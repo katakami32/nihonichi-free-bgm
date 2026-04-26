@@ -147,7 +147,13 @@ html[data-theme="dark"] .hero{background:#0a0805}
 .aitips{display:flex;flex-wrap:wrap;gap:6px;margin-top:.7rem}
 .aitip{font-size:11.5px;color:#fff;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.30);padding:5px 12px;border-radius:14px;cursor:pointer;transition:all .15s;font-weight:600;text-shadow:0 1px 3px rgba(0,0,0,0.9);backdrop-filter:blur(6px)}
 .aitip:hover{background:rgba(0,0,0,.75);border-color:var(--gold);color:#ffd97a}
-body.ai-active .hsearch input{border-color:var(--gold);background:rgba(212,168,67,.12);box-shadow:0 0 0 3px rgba(212,168,67,.18)}
+body.ai-active .hsearch input{border-color:var(--gold);background:rgba(0,0,0,.6);box-shadow:0 0 0 3px rgba(212,168,67,.3);color:#fff}
+/* autofill（ブラウザ自動補完）の黄色背景を打ち消す */
+.hsearch input:-webkit-autofill,
+.hsearch input:-webkit-autofill:hover,
+.hsearch input:-webkit-autofill:focus{-webkit-text-fill-color:#fff;-webkit-box-shadow:0 0 0 1000px rgba(0,0,0,.65) inset;transition:background-color 5000s ease-in-out 0s}
+.rmcustom input:-webkit-autofill,
+.rmcustom input:-webkit-autofill:focus{-webkit-text-fill-color:var(--ink);-webkit-box-shadow:0 0 0 1000px var(--card) inset;transition:background-color 5000s ease-in-out 0s}
 .hstats{display:flex;gap:2.5rem;margin-top:2.2rem;flex-wrap:wrap}
 .hstat .num{display:block;font-size:1.9rem;font-weight:900;font-family:var(--serif);color:#fff;line-height:1;margin-bottom:4px;text-shadow:0 2px 8px rgba(0,0,0,0.95),0 0 4px #000}
 .hstat .lbl{font-size:11.5px;color:rgba(255,255,255,.85);letter-spacing:.06em;text-shadow:0 1px 4px rgba(0,0,0,0.9);font-weight:500}
@@ -679,6 +685,21 @@ html[data-theme="dark"] footer{background:#0a0805}
     transition:left .05s linear;
   }
   .ptime{font-size:10px}
+  /* ======== モバイルモーダル: ボトムシート化 ======== */
+  /* キーボードが上がると dvh が縮小 → モーダルが自動的に小さくなる */
+  .aimodal{padding:0;align-items:flex-end}
+  .aibox{
+    border-radius:20px 20px 0 0;
+    max-height:90dvh;       /* キーボード表示時に縮む dynamic viewport */
+    max-height:90svh;       /* 古いiOSフォールバック */
+    display:flex;flex-direction:column;
+    overflow:hidden;
+  }
+  .aibody{overflow-y:auto;-webkit-overflow-scrolling:touch;flex:1;min-height:0}
+  /* iOS ズーム防止: フォントサイズ16px未満の入力欄はフォーカス時にズームする */
+  .rmcustom input,.rmopts select,.aiform textarea{font-size:16px !important}
+  /* フッターの列を1列に */
+  .fcol a{color:rgba(255,255,255,.7)}
 }
 </style>
 </head>
@@ -966,6 +987,23 @@ html[data-theme="dark"] footer{background:#0a0805}
   </div>
 </section>
 
+<!-- プライバシーポリシー -->
+<section class="lic" id="privacy" style="border-top:1px solid var(--border)">
+  <div class="licwrap">
+    <div class="lichead">
+      <div class="licttl">プライバシーポリシー</div>
+      <div class="licsub">個人情報の取り扱いについて</div>
+    </div>
+    <div style="font-size:13.5px;line-height:1.9;color:var(--muted);max-width:680px;margin:0 auto;display:flex;flex-direction:column;gap:1rem">
+      <div><strong style="color:var(--ink)">収集する情報</strong><br>当サイトはアカウント登録不要で利用できます。氏名・メールアドレス等の個人情報は一切収集しません。</div>
+      <div><strong style="color:var(--ink)">ブラウザ保存（localStorage）</strong><br>お気に入り登録・最近聴いた曲・テーマ設定は、お使いのブラウザのlocalStorageにのみ保存されます。サーバーへは送信されません。</div>
+      <div><strong style="color:var(--ink)">アクセス解析</strong><br>サイト改善のため、匿名の閲覧データ（ページビュー・再生回数等）を収集する場合があります。特定個人を識別できる情報は含みません。</div>
+      <div><strong style="color:var(--ink)">外部サービス</strong><br>楽曲ファイルはCloudflare R2より配信されます。Cloudflareのプライバシーポリシーが適用される場合があります。</div>
+      <div><strong style="color:var(--ink)">お問い合わせ</strong><br>プライバシーに関するご質問は <a href="mailto:taka.h2ommm@gmail.com" style="color:var(--accent)">taka.h2ommm@gmail.com</a> までご連絡ください。</div>
+    </div>
+  </div>
+</section>
+
 <footer id="about">
   <div class="finner">
     <div class="fgrid">
@@ -983,10 +1021,10 @@ html[data-theme="dark"] footer{background:#0a0805}
       </div>
       <div class="fcol">
         <h3>サポート</h3>
-        <a href="#">利用規約</a>
-        <a href="#">よくある質問</a>
-        <a href="#">お問い合わせ</a>
-        <a href="#">プライバシーポリシー</a>
+        <a href="#license">利用規約</a>
+        <a href="#faq">よくある質問</a>
+        <a href="mailto:taka.h2ommm@gmail.com">お問い合わせ</a>
+        <a href="#privacy">プライバシーポリシー</a>
       </div>
       <div class="fcol">
         <h3>キーボード操作</h3>
@@ -2140,6 +2178,12 @@ document.getElementById('searchBox').addEventListener('keydown', e => {
     e.target.blur(); // Enterキーでもキーボードを閉じる
     doSearch();
   }
+});
+// モバイル対応: タイピング停止後400msで自動検索（Enterなしでも反映）
+let _sbTimer;
+document.getElementById('searchBox').addEventListener('input', () => {
+  clearTimeout(_sbTimer);
+  _sbTimer = setTimeout(() => doSearch(), 400);
 });
 
 // ---- FAVORITES ----
@@ -3876,6 +3920,7 @@ document.querySelectorAll('#radioModal .rmcard').forEach(b => b.onclick = () => 
 
 // 自由入力
 document.getElementById('radioGo').onclick = () => {
+  document.activeElement?.blur(); // モバイルキーボードを閉じる
   const txt = document.getElementById('radioCustom').value.trim();
   const fade = +(document.getElementById('radioFade').value || 4);
   if (!txt) { toast('好みを入力するかカードを選んでください'); return; }
