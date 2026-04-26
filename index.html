@@ -3907,8 +3907,10 @@ play = function(id) {
 };
 
 // ---- iOS ダウンロード補助 ----------------------------------------
-// iOS Safari は cross-origin の <a download> を無視するため
-// fetch → Blob → ObjectURL に差し替えてダウンロードさせる
+// iOS Safari は cross-origin の <a download> を無視する。
+// 1st: Web Share API（共有シート→「ファイルに保存」）
+// 2nd: fetch → Blob → ObjectURL
+// NG:  window.open() は音楽アプリに横取りされるので使わない
 (function(){
   const isIOS = /iP(hone|ad|od)/.test(navigator.userAgent);
   if (!isIOS) return;
@@ -3927,9 +3929,26 @@ play = function(id) {
     try {
       const resp = await fetch(url, { cache: 'force-cache' });
       if (!resp.ok) throw new Error('fetch ' + resp.status);
-      const blob    = await resp.blob();
+      const blob = await resp.blob();
+
+      // ── 方法1: Web Share API（iOS 15以降）──
+      // 共有シートが開き「ファイルに保存」を選べる
+      if (navigator.canShare) {
+        const file = new File([blob], filename, { type: 'audio/mpeg' });
+        if (navigator.canShare({ files: [file] })) {
+          try {
+            await navigator.share({ files: [file] });
+            return; // ユーザーが保存先を選択
+          } catch(shareErr) {
+            if (shareErr.name === 'AbortError') return; // キャンセルは正常
+            // share 失敗 → 方法2へ
+          }
+        }
+      }
+
+      // ── 方法2: Blob ObjectURL ──
       const blobUrl = URL.createObjectURL(blob);
-      const tmp     = Object.assign(document.createElement('a'), {
+      const tmp = Object.assign(document.createElement('a'), {
         href: blobUrl, download: filename
       });
       document.body.appendChild(tmp);
@@ -3938,11 +3957,11 @@ play = function(id) {
       setTimeout(() => URL.revokeObjectURL(blobUrl), 60000);
       toast('✅ ダウンロード完了');
     } catch(err) {
-      console.warn('[iOS DL] fallback:', err);
-      window.open(url, '_blank');
-      toast('ファイルを開きました（長押し→「ダウンロード」で保存できます）');
+      console.warn('[iOS DL] error:', err);
+      // window.open() は音楽アプリが開くので使わない → 案内のみ
+      toast('⚠️ ブラウザのダウンロードマネージャーから保存してください');
     }
-  }, true); // capture phase で全ての <a download> を横取り
+  }, true);
 })();
 
 // ---- 起動シーケンス ----
