@@ -1,10 +1,10 @@
 User-agent: *
 Allow: /
 
-# 検索エンジンに優しいサイトマップ
-Sitemap: /sitemap.xml
+Sitemap: https://nihonichi-freemusicbgm.pages.dev/sitemap.xml
 
-# AI スクレイピング許可（このサイトはフリー素材なのでクローラ歓迎）
+# このサイトはフリー素材配布サイトです。すべてのクローラを歓迎します。
+# AI 学習クローラも許可（楽曲ファイル自体の再配布は利用規約で禁止）
 User-agent: GPTBot
 Allow: /
 
@@ -15,4 +15,10 @@ User-agent: Google-Extended
 Allow: /
 
 User-agent: CCBot
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
 Allow: /

@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "sitemap": "node scripts/generate-sitemap.js",
+    "sitemap:prod": "node scripts/generate-sitemap.js --base=https://nihonichi-freemusicbgm.pages.dev"
+  },
   "devDependencies": {
     "wrangler": "^4.85.0"
   }
