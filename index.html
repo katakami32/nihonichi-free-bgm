@@ -1134,7 +1134,7 @@ const API = (CFG.apiBase || '').replace(/\/$/, '');
 const USE_API = !!API;
 
 // 環境判別（本番環境 Cloudflare Pages か開発環境か）
-const isProduction = /pages\.dev$/.test(window.location.hostname);
+const isProduction = /pages\.dev$/.test(window.location.hostname) || /^https:/.test(window.location.protocol) && !/localhost|127\.0\.0\.1/.test(window.location.hostname);
 
 // R2 の公開 URL（Cloudflare ダッシュボード → R2 → bgm-data で確認して設定）
 const R2_BASE_URL = 'https://dec079cbb6f80e5bf626941e3f83844b.r2.cloudflarestorage.com/bgm-data';
