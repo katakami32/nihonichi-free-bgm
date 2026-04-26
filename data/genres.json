@@ -1,0 +1,100 @@
+[
+  {
+    "slug": "ambient",
+    "label_ja": "アンビエント",
+    "label_en": "Ambient",
+    "count": 436,
+    "cover": "images/ambient/merry-eve-snowfall_0d9e8f9f.jpeg"
+  },
+  {
+    "slug": "cinematic",
+    "label_ja": "シネマティック",
+    "label_en": "Cinematic / Orchestral",
+    "count": 389,
+    "cover": "images/cinematic/breaking-report_b2968b16.jpeg"
+  },
+  {
+    "slug": "j-pop",
+    "label_ja": "J-POP / シティポップ",
+    "label_en": "J-Pop / City Pop",
+    "count": 231,
+    "cover": "images/j-pop/summit-signal_2846248c.jpeg"
+  },
+  {
+    "slug": "jazz",
+    "label_ja": "ジャズ",
+    "label_en": "Jazz & Bossa Nova",
+    "count": 230,
+    "cover": "images/jazz/midnight-pour-over_9aaa952c.jpeg"
+  },
+  {
+    "slug": "lo-fi",
+    "label_ja": "Lo-Fi",
+    "label_en": "Lo-Fi / Chill",
+    "count": 195,
+    "cover": "images/lo-fi/window-rain-loops_cfe433ce.jpeg"
+  },
+  {
+    "slug": "electronic",
+    "label_ja": "エレクトロニック",
+    "label_en": "Electronic / Synthwave",
+    "count": 157,
+    "cover": "images/electronic/paper-skies_50984de4.jpeg"
+  },
+  {
+    "slug": "folk-acoustic",
+    "label_ja": "フォーク・アコースティック",
+    "label_en": "Folk / Acoustic",
+    "count": 98,
+    "cover": "images/folk-acoustic/open-window-morning_3bdae392.jpeg"
+  },
+  {
+    "slug": "other",
+    "label_ja": "その他",
+    "label_en": "Other",
+    "count": 93,
+    "cover": "images/other/breaking-report_a7dda388.jpeg"
+  },
+  {
+    "slug": "hip-hop-rnb",
+    "label_ja": "ヒップホップ・R&B",
+    "label_en": "Hip-Hop / R&B",
+    "count": 82,
+    "cover": "images/hip-hop-rnb/shibuya-dust-loop_66ff36ca.jpeg"
+  },
+  {
+    "slug": "rock",
+    "label_ja": "ロック",
+    "label_en": "Rock",
+    "count": 52,
+    "cover": "images/rock/concrete-slams_bd89b3f7.jpeg"
+  },
+  {
+    "slug": "pop",
+    "label_ja": "ポップス",
+    "label_en": "Pop",
+    "count": 47,
+    "cover": "images/pop/sakura-festival_7b9ea74f.jpeg"
+  },
+  {
+    "slug": "childrens",
+    "label_ja": "キッズ・童謡",
+    "label_en": "Children's",
+    "count": 30,
+    "cover": "images/childrens/cookie-parade_916045fa.jpeg"
+  },
+  {
+    "slug": "japanese-anime",
+    "label_ja": "和風・アニメ",
+    "label_en": "Japanese / Anime",
+    "count": 28,
+    "cover": "images/japanese-anime/track_a2507bf5.jpeg"
+  },
+  {
+    "slug": "corporate-bgm",
+    "label_ja": "企業VP・ドキュメンタリー",
+    "label_en": "Corporate / Documentary",
+    "count": 2,
+    "cover": "images/corporate-bgm/boardroom-momentum_e272fe5b.jpeg"
+  }
+]

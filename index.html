@@ -1136,9 +1136,11 @@ const USE_API = !!API;
 // R2 の公開 URL
 const R2_BASE_URL = 'https://pub-c8052da2182b4317bc252b78e473584c.r2.dev';
 
-// 環境に応じてデータソースを切り替え
+// 環境判定
 const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-const DATA_BASE = isLocalhost ? '/data' : `${R2_BASE_URL}/data`;
+// data/ は Pages（GitHub）から配信 → CORS不要（本番・ローカル共通で /data を使用）
+const DATA_BASE = '/data';
+// 画像は R2 から配信（<img>タグなのでCORS不要）
 const IMAGES_BASE_URL = isLocalhost ? '/images' : `${R2_BASE_URL}/images`;
 
 // 環境を正確に報告

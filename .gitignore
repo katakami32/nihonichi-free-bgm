@@ -23,15 +23,23 @@ out/
 build/
 
 # ========== R2 で管理するファイル（Git 除外） ==========
-# メタデータ
-data/
-
-# 音楽ファイル
+# 音楽ファイル（7GB → R2）
 audio/
 audio.backup/
 
-# 画像ファイル
+# 画像ファイル（226MB → R2）
 images/
+
+# data/ は Pages で配信するため Git に含める
+# 不要な重いファイルのみ除外
+data/suno_clips.json
+data/songs.json
+data/songs.csv
+data/downloads.tsv
+data/download_log.txt
+data/download_stdout.log
+data/download_failed.tsv
+data/genres.json.new
 
 # プロセスアーティファクト
 downloads.tsv
