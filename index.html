@@ -3925,23 +3925,7 @@ function radioUpdateNowPlaying(song) {
 }
 
 function radioWatch() {
-  if (!RADIO.on) return;
-  const h = RADIO.curHowl;
-  if (h && !RADIO.fadeStarted) {
-    try {
-      const dur = h.duration();
-      const pos = h.seek();
-      // 曲終了の (fadeSec+0.5秒) 前に次曲を先行起動 → 真のクロスフェード
-      if (typeof dur === 'number' && typeof pos === 'number'
-          && dur > 2 && pos > 2  // 最初の2秒は誤検知防止
-          && (dur - pos) <= (RADIO.fadeSec + 0.5)) {
-        RADIO.fadeStarted = true;
-        radioPlayNext(true);
-        // ループは継続（次曲の監視へ）
-      }
-    } catch(_) {}
-  }
-  if (RADIO.on) RADIO.watchRaf = requestAnimationFrame(radioWatch);
+  // 曲の終了は onend で検知するため、ここでは何もしない
 }
 
 function radioSkip() {
