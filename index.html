@@ -1160,9 +1160,8 @@ const getAudioUrl = (song) => {
     // ローカル: フルパスを使用（audio/jazz/song.mp3 など）
     return `/${fullPath}`;
   } else {
-    // R2: ファイル名だけを使用
-    const filename = fullPath.split('/').pop();
-    return `${R2_BASE_URL}/audio/${filename}`;
+    // R2: フルパスを使用（audio/jazz/song.mp3 のような階層構造）
+    return `${R2_BASE_URL}/${fullPath}`;
   }
 };
 
@@ -1174,9 +1173,8 @@ const getImageUrl = (imageUrl) => {
     // ローカル: フルパスを使用（images/ambient/image.jpeg など）
     return `/${imageUrl}`;
   } else {
-    // R2: ファイル名だけを使用
-    const filename = imageUrl.split('/').pop();
-    return `${IMAGES_BASE_URL}/${filename}`;
+    // R2: フルパスを使用（images/ambient/image.jpeg のような階層構造）
+    return `${R2_BASE_URL}/${imageUrl}`;
   }
 };
 
