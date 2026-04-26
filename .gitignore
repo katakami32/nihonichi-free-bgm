@@ -47,3 +47,16 @@ download_log.txt
 download_stdout.log
 download_failed.tsv
 genres.json.new
+
+# 一時作業ファイル
+*.sh
+*.log
+*.backup
+*.zip
+.wrangler/
+research/
+*_REPORT.md
+*_STATUS.md
+*_GUIDE.md
+*_IN_PROGRESS.md
+index.html.prod-backup
