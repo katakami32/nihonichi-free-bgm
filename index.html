@@ -1987,7 +1987,7 @@ async function renderGenreShowcase(){
 
   grid.innerHTML = sorted.map((g,i) => {
     const sz = sizeOrder[i] || '';
-    const cover = g.cover ? (ASSET_BASE ? `${ASSET_BASE}/${g.cover.replace(/^\//,'')}` : g.cover) : '';
+    const cover = g.cover ? getImageUrl(g.cover) : '';
     const cls = GENRE_CLASS[g.slug] || '';
     return `<div class="gscard ${sz}" data-gs="${escHtml(g.slug)}">
       ${cover?`<img src="${escHtml(cover)}" alt="${escHtml(g.label_ja)}" loading="lazy">`:''}
