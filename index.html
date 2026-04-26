@@ -8,7 +8,7 @@
 <meta name="keywords" content="フリーBGM,無料BGM,商用利用可,著作権フリー,YouTube BGM,ゲーム実況 BGM,Vlog BGM,AI BGM,Lo-fi,シネマティック,ジャズ,アンビエント">
 <meta name="theme-color" content="#c85a1e">
 <meta name="author" content="日本一フリーBGM">
-<link rel="canonical" href="/">
+<link rel="canonical" href="https://nihonichi-freemusicbgm.pages.dev/">
 
 <!-- ===== Google Search Console 所有権確認 =====
   Google Search Console でサイトを登録したら、発行される
@@ -24,11 +24,12 @@
 <meta property="og:description" content="BPM・尺・ムードで秒で見つかる。商用利用OK、クレジット任意の高品質フリーBGM。">
 <meta property="og:site_name" content="日本一フリーBGM">
 <meta property="og:locale" content="ja_JP">
-<meta property="og:image" content="/images/jazz/midnight-pour-over_9aaa952c.jpeg">
+<meta property="og:url" content="https://nihonichi-freemusicbgm.pages.dev/">
+<meta property="og:image" content="https://pub-c8052da2182b4317bc252b78e473584c.r2.dev/images/jazz/midnight-pour-over_9aaa952c.jpeg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="日本一フリーBGM｜2,070曲のフリーBGM">
 <meta name="twitter:description" content="登録不要、商用OK、クレジット任意。BPM・尺・ムードで秒で見つかるフリーBGM。">
-<meta name="twitter:image" content="/images/jazz/midnight-pour-over_9aaa952c.jpeg">
+<meta name="twitter:image" content="https://pub-c8052da2182b4317bc252b78e473584c.r2.dev/images/jazz/midnight-pour-over_9aaa952c.jpeg">
 
 <!-- インライン SVG ファビコン (音符マーク) -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23c85a1e'/%3E%3Ctext x='32' y='44' font-family='serif' font-size='38' font-weight='900' text-anchor='middle' fill='white'%3E音%3C/text%3E%3C/svg%3E">
@@ -43,11 +44,11 @@
   "name": "日本一フリーBGM",
   "alternateName": "Nihonichi Free BGM",
   "description": "AI生成の高品質フリーBGMを2,070曲、完全無料・商用利用OK・登録不要で配布する音源ライブラリ。",
-  "url": "/",
+  "url": "https://nihonichi-freemusicbgm.pages.dev/",
   "inLanguage": "ja-JP",
   "potentialAction": {
     "@type": "SearchAction",
-    "target": "/?q={search_term_string}",
+    "target": "https://nihonichi-freemusicbgm.pages.dev/?q={search_term_string}",
     "query-input": "required name=search_term_string"
   }
 }
@@ -759,10 +760,10 @@ html[data-theme="dark"] footer{background:#0a0805}
       <h1>すべての<em>クリエイター</em>に、<br>日本一の音を。</h1>
       <p class="lead">高品質なAI生成BGMを<b id="totalCount">2,070</b>曲、すべて無料・商用利用OKでダウンロードできます。BPM・尺・ムードで秒で見つかる検索体験。YouTube・ゲーム実況・Vlog・配信・映像制作にどうぞ。</p>
       <div class="hsearch">
-        <input type="text" id="searchBox" placeholder="例：ジャズ、夜カフェ、戦闘、ローファイ、爽やか">
-        <button onclick="doSearch()" title="キーワード検索">検索</button>
-        <button class="aibtn" id="aiOpen" title="AIにおまかせ — 文章を入れるとぴったりの曲を選びます">✨ AIにおまかせ</button>
-        <button class="radiobtn" id="radioOpen" title="BGMチャンネル — 気分を選ぶだけで曲が自動で流れ続けます">🎧 BGMチャンネル<span class="radiosub">気分を選ぶだけ・自動で流れ続ける</span></button>
+        <input type="text" id="searchBox" placeholder="例：ジャズ、夜カフェ、戦闘、ローファイ、爽やか" aria-label="BGMを検索">
+        <button onclick="doSearch()" title="キーワード検索" aria-label="キーワード検索">検索</button>
+        <button class="aibtn" id="aiOpen" title="AIにおまかせ — 文章を入れるとぴったりの曲を選びます" aria-label="AIにおまかせマッチング">✨ AIにおまかせ</button>
+        <button class="radiobtn" id="radioOpen" title="BGMチャンネル — 気分を選ぶだけで曲が自動で流れ続けます" aria-label="BGMチャンネルを開く">🎧 BGMチャンネル<span class="radiosub">気分を選ぶだけ・自動で流れ続ける</span></button>
       </div>
       <div class="aitips" id="aitips">
         <span class="aitip" data-q="朝の散歩で気持ち良くなれる音楽">☀️ 朝の散歩で気持ち良くなれる音楽</span>
@@ -1007,10 +1008,10 @@ html[data-theme="dark"] footer{background:#0a0805}
 </section>
 
 <!-- お問い合わせモーダル -->
-<div class="contactmodal" id="contactModal" role="dialog" aria-modal="true">
+<div class="contactmodal" id="contactModal" role="dialog" aria-modal="true" aria-labelledby="contactTitleLabel">
   <div class="contactbox">
     <div class="contacthead">
-      <h3>💬 お問い合わせ</h3>
+      <h3 id="contactTitleLabel">💬 お問い合わせ</h3>
       <button class="aiclose" onclick="document.getElementById('contactModal').classList.remove('on')" aria-label="閉じる">×</button>
     </div>
     <div class="contactbody">
@@ -1166,7 +1167,7 @@ html[data-theme="dark"] footer{background:#0a0805}
     <div class="aitop">
       <button class="aiclose" onclick="closeAi()" aria-label="閉じる">×</button>
       <div class="aittl"><span>✨</span><span id="aiTitleLabel">AIにおまかせマッチング</span></div>
-      <div class="aisub">どんな雰囲気の曲が欲しいか、自由に文章で書いてください。<br>シーン・気分・楽器・テンポなど何でもOK。AIが2,070曲から選び、なぜその曲が合うのか理由も教えてくれます。</div>
+      <div class="aisub">どんな雰囲気の曲が欲しいか、自由に文章で書いてください。<br>シーン・気分・楽器・テンポなど何でもOK。AIが<span id="aiSubCount">2,070</span>曲から選び、なぜその曲が合うのか理由も教えてくれます。</div>
     </div>
     <div class="aibody">
       <div class="aiform">
@@ -1507,6 +1508,8 @@ async function load(){
     countUp(document.getElementById('totalCount'), total, 1100);
     countUp(document.getElementById('statSongs'),  total, 1100);
     countUp(document.getElementById('statGenres'), genres.length, 800);
+    const aiSub = document.getElementById('aiSubCount');
+    if (aiSub) aiSub.textContent = total.toLocaleString();
     console.log('🎨 [LOAD] UI レンダリング開始');
     renderCats();
     renderGenreShowcase();
@@ -2013,7 +2016,7 @@ function card(s){
       <div class="crow">
         <span class="cbpm">♩= <b>${s.bpm?Math.round(s.bpm):'—'}</b></span>
         <div class="cact">
-          <button class="fav ${isFav?'on':''}" data-fav="${escHtml(s.id)}" title="お気に入り">${isFav?'♥':'♡'}</button>
+          <button class="fav ${isFav?'on':''}" data-fav="${escHtml(s.id)}" title="お気に入り" aria-label="${isFav?'お気に入りから外す':'お気に入りに追加'}" aria-pressed="${isFav}">${isFav?'♥':'♡'}</button>
           <a class="dlbtn" href="${escHtml(aud)}" download="${escHtml(s.slug||s.id)}.mp3" data-dl="${escHtml(s.id)}" title="MP3ダウンロード">⬇ DL</a>
         </div>
       </div>
@@ -2928,6 +2931,29 @@ document.addEventListener('keydown', e => {
   }
 });
 
+// ---- モーダル フォーカストラップ ----
+// Tab キーをモーダル内に閉じ込め、スクリーンリーダー用アクセシビリティを向上
+(function(){
+  const FOCUSABLE = 'a[href],button:not([disabled]),input,select,textarea,[tabindex]:not([tabindex="-1"])';
+  document.addEventListener('keydown', e => {
+    if (e.key !== 'Tab') return;
+    // 開いているモーダルを探す
+    const openModal =
+      document.querySelector('.aimodal.on') ||
+      document.querySelector('.modal.on') ||
+      (document.getElementById('plDrawer')?.classList.contains('open') ? document.getElementById('plDrawer') : null);
+    if (!openModal) return;
+    const els = [...openModal.querySelectorAll(FOCUSABLE)].filter(el => !el.closest('[hidden]') && el.offsetParent !== null);
+    if (els.length === 0) return;
+    const first = els[0], last = els[els.length - 1];
+    if (e.shiftKey) {
+      if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+    } else {
+      if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
+})();
+
 // ============================================================
 // ✨ AI マッチング (辞書ベースのコンセプト検索)
 // ============================================================
@@ -3013,27 +3039,23 @@ const AI_CONCEPTS = {
   'かっこいい': ['かっこいい','カッコイイ','格好いい','cool','クール','かっこ良い','スタイリッシュ','stylish','洗練','かっこ','格好','impressive','ドラマティック','dramatic','バッドアス','badass','渋い','渋','sharp','決まってる'],
   '可愛い':    ['可愛い','かわいい','cute','kawaii','playful','童謡','sweet','innocent','あどけ','チャーミング'],
   'セクシー':  ['セクシー','sexy','sensual','官能','魅惑','charm','魅力'],
-  'クール':    ['クール','cool','sophisticated','smooth','urban','noir','funky','洗練','coolジャズ'],
+  'クール':    ['クール','cool','sophisticated','smooth','urban','noir','funky','洗練','coolジャズ','冷たい','冷徹','ミニマル','minimal','sterile'],
   'コメディ':  ['コメディ','comedy','コミカル','ユーモア','humor','funny','楽しげ'],
-  'オシャレ':  ['おしゃれ','洒落','sophisticated','elegant','aesthetic','エステ','vintage','モダン','modern'],
+  'おしゃれ':  ['おしゃれ','オシャレ','洒落','sophisticated','elegant','aesthetic','エステ','vintage','モダン','modern'],
   '厳かな':    ['厳かな','solemn','厳粛','厳肃','formal','dignity','尊厳'],
   'グロテスク':['グロテスク','grotesque','異形','異質','strange','weird','奇怪'],
   'チャンティング':['チャンティング','chanting','唱える','唱歌','vocal chant','コーラス','chorus'],
   '感動':      ['感動','emotional','heartfelt','touching','切な','心に染','poignant','tender','tears'],
   '壮大':      ['壮大','エピック','epic','majestic','cinematic','grand','heroic','triumphant','soaring'],
-  'クール':    ['クール','cool','sophisticated','smooth','urban','noir','funky','洗練'],
-  'ダーク':    ['ダーク','dark','suspense','tense','緊迫','不穏','mysterious','eerie','moody'],
+  'ダーク':    ['ダーク','dark','suspense','tense','緊迫','不穏','mysterious','eerie','moody','暗い','黒い'],
   'まったり':  ['まったり','laid-back','chill','relax','穏やか','のんびり','lazy','mellow','ゆったり','ほっこり'],
-  'おしゃれ':  ['おしゃれ','洒落','sophisticated','elegant','aesthetic','エステ','vintage'],
   '爽やか':    ['爽やか','fresh','breezy','sunny','optimistic','明るい','さっぱり','すっきり'],
-  '神秘':      ['神秘','mysterious','mystical','ethereal','幻想','magical','magic','dreamy','異世界','ファンタジー','妖精','幻想的','幻想的','妖しい','怪しい'],
+  '神秘':      ['神秘','mysterious','mystical','ethereal','幻想','magical','magic','dreamy','異世界','ファンタジー','妖精','幻想的','妖しい','怪しい'],
   'サイバー':  ['サイバー','cyber','デジタル','digital','ハイテク','hi-tech','ロボット','robot','機械','機械音'],
   'オーガニック':['オーガニック','organic','自然','nature','natural','earth','アコースティック'],
   '甘い':      ['甘い','sweet','syrupy','sugary','甘美','蜜のような'],
-  'ダーク':    ['ダーク','dark','suspense','tense','緊迫','不穏','mysterious','eerie','moody','暗い','黒い'],
   'ブライト':  ['ブライト','bright','明るい','光','light','輝く','brilliant'],
   'ウォーム':  ['ウォーム','warm','温かい','温度','居心地','cozy','comfort'],
-  'クール':    ['クール','cool','冷たい','冷徹','ミニマル','minimal','sterile'],
   'ノスタル':  ['ノスタル','nostalgic','retro','vintage','昔','懐かし','old','懐かしい'],
   // ── 音楽ジャンル ──
   'アンビエント': ['アンビエント','ambient','環境音','背景','静か','瞑想'],
