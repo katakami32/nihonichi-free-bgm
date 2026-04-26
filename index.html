@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>日本一フリーBGM｜2,070曲のAI生成BGMを完全無料・商用利用OKで配布</title>
 <meta name="description" content="高品質なAI生成BGMを2,070曲、完全無料・商用利用OK・登録不要でダウンロードできるフリーBGMサイト。BPM・尺・ムードで秒で見つかる。YouTube・ゲーム実況・Vlog・配信に。">
 <meta name="keywords" content="フリーBGM,無料BGM,商用利用可,著作権フリー,YouTube BGM,ゲーム実況 BGM,Vlog BGM,AI BGM,Lo-fi,シネマティック,ジャズ,アンビエント">
@@ -91,7 +91,8 @@ html[data-theme="dark"]{
   --card:#1c1611; --shadow:0 2px 16px rgba(0,0,0,0.4);
 }
 html{scroll-behavior:smooth}
-body{font-family:var(--font);background:var(--paper);color:var(--ink);line-height:1.7;min-height:100vh;padding-bottom:100px}
+body{font-family:var(--font);background:var(--paper);color:var(--ink);line-height:1.7;min-height:100vh;padding-bottom:100px;-webkit-text-size-adjust:100%;text-size-adjust:100%;overflow-x:hidden}
+button,a,[role="button"]{touch-action:manipulation}
 a{color:inherit}
 button{font-family:inherit}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
@@ -519,7 +520,7 @@ html[data-theme="dark"] .ccount{background:rgba(255,255,255,.1)}
 .empty .em{font-size:3rem;margin-bottom:1rem}
 
 /* PLAYER */
-.pbar{position:fixed;bottom:0;left:0;right:0;background:var(--ink);color:#fff;border-top:1px solid rgba(255,255,255,.1);padding:11px 1.5rem;z-index:200;transform:translateY(100%);transition:transform .3s ease;box-shadow:0 -4px 24px rgba(0,0,0,.2)}
+.pbar{position:fixed;bottom:0;left:0;right:0;background:var(--ink);color:#fff;border-top:1px solid rgba(255,255,255,.1);padding:11px 1.5rem calc(11px + env(safe-area-inset-bottom, 0px));padding-left:max(1.5rem, env(safe-area-inset-left, 0px));padding-right:max(1.5rem, env(safe-area-inset-right, 0px));z-index:200;transform:translateY(100%);transition:transform .3s ease;box-shadow:0 -4px 24px rgba(0,0,0,.2)}
 html[data-theme="dark"] .pbar{background:#0a0805;color:#f3ece1}
 .pbar.on{transform:translateY(0)}
 .pinner{max-width:1280px;margin:0 auto;display:flex;align-items:center;gap:18px}
@@ -536,8 +537,8 @@ html[data-theme="dark"] .pbar{background:#0a0805;color:#f3ece1}
 .cpb:hover{background:var(--accent-h)}
 .parea{flex:1;display:flex;align-items:center;gap:10px;min-width:120px}
 .ptime{font-size:11px;color:rgba(255,255,255,.5);flex-shrink:0;font-variant-numeric:tabular-nums}
-.pseek{flex:1;height:5px;background:rgba(255,255,255,.13);border-radius:5px;cursor:pointer;position:relative}
-.pfill{position:absolute;top:0;left:0;height:100%;background:var(--accent);border-radius:5px;width:0}
+.pseek{flex:1;height:5px;background:rgba(255,255,255,.13);border-radius:5px;cursor:pointer;position:relative;touch-action:none;user-select:none;-webkit-user-select:none}
+.pfill{position:absolute;top:0;left:0;height:100%;background:var(--accent);border-radius:5px;width:0;pointer-events:none}
 .pseek:hover .pfill{background:var(--accent-h)}
 .vol{display:flex;align-items:center;gap:8px}
 .vol input{width:80px;cursor:pointer;accent-color:var(--accent)}
@@ -604,8 +605,6 @@ html[data-theme="dark"] footer{background:#0a0805}
 @media(max-width:640px){
   .hwrap{padding:0 1rem}
   .hbadge{display:none}
-  .pinfo{flex:1}
-  .parea,.vol,.pdl{display:none}
   .sgrid{grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:10px}
   .ctit{font-size:13px;min-height:36px}
   .cdesc{display:none}
@@ -617,6 +616,41 @@ html[data-theme="dark"] footer{background:#0a0805}
   .gscard .gsej{font-size:1rem !important}
   .pkrow{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}
   .pkttl,.gsttl{font-size:1.2rem}
+  /* 検索ボックス — 横突き抜け防止 & 入力欄を広く */
+  .hsearch{max-width:100%}
+  /* 入力欄+検索ボタンを1行目、AI/ラジオを2行目に */
+  .hsearch input{min-width:0;font-size:16px;flex:1 1 160px}
+  .hsearch .aibtn,.hsearch .radiobtn{flex:1 1 calc(50% - 4px);justify-content:center}
+  /* モバイルプレイヤー分の余白 (3行で~140px) */
+  body{padding-bottom:160px}
+  /* ======== モバイルプレイヤー 3行レイアウト ======== */
+  /* 行1: サムネ + 曲名情報 + アニメバー */
+  /* 行2: コントロールボタン (中央揃え) */
+  /* 行3: シークバー (全幅) */
+  .pbar{padding:8px 1rem calc(8px + env(safe-area-inset-bottom,0px))}
+  .pinner{flex-wrap:wrap;gap:4px 8px;align-items:center}
+  /* 行1 */
+  .pthumb{order:1;width:38px;height:38px;flex-shrink:0}
+  .pinfo{order:1;flex:1;min-width:0}
+  .pbars{order:1;flex-shrink:0}
+  /* 行2: pctrl を全幅で独立行に */
+  .pctrl{order:2;width:100%;justify-content:center;gap:6px;margin-top:2px}
+  /* モバイルは前/再生/次/ループだけ */
+  #shufBtn,#similarBtn,#pickBtn,#shareBtn{display:none}
+  /* 44px以上タップ領域 */
+  .cb{width:42px;height:42px;font-size:14px}
+  .cpb{width:48px;height:48px;font-size:16px}
+  /* 行3: シークバー全幅 */
+  .parea{display:flex;order:3;width:100%;min-width:0;margin-top:2px}
+  .vol,.pdl{display:none}
+  /* シークバー: タップ領域24px、視覚は4px */
+  .pseek{height:24px;background:transparent}
+  .pseek::before{content:'';position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:4px;background:rgba(255,255,255,.2);border-radius:4px;pointer-events:none}
+  .pfill{height:4px;top:50%;transform:translateY(-50%)}
+  /* ドラッグハンドル（白丸） */
+  .pfill::after{content:'';position:absolute;right:-7px;top:50%;transform:translateY(-50%);width:14px;height:14px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.4);opacity:0;transition:opacity .15s}
+  .pbar.on .pfill::after{opacity:1}
+  .ptime{font-size:10px}
 }
 </style>
 </head>
@@ -2059,6 +2093,8 @@ document.getElementById('loadMore').onclick = () => { currentPage++; render(); }
 
 // ---- SEARCH ----
 window.doSearch = async () => {
+  // スマホキーボードを閉じる（blur で確実に dismiss）
+  document.activeElement?.blur();
   currentSearch = document.getElementById('searchBox').value.trim();
   showFavOnly = false;
   // まず即スクロール（体感を速く）
@@ -2071,7 +2107,12 @@ window.doSearch = async () => {
     if (b) window.scrollTo({ top: b.offsetTop - 70, behavior: 'smooth' });
   });
 };
-document.getElementById('searchBox').addEventListener('keydown', e => { if (e.key==='Enter') doSearch(); });
+document.getElementById('searchBox').addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    e.target.blur(); // Enterキーでもキーボードを閉じる
+    doSearch();
+  }
+});
 
 // ---- FAVORITES ----
 const favBtn = document.getElementById('favBtn');
@@ -2288,11 +2329,30 @@ function _doSeek(ratio){
     audio.currentTime = ratio * audio.duration;
   }
 }
-seek.onclick = e => {
+// ---- シークバー: マウス & タッチ共通 ----
+function _seekRatio(clientX){
   const r = seek.getBoundingClientRect();
-  const ratio = Math.max(0, Math.min(1, (e.clientX-r.left)/r.width));
-  _doSeek(ratio);
+  return Math.max(0, Math.min(1, (clientX - r.left) / r.width));
+}
+// クリック（デスクトップ）
+seek.onclick = e => {
+  _doSeek(_seekRatio(e.clientX));
 };
+// タッチ（モバイル） — passive:false でスクロールをキャンセルし正確にシーク
+let _touchSeeking = false;
+seek.addEventListener('touchstart', e => {
+  _touchSeeking = true;
+  e.preventDefault();
+  _doSeek(_seekRatio(e.touches[0].clientX));
+}, { passive: false });
+seek.addEventListener('touchmove', e => {
+  if (!_touchSeeking) return;
+  e.preventDefault();
+  _doSeek(_seekRatio(e.touches[0].clientX));
+}, { passive: false });
+seek.addEventListener('touchend', () => {
+  _touchSeeking = false;
+}, { passive: true });
 volSlider.oninput = e => {
   const v = e.target.value/100;
   savedVolume = v;
