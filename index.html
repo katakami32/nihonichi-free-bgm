@@ -165,7 +165,8 @@ body.ai-active .hsearch input{border-color:var(--gold);background:rgba(212,168,6
 @keyframes pbA{0%,100%{height:30%}50%{height:100%}}
 
 /* 📻 作業用ラジオ */
-.radiobtn{background:linear-gradient(135deg,#c85a1e 0%,#d4a843 100%);color:#fff;display:inline-flex;align-items:center;gap:6px;font-weight:800}
+.radiobtn{background:linear-gradient(135deg,#c85a1e 0%,#d4a843 100%);color:#fff;display:inline-flex;flex-direction:column;align-items:center;gap:2px;font-weight:800;line-height:1.3}
+.radiobtn .radiosub{font-size:10px;font-weight:500;opacity:.88;letter-spacing:.02em}
 .radiobtn:hover{filter:brightness(1.1);transform:translateY(-1px)}
 .rmgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
 .rmcard{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:14px 16px;border:1.5px solid var(--border);border-radius:11px;background:var(--card);cursor:pointer;text-align:left;font-family:inherit;transition:all .15s;color:var(--ink)}
@@ -721,7 +722,7 @@ html[data-theme="dark"] footer{background:#0a0805}
         <input type="text" id="searchBox" placeholder="例：ジャズ、夜カフェ、戦闘、ローファイ、爽やか">
         <button onclick="doSearch()" title="キーワード検索">検索</button>
         <button class="aibtn" id="aiOpen" title="AIにおまかせ — 文章を入れるとぴったりの曲を選びます">✨ AIにおまかせ</button>
-        <button class="radiobtn" id="radioOpen" title="作業用ラジオ — 連続再生＆クロスフェード">📻 作業用ラジオ</button>
+        <button class="radiobtn" id="radioOpen" title="作業用ラジオ — 気分を選ぶだけで曲が自動で流れ続けます">📻 作業用ラジオ<span class="radiosub">気分を選ぶだけ・自動で流れ続ける</span></button>
       </div>
       <div class="aitips" id="aitips">
         <span class="aitip" data-q="朝の散歩で気持ち良くなれる音楽">☀️ 朝の散歩で気持ち良くなれる音楽</span>
@@ -1108,7 +1109,7 @@ html[data-theme="dark"] footer{background:#0a0805}
     <div class="aitop">
       <button class="aiclose" onclick="closeRadio()" aria-label="閉じる">×</button>
       <div class="aittl"><span>📻</span><span id="radioTitleLabel">作業用ラジオ</span></div>
-      <div class="aisub">気分に合うジャンルを選ぶと、AIがぴったりの曲を選んで延々と流します。<br>曲は自然な<b style="color:var(--gold)">クロスフェード</b>で繋ぎ、違和感なく聴き続けられます。</div>
+      <div class="aisub">気分やシーンを選ぶだけで、<b style="color:var(--gold)">曲が途切れず自動で流れ続けます。</b><br>曲と曲の間は自然な<b style="color:var(--gold)">クロスフェード</b>で繋がるので、作業・勉強・配信BGMにそのまま使えます。</div>
     </div>
     <div class="aibody">
       <div class="rmgrid">
