@@ -1141,9 +1141,8 @@ const R2_BASE_URL = 'https://pub-c8052da2182b4317bc252b78e473584c.r2.dev';
 const IMAGES_BASE_URL = `${R2_BASE_URL}/images`;
 
 // DATA_BASE: 環境に応じて切り替え
-const DATA_BASE = isProduction
-  ? `${R2_BASE_URL}/data`   // 本番：R2 から読み込み
-  : '/data';                 // 開発：ローカルから読み込み
+// テスト: 常に R2 URL を使用（isProduction 判定問題のテスト）
+const DATA_BASE = `${R2_BASE_URL}/data`;
 
 // デバッグ用
 console.log('hostname:', window.location.hostname);
@@ -1151,7 +1150,8 @@ console.log('isProduction:', isProduction);
 console.log('Current DATA_BASE:', DATA_BASE);
 
 // テスト用: R2 URL に強制設定（isProduction が false の場合のテスト）
-// const DATA_BASE = `${R2_BASE_URL}/data`;
+const DATA_BASE_OVERRIDE = `${R2_BASE_URL}/data`;
+console.log('Using DATA_BASE_OVERRIDE:', DATA_BASE_OVERRIDE);
 
 const ASSET_BASE = (CFG.assetBase || '').replace(/\/$/, '');
 
