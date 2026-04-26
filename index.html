@@ -2177,10 +2177,11 @@ function play(id){
   _setupPlayerUI(s);
   document.getElementById('player').classList.add('playing');
 
-  // Web Audio で再生 (html5: false がベストだが大容量曲はメモリ食う/4MBくらいまでOK)
+  // 本番(R2)ではCORSなしで再生できるようhtml5:trueを使用
+  // html5:true = <audio>タグ経由でストリーミング再生 (CORS不要)
   const howl = new Howl({
     src: [audioOf(s)],
-    html5: false,    // Web Audio API で完全シームレス
+    html5: true,     // <audio>タグで再生 → R2からCORSなしで動作
     volume: savedVolume,
     autoplay: true,
     onload: () => {
