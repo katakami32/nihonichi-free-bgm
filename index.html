@@ -1145,6 +1145,14 @@ const DATA_BASE = isProduction
   ? `${R2_BASE_URL}/data`   // 本番：R2 から読み込み
   : '/data';                 // 開発：ローカルから読み込み
 
+// デバッグ用
+console.log('hostname:', window.location.hostname);
+console.log('isProduction:', isProduction);
+console.log('Current DATA_BASE:', DATA_BASE);
+
+// テスト用: R2 URL に強制設定（isProduction が false の場合のテスト）
+// const DATA_BASE = `${R2_BASE_URL}/data`;
+
 const ASSET_BASE = (CFG.assetBase || '').replace(/\/$/, '');
 
 // 音楽ファイルの URL を環境に応じて生成
