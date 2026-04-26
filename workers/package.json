@@ -1,0 +1,24 @@
+{
+  "name": "bgm-api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "schema:remote": "wrangler d1 execute bgm --remote --file=schema.sql",
+    "schema:local": "wrangler d1 execute bgm --local --file=schema.sql",
+    "import:remote": "node scripts/build_import_sql.mjs && wrangler d1 execute bgm --remote --file=.import.sql",
+    "import:local": "node scripts/build_import_sql.mjs && wrangler d1 execute bgm --local --file=.import.sql",
+    "build:sql": "node scripts/build_import_sql.mjs",
+    "tail": "wrangler tail"
+  },
+  "dependencies": {
+    "hono": "^4.6.14"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250109.0",
+    "typescript": "^5.7.2",
+    "wrangler": "^3.99.0"
+  }
+}

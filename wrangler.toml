@@ -1,0 +1,14 @@
+name = "nihonichi-free-bgm"
+type = "javascript"
+account_id = "dec079cbb6f80e5bf626941e3f83844b"
+workers_dev = true
+
+# Cloudflare Pages 設定
+[env.production]
+name = "nihonichi-free-bgm"
+routes = [
+  { pattern = "example.com/*", zone_name = "example.com" }
+]
+
+# 公開ディレクトリ: プロジェクトルート全体
+# (index.html, data/, audio/, images/ などがすべて公開される)

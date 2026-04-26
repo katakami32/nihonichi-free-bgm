@@ -1,0 +1,33 @@
+name = "bgm-api"
+main = "src/index.ts"
+compatibility_date = "2026-04-01"
+compatibility_flags = ["nodejs_compat"]
+
+# ─── D1 ─────────────────────────────────────────
+# 1. wrangler d1 create bgm
+# 2. 出力された database_id をここに貼り付け
+[[d1_databases]]
+binding = "DB"
+database_name = "bgm"
+database_id = "REPLACE_WITH_YOUR_D1_ID"
+
+# ─── KV (キャッシュ・人気ランキング用) ───────────
+# wrangler kv namespace create KV
+[[kv_namespaces]]
+binding = "KV"
+id = "REPLACE_WITH_YOUR_KV_ID"
+
+# ─── 公開設定 ────────────────────────────────────
+[vars]
+# R2 を Custom Domain で公開した場合の URL ベース。
+# 例: "https://cdn.example.com"
+# 開発中は audio/images をローカルから配信したいので空にしておく (相対パスを返す)
+R2_PUBLIC_BASE = ""
+
+# CORS 許可オリジン。Pages のドメインに合わせて差し替え。
+# 開発中は "*" でOK。本番は厳格化推奨。
+ALLOWED_ORIGIN = "*"
+
+# ─── 管理者トークン（必ず secret で投入） ──────
+# wrangler secret put ADMIN_TOKEN
+# ※ ADMIN_TOKEN はここには書かない！

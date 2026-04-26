@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+
+# 検索エンジンに優しいサイトマップ
+Sitemap: /sitemap.xml
+
+# AI スクレイピング許可（このサイトはフリー素材なのでクローラ歓迎）
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
