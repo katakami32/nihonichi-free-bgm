@@ -1141,23 +1141,43 @@ const isLocalhost = window.location.hostname === 'localhost' || window.location.
 const DATA_BASE = isLocalhost ? '/data' : `${R2_BASE_URL}/data`;
 const IMAGES_BASE_URL = isLocalhost ? '/images' : `${R2_BASE_URL}/images`;
 
-console.log('[BGM] Using R2 URLs for all data sources');
+// 環境を正確に報告
+console.log('[BGM] Environment Detection');
+console.log('[BGM] hostname:', window.location.hostname);
+console.log('[BGM] isLocalhost:', isLocalhost);
+console.log('[BGM] Mode:', isLocalhost ? '🖥️ LOCALHOST (Local files)' : '☁️ PRODUCTION (R2 Cloud)');
 console.log('[BGM] DATA_BASE:', DATA_BASE);
+console.log('[BGM] IMAGES_BASE_URL:', IMAGES_BASE_URL);
 
 const ASSET_BASE = (CFG.assetBase || '').replace(/\/$/, '');
 
 // 音楽ファイルの URL を生成（環境に応じて切り替え）
 const getAudioUrl = (song) => {
-  const filename = (song.audio_url || song.audio || '').split('/').pop();
-  if (!filename) return '';
-  return isLocalhost ? `/audio/${filename}` : `${R2_BASE_URL}/audio/${filename}`;
+  const fullPath = song.audio_url || song.audio || '';
+  if (!fullPath) return '';
+
+  if (isLocalhost) {
+    // ローカル: フルパスを使用（audio/jazz/song.mp3 など）
+    return `/${fullPath}`;
+  } else {
+    // R2: ファイル名だけを使用
+    const filename = fullPath.split('/').pop();
+    return `${R2_BASE_URL}/audio/${filename}`;
+  }
 };
 
 // 画像ファイルの URL を生成（環境に応じて切り替え）
 const getImageUrl = (imageUrl) => {
   if (!imageUrl) return imageUrl;
-  const filename = imageUrl.split('/').pop();
-  return isLocalhost ? `/images/${filename}` : `${IMAGES_BASE_URL}/${filename}`;
+
+  if (isLocalhost) {
+    // ローカル: フルパスを使用（images/ambient/image.jpeg など）
+    return `/${imageUrl}`;
+  } else {
+    // R2: ファイル名だけを使用
+    const filename = imageUrl.split('/').pop();
+    return `${IMAGES_BASE_URL}/${filename}`;
+  }
 };
 
 // ---- STATE ----
