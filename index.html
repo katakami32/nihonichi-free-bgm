@@ -540,6 +540,7 @@ html[data-theme="dark"] .pbar{background:#0a0805;color:#f3ece1}
 .pseek{flex:1;height:5px;background:rgba(255,255,255,.13);border-radius:5px;cursor:pointer;position:relative;touch-action:none;user-select:none;-webkit-user-select:none}
 .pfill{position:absolute;top:0;left:0;height:100%;background:var(--accent);border-radius:5px;width:0;pointer-events:none}
 .pseek:hover .pfill{background:var(--accent-h)}
+.pknob{display:none}/* デスクトップでは非表示 */
 .vol{display:flex;align-items:center;gap:8px}
 .vol input{width:80px;cursor:pointer;accent-color:var(--accent)}
 .pdl{flex-shrink:0;font-size:12px;font-weight:700;padding:9px 16px;border-radius:7px;border:1px solid rgba(255,255,255,.22);background:transparent;color:rgba(255,255,255,.85);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:5px}
@@ -643,13 +644,31 @@ html[data-theme="dark"] footer{background:#0a0805}
   /* 行3: シークバー全幅 */
   .parea{display:flex;order:3;width:100%;min-width:0;margin-top:2px}
   .vol,.pdl{display:none}
-  /* シークバー: タップ領域24px、視覚は4px */
-  .pseek{height:24px;background:transparent}
-  .pseek::before{content:'';position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:4px;background:rgba(255,255,255,.2);border-radius:4px;pointer-events:none}
-  .pfill{height:4px;top:50%;transform:translateY(-50%)}
-  /* ドラッグハンドル（白丸） */
-  .pfill::after{content:'';position:absolute;right:-7px;top:50%;transform:translateY(-50%);width:14px;height:14px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.4);opacity:0;transition:opacity .15s}
-  .pbar.on .pfill::after{opacity:1}
+  /* ===== モバイルシークバー（完全作り直し） ===== */
+  /* タップ領域 32px、視覚トラック 6px */
+  .pseek{
+    height:32px;
+    background:rgba(255,255,255,.45); /* 高コントラスト白トラック */
+    border-radius:6px;
+    overflow:visible;
+  }
+  /* トラック全幅 (::before を廃止し .pseek 自体に背景を持たせる) */
+  .pfill{height:6px;top:50%;transform:translateY(-50%);border-radius:6px}
+  /* ツマミ専用要素 — 常時表示・指で隠れない16px */
+  .pknob{
+    display:block;
+    position:absolute;
+    top:50%;
+    left:0;                            /* JSで更新 */
+    transform:translate(-50%,-50%);
+    width:16px;height:16px;
+    border-radius:50%;
+    background:#fff;
+    box-shadow:0 1px 8px rgba(0,0,0,.55);
+    pointer-events:none;
+    z-index:2;
+    transition:left .05s linear;
+  }
   .ptime{font-size:10px}
 }
 </style>
@@ -995,7 +1014,7 @@ html[data-theme="dark"] footer{background:#0a0805}
     </div>
     <div class="parea">
       <span class="ptime" id="curTime">0:00</span>
-      <div class="pseek" id="seek"><div class="pfill" id="fill"></div></div>
+      <div class="pseek" id="seek"><div class="pfill" id="fill"></div><span class="pknob" id="seekKnob"></span></div>
       <span class="ptime" id="durTime">—</span>
     </div>
     <div class="vol">
@@ -2157,13 +2176,19 @@ function _activeHowl(){
   if (RADIO && RADIO.on && RADIO.curHowl) return RADIO.curHowl;
   return currentHowl;
 }
+function _updateKnob(pct){
+  const knob = document.getElementById('seekKnob');
+  if (knob) knob.style.left = pct + '%';
+}
 function _updateProgress(){
   const h = _activeHowl();
   if (!h || !h.playing()) { progressRaf = null; return; }
   const t = h.seek() || 0;
   const d = h.duration() || 0;
   if (d > 0) {
-    document.getElementById('fill').style.width = (t/d*100) + '%';
+    const pct = t/d*100;
+    document.getElementById('fill').style.width = pct + '%';
+    _updateKnob(pct);
   }
   document.getElementById('curTime').textContent = fmtDur(t);
   document.getElementById('durTime').textContent = fmtDur(d);
@@ -2173,6 +2198,9 @@ function _updateProgress(){
 function _setupPlayerUI(s){
   const id = s.id;
   document.getElementById('player').classList.add('on');
+  // シークバー・ツマミを先頭位置にリセット
+  document.getElementById('fill').style.width = '0%';
+  _updateKnob(0);
   document.getElementById('pName').textContent = s.title;
   const gJa = (genres.find(g=>g.slug===s.genre)||{}).label_ja || s.genre;
   document.getElementById('pCat').textContent = `${gJa} · ${fmtDur(s.duration)}${s.bpm?` · ♩=${Math.round(s.bpm)}`:''}`;
@@ -2313,7 +2341,9 @@ function _doSeek(ratio){
       if (d > 0) {
         try { h.seek(ratio * d); } catch(e){ console.warn('seek err', e); }
         // 進捗バーを即時更新 (Howler内部の状態反映を待たない)
-        document.getElementById('fill').style.width = (ratio*100) + '%';
+        const pct = ratio*100;
+        document.getElementById('fill').style.width = pct + '%';
+        _updateKnob(pct);
         document.getElementById('curTime').textContent = fmtDur(ratio * d);
         // rAFループ再起動 (一度停止していても確実に動かす)
         _stopProgressLoop();
