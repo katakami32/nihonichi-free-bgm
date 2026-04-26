@@ -3906,6 +3906,45 @@ play = function(id) {
   return _origPlayForRadio(id);
 };
 
+// ---- iOS ダウンロード補助 ----------------------------------------
+// iOS Safari は cross-origin の <a download> を無視するため
+// fetch → Blob → ObjectURL に差し替えてダウンロードさせる
+(function(){
+  const isIOS = /iP(hone|ad|od)/.test(navigator.userAgent);
+  if (!isIOS) return;
+
+  document.addEventListener('click', async e => {
+    const a = e.target.closest('a[download]');
+    if (!a || !a.href || a.href.startsWith('blob:') || a.href.startsWith('data:')) return;
+
+    e.preventDefault();
+    e.stopImmediatePropagation();
+
+    const url      = a.href;
+    const filename = a.getAttribute('download') || 'bgm.mp3';
+
+    toast('⬇ ダウンロード準備中…');
+    try {
+      const resp = await fetch(url, { cache: 'force-cache' });
+      if (!resp.ok) throw new Error('fetch ' + resp.status);
+      const blob    = await resp.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      const tmp     = Object.assign(document.createElement('a'), {
+        href: blobUrl, download: filename
+      });
+      document.body.appendChild(tmp);
+      tmp.click();
+      document.body.removeChild(tmp);
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 60000);
+      toast('✅ ダウンロード完了');
+    } catch(err) {
+      console.warn('[iOS DL] fallback:', err);
+      window.open(url, '_blank');
+      toast('ファイルを開きました（長押し→「ダウンロード」で保存できます）');
+    }
+  }, true); // capture phase で全ての <a download> を横取り
+})();
+
 // ---- 起動シーケンス ----
 load().then(() => {
   renderRecent();
