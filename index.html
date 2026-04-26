@@ -1133,54 +1133,28 @@ const CFG = window.BGM_CONFIG || {};
 const API = (CFG.apiBase || '').replace(/\/$/, '');
 const USE_API = !!API;
 
-// 環境判別（本番環境 Cloudflare Pages か開発環境か）
-const isProduction = /pages\.dev$/.test(window.location.hostname) || (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1');
-
-// R2 の公開 URL（パブリック開放）
+// R2 が本番・開発両対応（確実に動作）
 const R2_BASE_URL = 'https://pub-c8052da2182b4317bc252b78e473584c.r2.dev';
+const DATA_BASE = `${R2_BASE_URL}/data`;
 const IMAGES_BASE_URL = `${R2_BASE_URL}/images`;
 
-// DATA_BASE: 環境に応じて切り替え
-// テスト: 常に R2 URL を使用（isProduction 判定問題のテスト）
-const DATA_BASE = `${R2_BASE_URL}/data`;
-
-// デバッグ用
-console.log('hostname:', window.location.hostname);
-console.log('isProduction:', isProduction);
-console.log('Current DATA_BASE:', DATA_BASE);
-
-// テスト用: R2 URL に強制設定（isProduction が false の場合のテスト）
-const DATA_BASE_OVERRIDE = `${R2_BASE_URL}/data`;
-console.log('Using DATA_BASE_OVERRIDE:', DATA_BASE_OVERRIDE);
+console.log('[BGM] Using R2 URLs for all data sources');
+console.log('[BGM] DATA_BASE:', DATA_BASE);
 
 const ASSET_BASE = (CFG.assetBase || '').replace(/\/$/, '');
 
-// 音楽ファイルの URL を環境に応じて生成
+// 音楽ファイルの URL を生成（常に R2 から配信）
 const getAudioUrl = (song) => {
   const filename = (song.audio_url || song.audio || '').split('/').pop();
   if (!filename) return '';
-
-  if (isProduction) {
-    // 本番環境：R2 から配信
-    return `${R2_BASE_URL}/audio/${filename}`;
-  } else {
-    // 開発環境：ローカルから配信（相対パス）
-    return `/audio/${filename}`;
-  }
+  return `${R2_BASE_URL}/audio/${filename}`;
 };
 
-// 画像ファイルの URL を環境に応じて生成（オプション）
+// 画像ファイルの URL を生成（常に R2 から配信）
 const getImageUrl = (imageUrl) => {
   if (!imageUrl) return imageUrl;
-
-  if (isProduction) {
-    // 本番環境：R2 から配信
-    const filename = imageUrl.split('/').pop();
-    return `${IMAGES_BASE_URL}/${filename}`;
-  } else {
-    // 開発環境：ローカルから配信
-    return imageUrl;
-  }
+  const filename = imageUrl.split('/').pop();
+  return `${IMAGES_BASE_URL}/${filename}`;
 };
 
 // ---- STATE ----
