@@ -722,7 +722,7 @@ html[data-theme="dark"] footer{background:#0a0805}
         <input type="text" id="searchBox" placeholder="例：ジャズ、夜カフェ、戦闘、ローファイ、爽やか">
         <button onclick="doSearch()" title="キーワード検索">検索</button>
         <button class="aibtn" id="aiOpen" title="AIにおまかせ — 文章を入れるとぴったりの曲を選びます">✨ AIにおまかせ</button>
-        <button class="radiobtn" id="radioOpen" title="作業用ラジオ — 気分を選ぶだけで曲が自動で流れ続けます">📻 作業用ラジオ<span class="radiosub">気分を選ぶだけ・自動で流れ続ける</span></button>
+        <button class="radiobtn" id="radioOpen" title="BGMチャンネル — 気分を選ぶだけで曲が自動で流れ続けます">🎧 BGMチャンネル<span class="radiosub">気分を選ぶだけ・自動で流れ続ける</span></button>
       </div>
       <div class="aitips" id="aitips">
         <span class="aitip" data-q="朝の散歩で気持ち良くなれる音楽">☀️ 朝の散歩で気持ち良くなれる音楽</span>
@@ -1108,7 +1108,7 @@ html[data-theme="dark"] footer{background:#0a0805}
   <div class="aibox">
     <div class="aitop">
       <button class="aiclose" onclick="closeRadio()" aria-label="閉じる">×</button>
-      <div class="aittl"><span>📻</span><span id="radioTitleLabel">作業用ラジオ</span></div>
+      <div class="aittl"><span>🎧</span><span id="radioTitleLabel">BGMチャンネル</span></div>
       <div class="aisub">気分やシーンを選ぶだけで、<b style="color:var(--gold)">曲が途切れず自動で流れ続けます。</b><br>曲と曲の間は自然な<b style="color:var(--gold)">クロスフェード</b>で繋がるので、作業・勉強・配信BGMにそのまま使えます。</div>
     </div>
     <div class="aibody">
@@ -1134,7 +1134,7 @@ html[data-theme="dark"] footer{background:#0a0805}
             <option value="8">8秒（DJミックス風）</option>
           </select>
         </div>
-        <button class="aigo" id="radioGo" style="margin-top:.9rem">📻 ラジオを開始する</button>
+        <button class="aigo" id="radioGo" style="margin-top:.9rem">🎧 BGMを開始する</button>
       </div>
     </div>
   </div>
@@ -1143,7 +1143,7 @@ html[data-theme="dark"] footer{background:#0a0805}
 <!-- ラジオ稼働インジケータ (左下) -->
 <div class="radioind" id="radioInd" role="status" aria-live="polite">
   <span class="pulse"></span>
-  <span id="radioIndLabel">📻 ラジオ再生中</span>
+  <span id="radioIndLabel">🎧 BGMチャンネル再生中</span>
   <button class="skip" id="radioSkip" title="次の曲へ" aria-label="次の曲へ">⏭</button>
   <button class="stop" id="radioStop" title="停止" aria-label="停止">■</button>
 </div>
@@ -3682,11 +3682,11 @@ async function radioStart(prompt, fadeSec=4) {
 
   // インジケーター表示
   const indLabel = document.getElementById('radioIndLabel');
-  if (indLabel) indLabel.textContent = `📻 ${(prompt.length>20?prompt.slice(0,18)+'…':prompt)}`;
+  if (indLabel) indLabel.textContent = `🎧 ${(prompt.length>20?prompt.slice(0,18)+'…':prompt)}`;
   document.getElementById('radioInd').classList.add('on');
   document.getElementById('player').classList.add('on', 'radio');
 
-  toast(`📻 ラジオ開始：${(prompt.length>16?prompt.slice(0,14)+'…':prompt)}`);
+  toast(`🎧 BGMチャンネル開始：${(prompt.length>16?prompt.slice(0,14)+'…':prompt)}`);
   radioPlayNext(false);
   radioWatch();
 }
@@ -3854,13 +3854,12 @@ function radioStop() {
 
   document.getElementById('radioInd').classList.remove('on');
   document.getElementById('player').classList.remove('radio');
-  toast('📻 ラジオを停止しました');
+  toast('🎧 BGMチャンネルを停止しました');
 }
 
 // ── モーダル制御 ──
 window.openRadio = () => {
   document.getElementById('radioModal').classList.add('on');
-  setTimeout(() => document.getElementById('radioCustom').focus(), 80);
 };
 window.closeRadio = () => document.getElementById('radioModal').classList.remove('on');
 document.getElementById('radioOpen').onclick = openRadio;
