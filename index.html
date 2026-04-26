@@ -1120,7 +1120,7 @@ html[data-theme="dark"] footer{background:#0a0805}
 <script>
 window.BGM_CONFIG = {
   apiBase: '',                 // ← デプロイ後にWorkersのURLを入れる
-  dataBase: 'site/data',       // ローカルJSONの置き場 (apiBase空のとき使う)
+  dataBase: '/data',           // ローカルJSONの置き場 (apiBase空のとき使う)
   assetBase: ''                // 音声/画像のCDNベースURL (空ならAPIが返すまま使う)
 };
 </script>
@@ -1133,28 +1133,31 @@ const CFG = window.BGM_CONFIG || {};
 const API = (CFG.apiBase || '').replace(/\/$/, '');
 const USE_API = !!API;
 
-// R2 が本番・開発両対応（確実に動作）
+// R2 の公開 URL
 const R2_BASE_URL = 'https://pub-c8052da2182b4317bc252b78e473584c.r2.dev';
-const DATA_BASE = `${R2_BASE_URL}/data`;
-const IMAGES_BASE_URL = `${R2_BASE_URL}/images`;
+
+// 環境に応じてデータソースを切り替え
+const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+const DATA_BASE = isLocalhost ? '/data' : `${R2_BASE_URL}/data`;
+const IMAGES_BASE_URL = isLocalhost ? '/images' : `${R2_BASE_URL}/images`;
 
 console.log('[BGM] Using R2 URLs for all data sources');
 console.log('[BGM] DATA_BASE:', DATA_BASE);
 
 const ASSET_BASE = (CFG.assetBase || '').replace(/\/$/, '');
 
-// 音楽ファイルの URL を生成（常に R2 から配信）
+// 音楽ファイルの URL を生成（環境に応じて切り替え）
 const getAudioUrl = (song) => {
   const filename = (song.audio_url || song.audio || '').split('/').pop();
   if (!filename) return '';
-  return `${R2_BASE_URL}/audio/${filename}`;
+  return isLocalhost ? `/audio/${filename}` : `${R2_BASE_URL}/audio/${filename}`;
 };
 
-// 画像ファイルの URL を生成（常に R2 から配信）
+// 画像ファイルの URL を生成（環境に応じて切り替え）
 const getImageUrl = (imageUrl) => {
   if (!imageUrl) return imageUrl;
   const filename = imageUrl.split('/').pop();
-  return `${IMAGES_BASE_URL}/${filename}`;
+  return isLocalhost ? `/images/${filename}` : `${IMAGES_BASE_URL}/${filename}`;
 };
 
 // ---- STATE ----
@@ -1293,39 +1296,57 @@ function apiBeacon(path, body){
 
 // ---- LOAD ----
 async function load(){
+  console.log('🚀 [LOAD] 開始 - DATA_BASE:', DATA_BASE, 'USE_API:', USE_API);
   try {
     if (USE_API){
+      console.log('📡 [LOAD] API モード - API URL:', API);
       const g = await apiGet('/api/genres');
       genres = g;
+      console.log('✅ [LOAD] genres 取得完了:', genres.length, '件');
     } else {
       // データ更新が反映されないことがあるのでキャッシュバスター付与
       const v = Date.now();
+      console.log('📦 [LOAD] ローカルモード - キャッシュバスター:', v);
       const [g, all] = await Promise.all([
         fetch(`${DATA_BASE}/genres.json?v=${v}`, {cache:'no-cache'}).then(r=>{
+          console.log('📥 [LOAD] genres.json 取得:', r.status);
           if (!r.ok) throw new Error(`Failed to load genres.json: ${r.status} ${r.statusText}`);
           return r.json();
         }),
         fetch(`${DATA_BASE}/index.json?v=${v}`,  {cache:'no-cache'}).then(r=>{
+          console.log('📥 [LOAD] index.json 取得:', r.status);
           if (!r.ok) throw new Error(`Failed to load index.json: ${r.status} ${r.statusText}`);
           return r.json();
         })
       ]);
+      console.log('✅ [LOAD] Promise.all 完了 - g:', g.length, 'all:', all.length);
       genres = g;
       allSongs = all;
+      console.log('💾 [LOAD] 変数代入完了 - genres.length:', genres.length, 'allSongs.length:', allSongs.length);
+      console.log('📊 [LOAD] genres サンプル:', genres[0]);
+      console.log('📊 [LOAD] allSongs サンプル:', allSongs[0]);
     }
     const total = USE_API
       ? genres.reduce((a,g)=>a+(g.count||0),0)
       : allSongs.length;
     totalCount = total;
+    console.log('🎯 [LOAD] 合計曲数:', total);
     countUp(document.getElementById('totalCount'), total, 1100);
     countUp(document.getElementById('statSongs'),  total, 1100);
     countUp(document.getElementById('statGenres'), genres.length, 800);
+    console.log('🎨 [LOAD] UI レンダリング開始');
     renderCats();
     renderGenreShowcase();
     renderPickup();
     apply();
+    console.log('✨ [LOAD] 完全に完了');
   } catch(e){
-    console.error(e);
+    console.error('❌ [LOAD] エラー発生:', e);
+    console.error('❌ [LOAD] エラー詳細:', {
+      message: e.message,
+      stack: e.stack,
+      name: e.name
+    });
     const isFile = location.protocol === 'file:';
     let msg;
     if (USE_API){
@@ -3776,5 +3797,3 @@ load().then(() => {
 </script>
 </body>
 </html>
-
-// Cache bust: 1777186640
