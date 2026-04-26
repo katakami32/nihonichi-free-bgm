@@ -3636,7 +3636,7 @@ function radioCrossfadeTo(song, crossfade=true) {
   // 新しい Howl を作成 (volume 0 でロード後に fade in)
   const next = new Howl({
     src: [audioOf(song)],
-    html5: false,
+    html5: true,     // <audio>タグで再生 → R2からCORSなしで動作
     volume: 0,
     autoplay: true,
     onload: () => {
