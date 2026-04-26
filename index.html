@@ -259,7 +259,7 @@ body.ai-active .hsearch input{border-color:var(--gold);background:rgba(0,0,0,.6)
 
 @media(max-width:640px){
   .pldraw{width:100vw}
-  .plpill{bottom:80px;right:12px;padding:10px 14px;font-size:12px}
+  .plpill{bottom:175px;right:12px;padding:10px 14px;font-size:12px}
 }
 
 /* AI MATCH バナー & 理由チップ */
@@ -591,6 +591,25 @@ html[data-theme="dark"] .pbar{background:#0a0805;color:#f3ece1}
 .mbtn.sec{background:var(--warm);color:var(--ink)}
 .mbtn.sec:hover{background:var(--warm2)}
 
+/* お問い合わせモーダル */
+.contactmodal{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:280;display:none;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(8px)}
+.contactmodal.on{display:flex}
+.contactbox{background:var(--card);color:var(--ink);max-width:520px;width:100%;border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.4);border:1px solid var(--border)}
+.contacthead{padding:1.2rem 1.5rem;background:linear-gradient(135deg,var(--ink) 0%,#2a1810 100%);color:#fff;display:flex;justify-content:space-between;align-items:center}
+.contacthead h3{font-size:1.1rem;font-weight:800;margin:0}
+.contactbody{padding:1.4rem 1.5rem;display:flex;flex-direction:column;gap:1rem}
+.contactbody label{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:5px}
+.contactbody select,.contactbody input,.contactbody textarea{width:100%;font-family:var(--font);font-size:14px;padding:10px 13px;border:1.5px solid var(--border);border-radius:9px;background:var(--paper);color:var(--ink);outline:none;transition:all .2s;box-sizing:border-box}
+.contactbody select:focus,.contactbody input:focus,.contactbody textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(200,90,30,.12)}
+.contactbody textarea{min-height:110px;resize:vertical;line-height:1.6}
+.contactfoot{padding:1rem 1.5rem;border-top:1px solid var(--border);display:flex;gap:10px}
+@media(max-width:640px){
+  .contactbody select,.contactbody input,.contactbody textarea{font-size:16px !important}
+  .contactmodal{padding:0;align-items:flex-end}
+  .contactbox{border-radius:20px 20px 0 0;max-height:90dvh;display:flex;flex-direction:column}
+  .contactbody{overflow-y:auto;flex:1}
+}
+
 /* FOOTER */
 footer{background:var(--ink);color:rgba(255,255,255,.5);padding:3rem 1.5rem;margin-top:4rem}
 html[data-theme="dark"] footer{background:#0a0805}
@@ -652,7 +671,7 @@ html[data-theme="dark"] footer{background:#0a0805}
   /* 行2: pctrl を全幅で独立行に */
   .pctrl{order:2;width:100%;justify-content:center;gap:6px;margin-top:2px}
   /* モバイルは前/再生/次/ループだけ */
-  #shufBtn,#similarBtn,#pickBtn,#shareBtn{display:none}
+  #shufBtn,#similarBtn,#shareBtn{display:none}
   /* 44px以上タップ領域 */
   .cb{width:42px;height:42px;font-size:14px}
   .cpb{width:48px;height:48px;font-size:16px}
@@ -987,6 +1006,40 @@ html[data-theme="dark"] footer{background:#0a0805}
   </div>
 </section>
 
+<!-- お問い合わせモーダル -->
+<div class="contactmodal" id="contactModal" role="dialog" aria-modal="true">
+  <div class="contactbox">
+    <div class="contacthead">
+      <h3>💬 お問い合わせ</h3>
+      <button class="aiclose" onclick="document.getElementById('contactModal').classList.remove('on')" aria-label="閉じる">×</button>
+    </div>
+    <div class="contactbody">
+      <p style="font-size:13px;color:var(--muted);margin:0;line-height:1.7">バグ報告・機能リクエスト・ご意見など、サイト向上のためのご連絡をお待ちしています。</p>
+      <div>
+        <label>種別</label>
+        <select id="contactCat">
+          <option value="バグ報告">🐛 バグ報告</option>
+          <option value="機能リクエスト">✨ 機能リクエスト</option>
+          <option value="曲・コンテンツについて">🎵 曲・コンテンツについて</option>
+          <option value="その他">📝 その他</option>
+        </select>
+      </div>
+      <div>
+        <label>内容</label>
+        <textarea id="contactMsg" placeholder="例: ○○の検索をすると結果が表示されない&#10;例: ○○ジャンルの曲をもっと追加してほしい"></textarea>
+      </div>
+      <div>
+        <label>連絡先（任意）</label>
+        <input type="text" id="contactFrom" placeholder="返信が必要な場合はメールアドレスなど">
+      </div>
+    </div>
+    <div class="contactfoot">
+      <button class="mbtn sec" onclick="document.getElementById('contactModal').classList.remove('on')" style="flex:0 0 auto;padding:12px 20px">キャンセル</button>
+      <button class="mbtn pri" id="contactSend">送信する →</button>
+    </div>
+  </div>
+</div>
+
 <!-- プライバシーポリシー -->
 <section class="lic" id="privacy" style="border-top:1px solid var(--border)">
   <div class="licwrap">
@@ -1023,7 +1076,7 @@ html[data-theme="dark"] footer{background:#0a0805}
         <h3>サポート</h3>
         <a href="#license">利用規約</a>
         <a href="#faq">よくある質問</a>
-        <a href="mailto:taka.h2ommm@gmail.com">お問い合わせ</a>
+        <a href="#" id="contactLink">お問い合わせ</a>
         <a href="#privacy">プライバシーポリシー</a>
       </div>
       <div class="fcol">
@@ -2353,9 +2406,12 @@ function play(id){
 }
 
 playBtn.onclick = () => {
-  if (currentHowl) {
-    if (currentHowl.playing()) currentHowl.pause();
-    else currentHowl.play();
+  // _activeHowl() でラジオ中も含めた再生中Howlを取得
+  // playing() はiOSで不正確な場合があるため、ボタン表示を正とする
+  const h = _activeHowl();
+  if (h) {
+    if (playBtn.textContent === '⏸') h.pause();
+    else h.play();
     return;
   }
   if (!audio.src) return;
@@ -2954,6 +3010,7 @@ const AI_CONCEPTS = {
   '迫力':      ['迫力','epic','grand','powerful','huge','massive','大迫力','壮大','ドラマティック','劇的'],
   '希望':      ['希望','hope','hopeful','uplifting','optimistic','明るい未来','bright','前向き','勇気','やる気'],
   'もふもふ':  ['もふもふ','ふわふわ','cute','soft','playful','warm','cozy','ほのぼの'],
+  'かっこいい': ['かっこいい','カッコイイ','格好いい','cool','クール','かっこ良い','スタイリッシュ','stylish','洗練','かっこ','格好','impressive','ドラマティック','dramatic','バッドアス','badass','渋い','渋','sharp','決まってる'],
   '可愛い':    ['可愛い','かわいい','cute','kawaii','playful','童謡','sweet','innocent','あどけ','チャーミング'],
   'セクシー':  ['セクシー','sexy','sensual','官能','魅惑','charm','魅力'],
   'クール':    ['クール','cool','sophisticated','smooth','urban','noir','funky','洗練','coolジャズ'],
@@ -3790,10 +3847,17 @@ function radioCrossfadeTo(song, crossfade=true) {
       // 新曲フェードイン
       if (fadeMs > 0) next.fade(0, targetVol, fadeMs);
       else next.volume(targetVol);
-      // ★ プレイヤー進捗バー更新ループを開始 (ラジオ中も時間表示が動くように)
+      document.getElementById('playBtn').textContent = '⏸';
       document.getElementById('player').classList.add('playing');
       _stopProgressLoop();
       _updateProgress();
+    },
+    onpause: () => {
+      document.getElementById('playBtn').textContent = '▶';
+      document.getElementById('player').classList.remove('playing');
+    },
+    onstop: () => {
+      document.getElementById('playBtn').textContent = '▶';
     },
     onend: () => {
       if (RADIO.on && RADIO.curHowl === next) radioPlayNext(true);
@@ -3861,7 +3925,23 @@ function radioUpdateNowPlaying(song) {
 }
 
 function radioWatch() {
-  // Howler の onend で次曲が呼ばれるので、watch ループは不要。何もしない。
+  if (!RADIO.on) return;
+  const h = RADIO.curHowl;
+  if (h && !RADIO.fadeStarted) {
+    try {
+      const dur = h.duration();
+      const pos = h.seek();
+      // 曲終了の (fadeSec+0.5秒) 前に次曲を先行起動 → 真のクロスフェード
+      if (typeof dur === 'number' && typeof pos === 'number'
+          && dur > 2 && pos > 2  // 最初の2秒は誤検知防止
+          && (dur - pos) <= (RADIO.fadeSec + 0.5)) {
+        RADIO.fadeStarted = true;
+        radioPlayNext(true);
+        // ループは継続（次曲の監視へ）
+      }
+    } catch(_) {}
+  }
+  if (RADIO.on) RADIO.watchRaf = requestAnimationFrame(radioWatch);
 }
 
 function radioSkip() {
@@ -3950,6 +4030,43 @@ play = function(id) {
   }
   return _origPlayForRadio(id);
 };
+
+// ---- お問い合わせフォーム ----------------------------------------
+(function(){
+  // メールアドレスはソースに平文で記載しない（スパム対策）
+  const _em = atob('bWFydWhpcm84MjIwQGljbG91ZC5jb20=');
+
+  function openContact(e){
+    if(e) e.preventDefault();
+    document.getElementById('contactModal').classList.add('on');
+  }
+  document.getElementById('contactLink').addEventListener('click', openContact);
+
+  // モーダル外クリックで閉じる
+  document.getElementById('contactModal').addEventListener('click', e => {
+    if(e.target.id === 'contactModal')
+      document.getElementById('contactModal').classList.remove('on');
+  });
+
+  document.getElementById('contactSend').addEventListener('click', () => {
+    const cat  = document.getElementById('contactCat').value;
+    const msg  = document.getElementById('contactMsg').value.trim();
+    const from = document.getElementById('contactFrom').value.trim();
+    if(!msg){ toast('内容を入力してください'); return; }
+
+    const subject = encodeURIComponent(`[日本一フリーBGM] ${cat}`);
+    let body = `【種別】${cat}\n\n【内容】\n${msg}`;
+    if(from) body += `\n\n【連絡先】${from}`;
+    body = encodeURIComponent(body);
+
+    window.location.href = `mailto:${_em}?subject=${subject}&body=${body}`;
+    document.getElementById('contactModal').classList.remove('on');
+    toast('✉️ メールアプリを開きました');
+    // フォームをリセット
+    document.getElementById('contactMsg').value = '';
+    document.getElementById('contactFrom').value = '';
+  });
+})();
 
 // ---- iOS ダウンロード補助 ----------------------------------------
 // iOS Safari は cross-origin の <a download> を無視する。
