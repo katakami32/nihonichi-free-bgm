@@ -215,7 +215,13 @@ body.ai-active .hsearch input{border-color:var(--gold);background:rgba(0,0,0,.6)
 .radioind .skip:hover{background:rgba(255,255,255,.45)}
 .radioind .stop{background:transparent;border:1px solid rgba(255,255,255,.4);color:#fff;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-size:11px;cursor:pointer;line-height:1;font-weight:900}
 .radioind .stop:hover{background:rgba(255,255,255,.2);border-color:#fff}
-@media(max-width:640px){.radioind{bottom:76px;left:12px;padding:8px 12px;font-size:11px}}
+/* グッド・バッドボタン */
+.radioind .rfb{background:transparent;border:1px solid rgba(255,255,255,.3);color:#fff;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-size:14px;cursor:pointer;line-height:1;transition:all .18s;opacity:.75}
+.radioind .rfb:hover{opacity:1;transform:scale(1.15)}
+.radioind .rfb.good.active{background:rgba(80,200,100,.5);border-color:rgba(80,220,100,.9);opacity:1;transform:scale(1.1)}
+.radioind .rfb.bad.active{background:rgba(220,70,70,.5);border-color:rgba(240,80,80,.9);opacity:1}
+@media(max-width:640px){.radioind{bottom:76px;left:12px;padding:8px 12px;font-size:11px}
+.radioind .rfb{width:30px;height:30px;font-size:12px}}
 
 /* プレイヤーにRADIOバッジ */
 .pbar.radio .pcat::before{content:'📻 RADIO ';font-weight:800;color:var(--gold);margin-right:4px}
@@ -1245,6 +1251,8 @@ html[data-theme="dark"] footer{background:#0a0805}
 <div class="radioind" id="radioInd" role="status" aria-live="polite">
   <span class="pulse"></span>
   <span id="radioIndLabel">🎧 BGMチャンネル再生中</span>
+  <button class="rfb good" id="radioGoodBtn" title="グッド（優先再生）" aria-label="グッド">👍</button>
+  <button class="rfb bad"  id="radioBadBtn"  title="バッド（流れにくくする）" aria-label="バッド">👎</button>
   <button class="skip" id="radioSkip" title="次の曲へ" aria-label="次の曲へ">⏭</button>
   <button class="stop" id="radioStop" title="停止" aria-label="停止">■</button>
 </div>
@@ -3833,6 +3841,9 @@ async function radioStart(prompt) {
     if (genrePool.length >= 5) pool = genrePool;
   }
 
+  // バッド曲を除外
+  pool = pool.filter(s => !_rPrefs.dislikes.has(s.id));
+
   // RADIOは長時間再生するので候補を多めに取得（最大80曲）
   const candidates = aiMatch(prompt, pool, 80);
   if (!candidates || candidates.length < 3) {
@@ -3843,7 +3854,8 @@ async function radioStart(prompt) {
   RADIO.prompt = prompt;
   RADIO.mode = prompt;
   RADIO.targetGenre = targetGenre; // キュー枯渇時の補充でも同ジャンルを維持
-  RADIO.queue = shuffleArr(candidates);
+  // グッド曲を2倍の確率で再生（シャッフル配列に重複追加）
+  RADIO.queue = _buildRadioQueue(candidates);
   RADIO.history = [];
   RADIO.on = true;
   RADIO.prevVolume = (audio && audio.volume) || 0.8;
@@ -3872,11 +3884,14 @@ function radioPlayNext() {
       const gp = pool.filter(s => s.genre === RADIO.targetGenre);
       if (gp.length >= 5) pool = gp;
     }
+    // バッド曲を除外
+    pool = pool.filter(s => !_rPrefs.dislikes.has(s.id));
     const cands = aiMatch(RADIO.mode, pool, 80) || [];
     const recentIds = new Set(RADIO.history.slice(-15).map(s => s.id));
-    let fresh = cands.filter(s => !recentIds.has(s.id));
+    // グッド曲は recent でも除外しない（好きな曲は繰り返し流す）
+    let fresh = cands.filter(s => !recentIds.has(s.id) || _rPrefs.likes.has(s.id));
     if (!fresh.length) fresh = cands;
-    RADIO.queue = shuffleArr(fresh);
+    RADIO.queue = _buildRadioQueue(fresh);
     if (!RADIO.queue.length) {
       toast('もう流せる曲がありません');
       radioStop();
@@ -4011,10 +4026,73 @@ function radioUpdateNowPlaying(song) {
 
   // updatePlayingButtons (DL等の同期)
   if (typeof updatePlayingButtons === 'function') updatePlayingButtons();
+
+  // グッド・バッドボタンの状態を曲に合わせて更新
+  _radioFeedbackUpdate(song.id);
 }
 
 function radioWatch() {
   // 曲の終了は onend で検知するため、ここでは何もしない
+}
+
+// ── ラジオ グッド・バッド機能 ────────────────────────────────────
+// localStorage に永続保存。バッド曲はキューから除外、グッド曲は優先再生。
+const _rPrefs = (() => {
+  const load = k => new Set(JSON.parse(localStorage.getItem(k) || '[]'));
+  const prefs = {
+    likes:    load('radioLikes'),
+    dislikes: load('radioDislikes'),
+    save() {
+      localStorage.setItem('radioLikes',    JSON.stringify([...this.likes]));
+      localStorage.setItem('radioDislikes', JSON.stringify([...this.dislikes]));
+    }
+  };
+  return prefs;
+})();
+
+// グッド曲を2倍の確率で出現させるキュー構築（シャッフル前に重複追加）
+function _buildRadioQueue(candidates) {
+  const withBonus = [];
+  for (const s of candidates) {
+    withBonus.push(s);
+    if (_rPrefs.likes.has(s.id)) withBonus.push(s); // グッド曲は2回追加
+  }
+  return shuffleArr(withBonus);
+}
+
+function _radioFeedbackUpdate(id) {
+  const gBtn = document.getElementById('radioGoodBtn');
+  const bBtn = document.getElementById('radioBadBtn');
+  if (!gBtn || !bBtn) return;
+  gBtn.classList.toggle('active', _rPrefs.likes.has(id));
+  bBtn.classList.toggle('active', _rPrefs.dislikes.has(id));
+}
+
+function radioGood() {
+  if (!nowPlayingId || !RADIO.on) return;
+  const id = nowPlayingId;
+  if (_rPrefs.likes.has(id)) {
+    // 2回押したらキャンセル
+    _rPrefs.likes.delete(id);
+    toast('👍 解除しました');
+  } else {
+    _rPrefs.likes.add(id);
+    _rPrefs.dislikes.delete(id);
+    toast('👍 この曲を優先します');
+  }
+  _rPrefs.save();
+  _radioFeedbackUpdate(id);
+}
+
+function radioBad() {
+  if (!nowPlayingId || !RADIO.on) return;
+  const id = nowPlayingId;
+  _rPrefs.dislikes.add(id);
+  _rPrefs.likes.delete(id);
+  _rPrefs.save();
+  toast('👎 この曲は流れにくくなりました');
+  _radioFeedbackUpdate(id);
+  radioPlayNext(); // 即スキップ
 }
 
 function radioSkip() {
@@ -4076,7 +4154,9 @@ document.getElementById('radioCustom').addEventListener('keydown', e => {
   if (e.key === 'Enter') document.getElementById('radioGo').click();
 });
 
-// インジケーターのスキップ・停止
+// インジケーターのグッド・バッド・スキップ・停止
+document.getElementById('radioGoodBtn').onclick = e => { e.stopPropagation(); radioGood(); };
+document.getElementById('radioBadBtn').onclick  = e => { e.stopPropagation(); radioBad(); };
 document.getElementById('radioSkip').onclick = e => { e.stopPropagation(); radioSkip(); };
 document.getElementById('radioStop').onclick = e => { e.stopPropagation(); radioStop(); };
 // インジケーター本体クリックで再生中曲を上にスクロール
