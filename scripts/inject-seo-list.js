@@ -130,7 +130,7 @@ html = html.replace(
 // ── <title> の曲数を更新 ──────────────────────────────────
 html = html.replace(
   /<title>[^<]*<\/title>/,
-  `<title>日本一フリーミュージック｜${totalStr}曲のAI生成BGMを完全無料・商用利用OKで配布</title>`
+  `<title>日本一フリーMusic｜${totalStr}曲のAI生成BGMを完全無料・商用利用OKで配布</title>`
 );
 
 // ── JSON-LD description の曲数を更新 ─────────────────────
