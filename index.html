@@ -1355,6 +1355,7 @@ const getImageUrl = (imageUrl) => {
 let allSongs = [];                       // ローカルモード時のみ全件保持
 let genres = [];
 let view = [];                            // 現在表示中
+let playQueue = [];                       // 再生開始時点のview スナップショット（カテゴリ変更後も維持）
 let totalCount = 0;
 let currentCat = 'all';
 let currentBpm = null;
@@ -1987,14 +1988,11 @@ const GENRE_CLASS = {
   'japanese-anime':'g-anime','corporate-bgm':'g-corporate','other':'g-other'
 };
 
-// 紹介文を綺麗に整形 (英語の長い説明を冒頭でカット・カンマ区切り想定)
+// 紹介文を綺麗に整形（最大90文字でカット、カンマ分割しない）
 function shortDesc(d){
   if (!d) return '';
-  const trimmed = String(d).replace(/\s+/g,' ').trim();
-  // 「BGM」を含むカンマ部分を頭に持ってくる傾向があるので、最初のコンマで切って2句のみ取る
-  const parts = trimmed.split(/[,、]/).map(x=>x.trim()).filter(Boolean);
-  if (parts.length >= 2) return parts.slice(0,2).join('、');
-  return trimmed.length > 64 ? trimmed.slice(0,64)+'…' : trimmed;
+  const s = String(d).replace(/\s+/g,' ').trim();
+  return s.length > 90 ? s.slice(0, 90) + '…' : s;
 }
 
 // タグ文字列をチップ配列に。最大3個。
@@ -2231,16 +2229,24 @@ document.getElementById('pkShuffle').onclick = () => renderPickup();
 document.getElementById('loadMore').onclick = () => { currentPage++; render(); };
 
 // ---- SEARCH ----
-window.doSearch = async () => {
-  // スマホキーボードを閉じる（blur で確実に dismiss）
-  document.activeElement?.blur();
+// _applySearchSilent: 入力中に呼ぶ軽量版。blur・scroll を一切しない。
+// ユーザーがタイプ中に画面が飛んだりキーボードが閉じられる問題を防ぐ。
+async function _applySearchSilent() {
   currentSearch = document.getElementById('searchBox').value.trim();
   showFavOnly = false;
-  // まず即スクロール（体感を速く）
-  const browse = document.getElementById('browse');
-  if (browse) window.scrollTo({ top: browse.offsetTop - 70, behavior: 'smooth' });
-  // フェッチ完了後、レイアウト確定してから再度位置補正
   await apply();
+  // URL ハッシュだけ更新（スクロールなし）
+  if (currentSearch) history.replaceState(null, '', '#search/' + encodeURIComponent(currentSearch));
+  else history.replaceState(null, '', location.pathname);
+}
+
+// doSearch: 検索ボタン・Enter キー専用のフル版。blur + browse へスクロール。
+window.doSearch = async () => {
+  document.activeElement?.blur(); // スマホキーボードを閉じる
+  currentSearch = document.getElementById('searchBox').value.trim();
+  showFavOnly = false;
+  await apply();
+  // レイアウト確定後に 1 回だけスクロール
   requestAnimationFrame(() => {
     const b = document.getElementById('browse');
     if (b) window.scrollTo({ top: b.offsetTop - 70, behavior: 'smooth' });
@@ -2248,15 +2254,15 @@ window.doSearch = async () => {
 };
 document.getElementById('searchBox').addEventListener('keydown', e => {
   if (e.key === 'Enter') {
-    e.target.blur(); // Enterキーでもキーボードを閉じる
+    e.target.blur();
     doSearch();
   }
 });
-// モバイル対応: タイピング停止後400msで自動検索（Enterなしでも反映）
+// モバイル対応: タイピング停止後 400ms で自動適用（スクロール・blur なし）
 let _sbTimer;
 document.getElementById('searchBox').addEventListener('input', () => {
   clearTimeout(_sbTimer);
-  _sbTimer = setTimeout(() => doSearch(), 400);
+  _sbTimer = setTimeout(() => _applySearchSilent(), 400);
 });
 
 // ---- FAVORITES ----
@@ -2344,7 +2350,7 @@ function _setupPlayerUI(s){
   if (USE_API) apiBeacon('/api/play', { id });
 }
 
-function play(id){
+function play(id, fromQueue=false){
   const s = findSong(id);
   if (!s) return;
   // 同じ曲が再生中 → トグル
@@ -2353,6 +2359,8 @@ function play(id){
     else currentHowl.play();
     return;
   }
+  // 再生開始時点の view をスナップショット（カテゴリ変更後も同じリストで連続再生）
+  if (!fromQueue) playQueue = view.slice();
   // フォールバック: Howler が読み込めてない場合は legacy audio へ
   if (!_howlerSrcReady()) {
     audio.src = audioOf(s);
@@ -2714,21 +2722,24 @@ syncSL();
 
 // 既存 nextSong/prevSong/ended をシャッフル考慮版に置換
 function nextSongV2(){
-  if (!nowPlayingId || !view.length) return;
+  // playQueue: 再生開始時点のリスト。フィルタ変更後も元のコンテキストで連続再生
+  const q = playQueue.length ? playQueue : view;
+  if (!nowPlayingId || !q.length) return;
   if (shuffleOn){
-    const others = view.filter(s => s.id !== nowPlayingId);
+    const others = q.filter(s => s.id !== nowPlayingId);
     if (!others.length) return;
-    play(others[Math.floor(Math.random()*others.length)].id);
+    play(others[Math.floor(Math.random()*others.length)].id, true);
     return;
   }
-  const idx = view.findIndex(s => s.id === nowPlayingId);
-  if (idx >= 0 && idx+1 < view.length) play(view[idx+1].id);
-  else if (view.length) play(view[0].id);
+  const idx = q.findIndex(s => s.id === nowPlayingId);
+  if (idx >= 0 && idx+1 < q.length) play(q[idx+1].id, true);
+  else if (q.length) play(q[0].id, true);
 }
 function prevSongV2(){
-  if (!nowPlayingId || !view.length) return;
-  const idx = view.findIndex(s => s.id === nowPlayingId);
-  if (idx > 0) play(view[idx-1].id);
+  const q = playQueue.length ? playQueue : view;
+  if (!nowPlayingId || !q.length) return;
+  const idx = q.findIndex(s => s.id === nowPlayingId);
+  if (idx > 0) play(q[idx-1].id, true);
 }
 document.getElementById('nextBtn').onclick = nextSongV2;
 document.getElementById('prevBtn').onclick = prevSongV2;
