@@ -678,9 +678,8 @@ html[data-theme="dark"] footer{background:#0a0805}
   .hbadge{display:none}
   .sgrid{grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:10px}
   .ctit{font-size:13px;min-height:36px}
-  .cdesc{display:none}
-  /* AI結果・用途別フィルタ中は説明文を表示 */
-  body.ai-active .cdesc,body.use-active .cdesc{display:-webkit-box}
+  /* モバイルでも常に1行だけ表示（ぱっと見で内容がわかるように） */
+  .cdesc{-webkit-line-clamp:1;min-height:0;font-size:11px}
   .ctags{display:none}
   .mmeta{grid-template-columns:1fr 1fr}
   .fgrid{grid-template-columns:1fr}
