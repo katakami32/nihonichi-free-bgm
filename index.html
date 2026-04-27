@@ -2687,8 +2687,8 @@ function pushRecent(s){
   const lite = {
     id: s.id, slug: s.slug, title: s.title, genre: s.genre,
     duration: s.duration, bpm: s.bpm,
-    audio: getAudioUrl(s),
-    image: getImageUrl(s.image_url || s.image),
+    audio: s.audio_url || s.audio || '',
+    image: s.image_url || s.image || '',  // 生パスで保存（renderRecentでimageOf変換）
   };
   recent = [lite, ...recent.filter(x => x.id !== s.id)].slice(0, RECENT_MAX);
   localStorage.setItem(RECENT_KEY, JSON.stringify(recent));
@@ -2702,7 +2702,10 @@ function renderRecent(){
   if (!recent.length){ sec.style.display = 'none'; return; }
   sec.style.display = '';
   row.innerHTML = recent.map(s => {
-    const img = imageOf(s);
+    // 旧データ（フルURL保存）と新データ（生パス保存）の両方に対応
+    const img = s.image
+      ? (s.image.startsWith('http') ? s.image : imageOf(s))
+      : '';
     const gJa = (genres.find(g=>g.slug===s.genre)||{}).label_ja || s.genre;
     return `<div class="rcard" data-recent-id="${escHtml(s.id)}">
       <div class="rcimg">${img?`<img src="${escHtml(img)}" alt="">`:''}</div>
