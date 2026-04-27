@@ -3254,7 +3254,32 @@ const AI_CONCEPTS = {
   '完成':      ['完成','completion','complete','finished','perfect','fulfilled','達成'],
 };
 
-function aiMatch(prompt, sourceList) {
+// BGMチャンネル用ジャンル検出テーブル
+// プロンプトにこれらのキーワードが含まれていればそのジャンルに絞り込む
+const RADIO_GENRE_MAP = {
+  'childrens':     ['キッズ','kids','こども','子供','子ども','children'],
+  'jazz':          ['ジャズ','jazz'],
+  'ambient':       ['アンビエント','ambient'],
+  'cinematic':     ['シネマティック','cinematic','オーケストラ','orchestra'],
+  'lo-fi':         ['ローファイ','lo-fi','lofi','チルホップ'],
+  'j-pop':         ['シティポップ','city pop','j-pop','jpop'],
+  'electronic':    ['エレクトロニック','electronic'],
+  'hip-hop-rnb':   ['ヒップホップ','hip-hop','hiphop'],
+  'folk-acoustic': ['フォーク','folk'],
+  'rock':          ['ロック','rock'],
+  'corporate-bgm': ['コーポレート','corporate'],
+  'japanese-anime':['アニメ','anime','和風'],
+};
+
+function _detectRadioGenre(prompt) {
+  const pl = prompt.toLowerCase();
+  for (const [genre, kws] of Object.entries(RADIO_GENRE_MAP)) {
+    if (kws.some(k => pl.includes(k.toLowerCase()))) return genre;
+  }
+  return null;
+}
+
+function aiMatch(prompt, sourceList, limit=24) {
   if (!prompt) return [];
   const pl = prompt.toLowerCase();
 
@@ -3299,7 +3324,7 @@ function aiMatch(prompt, sourceList) {
     scored.push(Object.assign({}, s, { _aiReason: [...new Set(matched)], _aiScore: score }));
   }
   scored.sort((a, b) => b._aiScore - a._aiScore || (b.bpm||0)-(a.bpm||0));
-  const top = scored.slice(0, 24);
+  const top = scored.slice(0, limit ?? 24);
   top.forEach((s, i) => { s._aiRank = i + 1; });
   return top;
 }
@@ -3768,6 +3793,7 @@ const RADIO = {
   curHowl: null,
   prevVolume: null,
   watchRaf: null,
+  targetGenre: null,     // 検出されたジャンル（null = 全ジャンル対象）
 };
 
 function radioInitElems() {
@@ -3800,7 +3826,15 @@ async function radioStart(prompt) {
       pool = (r.items || []);
     } catch(e) { toast('読込エラー'); return; }
   }
-  const candidates = aiMatch(prompt, pool);
+  // ジャンルが明確な場合はそのジャンルに絞る（他ジャンル混入防止）
+  const targetGenre = _detectRadioGenre(prompt);
+  if (targetGenre) {
+    const genrePool = pool.filter(s => s.genre === targetGenre);
+    if (genrePool.length >= 5) pool = genrePool;
+  }
+
+  // RADIOは長時間再生するので候補を多めに取得（最大80曲）
+  const candidates = aiMatch(prompt, pool, 80);
   if (!candidates || candidates.length < 3) {
     toast('該当する曲が見つかりませんでした。別のキーワードでお試しください');
     return;
@@ -3808,6 +3842,7 @@ async function radioStart(prompt) {
 
   RADIO.prompt = prompt;
   RADIO.mode = prompt;
+  RADIO.targetGenre = targetGenre; // キュー枯渇時の補充でも同ジャンルを維持
   RADIO.queue = shuffleArr(candidates);
   RADIO.history = [];
   RADIO.on = true;
@@ -3830,10 +3865,14 @@ async function radioStart(prompt) {
 function radioPlayNext() {
   if (!RADIO.on) return;
 
-  // キュー枯渇 → 補充
+  // キュー枯渇 → 同ジャンル絞り込みを維持して補充
   if (RADIO.queue.length === 0) {
-    const pool = allSongs.length ? allSongs : view;
-    const cands = aiMatch(RADIO.mode, pool) || [];
+    let pool = allSongs.length ? allSongs : view;
+    if (RADIO.targetGenre) {
+      const gp = pool.filter(s => s.genre === RADIO.targetGenre);
+      if (gp.length >= 5) pool = gp;
+    }
+    const cands = aiMatch(RADIO.mode, pool, 80) || [];
     const recentIds = new Set(RADIO.history.slice(-15).map(s => s.id));
     let fresh = cands.filter(s => !recentIds.has(s.id));
     if (!fresh.length) fresh = cands;
