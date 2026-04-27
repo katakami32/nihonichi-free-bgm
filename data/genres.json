@@ -10,28 +10,28 @@
     "slug": "cinematic",
     "label_ja": "シネマティック",
     "label_en": "Cinematic / Orchestral",
-    "count": 389,
+    "count": 393,
     "cover": "images/cinematic/breaking-report_b2968b16.jpeg"
   },
   {
     "slug": "j-pop",
     "label_ja": "J-POP / シティポップ",
     "label_en": "J-Pop / City Pop",
-    "count": 231,
+    "count": 233,
     "cover": "images/j-pop/summit-signal_2846248c.jpeg"
   },
   {
     "slug": "jazz",
     "label_ja": "ジャズ",
     "label_en": "Jazz & Bossa Nova",
-    "count": 230,
+    "count": 232,
     "cover": "images/jazz/midnight-pour-over_9aaa952c.jpeg"
   },
   {
     "slug": "lo-fi",
     "label_ja": "Lo-Fi",
     "label_en": "Lo-Fi / Chill",
-    "count": 195,
+    "count": 197,
     "cover": "images/lo-fi/window-rain-loops_cfe433ce.jpeg"
   },
   {
@@ -45,7 +45,7 @@
     "slug": "folk-acoustic",
     "label_ja": "フォーク・アコースティック",
     "label_en": "Folk / Acoustic",
-    "count": 98,
+    "count": 100,
     "cover": "images/folk-acoustic/open-window-morning_3bdae392.jpeg"
   },
   {
@@ -80,7 +80,7 @@
     "slug": "childrens",
     "label_ja": "キッズ・童謡",
     "label_en": "Children's",
-    "count": 30,
+    "count": 38,
     "cover": "images/childrens/cookie-parade_916045fa.jpeg"
   },
   {
