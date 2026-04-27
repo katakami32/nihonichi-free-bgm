@@ -170,6 +170,16 @@ function buildPage(song) {
 
 <!-- 構造化データ (MusicRecording) -->
 <script type="application/ld+json">${JSON.stringify(ld, null, 0)}</script>
+<!-- 構造化データ (BreadcrumbList) -->
+<script type="application/ld+json">${JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  'itemListElement': [
+    { '@type': 'ListItem', 'position': 1, 'name': '日本一フリーMusic', 'item': BASE_URL },
+    { '@type': 'ListItem', 'position': 2, 'name': gJa + 'フリーミュージック', 'item': `${BASE_URL}/#genre/${song.genre || ''}` },
+    { '@type': 'ListItem', 'position': 3, 'name': title },
+  ]
+}, null, 0)}</script>
 
 <!-- メインアプリへ即時リダイレクト -->
 <script>window.location.replace(${JSON.stringify(appUrl)});</script>
