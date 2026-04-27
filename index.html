@@ -309,7 +309,8 @@ body.ai-active .hsearch input{border-color:var(--gold);background:rgba(0,0,0,.6)
 /* AI入力モーダル/オーバーレイ */
 .aimodal{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:280;display:none;align-items:flex-start;justify-content:center;padding:8vh 1rem 1rem;backdrop-filter:blur(8px)}
 .aimodal.on{display:flex}
-.aibox{background:var(--card);color:var(--ink);max-width:640px;width:100%;border-radius:18px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.4);border:1px solid var(--border)}
+.aibox{background:var(--card);color:var(--ink);max-width:640px;width:100%;border-radius:18px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.4);border:1px solid var(--border);max-height:88vh;display:flex;flex-direction:column}
+.aibody{overflow-y:auto;flex:1;min-height:0}
 .aitop{padding:1.4rem 1.6rem;background:linear-gradient(135deg,var(--ink) 0%,#2a1810 100%);color:#fff}
 .aittl{font-family:var(--serif);font-size:1.4rem;font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:.4rem}
 .aittl span:first-child{font-size:1.6rem}
