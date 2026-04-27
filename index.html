@@ -126,8 +126,7 @@ button{font-family:inherit}
 header{position:sticky;top:0;z-index:100;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
 .hwrap{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:62px;gap:1rem;padding:0 1.5rem}
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none}
-.logo-mark{width:44px;height:44px;border-radius:10px;overflow:hidden;flex-shrink:0}
-.logo-mark img{width:100%;height:100%;object-fit:cover;display:block}
+.logo-mark{width:38px;height:38px;background:var(--accent);border-radius:9px;display:grid;place-items:center;color:#fff;font-size:19px;font-weight:900;font-family:var(--serif)}
 .logo-name{font-size:14px;font-weight:900;letter-spacing:.04em;line-height:1.2}
 .logo-sub{font-size:10px;color:var(--muted);letter-spacing:.08em}
 nav{display:flex;gap:2px;flex:1;justify-content:center}
@@ -170,7 +169,7 @@ body.ai-active .hsearch input{border-color:var(--gold);background:rgba(0,0,0,.6)
 .hstat .num{display:block;font-size:1.9rem;font-weight:900;font-family:var(--serif);color:#fff;line-height:1;margin-bottom:4px;text-shadow:0 2px 8px rgba(0,0,0,0.95),0 0 4px #000}
 .hstat .lbl{font-size:11.5px;color:rgba(255,255,255,.85);letter-spacing:.06em;text-shadow:0 1px 4px rgba(0,0,0,0.9);font-weight:500}
 /* ビジュアライザ: 元のシンプルな白バーアニメ */
-.hvis{display:flex;align-items:center;justify-content:center;height:auto}
+.hvis{display:flex;align-items:center;gap:3px;opacity:.32;height:200px}
 .hvb{width:3px;background:#fff;border-radius:3px;animation:wv 1.4s ease-in-out infinite;will-change:transform}
 @keyframes wv{0%,100%{transform:scaleY(1)}50%{transform:scaleY(3)}}
 
@@ -761,7 +760,7 @@ html[data-theme="dark"] footer{background:#0a0805}
 <header>
   <div class="hwrap">
     <a class="logo" href="#top">
-      <div class="logo-mark"><img src="images/site/logo.png" alt="日本一フリーMusic ロゴ"></div>
+      <div class="logo-mark">音</div>
       <div>
         <div class="logo-name">日本一フリーMusic</div>
         <div class="logo-sub">NIHONICHI FREE MUSIC</div>
@@ -810,7 +809,6 @@ html[data-theme="dark"] footer{background:#0a0805}
       </div>
     </div>
     <div class="hvis" id="heroVis" aria-hidden="true">
-      <img src="images/site/hero-banner.png" alt="日本一フリーMusic バナー" style="width:100%;max-width:480px;border-radius:14px;box-shadow:0 8px 40px rgba(0,0,0,.5)">
     </div>
   </div>
 </section>
