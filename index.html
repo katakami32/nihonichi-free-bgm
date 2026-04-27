@@ -1218,7 +1218,7 @@ html[data-theme="dark"] footer{background:#0a0805}
     <div class="aitop">
       <button class="aiclose" onclick="closeRadio()" aria-label="閉じる">×</button>
       <div class="aittl"><span>🎧</span><span id="radioTitleLabel">BGMチャンネル</span></div>
-      <div class="aisub">気分やシーンを選ぶだけで、<b style="color:var(--gold)">曲が途切れず自動で流れ続けます。</b><br>曲と曲の間は自然な<b style="color:var(--gold)">クロスフェード</b>で繋がるので、作業・勉強・配信BGMにそのまま使えます。</div>
+      <div class="aisub">気分やシーンを選ぶだけで、<b style="color:var(--gold)">曲が途切れず自動で流れ続けます。</b><br>曲と曲の間は<b style="color:var(--gold)">自然なフェードで滑らかに繋がる</b>ので、作業・勉強・配信BGMにそのまま使えます。</div>
     </div>
     <div class="aibody">
       <div class="rmgrid">
@@ -1230,19 +1230,11 @@ html[data-theme="dark"] footer{background:#0a0805}
         <button class="rmcard" data-rm="シティポップ J-Pop 80年代 爽やか"><div class="ic">🌸</div><b>シティポップ</b><small>80年代風</small></button>
         <button class="rmcard" data-rm="エレクトロニック シンセ 高揚 アップテンポ"><div class="ic">🎛</div><b>エレクトロニック</b><small>シンセ & ダンス</small></button>
         <button class="rmcard" data-rm="朝 散歩 爽やか アコースティック ギター"><div class="ic">☀️</div><b>朝の散歩</b><small>爽やか & ギター</small></button>
+        <button class="rmcard" data-rm="キッズ こども 可愛い 明るい 楽しい"><div class="ic">🧸</div><b>キッズ・こども</b><small>明るく楽しい</small></button>
       </div>
       <div class="rmcustom">
         <label>または自由に指定</label>
         <input type="text" id="radioCustom" placeholder="例: 雨の日に窓辺で本を読む、優しいピアノ" maxlength="120">
-        <div class="rmopts">
-          <label style="margin:0;text-transform:none;letter-spacing:0;color:var(--muted);font-weight:500;font-size:12px;display:inline">クロスフェード:</label>
-          <select id="radioFade" aria-label="クロスフェード時間">
-            <option value="2">2秒（短め）</option>
-            <option value="4" selected>4秒（標準）</option>
-            <option value="6">6秒（ゆったり）</option>
-            <option value="8">8秒（DJミックス風）</option>
-          </select>
-        </div>
         <button class="aigo" id="radioGo" style="margin-top:.9rem">🎧 BGMを開始する</button>
       </div>
     </div>
@@ -2527,7 +2519,7 @@ volSlider.oninput = e => {
   if (typeof Howler !== 'undefined') Howler.volume(v);
   // legacy audio にも適用
   audio.volume = v;
-  if (RADIO.el2) RADIO.el2.volume = v;
+  // RADIO.curHowl の音量は Howler.volume() でグローバルに制御されるため個別設定不要
   localStorage.setItem('vol', String(v));
 };
 // 起動時の音量復元
@@ -3066,6 +3058,7 @@ const AI_CONCEPTS = {
   'もふもふ':  ['もふもふ','ふわふわ','cute','soft','playful','warm','cozy','ほのぼの'],
   'かっこいい': ['かっこいい','カッコイイ','格好いい','cool','クール','かっこ良い','スタイリッシュ','stylish','洗練','かっこ','格好','impressive','ドラマティック','dramatic','バッドアス','badass','渋い','渋','sharp','決まってる'],
   '可愛い':    ['可愛い','かわいい','cute','kawaii','playful','童謡','sweet','innocent','あどけ','チャーミング'],
+  'キッズ':    ['キッズ','kids','こども','子供','子ども','children','childrens',"children's",'幼児','保育','知育','童謡','絵本','遊び','ウクレレ','ukulele','bouncy'],
   'セクシー':  ['セクシー','sexy','sensual','官能','魅惑','charm','魅力'],
   'クール':    ['クール','cool','sophisticated','smooth','urban','noir','funky','洗練','coolジャズ','冷たい','冷徹','ミニマル','minimal','sterile'],
   'コメディ':  ['コメディ','comedy','コミカル','ユーモア','humor','funny','楽しげ'],
@@ -3745,7 +3738,6 @@ function setMasterVolume(vol01, durationSec=0.05) {
   initAudioCtx();
   if (!_masterGain) {
     if (audio) audio.volume = vol01;
-    if (RADIO.el2) RADIO.el2.volume = vol01;
     return;
   }
   const now = _actx.currentTime;
@@ -3773,14 +3765,9 @@ const RADIO = {
   prompt: null,
   queue: [],
   history: [],
-  fadeSec: 4,
-  el2: null,
-  cur: null,
-  next: null,
-  fadeRaf: null,
-  watchRaf: null,
-  fadeStarted: false,
+  curHowl: null,
   prevVolume: null,
+  watchRaf: null,
 };
 
 function radioInitElems() {
@@ -3800,7 +3787,7 @@ function shuffleArr(arr) {
   return a;
 }
 
-async function radioStart(prompt, fadeSec=4) {
+async function radioStart(prompt) {
   if (!prompt) { toast('好みを指定してください'); return; }
   radioInitElems();
 
@@ -3815,17 +3802,15 @@ async function radioStart(prompt, fadeSec=4) {
   }
   const candidates = aiMatch(prompt, pool);
   if (!candidates || candidates.length < 3) {
-    toast('該当する曲が少なすぎます。別の指定でお試しください');
+    toast('該当する曲が見つかりませんでした。別のキーワードでお試しください');
     return;
   }
 
   RADIO.prompt = prompt;
   RADIO.mode = prompt;
-  RADIO.fadeSec = Math.max(1, Math.min(15, fadeSec || 4));
   RADIO.queue = shuffleArr(candidates);
   RADIO.history = [];
   RADIO.on = true;
-  RADIO.fadeStarted = false;
   RADIO.prevVolume = (audio && audio.volume) || 0.8;
 
   // 既存のaudioを停止 (通常モードからの遷移のため)
@@ -3838,11 +3823,11 @@ async function radioStart(prompt, fadeSec=4) {
   document.getElementById('player').classList.add('on', 'radio');
 
   toast(`🎧 BGMチャンネル開始：${(prompt.length>16?prompt.slice(0,14)+'…':prompt)}`);
-  radioPlayNext(false);
+  radioPlayNext();
   radioWatch();
 }
 
-function radioPlayNext(crossfade=true) {
+function radioPlayNext() {
   if (!RADIO.on) return;
 
   // キュー枯渇 → 補充
@@ -3863,7 +3848,6 @@ function radioPlayNext(crossfade=true) {
   const song = RADIO.queue.shift();
   RADIO.history.push(song);
   if (RADIO.history.length > 30) RADIO.history.shift();
-  RADIO.fadeStarted = false;
 
   // 通常モード再生中の Howl があれば停止 (排他)
   if (currentHowl) {
@@ -3872,69 +3856,85 @@ function radioPlayNext(crossfade=true) {
     currentHowl = null;
   }
 
-  radioCrossfadeTo(song, crossfade);
+  radioTransitionTo(song);
 }
 
-function radioCrossfadeTo(song, crossfade=true) {
+/**
+ * radioTransitionTo: 旧曲フェードアウト(400ms) → 新曲フェードイン(600ms)
+ * 同時再生なし・iOS互換の確実なシーケンシャル方式
+ */
+function radioTransitionTo(song) {
   if (!_howlerSrcReady()) {
-    toast('Howler.js が読み込まれていません');
+    toast('音声ライブラリが読み込まれていません');
     return;
   }
-  const fadeMs = crossfade ? Math.max(500, (RADIO.fadeSec||4) * 1000) : 0;
+  const FADE_OUT = 400;  // 旧曲フェードアウト時間(ms)
+  const FADE_IN  = 600;  // 新曲フェードイン時間(ms)
   const targetVol = savedVolume;
 
-  // 新しい Howl を作成 (volume 0 でロード後に fade in)
-  const next = new Howl({
-    src: [audioOf(song)],
-    html5: true,     // <audio>タグで再生 → R2からCORSなしで動作
-    volume: 0,
-    autoplay: true,
-    onload: () => {
-      // duration が確定したらプレイヤーの右側時間を即更新
-      document.getElementById('durTime').textContent = fmtDur(next.duration());
-    },
-    onplay: () => {
-      // 新曲フェードイン
-      if (fadeMs > 0) next.fade(0, targetVol, fadeMs);
-      else next.volume(targetVol);
-      document.getElementById('playBtn').textContent = '⏸';
-      document.getElementById('player').classList.add('playing');
-      _stopProgressLoop();
-      _updateProgress();
-    },
-    onpause: () => {
-      document.getElementById('playBtn').textContent = '▶';
-      document.getElementById('player').classList.remove('playing');
-    },
-    onstop: () => {
-      document.getElementById('playBtn').textContent = '▶';
-    },
-    onend: () => {
-      if (RADIO.on && RADIO.curHowl === next) radioPlayNext(true);
-    },
-    onloaderror: (_, e) => console.warn('radio load err', e),
-    onplayerror: (_, e) => {
-      next.once('unlock', () => next.play());
-    }
-  });
-
-  // 旧 Howl をフェードアウトして破棄
   const prev = RADIO.curHowl;
+  RADIO.curHowl = null; // onendの二重発火防止
+
+  const startNext = () => {
+    if (!RADIO.on) return;
+
+    const next = new Howl({
+      src: [audioOf(song)],
+      html5: true,
+      volume: 0,
+      autoplay: true,
+      onload: () => {
+        document.getElementById('durTime').textContent = fmtDur(next.duration());
+      },
+      onplay: () => {
+        next.fade(0, targetVol, FADE_IN);
+        document.getElementById('playBtn').textContent = '⏸';
+        document.getElementById('player').classList.add('playing');
+        _stopProgressLoop();
+        _updateProgress();
+      },
+      onpause: () => {
+        document.getElementById('playBtn').textContent = '▶';
+        document.getElementById('player').classList.remove('playing');
+      },
+      onstop: () => {
+        document.getElementById('playBtn').textContent = '▶';
+      },
+      onend: () => {
+        if (RADIO.on && RADIO.curHowl === next) radioPlayNext();
+      },
+      onloaderror: (_, e) => {
+        console.warn('radio load err', e);
+        // 読み込みエラー時は次の曲へ自動スキップ
+        if (RADIO.on) setTimeout(() => radioPlayNext(), 500);
+      },
+      onplayerror: (_, e) => {
+        next.once('unlock', () => next.play());
+      }
+    });
+
+    RADIO.curHowl = next;
+    radioUpdateNowPlaying(song);
+  };
+
   if (prev) {
-    if (fadeMs > 0) {
-      try { prev.fade(prev.volume(), 0, fadeMs); } catch(_){}
+    // 旧曲をフェードアウト後に停止 → 新曲開始
+    try {
+      const curVol = (() => { try { return prev.volume(); } catch(_){ return 0; } })();
+      prev.fade(curVol, 0, FADE_OUT);
       setTimeout(() => {
         try { prev.stop(); } catch(_){}
         try { prev.unload(); } catch(_){}
-      }, fadeMs + 50);
-    } else {
+        startNext();
+      }, FADE_OUT + 50);
+    } catch(_) {
       try { prev.stop(); } catch(_){}
       try { prev.unload(); } catch(_){}
+      startNext();
     }
+  } else {
+    startNext(); // 最初の曲は即開始
   }
-
-  RADIO.curHowl = next;
-  radioUpdateNowPlaying(song);
 }
 
 function radioUpdateNowPlaying(song) {
@@ -3965,8 +3965,8 @@ function radioUpdateNowPlaying(song) {
       album: gJa,
       artwork: img ? [{src: img, sizes:'512x512', type:'image/jpeg'}] : []
     });
-    navigator.mediaSession.setActionHandler('play', () => RADIO.cur && RADIO.cur.play());
-    navigator.mediaSession.setActionHandler('pause', () => RADIO.cur && RADIO.cur.pause());
+    navigator.mediaSession.setActionHandler('play', () => RADIO.curHowl && RADIO.curHowl.play());
+    navigator.mediaSession.setActionHandler('pause', () => RADIO.curHowl && RADIO.curHowl.pause());
     navigator.mediaSession.setActionHandler('nexttrack', radioSkip);
   }
 
@@ -3980,18 +3980,12 @@ function radioWatch() {
 
 function radioSkip() {
   if (!RADIO.on) return;
-  RADIO.fadeStarted = false;
-  // 短めのクロスフェードで次の曲へ
-  const oldFade = RADIO.fadeSec;
-  RADIO.fadeSec = 1;       // スキップ時は1秒で素早く
-  radioPlayNext(true);
-  setTimeout(() => { RADIO.fadeSec = oldFade; }, 100);
+  radioPlayNext();
   toast('⏭ 次の曲へ');
 }
 
 function radioStop() {
   RADIO.on = false;
-  if (RADIO.fadeRaf) cancelAnimationFrame(RADIO.fadeRaf);
   if (RADIO.watchRaf) cancelAnimationFrame(RADIO.watchRaf);
 
   // Howler の fade で滑らかに停止
@@ -4027,19 +4021,17 @@ document.getElementById('radioModal').addEventListener('click', e => {
 
 // プリセットカード
 document.querySelectorAll('#radioModal .rmcard').forEach(b => b.onclick = () => {
-  const fade = +(document.getElementById('radioFade').value || 4);
   closeRadio();
-  radioStart(b.dataset.rm, fade);
+  radioStart(b.dataset.rm);
 });
 
 // 自由入力
 document.getElementById('radioGo').onclick = () => {
   document.activeElement?.blur(); // モバイルキーボードを閉じる
   const txt = document.getElementById('radioCustom').value.trim();
-  const fade = +(document.getElementById('radioFade').value || 4);
   if (!txt) { toast('好みを入力するかカードを選んでください'); return; }
   closeRadio();
-  radioStart(txt, fade);
+  radioStart(txt);
 };
 document.getElementById('radioCustom').addEventListener('keydown', e => {
   if (e.key === 'Enter') document.getElementById('radioGo').click();
