@@ -679,6 +679,8 @@ html[data-theme="dark"] footer{background:#0a0805}
   .sgrid{grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:10px}
   .ctit{font-size:13px;min-height:36px}
   .cdesc{display:none}
+  /* AI結果・用途別フィルタ中は説明文を表示 */
+  body.ai-active .cdesc,body.use-active .cdesc{display:-webkit-box}
   .ctags{display:none}
   .mmeta{grid-template-columns:1fr 1fr}
   .fgrid{grid-template-columns:1fr}
@@ -1729,6 +1731,14 @@ async function apply(){
   if (currentSearch){
     out = smartSearch(currentSearch, out);
   }
+  // 用途別シーンフィルタ（aiMatch でキーワードマッチング）
+  if (currentUse && USE_CASE_MAP[currentUse]) {
+    const matched = aiMatch(USE_CASE_MAP[currentUse].keywords, out, 300);
+    if (matched.length >= 3) out = matched;
+    document.body.classList.add('use-active');
+  } else {
+    document.body.classList.remove('use-active');
+  }
   switch(currentSort){
     case 'bpm-asc': out.sort((a,b)=>(a.bpm||0)-(b.bpm||0)); break;
     case 'bpm-desc': out.sort((a,b)=>(b.bpm||0)-(a.bpm||0)); break;
@@ -1952,7 +1962,7 @@ function renderFilterBar(){
     }});
   }
   if (typeof currentUse !== 'undefined' && currentUse){
-    const lbl = ({vlog:'Vlog',game:'ゲーム実況',opening:'オープニング',ending:'エンディング',cooking:'料理・工作',study:'勉強・作業',morning:'朝・始まり',night:'夜・カフェ',battle:'バトル・緊迫',travel:'旅・自然'})[currentUse];
+    const lbl = (USE_CASE_MAP[currentUse] || {}).label || currentUse;
     items.push({ key:'用途', label: lbl, clear: () => {
       currentUse = null;
       document.querySelectorAll('#useChips .uchip').forEach(c => c.classList.remove('on'));
@@ -2161,6 +2171,7 @@ async function renderPickup(){
     currentMood = null;
     currentUse = null;
     showFavOnly = false;
+    document.body.classList.remove('use-active');
     const sb = document.getElementById('searchBox'); if (sb) sb.value = '';
     document.querySelectorAll('#useChips .uchip').forEach(x => x.classList.remove('on'));
     document.querySelectorAll('#bpmChips .fchip').forEach(x => x.classList.remove('on'));
@@ -2213,42 +2224,31 @@ async function renderGenreShowcase(){
 }
 
 // ---- USE CASE (用途別シーン) ----
+// 用途別シーン — aiMatch に渡すキーワード（ムードフィルタとは独立）
 const USE_CASE_MAP = {
-  vlog:    { search: 'vlog OR travel OR upbeat OR pop', mood: 'upbeat' },
-  game:    { search: 'battle OR action OR rock', mood: 'epic' },
-  opening: { search: 'intro OR opening OR upbeat', mood: 'upbeat' },
-  ending:  { search: 'ending OR emotional OR ballad', mood: 'chill' },
-  cooking: { search: 'cute OR playful OR jazz', mood: 'cute' },
-  study:   { search: 'lo-fi OR ambient OR study', mood: 'chill' },
-  morning: { search: 'morning OR sunrise OR fresh', mood: 'upbeat' },
-  night:   { search: 'night OR cafe OR jazz', mood: 'chill' },
-  battle:  { search: 'battle OR intense OR cinematic', mood: 'epic' },
-  travel:  { search: 'travel OR nature OR adventure', mood: 'epic' },
+  vlog:    { keywords: 'vlog 旅行 日常 爽やか 元気 アップテンポ',      label: 'Vlog' },
+  game:    { keywords: 'ゲーム バトル 戦闘 緊張 激しい ロック エレクトロニック', label: 'ゲーム実況' },
+  opening: { keywords: '元気 高揚 明るい 爽やか 希望 達成',            label: 'オープニング' },
+  ending:  { keywords: '感動 切ない 癒し まったり 優しい',             label: 'エンディング' },
+  cooking: { keywords: '料理 カフェ かわいい ジャズ 明るい ポップ',    label: '料理・工作' },
+  study:   { keywords: '勉強 集中 Lo-Fi アンビエント 静か 穏やか',     label: '勉強・作業' },
+  morning: { keywords: '朝 爽やか アコースティック ギター 清々しい',   label: '朝・始まり' },
+  night:   { keywords: '夜 ジャズ カフェ おしゃれ まったり メロウ',    label: '夜・カフェ' },
+  battle:  { keywords: 'バトル 緊張 緊迫 激しい シネマティック 壮大', label: 'バトル・緊迫' },
+  travel:  { keywords: '旅行 自然 冒険 フォーク アコースティック',     label: '旅・自然' },
 };
 let currentUse = null;
 document.getElementById('useChips').addEventListener('click', e => {
   const btn = e.target.closest('.uchip'); if (!btn) return;
   const k = btn.dataset.use;
   if (currentUse === k){
+    // もう一度押したら解除
     currentUse = null;
     document.querySelectorAll('#useChips .uchip').forEach(x => x.classList.remove('on'));
-    currentSearch = '';
-    currentMood = null;
-    document.getElementById('searchBox').value = '';
-    document.querySelectorAll('#moodChips .fchip').forEach(x => x.classList.remove('on'));
   } else {
     currentUse = k;
     document.querySelectorAll('#useChips .uchip').forEach(x => x.classList.toggle('on', x === btn));
-    const conf = USE_CASE_MAP[k];
-    if (conf){
-      // 用途は "ムード + 検索ヒント" で表現
-      currentMood = conf.mood;
-      document.querySelectorAll('#moodChips .fchip').forEach(x =>
-        x.classList.toggle('on', x.dataset.mood === conf.mood)
-      );
-      currentSearch = '';
-      document.getElementById('searchBox').value = '';
-    }
+    // ムードチップ・検索ボックスには一切触れない（勝手に他の箇所が変わらないように）
   }
   apply();
   window.scrollTo({ top: document.getElementById('browse').offsetTop - 70, behavior:'smooth' });
