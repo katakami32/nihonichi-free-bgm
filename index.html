@@ -1239,40 +1239,40 @@ html[data-theme="dark"] footer{background:#0a0805}
   <div class="aibox">
     <div class="aitop">
       <button class="aiclose" onclick="closeRadio()" aria-label="閉じる">×</button>
-      <div class="aittl"><span>🎧</span><span id="radioTitleLabel">BGMチャンネル</span></div>
-      <div class="aisub">気分やシーンを選ぶだけで、<b style="color:var(--gold)">曲が途切れず自動で流れ続けます。</b><br>曲と曲の間は<b style="color:var(--gold)">自然なフェードで滑らかに繋がる</b>ので、作業・勉強・配信BGMにそのまま使えます。</div>
+      <div class="aittl"><span>🎧</span><span id="radioTitleLabel" data-i18n="rm_modal_title">BGMチャンネル</span></div>
+      <div class="aisub" data-i18n-html="rm_modal_sub">気分やシーンを選ぶだけで、<b style="color:var(--gold)">曲が途切れず自動で流れ続けます。</b><br>曲と曲の間は<b style="color:var(--gold)">自然なフェードで滑らかに繋がる</b>ので、作業・勉強・配信BGMにそのまま使えます。</div>
     </div>
     <div class="aibody">
       <div class="rmgrid">
-        <button class="rmcard" data-rm="癒し チル リラックス カフェ ジャズ"><div class="ic">☕</div><b>カフェ作業</b><small>チル & リラックス</small></button>
-        <button class="rmcard" data-rm="勉強 集中 Lo-Fi 穏やか 静か"><div class="ic">📚</div><b>勉強・集中</b><small>Lo-Fi & 穏やか</small></button>
-        <button class="rmcard" data-rm="夜 ジャズ カフェ おしゃれ メロウ"><div class="ic">🎷</div><b>夜カフェジャズ</b><small>大人のひととき</small></button>
-        <button class="rmcard" data-rm="アンビエント 静か 瞑想 癒し 自然"><div class="ic">🌌</div><b>アンビエント</b><small>瞑想 & 集中</small></button>
-        <button class="rmcard" data-rm="シネマティック 壮大 オーケストラ 感動"><div class="ic">🎬</div><b>シネマティック</b><small>壮大 & 感動</small></button>
-        <button class="rmcard" data-rm="シティポップ J-Pop 80年代 爽やか"><div class="ic">🌸</div><b>シティポップ</b><small>80年代風</small></button>
-        <button class="rmcard" data-rm="エレクトロニック シンセ 高揚 アップテンポ"><div class="ic">🎛</div><b>エレクトロニック</b><small>シンセ & ダンス</small></button>
-        <button class="rmcard" data-rm="朝 散歩 爽やか アコースティック ギター"><div class="ic">☀️</div><b>朝の散歩</b><small>爽やか & ギター</small></button>
-        <button class="rmcard" data-rm="キッズ こども 可愛い 明るい 楽しい"><div class="ic">🧸</div><b>キッズ・こども</b><small>明るく楽しい</small></button>
-        <button class="rmcard" data-rm="ドライブ 爽快 アップテンポ 疾走感 ノリノリ 開放感 エネルギッシュ upbeat driving energetic high-energy"><div class="ic">🚗</div><b>ドライブ・爽快</b><small>ノリノリ & 疾走感</small></button>
+        <button class="rmcard" data-rm="癒し チル リラックス カフェ ジャズ"><div class="ic">☕</div><b data-i18n="rm_cafe">カフェ作業</b><small data-i18n="rm_cafe_sub">チル & リラックス</small></button>
+        <button class="rmcard" data-rm="勉強 集中 Lo-Fi 穏やか 静か"><div class="ic">📚</div><b data-i18n="rm_study">勉強・集中</b><small data-i18n="rm_study_sub">Lo-Fi & 穏やか</small></button>
+        <button class="rmcard" data-rm="夜 ジャズ カフェ おしゃれ メロウ"><div class="ic">🎷</div><b data-i18n="rm_jazz">夜カフェジャズ</b><small data-i18n="rm_jazz_sub">大人のひととき</small></button>
+        <button class="rmcard" data-rm="アンビエント 静か 瞑想 癒し 自然"><div class="ic">🌌</div><b data-i18n="rm_ambient">アンビエント</b><small data-i18n="rm_ambient_sub">瞑想 & 集中</small></button>
+        <button class="rmcard" data-rm="シネマティック 壮大 オーケストラ 感動"><div class="ic">🎬</div><b data-i18n="rm_cinematic">シネマティック</b><small data-i18n="rm_cinematic_sub">壮大 & 感動</small></button>
+        <button class="rmcard" data-rm="シティポップ J-Pop 80年代 爽やか"><div class="ic">🌸</div><b data-i18n="rm_citypop">シティポップ</b><small data-i18n="rm_citypop_sub">80年代風</small></button>
+        <button class="rmcard" data-rm="エレクトロニック シンセ 高揚 アップテンポ"><div class="ic">🎛</div><b data-i18n="rm_electronic">エレクトロニック</b><small data-i18n="rm_electronic_sub">シンセ & ダンス</small></button>
+        <button class="rmcard" data-rm="朝 散歩 爽やか アコースティック ギター"><div class="ic">☀️</div><b data-i18n="rm_morning">朝の散歩</b><small data-i18n="rm_morning_sub">爽やか & ギター</small></button>
+        <button class="rmcard" data-rm="キッズ こども 可愛い 明るい 楽しい"><div class="ic">🧸</div><b data-i18n="rm_kids">キッズ・こども</b><small data-i18n="rm_kids_sub">明るく楽しい</small></button>
+        <button class="rmcard" data-rm="ドライブ 爽快 アップテンポ 疾走感 ノリノリ 開放感 エネルギッシュ upbeat driving energetic high-energy"><div class="ic">🚗</div><b data-i18n="rm_drive">ドライブ・爽快</b><small data-i18n="rm_drive_sub">ノリノリ & 疾走感</small></button>
       </div>
       <div class="rmcustom">
-        <label>または自由に指定</label>
-        <input type="text" id="radioCustom" placeholder="例: 雨の日に窓辺で本を読む、優しいピアノ" maxlength="120">
-        <button class="aigo" id="radioGo" style="margin-top:.9rem">🎧 BGMを開始する</button>
+        <label data-i18n="rm_custom_label">または自由に指定</label>
+        <input type="text" id="radioCustom" data-i18n-placeholder="rm_custom_placeholder" placeholder="例: 雨の日に窓辺で本を読む、優しいピアノ" maxlength="120">
+        <button class="aigo" id="radioGo" style="margin-top:.9rem" data-i18n="rm_start_btn">🎧 BGMを開始する</button>
       </div>
 
       <!-- 使い方ガイド -->
       <div class="rmguide">
-        <div class="rmguide-ttl">📖 使い方</div>
+        <div class="rmguide-ttl" data-i18n="rm_guide_ttl">📖 使い方</div>
         <ul class="rmguide-list">
-          <li><span class="gi">🎴</span><span>上のカードを選ぶか、自由にキーワードを入力して「BGMを開始する」を押すと、気分に合った曲が自動で流れ続けます。</span></li>
-          <li><span class="gi">🔄</span><span>曲は自動でシャッフル再生されます。同じ曲が続いて流れることはありません。</span></li>
-          <li><span class="gi">👍</span><span>再生中に <b>👍 グッド</b> を押すと、その曲が優先的にもっと流れるようになります。</span></li>
-          <li><span class="gi">👎</span><span>再生中に <b>👎 バッド</b> を押すと即スキップされ、以後そのチャンネルでは流れなくなります。</span></li>
-          <li><span class="gi">⏭</span><span>気分に合わない曲は <b>⏭ スキップ</b> ボタンで次の曲へ飛ばせます。</span></li>
-          <li><span class="gi">🔊</span><span>音量はプレイヤーのつまみで調整できます。ブラウザを閉じても設定は保存されます。</span></li>
-          <li><span class="gi">📱</span><span>スマホで画面をスクロールしても音楽は止まりません。他のアプリを使いながら聴けます。</span></li>
-          <li><span class="gi">■</span><span>左下のインジケーターの <b>■ 停止</b> ボタンで、いつでも終了できます。</span></li>
+          <li><span class="gi">🎴</span><span data-i18n="rm_guide1">上のカードを選ぶか、自由にキーワードを入力して「BGMを開始する」を押すと、気分に合った曲が自動で流れ続けます。</span></li>
+          <li><span class="gi">🔄</span><span data-i18n="rm_guide2">曲は自動でシャッフル再生されます。同じ曲が続いて流れることはありません。</span></li>
+          <li><span class="gi">👍</span><span data-i18n-html="rm_guide3">再生中に <b>👍 グッド</b> を押すと、その曲が優先的にもっと流れるようになります。</span></li>
+          <li><span class="gi">👎</span><span data-i18n-html="rm_guide4">再生中に <b>👎 バッド</b> を押すと即スキップされ、以後そのチャンネルでは流れなくなります。</span></li>
+          <li><span class="gi">⏭</span><span data-i18n-html="rm_guide5">気分に合わない曲は <b>⏭ スキップ</b> ボタンで次の曲へ飛ばせます。</span></li>
+          <li><span class="gi">🔊</span><span data-i18n="rm_guide6">音量はプレイヤーのつまみで調整できます。ブラウザを閉じても設定は保存されます。</span></li>
+          <li><span class="gi">📱</span><span data-i18n="rm_guide7">スマホで画面をスクロールしても音楽は止まりません。他のアプリを使いながら聴けます。</span></li>
+          <li><span class="gi">■</span><span data-i18n-html="rm_guide8">左下のインジケーターの <b>■ 停止</b> ボタンで、いつでも終了できます。</span></li>
         </ul>
       </div>
     </div>
@@ -1482,6 +1482,10 @@ function matchDur(s, d){
   // しきい値: ショート<60秒 / 中尺 1-2分 / ロング 2分+
   return d==='short' ? v<60 : d==='mid' ? v>=60 && v<120 : v>=120;
 }
+
+// ---- i18n helpers: 現在の言語に応じて曲タイトル・説明を返す ----
+function getTitle(s){ return (window._currentLang==='en' && s.title_en) ? s.title_en : (s.title||''); }
+function getDesc(s){  return (window._currentLang==='en' && s.desc_en)  ? s.desc_en  : (s.description||''); }
 
 // ---- normalize ----
 // API は audio_url/image_url、ローカルJSONは audio/image を返す。
@@ -2049,7 +2053,7 @@ function card(s){
   const gCls = GENRE_CLASS[s.genre] || '';
   const img = imageOf(s);
   const aud = audioOf(s);
-  const desc = shortDesc(s.description);
+  const desc = shortDesc(getDesc(s));
   const tags = tagChips(s.tags);
   const rk = s._aiRank;
   const rankBadge = rk ? `<div class="crank ${rk<=3?'r'+rk:'rN'}">${rk===1?'🥇':rk===2?'🥈':rk===3?'🥉':''} ${rk}位</div>` : '';
@@ -2064,7 +2068,7 @@ function card(s){
       <div class="cplay"><button class="${isPlaying?'playing':''}" data-play="${escHtml(s.id)}" aria-label="再生">${isPlaying?'⏸':'▶'}</button></div>
     </div>
     <div class="cbody">
-      <div class="ctit" data-detail="${escHtml(s.id)}" title="${escHtml(s.title)}">${escHtml(s.title)}</div>
+      <div class="ctit" data-detail="${escHtml(s.id)}" title="${escHtml(getTitle(s))}">${escHtml(getTitle(s))}</div>
       ${s._aiReason && s._aiReason.length ? `<div class="creason">${s._aiReason.slice(0,4).map(r=>`「${escHtml(r)}」`).join('・')}にマッチ</div>` : ''}
       ${desc?`<div class="cdesc">${escHtml(desc)}</div>`:'<div class="cdesc"></div>'}
       <div class="ctags">${tags.map(t=>`<span class="ctag" data-search="${escHtml(t)}">#${escHtml(t)}</span>`).join('')}</div>
@@ -2150,13 +2154,13 @@ async function renderPickup(){
     const img = imageOf(s);
     const gJa = (genres.find(g=>g.slug===s.genre)||{}).label_ja || s.genre;
     const gCls = GENRE_CLASS[s.genre] || '';
-    const desc = (s.description || '').trim();
+    const desc = getDesc(s).trim();
     return `<div class="pkcard" data-pkid="${escHtml(s.id)}">
-      ${img?`<img src="${escHtml(img)}" alt="${escHtml(s.title)}" loading="lazy">`:''}
+      ${img?`<img src="${escHtml(img)}" alt="${escHtml(getTitle(s))}" loading="lazy">`:''}
       <button class="pkplay" data-play="${escHtml(s.id)}" aria-label="試聴">▶</button>
       <div class="pkov">
         <span class="pkg ${gCls}">${escHtml(gJa)}</span>
-        <div class="pktit">${escHtml(s.title)}</div>
+        <div class="pktit">${escHtml(getTitle(s))}</div>
         ${desc?`<div class="pkdesc">${escHtml(desc)}</div>`:''}
         <div class="pkmeta">${fmtDur(s.duration)}${s.bpm?` · ♩=${Math.round(s.bpm)}`:''}</div>
       </div>
@@ -2365,7 +2369,7 @@ function _setupPlayerUI(s){
   // シークバー・ツマミを先頭位置にリセット
   document.getElementById('fill').style.width = '0%';
   _updateKnob(0);
-  document.getElementById('pName').textContent = s.title;
+  document.getElementById('pName').textContent = getTitle(s);
   const gJa = (genres.find(g=>g.slug===s.genre)||{}).label_ja || s.genre;
   document.getElementById('pCat').textContent = `${gJa} · ${fmtDur(s.duration)}${s.bpm?` · ♩=${Math.round(s.bpm)}`:''}`;
   const img = imageOf(s);
@@ -2604,16 +2608,17 @@ function openDetail(id){
   const badge = document.getElementById('mGenreBadge');
   badge.textContent = gJa;
   badge.className = 'mgenre ' + gCls + ' gtag';
-  document.getElementById('mTitle').textContent = s.title;
+  document.getElementById('mTitle').textContent = getTitle(s);
   const mImg = document.getElementById('mImg');
   const img = imageOf(s);
   mImg.src = img || '';
-  mImg.alt = s.title;
+  mImg.alt = getTitle(s);
   mImg.style.display = img ? '' : 'none';
   document.getElementById('mGenre').textContent = gJa;
   document.getElementById('mBpm').textContent = s.bpm ? Math.round(s.bpm) : '—';
   document.getElementById('mDur').textContent = fmtDur(s.duration);
-  document.getElementById('mDesc').textContent = s.description || '紹介文はまだ準備中です。';
+  const _noDesc = window._currentLang==='en' ? 'No description available.' : '紹介文はまだ準備中です。';
+  document.getElementById('mDesc').textContent = getDesc(s) || _noDesc;
   const tags = (s.tags||'').split(/[,、]/).map(t=>t.trim()).filter(Boolean);
   document.getElementById('mTags').innerHTML = tags.map(t=>
     `<span class="mtg" data-search="${escHtml(t)}" style="cursor:pointer">#${escHtml(t)}</span>`
@@ -2712,7 +2717,7 @@ function renderRecent(){
     return `<div class="rcard" data-recent-id="${escHtml(s.id)}">
       <div class="rcimg">${img?`<img src="${escHtml(img)}" alt="">`:''}</div>
       <div class="rcinfo">
-        <div class="rcttl">${escHtml(s.title)}</div>
+        <div class="rcttl">${escHtml(getTitle(s))}</div>
         <div class="rcmeta">${escHtml(gJa)} · ${fmtDur(s.duration)}</div>
       </div>
     </div>`;
@@ -3542,7 +3547,7 @@ function plRender(){
     return `<div class="plitem ${isNow?'now':''}" data-pl="${escHtml(s.id)}">
       <div class="plimg">${img?`<img src="${escHtml(img)}" alt="">`:'🎵'}</div>
       <div class="plinfo">
-        <div class="plttl2">${escHtml(s.title)}</div>
+        <div class="plttl2">${escHtml(getTitle(s))}</div>
         <div class="plmeta">${fmtDur(s.duration)}${s.bpm?` · ♩=${Math.round(s.bpm)}`:''}</div>
       </div>
       <div class="plact">
@@ -4031,7 +4036,7 @@ function radioTransitionTo(song) {
 function radioUpdateNowPlaying(song) {
   nowPlayingId = song.id;
   document.getElementById('player').classList.add('on');
-  document.getElementById('pName').textContent = song.title;
+  document.getElementById('pName').textContent = getTitle(song);
   const gJa = (genres.find(g=>g.slug===song.genre)||{}).label_ja || song.genre;
   document.getElementById('pCat').textContent = `${gJa} · ${fmtDur(song.duration)}${song.bpm?` · ♩=${Math.round(song.bpm)}`:''}`;
   const img = imageOf(song);
@@ -6569,6 +6574,31 @@ const T = {
     footer_support_title:'サポート', footer_license:'利用規約', footer_faq:'よくある質問',
     footer_contact:'お問い合わせ', footer_privacy:'プライバシーポリシー',
     footer_kbd_title:'キーボード操作', footer_shortcuts:'ショートカット一覧',
+    // BGM Channel Modal
+    rm_modal_title:'BGMチャンネル',
+    rm_modal_sub:'気分やシーンを選ぶだけで、<b style="color:var(--gold)">曲が途切れず自動で流れ続けます。</b><br>曲と曲の間は<b style="color:var(--gold)">自然なフェードで滑らかに繋がる</b>ので、作業・勉強・配信BGMにそのまま使えます。',
+    rm_cafe:'カフェ作業', rm_cafe_sub:'チル & リラックス',
+    rm_study:'勉強・集中', rm_study_sub:'Lo-Fi & 穏やか',
+    rm_jazz:'夜カフェジャズ', rm_jazz_sub:'大人のひととき',
+    rm_ambient:'アンビエント', rm_ambient_sub:'瞑想 & 集中',
+    rm_cinematic:'シネマティック', rm_cinematic_sub:'壮大 & 感動',
+    rm_citypop:'シティポップ', rm_citypop_sub:'80年代風',
+    rm_electronic:'エレクトロニック', rm_electronic_sub:'シンセ & ダンス',
+    rm_morning:'朝の散歩', rm_morning_sub:'爽やか & ギター',
+    rm_kids:'キッズ・こども', rm_kids_sub:'明るく楽しい',
+    rm_drive:'ドライブ・爽快', rm_drive_sub:'ノリノリ & 疾走感',
+    rm_custom_label:'または自由に指定',
+    rm_custom_placeholder:'例: 雨の日に窓辺で本を読む、優しいピアノ',
+    rm_start_btn:'🎧 BGMを開始する',
+    rm_guide_ttl:'📖 使い方',
+    rm_guide1:'上のカードを選ぶか、自由にキーワードを入力して「BGMを開始する」を押すと、気分に合った曲が自動で流れ続けます。',
+    rm_guide2:'曲は自動でシャッフル再生されます。同じ曲が続いて流れることはありません。',
+    rm_guide3:'再生中に <b>👍 グッド</b> を押すと、その曲が優先的にもっと流れるようになります。',
+    rm_guide4:'再生中に <b>👎 バッド</b> を押すと即スキップされ、以後そのチャンネルでは流れなくなります。',
+    rm_guide5:'気分に合わない曲は <b>⏭ スキップ</b> ボタンで次の曲へ飛ばせます。',
+    rm_guide6:'音量はプレイヤーのつまみで調整できます。ブラウザを閉じても設定は保存されます。',
+    rm_guide7:'スマホで画面をスクロールしても音楽は止まりません。他のアプリを使いながら聴けます。',
+    rm_guide8:'左下のインジケーターの <b>■ 停止</b> ボタンで、いつでも終了できます。',
   },
   en: {
     // Nav
@@ -6621,6 +6651,31 @@ const T = {
     footer_support_title:'Support', footer_license:'License', footer_faq:'FAQ',
     footer_contact:'Contact', footer_privacy:'Privacy Policy',
     footer_kbd_title:'Keyboard Shortcuts', footer_shortcuts:'View Shortcuts',
+    // BGM Channel Modal
+    rm_modal_title:'BGM Channel',
+    rm_modal_sub:'Just pick a mood or scene — <b style="color:var(--gold)">music plays nonstop automatically.</b><br>Tracks <b style="color:var(--gold)">crossfade smoothly</b> so you can use it for work, study, or streaming without interruption.',
+    rm_cafe:'Café Work', rm_cafe_sub:'Chill & Relax',
+    rm_study:'Study Focus', rm_study_sub:'Lo-Fi & Calm',
+    rm_jazz:'Night Jazz Café', rm_jazz_sub:'Evening Vibes',
+    rm_ambient:'Ambient', rm_ambient_sub:'Meditation & Focus',
+    rm_cinematic:'Cinematic', rm_cinematic_sub:'Epic & Emotional',
+    rm_citypop:'City Pop', rm_citypop_sub:'80s Japanese Style',
+    rm_electronic:'Electronic', rm_electronic_sub:'Synth & Dance',
+    rm_morning:'Morning Walk', rm_morning_sub:'Fresh & Acoustic',
+    rm_kids:'Kids', rm_kids_sub:'Bright & Fun',
+    rm_drive:'Drive Mode', rm_drive_sub:'Upbeat & Energetic',
+    rm_custom_label:'Or type your own',
+    rm_custom_placeholder:'e.g. rainy day reading, gentle piano',
+    rm_start_btn:'🎧 Start BGM',
+    rm_guide_ttl:'📖 How to Use',
+    rm_guide1:'Pick a card above or type your own keywords, then press "Start BGM" to begin continuous autoplay.',
+    rm_guide2:'Tracks play on shuffle — no repeats within the same session.',
+    rm_guide3:'Press <b>👍 Good</b> during playback to hear that track more often.',
+    rm_guide4:'Press <b>👎 Bad</b> to skip immediately and remove it from the current channel.',
+    rm_guide5:'Tap <b>⏭ Skip</b> to jump to the next track anytime.',
+    rm_guide6:'Adjust volume with the player knob. Settings are saved after closing the browser.',
+    rm_guide7:'On mobile, music keeps playing while you scroll or use other apps.',
+    rm_guide8:'Tap <b>■ Stop</b> on the bottom-left indicator to end the channel anytime.',
   }
 };
 
