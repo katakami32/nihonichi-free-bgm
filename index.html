@@ -1070,7 +1070,7 @@ html[data-theme="dark"] footer{background:#0a0805}
       <div><strong style="color:var(--ink)">ブラウザ保存（localStorage）</strong><br>お気に入り登録・最近聴いた曲・テーマ設定は、お使いのブラウザのlocalStorageにのみ保存されます。サーバーへは送信されません。</div>
       <div><strong style="color:var(--ink)">アクセス解析</strong><br>サイト改善のため、匿名の閲覧データ（ページビュー・再生回数等）を収集する場合があります。特定個人を識別できる情報は含みません。</div>
       <div><strong style="color:var(--ink)">外部サービス</strong><br>楽曲ファイルはCloudflare R2より配信されます。Cloudflareのプライバシーポリシーが適用される場合があります。</div>
-      <div><strong style="color:var(--ink)">お問い合わせ</strong><br>プライバシーに関するご質問は <a href="mailto:taka.h2ommm@gmail.com" style="color:var(--accent)">taka.h2ommm@gmail.com</a> までご連絡ください。</div>
+      <div><strong style="color:var(--ink)">お問い合わせ</strong><br>プライバシーに関するご質問は <a href="#" id="privacyContactLink" style="color:var(--accent)">お問い合わせフォーム</a> よりご連絡ください。</div>
     </div>
   </div>
 </section>
@@ -4067,6 +4067,8 @@ play = function(id) {
     document.getElementById('contactModal').classList.add('on');
   }
   document.getElementById('contactLink').addEventListener('click', openContact);
+  const _privacyLink = document.getElementById('privacyContactLink');
+  if (_privacyLink) _privacyLink.addEventListener('click', openContact);
 
   // モーダル外クリックで閉じる
   document.getElementById('contactModal').addEventListener('click', e => {
