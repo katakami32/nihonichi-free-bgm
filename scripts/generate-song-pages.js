@@ -99,10 +99,10 @@ function buildPage(song) {
 
   // メタ description（~160字）
   const metaDesc = [
-    `「${title}」— ${gJa}のフリーBGM。`,
+    `「${title}」— ${gJa}のフリーミュージック。`,
     desc ? desc.slice(0, 80) + (desc.length > 80 ? '…' : '') : '',
     tags.length ? `タグ: ${tags.slice(0,4).join(', ')}。` : '',
-    '完全無料・商用利用OK・登録不要。日本一フリーBGMより配布。',
+    '完全無料・商用利用OK・登録不要。日本一フリーミュージックより配布。',
   ].filter(Boolean).join(' ').slice(0, 160);
 
   // メタ一覧テキスト
@@ -121,8 +121,8 @@ function buildPage(song) {
     'image': imgUrl,
     'isAccessibleForFree': true,
     'license': `${BASE_URL}/#license`,
-    'creditText': '日本一フリーBGM',
-    'copyrightNotice': '無料・商用利用OK・クレジット不要 / 日本一フリーBGM',
+    'creditText': '日本一フリーミュージック',
+    'copyrightNotice': '無料・商用利用OK・クレジット不要 / 日本一フリーミュージック',
     'keywords': tags.join(', '),
     ...(bpm ? { 'tempo': Math.round(song.bpm) } : {}),
     ...(audioUrl ? {
@@ -135,12 +135,12 @@ function buildPage(song) {
     } : {}),
     'isPartOf': {
       '@type': 'MusicAlbum',
-      'name': `日本一フリーBGM — ${gJa}コレクション`,
+      'name': `日本一フリーミュージック — ${gJa}コレクション`,
       'url': `${BASE_URL}/#genre/${song.genre || ''}`,
     },
     'publisher': {
       '@type': 'Organization',
-      'name': '日本一フリーBGM',
+      'name': '日本一フリーミュージック',
       'url': BASE_URL,
     },
   };
@@ -150,21 +150,21 @@ function buildPage(song) {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>${esc(title)} — ${esc(gJa)}フリーBGM | 日本一フリーBGM</title>
+<title>${esc(title)} — ${esc(gJa)}フリーミュージック | 日本一フリーミュージック</title>
 <meta name="description" content="${esc(metaDesc)}">
 <meta name="keywords" content="${esc(['フリーBGM','無料BGM','商用利用可',gJa,...tags].join(','))}">
 <link rel="canonical" href="${esc(pageUrl)}">
 
 <!-- OGP -->
 <meta property="og:type" content="music.song">
-<meta property="og:title" content="${esc(title)} — ${esc(gJa)}フリーBGM | 日本一フリーBGM">
+<meta property="og:title" content="${esc(title)} — ${esc(gJa)}フリーミュージック | 日本一フリーミュージック">
 <meta property="og:description" content="${esc(metaDesc)}">
 <meta property="og:url" content="${esc(pageUrl)}">
 <meta property="og:image" content="${esc(imgUrl)}">
-<meta property="og:site_name" content="日本一フリーBGM">
+<meta property="og:site_name" content="日本一フリーミュージック">
 <meta property="og:locale" content="ja_JP">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="${esc(title)} — ${esc(gJa)}フリーBGM">
+<meta name="twitter:title" content="${esc(title)} — ${esc(gJa)}フリーミュージック">
 <meta name="twitter:description" content="${esc(metaDesc)}">
 <meta name="twitter:image" content="${esc(imgUrl)}">
 
@@ -197,7 +197,7 @@ ${tags.length ? `<div class="tags">${tags.map(t => `<span class="tag">#${esc(t)}
 <a class="backlink" href="${esc(appUrl)}">▶ この曲を再生・ダウンロードする</a>
 <p class="redirect-note">※ このページは自動的にメインサイトに転送されます。転送されない場合は上のリンクをクリックしてください。</p>
 <p style="margin-top:2rem;font-size:12px;color:#b09c84">
-  <a href="${esc(BASE_URL)}" style="color:#c85a1e">← 日本一フリーBGM トップへ</a> |
+  <a href="${esc(BASE_URL)}" style="color:#c85a1e">← 日本一フリーミュージック トップへ</a> |
   <a href="${esc(BASE_URL)}/#genre/${esc(song.genre||'')}" style="color:#c85a1e">${esc(gJa)}一覧へ</a>
 </p>
 </body>
