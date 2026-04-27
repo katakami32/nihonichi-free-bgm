@@ -199,6 +199,11 @@ body.ai-active .hsearch input{border-color:var(--gold);background:rgba(0,0,0,.6)
 .rmcard b{font-size:14px;font-weight:800}
 .rmcard small{font-size:11px;color:var(--muted);font-weight:500}
 .rmcustom{margin-top:1rem;border-top:1px solid var(--border);padding-top:1rem}
+.rmguide{margin-top:1.2rem;border-top:1px solid var(--border);padding-top:1rem}
+.rmguide-ttl{font-size:11px;font-weight:800;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.7rem}
+.rmguide-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.55rem}
+.rmguide-list li{font-size:12.5px;color:var(--ink);line-height:1.6;display:flex;gap:.5rem;align-items:flex-start}
+.rmguide-list li .gi{flex-shrink:0;font-size:14px;margin-top:1px}
 .rmcustom label{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:6px}
 .rmcustom input{width:100%;font-family:inherit;font-size:14px;padding:12px 14px;border:1.5px solid var(--border);border-radius:9px;background:var(--paper);color:var(--ink);outline:none;transition:all .2s}
 .rmcustom input:focus{border-color:var(--accent);background:var(--card);box-shadow:0 0 0 3px rgba(200,90,30,.12)}
@@ -1242,6 +1247,21 @@ html[data-theme="dark"] footer{background:#0a0805}
         <label>または自由に指定</label>
         <input type="text" id="radioCustom" placeholder="例: 雨の日に窓辺で本を読む、優しいピアノ" maxlength="120">
         <button class="aigo" id="radioGo" style="margin-top:.9rem">🎧 BGMを開始する</button>
+      </div>
+
+      <!-- 使い方ガイド -->
+      <div class="rmguide">
+        <div class="rmguide-ttl">📖 使い方</div>
+        <ul class="rmguide-list">
+          <li><span class="gi">🎴</span><span>上のカードを選ぶか、自由にキーワードを入力して「BGMを開始する」を押すと、気分に合った曲が自動で流れ続けます。</span></li>
+          <li><span class="gi">🔄</span><span>曲は自動でシャッフル再生されます。同じ曲が続いて流れることはありません。</span></li>
+          <li><span class="gi">👍</span><span>再生中に <b>👍 グッド</b> を押すと、その曲が優先的にもっと流れるようになります。</span></li>
+          <li><span class="gi">👎</span><span>再生中に <b>👎 バッド</b> を押すと即スキップされ、以後そのチャンネルでは流れなくなります。</span></li>
+          <li><span class="gi">⏭</span><span>気分に合わない曲は <b>⏭ スキップ</b> ボタンで次の曲へ飛ばせます。</span></li>
+          <li><span class="gi">🔊</span><span>音量はプレイヤーのつまみで調整できます。ブラウザを閉じても設定は保存されます。</span></li>
+          <li><span class="gi">📱</span><span>スマホで画面をスクロールしても音楽は止まりません。他のアプリを使いながら聴けます。</span></li>
+          <li><span class="gi">■</span><span>左下のインジケーターの <b>■ 停止</b> ボタンで、いつでも終了できます。</span></li>
+        </ul>
       </div>
     </div>
   </div>
@@ -3800,7 +3820,8 @@ const RADIO = {
   history: [],
   curHowl: null,
   prevVolume: null,
-  watchRaf: null,
+  watchInterval: null,   // 末尾空白検知インターバル
+  _transitioning: false, // 二重遷移防止フラグ
   targetGenre: null,     // 検出されたジャンル（null = 全ジャンル対象）
 };
 
@@ -3922,8 +3943,8 @@ function radioTransitionTo(song) {
     toast('音声ライブラリが読み込まれていません');
     return;
   }
-  const FADE_OUT = 400;  // 旧曲フェードアウト時間(ms)
-  const FADE_IN  = 600;  // 新曲フェードイン時間(ms)
+  const FADE_OUT = 200;  // 旧曲フェードアウト時間(ms) — 末尾検知で早めに呼ばれるので短め
+  const FADE_IN  = 500;  // 新曲フェードイン時間(ms)
   const targetVol = savedVolume;
 
   const prev = RADIO.curHowl;
@@ -3931,6 +3952,7 @@ function radioTransitionTo(song) {
 
   const startNext = () => {
     if (!RADIO.on) return;
+    RADIO._transitioning = false; // 新曲開始で遷移フラグをリセット
 
     const next = new Howl({
       src: [audioOf(song)],
@@ -4032,7 +4054,25 @@ function radioUpdateNowPlaying(song) {
 }
 
 function radioWatch() {
-  // 曲の終了は onend で検知するため、ここでは何もしない
+  // 500msごとに残り時間を監視し、2秒以内になったら早めに次の曲へ移行
+  // → 末尾の無音・空白をスキップしてシームレスな連続再生を実現
+  if (RADIO.watchInterval) clearInterval(RADIO.watchInterval);
+  RADIO.watchInterval = setInterval(() => {
+    if (!RADIO.on) { clearInterval(RADIO.watchInterval); return; }
+    const h = RADIO.curHowl;
+    if (!h) return;
+    try {
+      if (!h.playing()) return;
+      const dur = h.duration();
+      const pos = h.seek();
+      if (typeof pos !== 'number' || typeof dur !== 'number' || dur <= 3) return;
+      // 残り2秒以内 → 即次の曲へ（onend を待たずに末尾の空白を飛ばす）
+      if ((dur - pos) <= 2.0 && !RADIO._transitioning) {
+        RADIO._transitioning = true;
+        radioPlayNext();
+      }
+    } catch(_) {}
+  }, 500);
 }
 
 // ── ラジオ グッド・バッド機能 ────────────────────────────────────
@@ -4103,7 +4143,9 @@ function radioSkip() {
 
 function radioStop() {
   RADIO.on = false;
+  RADIO._transitioning = false;
   if (RADIO.watchRaf) cancelAnimationFrame(RADIO.watchRaf);
+  if (RADIO.watchInterval) { clearInterval(RADIO.watchInterval); RADIO.watchInterval = null; }
 
   // Howler の fade で滑らかに停止
   const cur = RADIO.curHowl;
