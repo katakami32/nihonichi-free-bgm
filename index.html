@@ -770,18 +770,19 @@ html[data-theme="dark"] footer{background:#0a0805}
       </div>
     </a>
     <nav>
-      <a href="#top" class="active">ホーム</a>
-      <a href="#pickup">ピックアップ</a>
-      <a href="#genshow">ジャンル</a>
-      <a href="#usec">用途別</a>
-      <a href="#browse">BGM一覧</a>
-      <a href="#faq">よくある質問</a>
-      <a href="#license">利用規約</a>
+      <a href="#top" class="active" data-i18n="nav_home">ホーム</a>
+      <a href="#pickup" data-i18n="nav_pickup">ピックアップ</a>
+      <a href="#genshow" data-i18n="nav_genre">ジャンル</a>
+      <a href="#usec" data-i18n="nav_usage">用途別</a>
+      <a href="#browse" data-i18n="nav_browse">BGM一覧</a>
+      <a href="#faq" data-i18n="nav_faq">よくある質問</a>
+      <a href="#license" data-i18n="nav_license">利用規約</a>
     </nav>
     <div class="htools">
       <button class="iconbtn" id="randomBtn" title="ランダム1曲再生 (R)" aria-label="ランダム再生">🎲</button>
       <button class="iconbtn" id="favBtn" title="お気に入り (F)" aria-label="お気に入り一覧">♡</button>
       <button class="iconbtn" id="themeBtn" title="ダーク/ライト切替" aria-label="テーマ切替">🌗</button>
+      <button class="iconbtn" id="langBtn" title="Switch Language" aria-label="言語切替">🌐</button>
     </div>
   </div>
 </header>
@@ -789,26 +790,26 @@ html[data-theme="dark"] footer{background:#0a0805}
 <section class="hero" id="top">
   <div class="herowrap">
     <div>
-      <div class="htag">⭐ 完全無料・商用利用OK・登録不要・クレジット表記不要</div>
-      <h1>すべての<em>クリエイター</em>に、<br>日本一の音を。</h1>
-      <p class="lead">高品質なAI生成BGMを<b id="totalCount">2,070</b>曲、すべて無料・商用利用OKでダウンロードできます。BPM・尺・ムードで秒で見つかる検索体験。YouTube・ゲーム実況・Vlog・配信・映像制作にどうぞ。</p>
+      <div class="htag" data-i18n="hero_badge">⭐ 完全無料・商用利用OK・登録不要・クレジット表記不要</div>
+      <h1 data-i18n-html="hero_h1">すべての<em>クリエイター</em>に、<br>日本一の音を。</h1>
+      <p class="lead" data-i18n-html="hero_lead">高品質なAI生成BGMを<b id="totalCount">2,070</b>曲、すべて無料・商用利用OKでダウンロードできます。BPM・尺・ムードで秒で見つかる検索体験。YouTube・ゲーム実況・Vlog・配信・映像制作にどうぞ。</p>
       <div class="hsearch">
-        <input type="text" id="searchBox" placeholder="例：ジャズ、夜カフェ、戦闘、ローファイ、爽やか" aria-label="BGMを検索">
-        <button onclick="doSearch()" title="キーワード検索" aria-label="キーワード検索">検索</button>
-        <button class="aibtn" id="aiOpen" title="AIにおまかせ — 文章を入れるとぴったりの曲を選びます" aria-label="AIにおまかせマッチング">✨ AIにおまかせ</button>
-        <button class="radiobtn" id="radioOpen" title="BGMチャンネル — 気分を選ぶだけで曲が自動で流れ続けます" aria-label="BGMチャンネルを開く">🎧 BGMチャンネル<span class="radiosub">気分を選ぶだけ・自動で流れ続ける</span></button>
+        <input type="text" id="searchBox" placeholder="例：ジャズ、夜カフェ、戦闘、ローファイ、爽やか" data-i18n-placeholder="search_placeholder" aria-label="BGMを検索">
+        <button onclick="doSearch()" title="キーワード検索" aria-label="キーワード検索" data-i18n="search_btn">検索</button>
+        <button class="aibtn" id="aiOpen" title="AIにおまかせ" aria-label="AIにおまかせ" data-i18n-html="ai_btn">✨ AIにおまかせ</button>
+        <button class="radiobtn" id="radioOpen" title="BGMチャンネル" aria-label="BGMチャンネル">🎧 <span data-i18n="radio_btn">BGMチャンネル</span><span class="radiosub" data-i18n="radio_sub">気分を選ぶだけ・自動で流れ続ける</span></button>
       </div>
       <div class="aitips" id="aitips">
-        <span class="aitip" data-q="朝の散歩で気持ち良くなれる音楽">☀️ 朝の散歩で気持ち良くなれる音楽</span>
-        <span class="aitip" data-q="夜カフェでまったりするチル">🌙 夜カフェでまったりするチル</span>
-        <span class="aitip" data-q="ホラー怖い緊張">😱 ホラー実況・怖い曲</span>
-        <span class="aitip" data-q="結婚式壮大感動">💍 結婚式オープニング</span>
+        <span class="aitip" data-q="朝の散歩で気持ち良くなれる音楽" data-i18n="tip1">☀️ 朝の散歩で気持ち良くなれる音楽</span>
+        <span class="aitip" data-q="夜カフェでまったりするチル" data-i18n="tip2">🌙 夜カフェでまったりするチル</span>
+        <span class="aitip" data-q="ホラー怖い緊張" data-i18n="tip3">😱 ホラー実況・怖い曲</span>
+        <span class="aitip" data-q="結婚式壮大感動" data-i18n="tip4">💍 結婚式オープニング</span>
       </div>
       <div class="hstats">
-        <div class="hstat"><span class="num" id="statSongs">2,070</span><span class="lbl">楽曲数</span></div>
-        <div class="hstat"><span class="num" id="statGenres">14</span><span class="lbl">ジャンル</span></div>
-        <div class="hstat"><span class="num">登録不要</span><span class="lbl">ワンクリックDL</span></div>
-        <div class="hstat"><span class="num">商用OK</span><span class="lbl">クレジット任意</span></div>
+        <div class="hstat"><span class="num" id="statSongs">2,070</span><span class="lbl" data-i18n="stat_songs">楽曲数</span></div>
+        <div class="hstat"><span class="num" id="statGenres">14</span><span class="lbl" data-i18n="stat_genres">ジャンル</span></div>
+        <div class="hstat"><span class="num" data-i18n="stat_noreg">登録不要</span><span class="lbl" data-i18n="stat_noreg_sub">ワンクリックDL</span></div>
+        <div class="hstat"><span class="num" data-i18n="stat_commercial">商用OK</span><span class="lbl" data-i18n="stat_commercial_sub">クレジット任意</span></div>
       </div>
     </div>
     <div class="hvis" id="heroVis" aria-hidden="true">
@@ -819,10 +820,10 @@ html[data-theme="dark"] footer{background:#0a0805}
 
 <div class="trust">
   <div class="trustinner">
-    <div class="tcell"><div class="ic">🎁</div><div><strong>完全無料・登録不要</strong><span>クレカ・メール登録一切不要</span></div></div>
-    <div class="tcell"><div class="ic">✅</div><div><strong>商用利用OK</strong><span>YouTube・配信・広告に</span></div></div>
-    <div class="tcell"><div class="ic">📝</div><div><strong>クレジット不要</strong><span>表記なしでも自由に使用可</span></div></div>
-    <div class="tcell"><div class="ic">🤖</div><div><strong>AI生成と明示</strong><span>AIで全曲生成・透明性100%</span></div></div>
+    <div class="tcell"><div class="ic">🎁</div><div><strong data-i18n="trust1_title">完全無料・登録不要</strong><span data-i18n="trust1_sub">クレカ・メール登録一切不要</span></div></div>
+    <div class="tcell"><div class="ic">✅</div><div><strong data-i18n="trust2_title">商用利用OK</strong><span data-i18n="trust2_sub">YouTube・配信・広告に</span></div></div>
+    <div class="tcell"><div class="ic">📝</div><div><strong data-i18n="trust3_title">クレジット不要</strong><span data-i18n="trust3_sub">表記なしでも自由に使用可</span></div></div>
+    <div class="tcell"><div class="ic">🤖</div><div><strong data-i18n="trust4_title">AI生成と明示</strong><span data-i18n="trust4_sub">AIで全曲生成・透明性100%</span></div></div>
   </div>
 </div>
 
@@ -830,8 +831,8 @@ html[data-theme="dark"] footer{background:#0a0805}
 <section class="recent" id="recent" style="display:none">
   <div class="rwrap">
     <div class="rhead">
-      <div class="rttl">最近聴いた曲</div>
-      <button class="rclear" id="rClear">履歴をクリア</button>
+      <div class="rttl" data-i18n="recent_title">最近聴いた曲</div>
+      <button class="rclear" id="rClear" data-i18n="recent_clear">履歴をクリア</button>
     </div>
     <div class="rrow" id="rRow"></div>
   </div>
@@ -842,10 +843,10 @@ html[data-theme="dark"] footer{background:#0a0805}
   <div class="pkwrap">
     <div class="pkhead">
       <div>
-        <div class="pkttl">今週のピックアップ</div>
-        <div class="pksub">編集部おすすめのBGM。気分・シーンに合わせてどうぞ。</div>
+        <div class="pkttl" data-i18n="pickup_title">今週のピックアップ</div>
+        <div class="pksub" data-i18n="pickup_sub">編集部おすすめのBGM。気分・シーンに合わせてどうぞ。</div>
       </div>
-      <button class="dlbtn" id="pkShuffle" style="border-color:var(--accent);color:var(--accent)">🔀 シャッフル</button>
+      <button class="dlbtn" id="pkShuffle" style="border-color:var(--accent);color:var(--accent)" data-i18n="pickup_shuffle">🔀 シャッフル</button>
     </div>
     <div class="pkrow" id="pkRow"></div>
   </div>
@@ -856,8 +857,8 @@ html[data-theme="dark"] footer{background:#0a0805}
   <div class="gswrap">
     <div class="gshead">
       <div>
-        <div class="gsttl">ジャンルから探す</div>
-        <div class="gssub">14ジャンル、すべて無料。クリックで一覧へ。</div>
+        <div class="gsttl" data-i18n="genre_title">ジャンルから探す</div>
+        <div class="gssub" data-i18n="genre_sub">14ジャンル、すべて無料。クリックで一覧へ。</div>
       </div>
     </div>
     <div class="gsgrid" id="gsGrid"></div>
@@ -868,20 +869,20 @@ html[data-theme="dark"] footer{background:#0a0805}
 <section class="usec" id="usec">
   <div class="uwrap">
     <div class="uhead">
-      <div class="uttl">用途・シーン別</div>
-      <div class="usub">動画・配信のシーンに合わせてフィルタ</div>
+      <div class="uttl" data-i18n="usage_title">用途・シーン別</div>
+      <div class="usub" data-i18n="usage_sub">動画・配信のシーンに合わせてフィルタ</div>
     </div>
     <div class="uchips" id="useChips">
-      <button class="uchip" data-use="vlog"><span class="ic">📷</span>Vlog</button>
-      <button class="uchip" data-use="game"><span class="ic">🎮</span>ゲーム実況</button>
-      <button class="uchip" data-use="opening"><span class="ic">🎬</span>オープニング</button>
-      <button class="uchip" data-use="ending"><span class="ic">🎞</span>エンディング</button>
-      <button class="uchip" data-use="cooking"><span class="ic">🍳</span>料理・工作</button>
-      <button class="uchip" data-use="study"><span class="ic">📚</span>勉強・作業</button>
-      <button class="uchip" data-use="morning"><span class="ic">☀️</span>朝・始まり</button>
-      <button class="uchip" data-use="night"><span class="ic">🌙</span>夜・カフェ</button>
-      <button class="uchip" data-use="battle"><span class="ic">⚔️</span>バトル・緊迫</button>
-      <button class="uchip" data-use="travel"><span class="ic">✈️</span>旅・自然</button>
+      <button class="uchip" data-use="vlog"><span class="ic">📷</span><span data-i18n="use_vlog">Vlog</span></button>
+      <button class="uchip" data-use="game"><span class="ic">🎮</span><span data-i18n="use_game">ゲーム実況</span></button>
+      <button class="uchip" data-use="opening"><span class="ic">🎬</span><span data-i18n="use_opening">オープニング</span></button>
+      <button class="uchip" data-use="ending"><span class="ic">🎞</span><span data-i18n="use_ending">エンディング</span></button>
+      <button class="uchip" data-use="cooking"><span class="ic">🍳</span><span data-i18n="use_cooking">料理・工作</span></button>
+      <button class="uchip" data-use="study"><span class="ic">📚</span><span data-i18n="use_study">勉強・作業</span></button>
+      <button class="uchip" data-use="morning"><span class="ic">☀️</span><span data-i18n="use_morning">朝・始まり</span></button>
+      <button class="uchip" data-use="night"><span class="ic">🌙</span><span data-i18n="use_night">夜・カフェ</span></button>
+      <button class="uchip" data-use="battle"><span class="ic">⚔️</span><span data-i18n="use_battle">バトル・緊迫</span></button>
+      <button class="uchip" data-use="travel"><span class="ic">✈️</span><span data-i18n="use_travel">旅・自然</span></button>
     </div>
   </div>
 </section>
@@ -889,34 +890,34 @@ html[data-theme="dark"] footer{background:#0a0805}
 <div class="main" id="browse">
   <aside class="side">
     <div class="sblock">
-      <div class="stitle">🎼 ジャンル</div>
+      <div class="stitle" data-i18n="filter_genre">🎼 ジャンル</div>
       <div class="catlist" id="catList"></div>
     </div>
     <div class="sblock">
-      <div class="stitle" id="bpm">⏱ BPM (テンポ)</div>
+      <div class="stitle" id="bpm" data-i18n="filter_bpm">⏱ BPM (テンポ)</div>
       <div class="fchips" id="bpmChips">
-        <button class="fchip" data-bpm="slow">スロー &lt;90</button>
-        <button class="fchip" data-bpm="mid">ミディアム 90-130</button>
-        <button class="fchip" data-bpm="fast">アップ 130+</button>
+        <button class="fchip" data-bpm="slow" data-i18n="bpm_slow">スロー &lt;90</button>
+        <button class="fchip" data-bpm="mid" data-i18n="bpm_mid">ミディアム 90-130</button>
+        <button class="fchip" data-bpm="fast" data-i18n="bpm_fast">アップ 130+</button>
       </div>
     </div>
     <div class="sblock">
-      <div class="stitle">🕒 尺</div>
+      <div class="stitle" data-i18n="filter_dur">🕒 尺</div>
       <div class="fchips" id="durChips">
-        <button class="fchip" data-dur="short">ショート &lt;1分</button>
-        <button class="fchip" data-dur="mid">中尺 1-2分</button>
-        <button class="fchip" data-dur="long">ロング 2分+</button>
+        <button class="fchip" data-dur="short" data-i18n="dur_short">ショート &lt;1分</button>
+        <button class="fchip" data-dur="mid" data-i18n="dur_mid">中尺 1-2分</button>
+        <button class="fchip" data-dur="long" data-i18n="dur_long">ロング 2分+</button>
       </div>
     </div>
     <div class="sblock" id="mood">
-      <div class="stitle">🎨 ムード</div>
+      <div class="stitle" data-i18n="filter_mood">🎨 ムード</div>
       <div class="fchips" id="moodChips">
-        <button class="fchip" data-mood="chill">チル・癒し</button>
-        <button class="fchip" data-mood="upbeat">明るい・元気</button>
-        <button class="fchip" data-mood="dark">ダーク・緊張</button>
-        <button class="fchip" data-mood="epic">壮大・シネマ</button>
-        <button class="fchip" data-mood="cute">かわいい</button>
-        <button class="fchip" data-mood="cool">クール</button>
+        <button class="fchip" data-mood="chill" data-i18n="mood_chill">チル・癒し</button>
+        <button class="fchip" data-mood="upbeat" data-i18n="mood_upbeat">明るい・元気</button>
+        <button class="fchip" data-mood="dark" data-i18n="mood_dark">ダーク・緊張</button>
+        <button class="fchip" data-mood="epic" data-i18n="mood_epic">壮大・シネマ</button>
+        <button class="fchip" data-mood="cute" data-i18n="mood_cute">かわいい</button>
+        <button class="fchip" data-mood="cool" data-i18n="mood_cool">クール</button>
       </div>
     </div>
   </aside>
@@ -926,22 +927,22 @@ html[data-theme="dark"] footer{background:#0a0805}
     <div class="fbar" id="fbar" role="region" aria-label="適用中のフィルタ"></div>
     <div class="ctop">
       <div class="ctitle">
-        <span id="listTitle">新着BGM</span>
+        <span id="listTitle" data-i18n="list_new">新着BGM</span>
         <span class="ccount2" id="listCount"></span>
       </div>
       <div class="ctools">
         <select class="csort" id="sortSel">
-          <option value="new">新着順</option>
-          <option value="bpm-asc">BPM 遅い順</option>
-          <option value="bpm-desc">BPM 速い順</option>
-          <option value="dur-asc">短い順</option>
-          <option value="dur-desc">長い順</option>
-          <option value="title">タイトル順</option>
+          <option value="new" data-i18n="sort_new">新着順</option>
+          <option value="bpm-asc" data-i18n="sort_bpm_asc">BPM 遅い順</option>
+          <option value="bpm-desc" data-i18n="sort_bpm_desc">BPM 速い順</option>
+          <option value="dur-asc" data-i18n="sort_dur_asc">短い順</option>
+          <option value="dur-desc" data-i18n="sort_dur_desc">長い順</option>
+          <option value="title" data-i18n="sort_title">タイトル順</option>
         </select>
       </div>
     </div>
     <div class="sgrid" id="grid"></div>
-    <button class="loadmore" id="loadMore" style="display:none">もっと見る</button>
+    <button class="loadmore" id="loadMore" style="display:none" data-i18n="load_more">もっと見る</button>
   </div>
 </div>
 
@@ -949,8 +950,8 @@ html[data-theme="dark"] footer{background:#0a0805}
 <section class="faq" id="faq">
   <div class="faqwrap">
     <div class="faqhead">
-      <div class="faqttl">よくある質問</div>
-      <div class="faqsub">気になることは、たぶんここに答えがあります。</div>
+      <div class="faqttl" data-i18n="faq_title">よくある質問</div>
+      <div class="faqsub" data-i18n="faq_sub">気になることは、たぶんここに答えがあります。</div>
     </div>
 
     <details class="faqitem">
@@ -1096,27 +1097,27 @@ html[data-theme="dark"] footer{background:#0a0805}
   <div class="finner">
     <div class="fgrid">
       <div class="fcol fabout">
-        <h3>このサイトについて</h3>
+        <h3 data-i18n="footer_about_title">このサイトについて</h3>
         <p><strong style="color:rgba(255,255,255,.85)">日本一フリーMusic</strong> はAIで生成した高品質なオリジナルBGMを、完全無料・商用利用OK・クレジット表記不要で配布する音源ライブラリです。</p>
         <p>AI生成であることを明示し、利用条件をシンプルに。動画制作・ゲーム実況・配信・映像作品で安心して使える環境を目指しています。</p>
       </div>
       <div class="fcol">
-        <h3>ライブラリ</h3>
-        <a href="#browse">すべてのBGM</a>
-        <a href="#mood">ムード別</a>
-        <a href="#bpm">BPM別</a>
-        <a href="#" id="favLink">お気に入り</a>
+        <h3 data-i18n="footer_lib_title">ライブラリ</h3>
+        <a href="#browse" data-i18n="footer_all">すべてのBGM</a>
+        <a href="#mood" data-i18n="footer_mood">ムード別</a>
+        <a href="#bpm" data-i18n="footer_bpm">BPM別</a>
+        <a href="#" id="favLink" data-i18n="footer_fav">お気に入り</a>
       </div>
       <div class="fcol">
-        <h3>サポート</h3>
-        <a href="#license">利用規約</a>
-        <a href="#faq">よくある質問</a>
-        <a href="#" id="contactLink">お問い合わせ</a>
-        <a href="#privacy">プライバシーポリシー</a>
+        <h3 data-i18n="footer_support_title">サポート</h3>
+        <a href="#license" data-i18n="footer_license">利用規約</a>
+        <a href="#faq" data-i18n="footer_faq">よくある質問</a>
+        <a href="#" id="contactLink" data-i18n="footer_contact">お問い合わせ</a>
+        <a href="#privacy" data-i18n="footer_privacy">プライバシーポリシー</a>
       </div>
       <div class="fcol">
-        <h3>キーボード操作</h3>
-        <a href="#" id="fShortcuts">⌨ ショートカット一覧</a>
+        <h3 data-i18n="footer_kbd_title">キーボード操作</h3>
+        <a href="#" id="fShortcuts">⌨ <span data-i18n="footer_shortcuts">ショートカット一覧</span></a>
         <a href="sitemap.xml">🗺 サイトマップ</a>
         <a href="robots.txt">🤖 robots.txt</a>
         <a href="#" id="fCopyUrl">🔗 URLをコピー</a>
@@ -6505,5 +6506,184 @@ load().then(() => {
   <p>すべての楽曲は著作権フリー・商用利用可・クレジット表記不要でダウンロードできます。</p>
 </div>
 <!-- SEO:END -->
+
+<!-- ============================================================
+     i18n: 多言語対応（日本語 / English）
+     ブラウザ言語が ja 以外 → 自動で英語UI
+     🌐ボタンで手動切替 / localStorage に記憶
+============================================================ -->
+<script>
+(function(){
+'use strict';
+
+const T = {
+  ja: {
+    // Nav
+    nav_home:'ホーム', nav_pickup:'ピックアップ', nav_genre:'ジャンル',
+    nav_usage:'用途別', nav_browse:'BGM一覧', nav_faq:'よくある質問', nav_license:'利用規約',
+    // Hero
+    hero_badge:'⭐ 完全無料・商用利用OK・登録不要・クレジット表記不要',
+    hero_h1:'すべての<em>クリエイター</em>に、<br>日本一の音を。',
+    hero_lead:'高品質なAI生成BGMを<b id="totalCount">2,070</b>曲、すべて無料・商用利用OKでダウンロードできます。BPM・尺・ムードで秒で見つかる検索体験。YouTube・ゲーム実況・Vlog・配信・映像制作にどうぞ。',
+    search_placeholder:'例：ジャズ、夜カフェ、戦闘、ローファイ、爽やか',
+    search_btn:'検索',
+    ai_btn:'✨ AIにおまかせ',
+    radio_btn:'BGMチャンネル',
+    radio_sub:'気分を選ぶだけ・自動で流れ続ける',
+    tip1:'☀️ 朝の散歩で気持ち良くなれる音楽',
+    tip2:'🌙 夜カフェでまったりするチル',
+    tip3:'😱 ホラー実況・怖い曲',
+    tip4:'💍 結婚式オープニング',
+    stat_songs:'楽曲数', stat_genres:'ジャンル',
+    stat_noreg:'登録不要', stat_noreg_sub:'ワンクリックDL',
+    stat_commercial:'商用OK', stat_commercial_sub:'クレジット任意',
+    // Trust
+    trust1_title:'完全無料・登録不要', trust1_sub:'クレカ・メール登録一切不要',
+    trust2_title:'商用利用OK', trust2_sub:'YouTube・配信・広告に',
+    trust3_title:'クレジット不要', trust3_sub:'表記なしでも自由に使用可',
+    trust4_title:'AI生成と明示', trust4_sub:'AIで全曲生成・透明性100%',
+    // Sections
+    recent_title:'最近聴いた曲', recent_clear:'履歴をクリア',
+    pickup_title:'今週のピックアップ', pickup_sub:'編集部おすすめのBGM。気分・シーンに合わせてどうぞ。', pickup_shuffle:'🔀 シャッフル',
+    genre_title:'ジャンルから探す', genre_sub:'14ジャンル、すべて無料。クリックで一覧へ。',
+    usage_title:'用途・シーン別', usage_sub:'動画・配信のシーンに合わせてフィルタ',
+    use_vlog:'Vlog', use_game:'ゲーム実況', use_opening:'オープニング', use_ending:'エンディング',
+    use_cooking:'料理・工作', use_study:'勉強・作業', use_morning:'朝・始まり', use_night:'夜・カフェ',
+    use_battle:'バトル・緊迫', use_travel:'旅・自然',
+    // Filters
+    filter_genre:'🎼 ジャンル', filter_bpm:'⏱ BPM (テンポ)', filter_dur:'🕒 尺', filter_mood:'🎨 ムード',
+    bpm_slow:'スロー <90', bpm_mid:'ミディアム 90-130', bpm_fast:'アップ 130+',
+    dur_short:'ショート <1分', dur_mid:'中尺 1-2分', dur_long:'ロング 2分+',
+    mood_chill:'チル・癒し', mood_upbeat:'明るい・元気', mood_dark:'ダーク・緊張',
+    mood_epic:'壮大・シネマ', mood_cute:'かわいい', mood_cool:'クール',
+    list_new:'新着BGM', load_more:'もっと見る',
+    sort_new:'新着順', sort_bpm_asc:'BPM 遅い順', sort_bpm_desc:'BPM 速い順',
+    sort_dur_asc:'短い順', sort_dur_desc:'長い順', sort_title:'タイトル順',
+    // FAQ
+    faq_title:'よくある質問', faq_sub:'気になることは、たぶんここに答えがあります。',
+    // Footer
+    footer_about_title:'このサイトについて',
+    footer_lib_title:'ライブラリ', footer_all:'すべてのBGM', footer_mood:'ムード別',
+    footer_bpm:'BPM別', footer_fav:'お気に入り',
+    footer_support_title:'サポート', footer_license:'利用規約', footer_faq:'よくある質問',
+    footer_contact:'お問い合わせ', footer_privacy:'プライバシーポリシー',
+    footer_kbd_title:'キーボード操作', footer_shortcuts:'ショートカット一覧',
+  },
+  en: {
+    // Nav
+    nav_home:'Home', nav_pickup:'Featured', nav_genre:'Genres',
+    nav_usage:'Use Cases', nav_browse:'All BGM', nav_faq:'FAQ', nav_license:'License',
+    // Hero
+    hero_badge:'⭐ 100% Free · Commercial Use OK · No Sign-up · No Credit Required',
+    hero_h1:'The best music<br>for every <em>creator</em>.',
+    hero_lead:'<b id="totalCount">2,070</b> high-quality AI-generated BGM tracks — all free, commercial use OK, no registration required. Find the perfect track by BPM, length, or mood in seconds. Perfect for YouTube, gaming, Vlogs, streams & films.',
+    search_placeholder:'e.g. jazz, chill café, battle, lo-fi, upbeat',
+    search_btn:'Search',
+    ai_btn:'✨ AI Match',
+    radio_btn:'BGM Channel',
+    radio_sub:'Pick a vibe · music plays on',
+    tip1:'☀️ Morning walk feel-good music',
+    tip2:'🌙 Late night chill café vibes',
+    tip3:'😱 Horror / tension music',
+    tip4:'💍 Wedding ceremony opener',
+    stat_songs:'Tracks', stat_genres:'Genres',
+    stat_noreg:'No Sign-up', stat_noreg_sub:'One-click DL',
+    stat_commercial:'Commercial OK', stat_commercial_sub:'Credit optional',
+    // Trust
+    trust1_title:'100% Free · No Sign-up', trust1_sub:'No credit card or email required',
+    trust2_title:'Commercial Use OK', trust2_sub:'YouTube, streams, ads & more',
+    trust3_title:'No Credit Required', trust3_sub:'Use freely without attribution',
+    trust4_title:'AI-Generated · Transparent', trust4_sub:'All tracks AI-made, clearly stated',
+    // Sections
+    recent_title:'Recently Played', recent_clear:'Clear History',
+    pickup_title:"This Week's Featured", pickup_sub:"Editor's picks. Choose by mood or scene.", pickup_shuffle:'🔀 Shuffle',
+    genre_title:'Browse by Genre', genre_sub:'14 genres, all free. Click to explore.',
+    usage_title:'Browse by Use Case', usage_sub:'Filter by video & streaming scene',
+    use_vlog:'Vlog', use_game:'Gaming', use_opening:'Opening', use_ending:'Ending',
+    use_cooking:'Cooking / Craft', use_study:'Study / Work', use_morning:'Morning / Start', use_night:'Night / Café',
+    use_battle:'Battle / Tension', use_travel:'Travel / Nature',
+    // Filters
+    filter_genre:'🎼 Genre', filter_bpm:'⏱ BPM (Tempo)', filter_dur:'🕒 Length', filter_mood:'🎨 Mood',
+    bpm_slow:'Slow <90', bpm_mid:'Medium 90-130', bpm_fast:'Upbeat 130+',
+    dur_short:'Short <1min', dur_mid:'Medium 1-2min', dur_long:'Long 2min+',
+    mood_chill:'Chill / Relax', mood_upbeat:'Bright / Upbeat', mood_dark:'Dark / Tense',
+    mood_epic:'Epic / Cinematic', mood_cute:'Cute', mood_cool:'Cool',
+    list_new:'New Arrivals', load_more:'Load More',
+    sort_new:'Newest', sort_bpm_asc:'BPM: Slow first', sort_bpm_desc:'BPM: Fast first',
+    sort_dur_asc:'Shortest first', sort_dur_desc:'Longest first', sort_title:'Title A-Z',
+    // FAQ
+    faq_title:'FAQ', faq_sub:'Answers to common questions.',
+    // Footer
+    footer_about_title:'About This Site',
+    footer_lib_title:'Library', footer_all:'All BGM', footer_mood:'By Mood',
+    footer_bpm:'By BPM', footer_fav:'Favorites',
+    footer_support_title:'Support', footer_license:'License', footer_faq:'FAQ',
+    footer_contact:'Contact', footer_privacy:'Privacy Policy',
+    footer_kbd_title:'Keyboard Shortcuts', footer_shortcuts:'View Shortcuts',
+  }
+};
+
+// ── 言語適用 ──────────────────────────────────
+function applyLang(lang) {
+  const t = T[lang] || T.ja;
+  // textContent
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const v = t[el.dataset.i18n]; if (v !== undefined) el.textContent = v;
+  });
+  // innerHTML (em/br などを含む要素)
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const v = t[el.dataset.i18nHtml]; if (v !== undefined) el.innerHTML = v;
+  });
+  // placeholder
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const v = t[el.dataset.i18nPlaceholder]; if (v !== undefined) el.placeholder = v;
+  });
+  // <select> option の textContent
+  document.querySelectorAll('option[data-i18n]').forEach(el => {
+    const v = t[el.dataset.i18n]; if (v !== undefined) el.textContent = v;
+  });
+  // <html> lang 属性
+  document.documentElement.lang = lang === 'en' ? 'en' : 'ja';
+  // 🌐ボタンのラベル更新
+  const btn = document.getElementById('langBtn');
+  if (btn) btn.title = lang === 'en' ? '日本語に切替' : 'Switch to English';
+  // 記憶
+  try { localStorage.setItem('nihonichi_lang', lang); } catch(e){}
+  window._currentLang = lang;
+}
+
+// ── 初期化 ──────────────────────────────────
+function initLang() {
+  // 1. localStorage の設定を優先
+  let lang = null;
+  try { lang = localStorage.getItem('nihonichi_lang'); } catch(e){}
+  // 2. なければブラウザ言語を判定
+  if (!lang) {
+    const bl = (navigator.language || navigator.userLanguage || 'ja').toLowerCase();
+    lang = bl.startsWith('ja') ? 'ja' : 'en';
+  }
+  applyLang(lang);
+}
+
+// ── 🌐ボタン ──────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  initLang();
+  const btn = document.getElementById('langBtn');
+  if (btn) btn.addEventListener('click', () => {
+    applyLang(window._currentLang === 'en' ? 'ja' : 'en');
+  });
+});
+
+// DOMContentLoaded より早く読まれた場合の即時実行
+if (document.readyState !== 'loading') {
+  initLang();
+  const btn = document.getElementById('langBtn');
+  if (btn) btn.addEventListener('click', () => {
+    applyLang(window._currentLang === 'en' ? 'ja' : 'en');
+  });
+}
+
+})();
+</script>
 </body>
 </html>
