@@ -230,6 +230,13 @@ body.ai-active .hsearch input{border-color:var(--gold);background:rgba(0,0,0,.6)
 
 /* プレイヤーにRADIOバッジ */
 .pbar.radio .pcat::before{content:'📻 RADIO ';font-weight:800;color:var(--gold);margin-right:4px}
+/* 再生バーのグッド・バッドボタン（RADIOモード中のみ表示） */
+.pbar .prfb{display:none;font-size:15px;opacity:.65;transition:all .18s}
+.pbar.radio .prfb{display:grid}
+.pbar .prfb:hover{opacity:1;transform:scale(1.2)}
+.pbar .prfb.active{opacity:1}
+.pbar .pgood.active{text-shadow:0 0 8px rgba(80,220,100,.9)}
+.pbar .pbad.active{text-shadow:0 0 8px rgba(240,80,80,.9)}
 
 /* AIランクバッジ */
 .crank{position:absolute;top:8px;left:8px;display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:900;padding:4px 10px;border-radius:14px;z-index:3;box-shadow:0 3px 10px rgba(0,0,0,.35);letter-spacing:.04em;text-shadow:0 1px 2px rgba(0,0,0,.2);color:#fff}
@@ -1140,6 +1147,9 @@ html[data-theme="dark"] footer{background:#0a0805}
       <button class="cb" id="similarBtn" title="この曲に似た曲を探す" aria-label="似た曲">🔮</button>
       <button class="cb" id="pickBtn" title="プレイリストに追加" aria-label="プレイリストに追加">＋</button>
       <button class="cb" id="shareBtn" title="共有" aria-label="この曲を共有">↗</button>
+      <!-- RADIOモード中のみ表示 -->
+      <button class="cb prfb pgood" id="pGoodBtn" title="グッド（優先再生）" aria-label="グッド">👍</button>
+      <button class="cb prfb pbad"  id="pBadBtn"  title="バッド（流れにくくする）" aria-label="バッド">👎</button>
     </div>
     <div class="parea">
       <span class="ptime" id="curTime">0:00</span>
@@ -4101,11 +4111,14 @@ function _buildRadioQueue(candidates) {
 }
 
 function _radioFeedbackUpdate(id) {
-  const gBtn = document.getElementById('radioGoodBtn');
-  const bBtn = document.getElementById('radioBadBtn');
-  if (!gBtn || !bBtn) return;
-  gBtn.classList.toggle('active', _rPrefs.likes.has(id));
-  bBtn.classList.toggle('active', _rPrefs.dislikes.has(id));
+  const isLiked    = _rPrefs.likes.has(id);
+  const isDisliked = _rPrefs.dislikes.has(id);
+  // インジケーターのボタン
+  document.getElementById('radioGoodBtn')?.classList.toggle('active', isLiked);
+  document.getElementById('radioBadBtn')?.classList.toggle('active', isDisliked);
+  // 再生バーのボタン
+  document.getElementById('pGoodBtn')?.classList.toggle('active', isLiked);
+  document.getElementById('pBadBtn')?.classList.toggle('active', isDisliked);
 }
 
 function radioGood() {
@@ -4199,6 +4212,9 @@ document.getElementById('radioCustom').addEventListener('keydown', e => {
 // インジケーターのグッド・バッド・スキップ・停止
 document.getElementById('radioGoodBtn').onclick = e => { e.stopPropagation(); radioGood(); };
 document.getElementById('radioBadBtn').onclick  = e => { e.stopPropagation(); radioBad(); };
+// 再生バーのグッド・バッド
+document.getElementById('pGoodBtn').onclick = () => radioGood();
+document.getElementById('pBadBtn').onclick  = () => radioBad();
 document.getElementById('radioSkip').onclick = e => { e.stopPropagation(); radioSkip(); };
 document.getElementById('radioStop').onclick = e => { e.stopPropagation(); radioStop(); };
 // インジケーター本体クリックで再生中曲を上にスクロール
