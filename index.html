@@ -2400,10 +2400,16 @@ function _setupPlayerUI(s){
 function play(id, fromQueue=false){
   const s = findSong(id);
   if (!s) return;
-  // 同じ曲が再生中 → トグル
+  // 同じ曲が再生中 → トグル（ポーズはフェードアウト、再開はフェードイン）
   if (currentHowl && nowPlayingId === id) {
-    if (currentHowl.playing()) currentHowl.pause();
-    else currentHowl.play();
+    if (currentHowl.playing()) {
+      currentHowl.fade(currentHowl.volume(), 0, 60);
+      setTimeout(() => { try { currentHowl && currentHowl.pause(); } catch(_){} }, 70);
+    } else {
+      currentHowl.volume(0);
+      currentHowl.play();
+      setTimeout(() => { try { currentHowl && currentHowl.fade(0, savedVolume, 40); } catch(_){} }, 10);
+    }
     return;
   }
   // 再生開始時点の view をスナップショット（カテゴリ変更後も同じリストで連続再生）
@@ -2417,10 +2423,15 @@ function play(id, fromQueue=false){
     return;
   }
 
-  // 前の Howl を即停止 + 解放 (クロスフェード無し)
+  // 前の Howl をフェードアウト → 停止 + 解放（ぷつぷつ防止）
   if (currentHowl) {
-    try { currentHowl.stop(); } catch(_){}
-    try { currentHowl.unload(); } catch(_){}
+    const dying = currentHowl;
+    try {
+      dying.fade(dying.volume(), 0, 80);
+      setTimeout(() => { try { dying.stop(); dying.unload(); } catch(_){} }, 100);
+    } catch(_) {
+      try { dying.stop(); dying.unload(); } catch(_){}
+    }
     currentHowl = null;
   }
   _stopProgressLoop();
@@ -2434,12 +2445,14 @@ function play(id, fromQueue=false){
   const howl = new Howl({
     src: [audioOf(s)],
     html5: true,     // <audio>タグで再生 → R2からCORSなしで動作
-    volume: savedVolume,
+    volume: 0,       // 無音スタート → onplay でフェードイン（ぷつぷつ防止）
     autoplay: true,
     onload: () => {
       document.getElementById('durTime').textContent = fmtDur(howl.duration());
     },
     onplay: () => {
+      // フェードイン（40ms）で開始ぷつぷつを消す
+      howl.fade(0, savedVolume, 40);
       document.getElementById('playBtn').textContent = '⏸';
       document.getElementById('player').classList.add('playing');
       _stopProgressLoop();
@@ -2485,8 +2498,16 @@ playBtn.onclick = () => {
   // playing() はiOSで不正確な場合があるため、ボタン表示を正とする
   const h = _activeHowl();
   if (h) {
-    if (playBtn.textContent === '⏸') h.pause();
-    else h.play();
+    if (playBtn.textContent === '⏸') {
+      // ポーズ: フェードアウト後に停止（ぷつぷつ防止）
+      h.fade(h.volume(), 0, 60);
+      setTimeout(() => { try { h.pause(); } catch(_){} }, 70);
+    } else {
+      // 再開: 無音から再生してフェードイン
+      h.volume(0);
+      h.play();
+      setTimeout(() => { try { h.fade(0, savedVolume, 40); } catch(_){} }, 10);
+    }
     return;
   }
   if (!audio.src) return;
@@ -2523,7 +2544,12 @@ function _doSeek(ratio){
     const apply = () => {
       const d = h.duration();
       if (d > 0) {
+        // シーク前にミュート → ぷつぷつ防止
+        const vol = h.volume();
+        h.volume(0);
         try { h.seek(ratio * d); } catch(e){ console.warn('seek err', e); }
+        // 30ms後にフェードイン
+        setTimeout(() => { try { h.fade(0, vol > 0 ? vol : savedVolume, 30); } catch(_){} }, 30);
         // 進捗バーを即時更新 (Howler内部の状態反映を待たない)
         const pct = ratio*100;
         document.getElementById('fill').style.width = pct + '%';
