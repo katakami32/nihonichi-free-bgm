@@ -20,17 +20,21 @@ GENRE_RULES = [
     ("electronic",          ["electronic", "edm", "synthwave", "future bass", "house",
                              "techno", "trance", "dubstep", "chiptune", "8bit", "8-bit",
                              "idm", "dnb", "drum and bass"]),
+    # childrens BEFORE j-pop/pop/folk — tags like "children's instrumental pop" must not
+    # fall through to the "pop" rule
+    ("childrens",           ["children", "children's", "kids", "nursery", "lullaby",
+                             "toybox", "toy box", "toy piano", "marimba parade",
+                             "playful ukulele", "cartoon"]),
     ("j-pop",               ["j-pop", "jpop", "city pop", "citypop", "acoustic pop",
                              "ballad", "pop rock", "pop-rock", "idol", "indie pop"]),
-    ("pop",                 ["pop"]),  # generic pop fallback
+    ("folk-acoustic",       ["folk", "acoustic", "country", "americana", "bluegrass"]),
+    ("pop",                 ["pop"]),  # generic pop fallback — MUST stay after childrens/j-pop/folk
     ("hip-hop-rnb",         ["hip hop", "hip-hop", "hiphop", "trap", "r&b", "rnb", "soul"]),
     ("rock",                ["rock", "punk", "metal", "emo", "grunge", "alternative"]),
-    ("folk-acoustic",       ["folk", "acoustic", "country", "americana", "bluegrass"]),
     ("japanese-anime",      ["japanese traditional", "japanese festival",
                              "japanese documentary", "anime", "shakuhachi", "koto",
                              "taiko", "enka"]),
     ("corporate-bgm",       ["corporate", "documentary", "business"]),
-    ("childrens",           ["children", "kids", "nursery", "lullaby"]),
 ]
 FALLBACK = "other"
 
@@ -80,18 +84,35 @@ def main():
         base    = f"{slug}_{short}"
         slug_counts[base] += 1
 
+        # duration: top-level (old API) → metadata.duration (new API v5.5+)
+        meta     = c.get("metadata") or {}
+        duration = c.get("duration") or meta.get("duration")
+
+        # BPM: top-level avg_bpm (old) → parse from metadata.tags text (new)
+        bpm = c.get("avg_bpm")
+        if not bpm:
+            import re as _re
+            all_text = (meta.get("tags") or "") + " " + (c.get("display_tags") or "")
+            m = _re.search(r"(\d{2,3})\s*bpm", all_text, _re.IGNORECASE)
+            bpm = int(m.group(1)) if m else None
+
+        # description: prefer gpt_description_prompt from metadata (new) over top-level
+        description = (meta.get("gpt_description_prompt")
+                       or c.get("gpt_description_prompt")
+                       or "")
+
         row = {
             "id":          c["id"],
             "title":       c.get("title", ""),
             "slug":        base,
             "genre":       genre,
             "display_tags":c.get("display_tags", ""),
-            "tags":        (c.get("tags") or "")[:1000],
-            "description": c.get("gpt_description_prompt") or "",
+            "tags":        (meta.get("tags") or c.get("tags") or "")[:1000],
+            "description": description,
             "prompt":      (c.get("prompt") or "")[:500],
-            "duration":    c.get("duration"),
-            "bpm":         c.get("avg_bpm"),
-            "model":       c.get("model"),
+            "duration":    duration,
+            "bpm":         bpm,
+            "model":       c.get("model_name") or c.get("model"),
             "created_at":  c.get("created_at"),
             "audio_url":   c.get("audio_url"),
             "image_url":   c.get("image_url"),
