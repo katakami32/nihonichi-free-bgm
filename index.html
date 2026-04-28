@@ -6901,8 +6901,17 @@ function initLang() {
   try { lang = localStorage.getItem('nihonichi_lang'); } catch(e){}
   // 2. なければブラウザ言語を判定
   if (!lang) {
-    const bl = (navigator.language || navigator.userLanguage || 'ja').toLowerCase();
-    lang = bl.startsWith('ja') ? 'ja' : 'en';
+    // navigator.languages は全ての優先言語リスト（モバイルでも有効）
+    // 日本語サイトなので: 言語リストに ja が含まれていれば日本語、
+    // 完全に英語のみ環境だけ英語にする
+    const langs = Array.from(navigator.languages || []).map(l => l.toLowerCase());
+    if (!langs.length) langs.push((navigator.language || 'ja').toLowerCase());
+    const hasJa = langs.some(l => l.startsWith('ja'));
+    const topIsEn = langs[0] && langs[0].startsWith('en');
+    // 日本語が含まれる → 日本語
+    // 日本語がなく、第一言語が英語 → 英語
+    // それ以外（中国語・韓国語など）→ 日本語（日本向けサイトのデフォルト）
+    lang = hasJa ? 'ja' : (topIsEn ? 'en' : 'ja');
   }
   applyLang(lang);
 }
