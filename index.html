@@ -315,10 +315,10 @@ body.ai-active .hsearch input{border-color:var(--gold);background:rgba(0,0,0,.6)
 .aimodal.on{display:flex}
 .aibox{background:var(--card);color:var(--ink);max-width:640px;width:100%;border-radius:18px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.4);border:1px solid var(--border);max-height:88vh;display:flex;flex-direction:column}
 .aibody{overflow-y:auto;flex:1;min-height:0}
-.aitop{padding:1.4rem 1.6rem;background:linear-gradient(135deg,var(--ink) 0%,#2a1810 100%);color:#fff}
-.aittl{font-family:var(--serif);font-size:1.4rem;font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:.4rem}
-.aittl span:first-child{font-size:1.6rem}
-.aisub{font-size:12.5px;color:rgba(255,255,255,.7);line-height:1.7}
+.aitop{padding:1rem 1.4rem .9rem;background:linear-gradient(135deg,var(--ink) 0%,#2a1810 100%);color:#fff}
+.aittl{font-family:var(--serif);font-size:1.15rem;font-weight:700;display:flex;align-items:center;gap:7px;margin-bottom:.25rem;white-space:nowrap}
+.aittl span:first-child{font-size:1.3rem;flex-shrink:0}
+.aisub{font-size:12px;color:rgba(255,255,255,.7);line-height:1.5}
 .aibody{padding:1.4rem 1.6rem}
 .aiform{display:flex;flex-direction:column;gap:.8rem}
 .aiform textarea{font-family:var(--font);font-size:14px;padding:14px 16px;border:1.5px solid var(--border);border-radius:10px;background:var(--paper);color:var(--ink);resize:vertical;min-height:90px;outline:none;transition:all .2s;line-height:1.7}
@@ -345,6 +345,44 @@ body.ai-active .hsearch input{border-color:var(--gold);background:rgba(0,0,0,.6)
 .aihist-item .h-rm{flex-shrink:0;width:18px;height:18px;border-radius:50%;border:none;background:transparent;color:var(--muted);cursor:pointer;display:grid;place-items:center;font-size:13px;line-height:1;opacity:0;transition:opacity .15s}
 .aihist-item:hover .h-rm{opacity:1}
 .aihist-item .h-rm:hover{background:var(--accent);color:#fff}
+
+/* AI モーダル — タブ */
+.aitabs{display:flex;background:var(--paper);border-bottom:2px solid var(--border);flex-shrink:0}
+.aitab{flex:1;padding:10px 4px;font-size:12px;font-weight:700;background:transparent;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;cursor:pointer;color:var(--muted);transition:all .15s;letter-spacing:.01em}
+.aitab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.aitab:hover:not(.active){color:var(--ink);background:var(--warm)}
+.aitabpanel{padding:1.2rem 1.4rem}
+
+/* AI モーダル — 気分カード */
+.aimood-section{margin-bottom:1.1rem}
+.aimood-ttl{font-size:12.5px;font-weight:700;color:var(--ink);margin-bottom:.65rem;letter-spacing:.02em}
+.aimood-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.aimood-grid--scene{grid-template-columns:repeat(4,1fr)}
+.aimoodcard{display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 6px 10px;border-radius:12px;background:var(--paper);border:2px solid var(--border);cursor:pointer;font-size:1.55rem;transition:all .15s;color:var(--ink);line-height:1}
+.aimoodcard span{font-size:10.5px;font-weight:600;text-align:center;line-height:1.25;color:var(--ink)}
+.aimoodcard:hover{border-color:var(--accent);background:var(--warm);transform:translateY(-1px)}
+.aimoodcard.selected{border-color:var(--accent);background:var(--warm);box-shadow:0 0 0 3px rgba(200,90,30,.18)}
+.aimood-grid--scene .aimoodcard{padding:10px 4px 8px;font-size:1.3rem}
+@media(max-width:480px){
+  .aimood-grid{grid-template-columns:repeat(3,1fr)}
+  .aimood-grid--scene{grid-template-columns:repeat(4,1fr)}
+  .aimoodcard span{font-size:10px}
+}
+
+/* AI モーダル — パーソナル推薦 */
+.airecs-empty{text-align:center;padding:2.2rem 1rem 1.8rem;color:var(--muted)}
+.airecs-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;font-size:13px;font-weight:700}
+.airecs-profile{font-size:11px;font-weight:400;color:var(--muted)}
+.airecs-list{display:flex;flex-direction:column;gap:6px;max-height:230px;overflow-y:auto}
+.airecs-item{display:flex;align-items:center;gap:9px;padding:7px 9px;border-radius:10px;background:var(--paper);border:1px solid var(--border);cursor:pointer;transition:all .12s}
+.airecs-item:hover{border-color:var(--accent);background:var(--warm)}
+.airecs-thumb{width:38px;height:38px;border-radius:7px;object-fit:cover;flex-shrink:0}
+.airecs-thumb-fb{width:38px;height:38px;border-radius:7px;background:var(--warm2);display:grid;place-items:center;font-size:1.1rem;flex-shrink:0}
+.airecs-info{flex:1;min-width:0}
+.airecs-title{font-size:12.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.airecs-meta{font-size:11px;color:var(--muted);margin-top:2px}
+.airecs-play{flex-shrink:0;width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;border:none;cursor:pointer;display:grid;place-items:center;font-size:12px;transition:transform .15s}
+.airecs-play:hover{transform:scale(1.12)}
 
 /* PICKUP (今週のおすすめ) */
 .pickup{background:linear-gradient(180deg,var(--warm) 0%,var(--paper) 100%);padding:2.5rem 1.5rem 2rem;border-bottom:1px solid var(--border)}
@@ -596,6 +634,7 @@ html[data-theme="dark"] .pbar{background:#0a0805;color:#f3ece1}
 .vol input{width:80px;cursor:pointer;accent-color:var(--accent)}
 .pdl{flex-shrink:0;font-size:12px;font-weight:700;padding:9px 16px;border-radius:7px;border:1px solid rgba(255,255,255,.22);background:transparent;color:rgba(255,255,255,.85);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:5px}
 .pdl:hover{background:rgba(255,255,255,.12);color:#fff}
+#dlBtn{display:none}
 
 /* DETAIL MODAL */
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:300;display:none;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(6px)}
@@ -715,6 +754,7 @@ html[data-theme="dark"] footer{background:#0a0805}
   /* 行3: シークバー全幅 */
   .parea{display:flex;order:3;width:100%;min-width:0;margin-top:2px}
   .vol,.pdl{display:none}
+  #dlBtn{display:inline-flex}
   /* ===== モバイルシークバー（完全作り直し） ===== */
   /* タップ領域 32px、視覚トラック 6px */
   .pseek{
@@ -1152,6 +1192,7 @@ html[data-theme="dark"] footer{background:#0a0805}
       <button class="cb" id="similarBtn" data-i18n-title="player_similar" data-i18n-aria="player_similar" title="この曲に似た曲を探す" aria-label="似た曲">🔮</button>
       <button class="cb" id="pickBtn" data-i18n-title="player_pick" data-i18n-aria="player_pick" title="プレイリストに追加" aria-label="プレイリストに追加">＋</button>
       <button class="cb" id="shareBtn" data-i18n-title="player_share" data-i18n-aria="player_share" title="共有" aria-label="この曲を共有">↗</button>
+      <button class="cb" id="dlBtn" title="ダウンロード" aria-label="ダウンロード">⬇</button>
       <!-- RADIOモード中のみ表示 -->
       <button class="cb prfb pgood" id="pGoodBtn" data-i18n-title="player_good" data-i18n-aria="player_good" title="グッド（優先再生）" aria-label="グッド">👍</button>
       <button class="cb prfb pbad"  id="pBadBtn"  data-i18n-title="player_bad" data-i18n-aria="player_bad" title="バッド（流れにくくする）" aria-label="バッド">👎</button>
@@ -1210,30 +1251,87 @@ html[data-theme="dark"] footer{background:#0a0805}
     <div class="aitop">
       <button class="aiclose" onclick="closeAi()" aria-label="閉じる">×</button>
       <div class="aittl"><span>✨</span><span id="aiTitleLabel" data-i18n="ai_modal_title">AIにおまかせマッチング</span></div>
-      <div class="aisub" data-i18n-html="ai_modal_sub">どんな雰囲気の曲が欲しいか、自由に文章で書いてください。<br>シーン・気分・楽器・テンポなど何でもOK。AIが<span id="aiSubCount">2,090</span>曲から選び、なぜその曲が合うのか理由も教えてくれます。</div>
+      <div class="aisub">タップするだけで<span id="aiSubCount">2,090</span>曲からぴったりを選びます</div>
+    </div>
+    <!-- タブ -->
+    <div class="aitabs">
+      <button class="aitab active" data-tab="recs">🎯 あなたへ</button>
+      <button class="aitab" data-tab="mood">💭 気分で選ぶ</button>
+      <button class="aitab" data-tab="text">✏️ 詳細指定</button>
     </div>
     <div class="aibody">
-      <div class="aiform">
-        <textarea id="aiPrompt" placeholder="例: 雨の日の夜にカフェで本を読みながら聴きたい、優しいピアノの曲。落ち着いた雰囲気で。" rows="4" maxlength="300"></textarea>
-        <div class="aiexamples" id="aiExamples">
-          <button type="button" class="aiex" data-q="朝のVlogに合う爽やかなアコースティックギター" data-i18n="aiex_vlog">朝のVlog</button>
-          <button type="button" class="aiex" data-q="ゲーム実況のバトルシーンで盛り上がる激しいロック" data-i18n="aiex_game">ゲームバトル</button>
-          <button type="button" class="aiex" data-q="勉強・作業に集中できる優しいLo-Fi" data-i18n="aiex_study">勉強・作業</button>
-          <button type="button" class="aiex" data-q="料理動画にぴったりの明るくて軽快な音楽" data-i18n="aiex_cooking">料理動画</button>
-          <button type="button" class="aiex" data-q="ホラー演出で不気味な雰囲気を出したい" data-i18n="aiex_horror">ホラー</button>
-          <button type="button" class="aiex" data-q="深夜カフェでチルする大人のジャズ" data-i18n="aiex_jazz">夜のジャズ</button>
-          <button type="button" class="aiex" data-q="桜の春らしい優しくて切ないピアノ" data-i18n="aiex_spring">桜・春</button>
-          <button type="button" class="aiex" data-q="壮大なシネマティックでエピックな冒険感" data-i18n="aiex_epic">エピック冒険</button>
+
+      <!-- ── Tab: パーソナル推薦 ── -->
+      <div class="aitabpanel" id="aiPanelRecs">
+        <div id="aiRecsEmpty" class="airecs-empty">
+          <div style="font-size:2.4rem;margin-bottom:.5rem">🎵</div>
+          <div style="font-weight:700;margin-bottom:.4rem">まだ再生履歴がありません</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.6">曲を聴いたり、プレイリストに追加したりすると<br>あなたの好みを学習して自動でおすすめします。</div>
         </div>
-        <button class="aigo" id="aiGo" data-i18n="ai_go_btn">✨ ぴったりの曲を選んでもらう</button>
-        <div class="aihist" id="aiHistWrap" style="display:none">
-          <div class="aihist-label">
-            <span data-i18n="ai_hist_label">🕘 過去の検索</span>
-            <button type="button" class="aihist-clear" id="aiHistClear" data-i18n="ai_hist_clear">クリア</button>
+        <div id="aiRecsContent" style="display:none">
+          <div class="airecs-head">
+            <span>🎯 あなたの好みから</span>
+            <span id="aiRecsProfile" class="airecs-profile"></span>
           </div>
-          <div class="aihist-list" id="aiHistList"></div>
+          <div id="aiRecsList" class="airecs-list"></div>
+          <button class="aigo" id="aiRecsGo" style="margin-top:.8rem">✨ このテイストでもっと探す</button>
         </div>
       </div>
+
+      <!-- ── Tab: 気分で選ぶ ── -->
+      <div class="aitabpanel" id="aiPanelMood" style="display:none">
+        <div class="aimood-section">
+          <div class="aimood-ttl">今の気分は？</div>
+          <div class="aimood-grid" id="aiMoodGrid">
+            <button class="aimoodcard" data-mood="calm">😌<span>落ち着きたい</span></button>
+            <button class="aimoodcard" data-mood="energy">⚡<span>元気になりたい</span></button>
+            <button class="aimoodcard" data-mood="sad">😢<span>しんみりしたい</span></button>
+            <button class="aimoodcard" data-mood="focus">🎯<span>集中したい</span></button>
+            <button class="aimoodcard" data-mood="fun">💃<span>楽しみたい</span></button>
+            <button class="aimoodcard" data-mood="night">🌙<span>夜にひたる</span></button>
+          </div>
+        </div>
+        <div class="aimood-section" id="aiSceneSection" style="opacity:.35;pointer-events:none;transition:opacity .2s">
+          <div class="aimood-ttl">どこで使う？ <span style="font-size:11px;font-weight:400;color:var(--muted)">(任意)</span></div>
+          <div class="aimood-grid aimood-grid--scene" id="aiSceneGrid">
+            <button class="aimoodcard" data-scene="video">🎬<span>動画制作</span></button>
+            <button class="aimoodcard" data-scene="game">🎮<span>ゲーム</span></button>
+            <button class="aimoodcard" data-scene="cafe">☕<span>カフェ・作業</span></button>
+            <button class="aimoodcard" data-scene="study">📚<span>勉強</span></button>
+            <button class="aimoodcard" data-scene="workout">🏋️<span>運動</span></button>
+            <button class="aimoodcard" data-scene="morning">🌅<span>朝</span></button>
+            <button class="aimoodcard" data-scene="japanese">🌸<span>和風・日本</span></button>
+            <button class="aimoodcard" data-scene="party">🎉<span>お祝い</span></button>
+          </div>
+        </div>
+        <button class="aigo" id="aiMoodGo" disabled>✨ おすすめを見る</button>
+      </div>
+
+      <!-- ── Tab: テキスト詳細指定 (従来) ── -->
+      <div class="aitabpanel" id="aiPanelText" style="display:none">
+        <div class="aiform">
+          <textarea id="aiPrompt" placeholder="例: 雨の日の夜にカフェで本を読みながら聴きたい、優しいピアノの曲。落ち着いた雰囲気で。" rows="4" maxlength="300"></textarea>
+          <div class="aiexamples" id="aiExamples">
+            <button type="button" class="aiex" data-q="朝のVlogに合う爽やかなアコースティックギター" data-i18n="aiex_vlog">朝のVlog</button>
+            <button type="button" class="aiex" data-q="ゲーム実況のバトルシーンで盛り上がる激しいロック" data-i18n="aiex_game">ゲームバトル</button>
+            <button type="button" class="aiex" data-q="勉強・作業に集中できる優しいLo-Fi" data-i18n="aiex_study">勉強・作業</button>
+            <button type="button" class="aiex" data-q="料理動画にぴったりの明るくて軽快な音楽" data-i18n="aiex_cooking">料理動画</button>
+            <button type="button" class="aiex" data-q="ホラー演出で不気味な雰囲気を出したい" data-i18n="aiex_horror">ホラー</button>
+            <button type="button" class="aiex" data-q="深夜カフェでチルする大人のジャズ" data-i18n="aiex_jazz">夜のジャズ</button>
+            <button type="button" class="aiex" data-q="桜の春らしい優しくて切ないピアノ" data-i18n="aiex_spring">桜・春</button>
+            <button type="button" class="aiex" data-q="壮大なシネマティックでエピックな冒険感" data-i18n="aiex_epic">エピック冒険</button>
+          </div>
+          <button class="aigo" id="aiGo" data-i18n="ai_go_btn">✨ ぴったりの曲を選んでもらう</button>
+          <div class="aihist" id="aiHistWrap" style="display:none">
+            <div class="aihist-label">
+              <span data-i18n="ai_hist_label">🕘 過去の検索</span>
+              <button type="button" class="aihist-clear" id="aiHistClear" data-i18n="ai_hist_clear">クリア</button>
+            </div>
+            <div class="aihist-list" id="aiHistList"></div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -2389,10 +2487,18 @@ function _setupPlayerUI(s){
   if (!cur || cur.getAttribute('src') !== img) {
     pt.innerHTML = img ? `<img src="${escHtml(img)}" alt="">` : '🎵';
   }
-  document.getElementById('pDl').href = audioOf(s);
-  document.getElementById('pDl').setAttribute('download', (s.slug||s.id)+'.mp3');
+  const dlUrl = audioOf(s);
+  const dlName = (s.slug||s.id)+'.mp3';
+  document.getElementById('pDl').href = dlUrl;
+  document.getElementById('pDl').setAttribute('download', dlName);
   document.getElementById('pDl').onclick = () => {
     if (USE_API) apiBeacon('/api/download', { id });
+  };
+  // モバイル用ダウンロードボタン（pctrl内）
+  document.getElementById('dlBtn').onclick = () => {
+    if (USE_API) apiBeacon('/api/download', { id });
+    const a = document.createElement('a');
+    a.href = dlUrl; a.download = dlName; a.click();
   };
   if (USE_API) apiBeacon('/api/play', { id });
 }
@@ -2437,6 +2543,7 @@ function play(id, fromQueue=false){
   _stopProgressLoop();
 
   nowPlayingId = id;
+  trackPlay(id);   // 行動履歴に記録 → パーソナライズ推薦に使用
   _setupPlayerUI(s);
   document.getElementById('player').classList.add('playing');
 
@@ -3484,7 +3591,7 @@ window.openAi = () => {
   setTimeout(() => document.getElementById('aiPrompt').focus(), 80);
 };
 window.closeAi = () => document.getElementById('aiModal').classList.remove('on');
-document.getElementById('aiOpen').onclick = openAi;
+document.getElementById('aiOpen').onclick = () => window.openAi();
 document.getElementById('aiModal').addEventListener('click', e => {
   if (e.target.id === 'aiModal') closeAi();
 });
@@ -3769,10 +3876,227 @@ document.getElementById('aiHistClear').onclick = () => {
   toast('AI履歴をクリアしました');
 };
 
+// ============================================================
+// 🎵 再生履歴トラッキング & パーソナライズ推薦
+// ============================================================
+const PLAY_HIST_KEY = 'play_history:v2';
+const PLAY_HIST_MAX = 200;
+
+function trackPlay(id) {
+  if (!id) return;
+  try {
+    let hist = JSON.parse(localStorage.getItem(PLAY_HIST_KEY) || '[]');
+    hist = hist.filter(x => x.id !== id);
+    hist.unshift({ id, ts: Date.now() });
+    if (hist.length > PLAY_HIST_MAX) hist = hist.slice(0, PLAY_HIST_MAX);
+    localStorage.setItem(PLAY_HIST_KEY, JSON.stringify(hist));
+  } catch(_){}
+}
+
+function buildTasteProfile() {
+  let playHist = [];
+  try { playHist = JSON.parse(localStorage.getItem(PLAY_HIST_KEY) || '[]'); } catch(_){}
+
+  const plIds   = [...playlist];
+  const likedIds = [..._rPrefs.likes];
+
+  // 好み信号を重み付きで合算（ラジオgood=3, プレイリスト=2, 再生=1）
+  const songWeights = new Map();
+  for (const id of likedIds) songWeights.set(id, (songWeights.get(id)||0) + 3);
+  for (const id of plIds)    songWeights.set(id, (songWeights.get(id)||0) + 2);
+  for (const {id} of playHist.slice(0, 60)) songWeights.set(id, (songWeights.get(id)||0) + 1);
+
+  if (!songWeights.size) return null;
+
+  const genreCount = {};
+  const tagCount   = {};
+  let bpmSum = 0, bpmCnt = 0;
+
+  for (const [id, weight] of songWeights) {
+    const s = findSong(id) || allSongs.find(x => x.id === id);
+    if (!s) continue;
+    genreCount[s.genre] = (genreCount[s.genre]||0) + weight;
+    if (s.bpm) { bpmSum += s.bpm * weight; bpmCnt += weight; }
+    for (const t of (s.tags||'').split(',')) {
+      const tag = t.trim().toLowerCase();
+      if (tag && tag.length > 1) tagCount[tag] = (tagCount[tag]||0) + weight;
+    }
+  }
+
+  const topGenres = Object.entries(genreCount).sort((a,b)=>b[1]-a[1]).slice(0,3).map(([g])=>g);
+  const topTags   = Object.entries(tagCount).sort((a,b)=>b[1]-a[1]).slice(0,10).map(([t])=>t);
+  const avgBpm    = bpmCnt > 0 ? Math.round(bpmSum / bpmCnt) : null;
+
+  return { topGenres, topTags, avgBpm, total: songWeights.size };
+}
+
+function getPersonalRecs(limit=10) {
+  const profile = buildTasteProfile();
+  if (!profile || (!profile.topTags.length && !profile.topGenres.length)) return null;
+
+  let playHist = [];
+  try { playHist = JSON.parse(localStorage.getItem(PLAY_HIST_KEY) || '[]'); } catch(_){}
+  // 直近20曲は除外して新鮮さを保つ
+  const recentIds = new Set(playHist.slice(0, 20).map(x => x.id));
+  const pool      = allSongs.filter(s => !recentIds.has(s.id) && !_rPrefs.dislikes.has(s.id));
+  const prompt    = [...profile.topTags, ...profile.topGenres].join(' ');
+
+  return { profile, results: aiMatch(prompt, pool, limit) };
+}
+
+// ── 気分・シーン → クエリキーワード マッピング ─────────────────
+const MOOD_MAP = {
+  calm:   '落ち着いた 穏やか リラックス チル 癒し soft gentle peaceful mellow',
+  energy: '明るい 元気 アップテンポ 高揚 energetic upbeat exciting bright',
+  sad:    '切ない 悲しい 感動的 メランコリー melancholy emotional sentimental nostalgic',
+  focus:  '集中 Lo-Fi 穏やか 静か 作業用 シンプル minimal ambient',
+  fun:    '楽しい 明るい ポップ パーティー fun pop happy playful',
+  night:  '夜 ジャズ おしゃれ メロウ 夜更け midnight jazz mellow late night chill',
+};
+const SCENE_MAP = {
+  video:    '動画 YouTube Vlog 映像 BGM cinematic',
+  game:     'ゲーム バトル 疾走 epic action game adventure',
+  cafe:     'カフェ おしゃれ リラックス コーヒー lounge café',
+  study:    '勉強 集中 Lo-Fi 静か 作業 study focus',
+  workout:  '運動 スポーツ アップテンポ トレーニング workout energetic',
+  morning:  '朝 爽やか アコースティック 清々しい morning fresh acoustic',
+  japanese: '和風 日本 アニメ 和楽器 桜 japan traditional koto shakuhachi',
+  party:    'お祝い パーティー 祭り 楽しい party celebration festive',
+};
+
+// ── パーソナル推薦タブ描画 ─────────────────────────────────────
+function _renderAiRecs() {
+  const empty   = document.getElementById('aiRecsEmpty');
+  const content = document.getElementById('aiRecsContent');
+  const list    = document.getElementById('aiRecsList');
+  const profEl  = document.getElementById('aiRecsProfile');
+  if (!empty || !content || !list) return;
+
+  // 行動履歴があるか確認（localStorage から直接チェック）
+  let playHist = [];
+  try { playHist = JSON.parse(localStorage.getItem(PLAY_HIST_KEY) || '[]'); } catch(_){}
+  const hasHistory = playHist.length > 0 || _rPrefs.likes.size > 0 || playlist.size > 0;
+
+  if (!hasHistory) {
+    empty.style.display = '';
+    content.style.display = 'none';
+    return;
+  }
+
+  const recs = getPersonalRecs(10);
+
+  if (!recs || !recs.results.length) {
+    // 履歴はあるが allSongs がまだ未ロード → 1秒後にリトライ
+    empty.style.display = '';
+    content.style.display = 'none';
+    setTimeout(() => {
+      const modal = document.getElementById('aiModal');
+      const tab   = document.querySelector('.aitab[data-tab="recs"]');
+      if (modal?.classList.contains('on') && tab?.classList.contains('active')) {
+        _renderAiRecs();
+      }
+    }, 1000);
+    return;
+  }
+
+  empty.style.display = 'none';
+  content.style.display = '';
+
+  const { profile, results } = recs;
+  profEl.textContent = profile.topGenres.length
+    ? `好みのジャンル: ${profile.topGenres.slice(0,2).join(' · ')}`
+    : '';
+
+  list.innerHTML = results.map(s => {
+    const img   = imageOf(s);
+    const title = getTitle(s);
+    const meta  = [s.genre, s.bpm ? `♩${Math.round(s.bpm)}` : null, fmtDur(s.duration)].filter(Boolean).join(' · ');
+    return `<div class="airecs-item" data-recid="${escHtml(s.id)}">
+      ${img
+        ? `<img class="airecs-thumb" src="${escHtml(img)}" alt="" loading="lazy">`
+        : `<div class="airecs-thumb-fb">🎵</div>`}
+      <div class="airecs-info">
+        <div class="airecs-title">${escHtml(title)}</div>
+        <div class="airecs-meta">${escHtml(meta)}</div>
+      </div>
+      <button class="airecs-play" data-recplay="${escHtml(s.id)}" aria-label="再生">▶</button>
+    </div>`;
+  }).join('');
+
+  list.querySelectorAll('[data-recplay]').forEach(btn => {
+    btn.onclick = e => { e.stopPropagation(); play(btn.dataset.recplay); closeAi(); };
+  });
+  list.querySelectorAll('[data-recid]').forEach(item => {
+    item.onclick = e => {
+      if (e.target.closest('[data-recplay]')) return;
+      play(item.dataset.recid); closeAi();
+    };
+  });
+
+  const recsGoBtn = document.getElementById('aiRecsGo');
+  if (recsGoBtn) {
+    recsGoBtn.onclick = () => {
+      const prompt = [...recs.profile.topTags, ...recs.profile.topGenres].join(' ');
+      closeAi();
+      runAi(prompt);
+    };
+  }
+}
+
+// ── タブ切替 ─────────────────────────────────────────────────
+function aiSwitchTab(tab) {
+  document.querySelectorAll('.aitab').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+  document.querySelectorAll('.aitabpanel').forEach(p => { p.style.display = 'none'; });
+  const panelId = { recs: 'aiPanelRecs', mood: 'aiPanelMood', text: 'aiPanelText' }[tab];
+  if (panelId) { const el = document.getElementById(panelId); if (el) el.style.display = ''; }
+  if (tab === 'recs') _renderAiRecs();
+  if (tab === 'text') renderAiHist();
+}
+document.querySelectorAll('.aitab').forEach(btn => {
+  btn.onclick = () => aiSwitchTab(btn.dataset.tab);
+});
+
+// ── 気分カード ───────────────────────────────────────────────
+let _aiSelMood  = null;
+let _aiSelScene = null;
+
+document.querySelectorAll('#aiMoodGrid .aimoodcard').forEach(card => {
+  card.onclick = () => {
+    document.querySelectorAll('#aiMoodGrid .aimoodcard').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    _aiSelMood = card.dataset.mood;
+    const sceneSection = document.getElementById('aiSceneSection');
+    if (sceneSection) { sceneSection.style.opacity = '1'; sceneSection.style.pointerEvents = ''; }
+    const goBtn = document.getElementById('aiMoodGo');
+    if (goBtn) goBtn.disabled = false;
+  };
+});
+
+// ── シーンカード (トグル) ───────────────────────────────────
+document.querySelectorAll('#aiSceneGrid .aimoodcard').forEach(card => {
+  card.onclick = () => {
+    const wasSelected = card.classList.contains('selected');
+    document.querySelectorAll('#aiSceneGrid .aimoodcard').forEach(c => c.classList.remove('selected'));
+    if (!wasSelected) { card.classList.add('selected'); _aiSelScene = card.dataset.scene; }
+    else { _aiSelScene = null; }
+  };
+});
+
+// ── 気分で選ぶ → 実行 ─────────────────────────────────────
+document.getElementById('aiMoodGo').onclick = () => {
+  if (!_aiSelMood) return;
+  const parts = [MOOD_MAP[_aiSelMood]];
+  if (_aiSelScene) parts.push(SCENE_MAP[_aiSelScene]);
+  closeAi();
+  runAi(parts.join(' '));
+};
+
 // モーダルが開いた時に履歴を再描画
 const _origOpenAi = window.openAi;
 window.openAi = () => {
   _origOpenAi();
+  // 「あなたへ」タブを初期表示してデータ更新
+  aiSwitchTab('recs');
   renderAiHist();
 };
 
