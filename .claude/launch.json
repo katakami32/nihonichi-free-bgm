@@ -6,6 +6,12 @@
       "runtimeExecutable": "npx",
       "runtimeArgs": ["serve", "-p", "8123", "."],
       "port": 8123
+    },
+    {
+      "name": "bgm-preview",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "-p", "8124", "/tmp/bgm-preview"],
+      "port": 8124
     }
   ]
 }
