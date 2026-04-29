@@ -17,6 +17,13 @@ database_id = "REPLACE_WITH_YOUR_D1_ID"
 binding = "KV"
 id = "REPLACE_WITH_YOUR_KV_ID"
 
+# ─── R2 (音楽・画像・データ格納) ─────────────────
+# wrangler r2 bucket create bgm-data
+# ※ Workers からプロキシ配信 → キャッシュヘッダーをコードで制御
+[[r2_buckets]]
+binding = "R2"
+bucket_name = "bgm-data"
+
 # ─── 公開設定 ────────────────────────────────────
 [vars]
 # R2 を Custom Domain で公開した場合の URL ベース。

@@ -4,9 +4,9 @@
 /*
   Cache-Control: no-cache, must-revalidate
 
-# JSONデータは5分キャッシュ（更新頻度が低いため）
+# JSONデータは常に最新を取得（SWRでフロント側がキャッシュ管理するため）
 /data/*.json
-  Cache-Control: public, max-age=300, stale-while-revalidate=60
+  Cache-Control: no-cache, must-revalidate
 
 # 音声・画像は長期キャッシュ（R2経由なので実質関係ないが念のため）
 /audio/*

@@ -140,6 +140,7 @@ nav a.active{color:#1de9b6;font-weight:700;background:rgba(29,233,182,.1)}
 .htools{display:flex;gap:6px;align-items:center}
 .iconbtn{width:38px;height:38px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:rgba(255,255,255,.7);cursor:pointer;display:grid;place-items:center;font-size:15px;transition:all .18s}
 .iconbtn:hover{border-color:rgba(29,233,182,.5);background:rgba(29,233,182,.08);color:#1de9b6;box-shadow:0 0 10px rgba(29,233,182,.2)}
+#favBtn{display:none!important}
 .hbadge{background:var(--accent);color:#fff;font-size:11px;font-weight:700;padding:6px 14px;border-radius:20px;letter-spacing:.05em}
 
 /* HERO (元の構成) */
@@ -634,7 +635,7 @@ html[data-theme="dark"] .pbar{background:#0a0805;color:#f3ece1}
 .vol input{width:80px;cursor:pointer;accent-color:var(--accent)}
 .pdl{flex-shrink:0;font-size:12px;font-weight:700;padding:9px 16px;border-radius:7px;border:1px solid rgba(255,255,255,.22);background:transparent;color:rgba(255,255,255,.85);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:5px}
 .pdl:hover{background:rgba(255,255,255,.12);color:#fff}
-#dlBtn{display:none}
+#dlBtn{display:none;text-decoration:none;padding:0;line-height:0;border:none}
 
 /* DETAIL MODAL */
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:300;display:none;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(6px)}
@@ -754,7 +755,7 @@ html[data-theme="dark"] footer{background:#0a0805}
   /* 行3: シークバー全幅 */
   .parea{display:flex;order:3;width:100%;min-width:0;margin-top:2px}
   .vol,.pdl{display:none}
-  #dlBtn{display:inline-flex}
+  #dlBtn{display:grid;place-items:center}
   /* ===== モバイルシークバー（完全作り直し） ===== */
   /* タップ領域 32px、視覚トラック 6px */
   .pseek{
@@ -801,7 +802,7 @@ html[data-theme="dark"] footer{background:#0a0805}
 </head>
 <body>
 
-<a href="#browse" class="skip">本文（楽曲一覧）へスキップ</a>
+<a href="#browse" class="skip" data-i18n="skip_link">本文（楽曲一覧）へスキップ</a>
 
 <header>
   <div class="hwrap">
@@ -824,10 +825,10 @@ html[data-theme="dark"] footer{background:#0a0805}
       <a href="#license" data-i18n="nav_license">利用規約</a>
     </nav>
     <div class="htools">
-      <button class="iconbtn" id="randomBtn" title="ランダム1曲再生 (R)" aria-label="ランダム再生">🎲</button>
-      <button class="iconbtn" id="favBtn" title="お気に入り (F)" aria-label="お気に入り一覧">♡</button>
-      <button class="iconbtn" id="themeBtn" title="ダーク/ライト切替" aria-label="テーマ切替">🌗</button>
-      <button class="iconbtn" id="langBtn" title="Switch Language" aria-label="言語切替">🌐</button>
+      <button class="iconbtn" id="randomBtn" data-i18n-title="btn_random_title" data-i18n-aria="btn_random_aria" title="ランダム1曲再生 (R)" aria-label="ランダム再生">🎲</button>
+      <button class="iconbtn" id="favBtn" data-i18n-title="btn_fav_title" data-i18n-aria="btn_fav_aria" title="お気に入り (F)" aria-label="お気に入り一覧">♡</button>
+      <button class="iconbtn" id="themeBtn" data-i18n-title="btn_theme_title" data-i18n-aria="btn_theme_aria" title="ダーク/ライト切替" aria-label="テーマ切替">🌗</button>
+      <button class="iconbtn" id="langBtn" data-i18n-aria="btn_lang_aria" title="Switch Language" aria-label="言語切替">🌐</button>
     </div>
   </div>
 </header>
@@ -839,10 +840,10 @@ html[data-theme="dark"] footer{background:#0a0805}
       <h1 data-i18n-html="hero_h1">すべての<em>クリエイター</em>に、<br>日本一の音を。</h1>
       <p class="lead" data-i18n-html="hero_lead">高品質なAI生成BGMを<b id="totalCount">2,090</b>曲、すべて無料・商用利用OKでダウンロードできます。BPM・尺・ムードで秒で見つかる検索体験。YouTube・ゲーム実況・Vlog・配信・映像制作にどうぞ。</p>
       <div class="hsearch">
-        <input type="text" id="searchBox" placeholder="例：ジャズ、夜カフェ、戦闘、ローファイ、爽やか" data-i18n-placeholder="search_placeholder" aria-label="BGMを検索">
-        <button onclick="doSearch()" title="キーワード検索" aria-label="キーワード検索" data-i18n="search_btn">検索</button>
-        <button class="aibtn" id="aiOpen" title="AIにおまかせ" aria-label="AIにおまかせ" data-i18n-html="ai_btn">✨ AIにおまかせ</button>
-        <button class="radiobtn" id="radioOpen" title="BGMチャンネル" aria-label="BGMチャンネル">🎧 <span data-i18n="radio_btn">BGMチャンネル</span><span class="radiosub" data-i18n="radio_sub">気分を選ぶだけ・自動で流れ続ける</span></button>
+        <input type="text" id="searchBox" placeholder="例：ジャズ、夜カフェ、戦闘、ローファイ、爽やか" data-i18n-placeholder="search_placeholder" data-i18n-aria="search_aria" aria-label="BGMを検索">
+        <button onclick="doSearch()" data-i18n-title="search_title" data-i18n-aria="search_title" title="キーワード検索" aria-label="キーワード検索" data-i18n="search_btn">検索</button>
+        <button class="aibtn" id="aiOpen" data-i18n-title="ai_btn_title" data-i18n-aria="ai_btn_aria" title="AIにおまかせ" aria-label="AIにおまかせ" data-i18n-html="ai_btn">✨ AIにおまかせ</button>
+        <button class="radiobtn" id="radioOpen" data-i18n-title="radio_btn_title" data-i18n-aria="radio_btn_title" title="BGMチャンネル" aria-label="BGMチャンネル">🎧 <span data-i18n="radio_btn">BGMチャンネル</span><span class="radiosub" data-i18n="radio_sub">気分を選ぶだけ・自動で流れ続ける</span></button>
       </div>
       <div class="aitips" id="aitips">
         <span class="aitip" data-q="朝の散歩で気持ち良くなれる音楽" data-i18n="tip1">☀️ 朝の散歩で気持ち良くなれる音楽</span>
@@ -969,7 +970,7 @@ html[data-theme="dark"] footer{background:#0a0805}
 
   <div>
     <!-- 適用中のフィルタを集約表示 -->
-    <div class="fbar" id="fbar" role="region" aria-label="適用中のフィルタ"></div>
+    <div class="fbar" id="fbar" role="region" data-i18n-aria="filter_region_aria" aria-label="適用中のフィルタ"></div>
     <div class="ctop">
       <div class="ctitle">
         <span id="listTitle" data-i18n="list_new">新着BGM</span>
@@ -1093,7 +1094,7 @@ html[data-theme="dark"] footer{background:#0a0805}
   <div class="contactbox">
     <div class="contacthead">
       <h3 id="contactTitleLabel" data-i18n="contact_title">💬 お問い合わせ</h3>
-      <button class="aiclose" onclick="document.getElementById('contactModal').classList.remove('on')" aria-label="閉じる">×</button>
+      <button class="aiclose" onclick="document.getElementById('contactModal').classList.remove('on')" data-i18n-aria="modal_close_aria" aria-label="閉じる">×</button>
     </div>
     <div class="contactbody">
       <p style="font-size:13px;color:var(--muted);margin:0;line-height:1.7" data-i18n="contact_intro">バグ報告・機能リクエスト・ご意見など、サイト向上のためのご連絡をお待ちしています。</p>
@@ -1143,8 +1144,8 @@ html[data-theme="dark"] footer{background:#0a0805}
     <div class="fgrid">
       <div class="fcol fabout">
         <h3 data-i18n="footer_about_title">このサイトについて</h3>
-        <p><strong style="color:rgba(255,255,255,.85)">日本一フリーMusic</strong> はAIで生成した高品質なオリジナルBGMを、完全無料・商用利用OK・クレジット表記不要で配布する音源ライブラリです。</p>
-        <p>AI生成であることを明示し、利用条件をシンプルに。動画制作・ゲーム実況・配信・映像作品で安心して使える環境を目指しています。</p>
+        <p data-i18n-html="footer_about_p1"><strong style="color:rgba(255,255,255,.85)">日本一フリーMusic</strong> はAIで生成した高品質なオリジナルBGMを、完全無料・商用利用OK・クレジット表記不要で配布する音源ライブラリです。</p>
+        <p data-i18n="footer_about_p2">AI生成であることを明示し、利用条件をシンプルに。動画制作・ゲーム実況・配信・映像作品で安心して使える環境を目指しています。</p>
       </div>
       <div class="fcol">
         <h3 data-i18n="footer_lib_title">ライブラリ</h3>
@@ -1163,13 +1164,12 @@ html[data-theme="dark"] footer{background:#0a0805}
       <div class="fcol">
         <h3 data-i18n="footer_kbd_title">キーボード操作</h3>
         <a href="#" id="fShortcuts">⌨ <span data-i18n="footer_shortcuts">ショートカット一覧</span></a>
-        <a href="sitemap.xml">🗺 サイトマップ</a>
         <a href="robots.txt">🤖 robots.txt</a>
-        <a href="#" id="fCopyUrl">🔗 URLをコピー</a>
+        <a href="#" id="fCopyUrl" data-i18n="footer_copy_url">🔗 URLをコピー</a>
       </div>
     </div>
     <div class="fbot">
-      <div class="flogo">🎵 日本一フリーMusic</div>
+      <div class="flogo" data-i18n="footer_logo">🎵 日本一フリーMusic</div>
       <div class="fcopy">© 2026 日本一フリーMusic. Powered by AI. All sounds free for use.</div>
     </div>
   </div>
@@ -1192,7 +1192,7 @@ html[data-theme="dark"] footer{background:#0a0805}
       <button class="cb" id="similarBtn" data-i18n-title="player_similar" data-i18n-aria="player_similar" title="この曲に似た曲を探す" aria-label="似た曲">🔮</button>
       <button class="cb" id="pickBtn" data-i18n-title="player_pick" data-i18n-aria="player_pick" title="プレイリストに追加" aria-label="プレイリストに追加">＋</button>
       <button class="cb" id="shareBtn" data-i18n-title="player_share" data-i18n-aria="player_share" title="共有" aria-label="この曲を共有">↗</button>
-      <button class="cb" id="dlBtn" title="ダウンロード" aria-label="ダウンロード">⬇</button>
+      <a class="cb" id="dlBtn" data-i18n-title="btn_dl_title" data-i18n-aria="btn_dl_aria" title="ダウンロード" aria-label="ダウンロード"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="display:block"><path d="M8 1.5v9M4 7.5L8 11.5l4-4M2 13.5h12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       <!-- RADIOモード中のみ表示 -->
       <button class="cb prfb pgood" id="pGoodBtn" data-i18n-title="player_good" data-i18n-aria="player_good" title="グッド（優先再生）" aria-label="グッド">👍</button>
       <button class="cb prfb pbad"  id="pBadBtn"  data-i18n-title="player_bad" data-i18n-aria="player_bad" title="バッド（流れにくくする）" aria-label="バッド">👎</button>
@@ -1217,7 +1217,7 @@ html[data-theme="dark"] footer{background:#0a0805}
         <span class="mgenre" id="mGenreBadge">—</span>
         <div class="mtit" id="mTitle">—</div>
       </div>
-      <button class="mclose" onclick="closeModal()" aria-label="閉じる">×</button>
+      <button class="mclose" onclick="closeModal()" data-i18n-aria="modal_close_aria" aria-label="閉じる">×</button>
     </div>
     <div class="mbody">
       <div class="mimg"><img id="mImg" src="" alt=""></div>
@@ -1249,15 +1249,15 @@ html[data-theme="dark"] footer{background:#0a0805}
 <div class="aimodal" id="aiModal" role="dialog" aria-modal="true" aria-labelledby="aiTitleLabel">
   <div class="aibox">
     <div class="aitop">
-      <button class="aiclose" onclick="closeAi()" aria-label="閉じる">×</button>
+      <button class="aiclose" onclick="closeAi()" data-i18n-aria="modal_close_aria" aria-label="閉じる">×</button>
       <div class="aittl"><span>✨</span><span id="aiTitleLabel" data-i18n="ai_modal_title">AIにおまかせマッチング</span></div>
-      <div class="aisub">タップするだけで<span id="aiSubCount">2,090</span>曲からぴったりを選びます</div>
+      <div class="aisub" data-i18n-html="ai_modal_sub">タップするだけで<span id="aiSubCount">2,090</span>曲からぴったりを選びます</div>
     </div>
     <!-- タブ -->
     <div class="aitabs">
-      <button class="aitab active" data-tab="recs">🎯 あなたへ</button>
-      <button class="aitab" data-tab="mood">💭 気分で選ぶ</button>
-      <button class="aitab" data-tab="text">✏️ 詳細指定</button>
+      <button class="aitab active" data-tab="recs" data-i18n="ai_tab_recs">🎯 あなたへ</button>
+      <button class="aitab" data-tab="mood" data-i18n="ai_tab_mood">💭 気分で選ぶ</button>
+      <button class="aitab" data-tab="text" data-i18n="ai_tab_text">✏️ 詳細指定</button>
     </div>
     <div class="aibody">
 
@@ -1265,46 +1265,46 @@ html[data-theme="dark"] footer{background:#0a0805}
       <div class="aitabpanel" id="aiPanelRecs">
         <div id="aiRecsEmpty" class="airecs-empty">
           <div style="font-size:2.4rem;margin-bottom:.5rem">🎵</div>
-          <div style="font-weight:700;margin-bottom:.4rem">まだ再生履歴がありません</div>
-          <div style="font-size:12px;color:var(--muted);line-height:1.6">曲を聴いたり、プレイリストに追加したりすると<br>あなたの好みを学習して自動でおすすめします。</div>
+          <div style="font-weight:700;margin-bottom:.4rem" data-i18n="ai_recs_empty_title">まだ再生履歴がありません</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.6" data-i18n-html="ai_recs_empty_body">曲を聴いたり、プレイリストに追加したりすると<br>あなたの好みを学習して自動でおすすめします。</div>
         </div>
         <div id="aiRecsContent" style="display:none">
           <div class="airecs-head">
-            <span>🎯 あなたの好みから</span>
+            <span data-i18n="ai_recs_head">🎯 あなたの好みから</span>
             <span id="aiRecsProfile" class="airecs-profile"></span>
           </div>
           <div id="aiRecsList" class="airecs-list"></div>
-          <button class="aigo" id="aiRecsGo" style="margin-top:.8rem">✨ このテイストでもっと探す</button>
+          <button class="aigo" id="aiRecsGo" style="margin-top:.8rem" data-i18n="ai_recs_go">✨ このテイストでもっと探す</button>
         </div>
       </div>
 
       <!-- ── Tab: 気分で選ぶ ── -->
       <div class="aitabpanel" id="aiPanelMood" style="display:none">
         <div class="aimood-section">
-          <div class="aimood-ttl">今の気分は？</div>
+          <div class="aimood-ttl" data-i18n="ai_mood_ttl1">今の気分は？</div>
           <div class="aimood-grid" id="aiMoodGrid">
-            <button class="aimoodcard" data-mood="calm">😌<span>落ち着きたい</span></button>
-            <button class="aimoodcard" data-mood="energy">⚡<span>元気になりたい</span></button>
-            <button class="aimoodcard" data-mood="sad">😢<span>しんみりしたい</span></button>
-            <button class="aimoodcard" data-mood="focus">🎯<span>集中したい</span></button>
-            <button class="aimoodcard" data-mood="fun">💃<span>楽しみたい</span></button>
-            <button class="aimoodcard" data-mood="night">🌙<span>夜にひたる</span></button>
+            <button class="aimoodcard" data-mood="calm">😌<span data-i18n="ai_mood_calm">落ち着きたい</span></button>
+            <button class="aimoodcard" data-mood="energy">⚡<span data-i18n="ai_mood_energy">元気になりたい</span></button>
+            <button class="aimoodcard" data-mood="sad">😢<span data-i18n="ai_mood_sad">しんみりしたい</span></button>
+            <button class="aimoodcard" data-mood="focus">🎯<span data-i18n="ai_mood_focus">集中したい</span></button>
+            <button class="aimoodcard" data-mood="fun">💃<span data-i18n="ai_mood_fun">楽しみたい</span></button>
+            <button class="aimoodcard" data-mood="night">🌙<span data-i18n="ai_mood_night">夜にひたる</span></button>
           </div>
         </div>
         <div class="aimood-section" id="aiSceneSection" style="opacity:.35;pointer-events:none;transition:opacity .2s">
-          <div class="aimood-ttl">どこで使う？ <span style="font-size:11px;font-weight:400;color:var(--muted)">(任意)</span></div>
+          <div class="aimood-ttl"><span data-i18n="ai_mood_ttl2">どこで使う？</span> <span style="font-size:11px;font-weight:400;color:var(--muted)" data-i18n="ai_mood_optional">(任意)</span></div>
           <div class="aimood-grid aimood-grid--scene" id="aiSceneGrid">
-            <button class="aimoodcard" data-scene="video">🎬<span>動画制作</span></button>
-            <button class="aimoodcard" data-scene="game">🎮<span>ゲーム</span></button>
-            <button class="aimoodcard" data-scene="cafe">☕<span>カフェ・作業</span></button>
-            <button class="aimoodcard" data-scene="study">📚<span>勉強</span></button>
-            <button class="aimoodcard" data-scene="workout">🏋️<span>運動</span></button>
-            <button class="aimoodcard" data-scene="morning">🌅<span>朝</span></button>
-            <button class="aimoodcard" data-scene="japanese">🌸<span>和風・日本</span></button>
-            <button class="aimoodcard" data-scene="party">🎉<span>お祝い</span></button>
+            <button class="aimoodcard" data-scene="video">🎬<span data-i18n="ai_scene_video">動画制作</span></button>
+            <button class="aimoodcard" data-scene="game">🎮<span data-i18n="ai_scene_game">ゲーム</span></button>
+            <button class="aimoodcard" data-scene="cafe">☕<span data-i18n="ai_scene_cafe">カフェ・作業</span></button>
+            <button class="aimoodcard" data-scene="study">📚<span data-i18n="ai_scene_study">勉強</span></button>
+            <button class="aimoodcard" data-scene="workout">🏋️<span data-i18n="ai_scene_workout">運動</span></button>
+            <button class="aimoodcard" data-scene="morning">🌅<span data-i18n="ai_scene_morning">朝</span></button>
+            <button class="aimoodcard" data-scene="japanese">🌸<span data-i18n="ai_scene_japanese">和風・日本</span></button>
+            <button class="aimoodcard" data-scene="party">🎉<span data-i18n="ai_scene_party">お祝い</span></button>
           </div>
         </div>
-        <button class="aigo" id="aiMoodGo" disabled>✨ おすすめを見る</button>
+        <button class="aigo" id="aiMoodGo" disabled data-i18n="ai_mood_go">✨ おすすめを見る</button>
       </div>
 
       <!-- ── Tab: テキスト詳細指定 (従来) ── -->
@@ -1340,7 +1340,7 @@ html[data-theme="dark"] footer{background:#0a0805}
 <div class="aimodal" id="radioModal" role="dialog" aria-modal="true" aria-labelledby="radioTitleLabel">
   <div class="aibox">
     <div class="aitop">
-      <button class="aiclose" onclick="closeRadio()" aria-label="閉じる">×</button>
+      <button class="aiclose" onclick="closeRadio()" data-i18n-aria="modal_close_aria" aria-label="閉じる">×</button>
       <div class="aittl"><span>🎧</span><span id="radioTitleLabel" data-i18n="rm_modal_title">BGMチャンネル</span></div>
       <div class="aisub" data-i18n-html="rm_modal_sub">気分やシーンを選ぶだけで、<b style="color:var(--gold)">曲が途切れず自動で流れ続けます。</b><br>曲と曲の間は<b style="color:var(--gold)">自然なフェードで滑らかに繋がる</b>ので、作業・勉強・配信BGMにそのまま使えます。</div>
     </div>
@@ -1399,7 +1399,7 @@ html[data-theme="dark"] footer{background:#0a0805}
 <aside class="pldraw" id="plDrawer" role="dialog" aria-modal="true" aria-labelledby="plTitleLabel">
   <div class="plhead">
     <div class="plttl" id="plTitleLabel">📋 <span data-i18n="playlist_title_label">プレイリスト</span><small id="plCount">0曲</small></div>
-    <button class="plclose" id="plClose" aria-label="閉じる">×</button>
+    <button class="plclose" id="plClose" data-i18n-aria="modal_close_aria" aria-label="閉じる">×</button>
   </div>
   <div class="plbody" id="plBody"></div>
   <div class="plfoot" id="plFoot" style="display:none">
@@ -1624,38 +1624,80 @@ function apiBeacon(path, body){
   }).catch(()=>{});
 }
 
+// ─── ダウンロードヘルパー（クロスオリジン R2 対応）────────────────────
+// クロスオリジン (R2) では <a download> がブラウザにブロックされる。
+// ・iOS   : ファイル末尾の iOS IIFE が Web Share API で処理するため何もしない
+// ・非 iOS: blob fetch 方式でブラウザに強制的に保存ダイアログを出す
+const _isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
+  || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+async function _triggerDownload(url, filename) {
+  if (!url) return;
+  // iOS は IIFE の Web Share API ハンドラに任せる（バブル後に動く）
+  if (_isIOS) return;
+  toast('⬇ ダウンロード準備中...');
+  try {
+    const res = await fetch(url, { mode: 'cors' });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const blob = await res.blob();
+    const blobUrl = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = blobUrl;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => { URL.revokeObjectURL(blobUrl); a.remove(); }, 500);
+  } catch(e) {
+    console.warn('[DL] blob failed, opening in new tab:', e.message);
+    window.open(url, '_blank');
+  }
+}
+
+// DL ボタン共通クリックハンドラ
+// ・iOS   : preventDefault のみ（IIFE の Web Share ハンドラがバブル後に動く）
+// ・非 iOS: stopPropagation + blob ダウンロード（IIFE は非 iOS で何もしないので不要）
+function _onDlClick(e, url, filename, songId) {
+  e.preventDefault();
+  if (!_isIOS) e.stopPropagation(); // iOS のみバブルさせて IIFE ハンドラに渡す
+  _triggerDownload(url, filename);  // iOS では内部で即 return する
+  if (USE_API && songId) apiBeacon('/api/download', { id: songId });
+}
+
+// ─── SWR (Stale-While-Revalidate) ヘルパー ────────────────────────
+// localStorage にデータを保存し、次回アクセス時はキャッシュを即座に描画。
+// バックグラウンドで最新データを取得し、差分があれば再描画する。
+const _SWR_GENRES = 'bgm:swr:genres';
+const _SWR_SONGS  = 'bgm:swr:songs';
+const _SWR_TTL    = 5 * 60 * 1000; // 5分間はキャッシュ有効（バックグラウンド再検証も実施）
+
+function _swrRead(key) {
+  try {
+    const raw = localStorage.getItem(key);
+    if (!raw) return null;
+    const obj = JSON.parse(raw);
+    // { ts: number, data: Array } 形式のみ受け付ける
+    return (obj && Array.isArray(obj.data) && typeof obj.ts === 'number') ? obj : null;
+  } catch { return null; }
+}
+
+function _swrWrite(key, data) {
+  try {
+    localStorage.setItem(key, JSON.stringify({ ts: Date.now(), data }));
+  } catch { /* quota exceeded は無視 */ }
+}
+
+// 軽量ハッシュ: 件数 + 先頭10件の id を連結して変化を検出
+function _dataHash(arr) {
+  if (!Array.isArray(arr) || !arr.length) return '0';
+  return arr.length + ':' + arr.slice(0, 10).map(x => String(x.id || x.slug || '')).join(',');
+}
+
 // ---- LOAD ----
 async function load(){
   console.log('🚀 [LOAD] 開始 - DATA_BASE:', DATA_BASE, 'USE_API:', USE_API);
-  try {
-    if (USE_API){
-      console.log('📡 [LOAD] API モード - API URL:', API);
-      const g = await apiGet('/api/genres');
-      genres = g;
-      console.log('✅ [LOAD] genres 取得完了:', genres.length, '件');
-    } else {
-      // データ更新が反映されないことがあるのでキャッシュバスター付与
-      const v = Date.now();
-      console.log('📦 [LOAD] ローカルモード - キャッシュバスター:', v);
-      const [g, all] = await Promise.all([
-        fetch(`${DATA_BASE}/genres.json?v=${v}`, {cache:'no-cache'}).then(r=>{
-          console.log('📥 [LOAD] genres.json 取得:', r.status);
-          if (!r.ok) throw new Error(`Failed to load genres.json: ${r.status} ${r.statusText}`);
-          return r.json();
-        }),
-        fetch(`${DATA_BASE}/index.json?v=${v}`,  {cache:'no-cache'}).then(r=>{
-          console.log('📥 [LOAD] index.json 取得:', r.status);
-          if (!r.ok) throw new Error(`Failed to load index.json: ${r.status} ${r.statusText}`);
-          return r.json();
-        })
-      ]);
-      console.log('✅ [LOAD] Promise.all 完了 - g:', g.length, 'all:', all.length);
-      genres = g;
-      allSongs = all;
-      console.log('💾 [LOAD] 変数代入完了 - genres.length:', genres.length, 'allSongs.length:', allSongs.length);
-      console.log('📊 [LOAD] genres サンプル:', genres[0]);
-      console.log('📊 [LOAD] allSongs サンプル:', allSongs[0]);
-    }
+
+  // データ取得後の共通レンダリング処理
+  function _renderUI() {
     const total = USE_API
       ? genres.reduce((a,g)=>a+(g.count||0),0)
       : allSongs.length;
@@ -1671,6 +1713,76 @@ async function load(){
     renderGenreShowcase();
     renderPickup();
     apply();
+  }
+
+  try {
+    if (USE_API){
+      console.log('📡 [LOAD] API モード - API URL:', API);
+      const g = await apiGet('/api/genres');
+      genres = g;
+      console.log('✅ [LOAD] genres 取得完了:', genres.length, '件');
+      _renderUI();
+    } else {
+      // ── SWR: キャッシュがあれば即座に描画 ──────────────────────
+      const cG = _swrRead(_SWR_GENRES);
+      const cA = _swrRead(_SWR_SONGS);
+      const isFresh = cG && cA && (Date.now() - cG.ts) < _SWR_TTL;
+
+      if (isFresh) {
+        console.log('⚡ [LOAD] SWR: キャッシュヒット (age:', Math.round((Date.now() - cG.ts)/1000), 's) → 即レンダリング');
+        genres   = cG.data;
+        allSongs = cA.data;
+        _renderUI();
+      }
+
+      // ── バックグラウンドまたは初回フェッチ ─────────────────────
+      console.log(isFresh ? '🔄 [LOAD] SWR: バックグラウンド再検証中...' : '📦 [LOAD] 初回フェッチ開始');
+      const v = Date.now();
+      let g, all;
+      try {
+        [g, all] = await Promise.all([
+          fetch(`${DATA_BASE}/genres.json?v=${v}`, {cache:'no-cache'}).then(r=>{
+            console.log('📥 [LOAD] genres.json 取得:', r.status);
+            if (!r.ok) throw new Error(`Failed to load genres.json: ${r.status} ${r.statusText}`);
+            return r.json();
+          }),
+          fetch(`${DATA_BASE}/index.json?v=${v}`,  {cache:'no-cache'}).then(r=>{
+            console.log('📥 [LOAD] index.json 取得:', r.status);
+            if (!r.ok) throw new Error(`Failed to load index.json: ${r.status} ${r.statusText}`);
+            return r.json();
+          })
+        ]);
+      } catch(fetchErr) {
+        if (isFresh) {
+          // キャッシュで表示済み → バックグラウンドエラーは静かに記録
+          console.warn('⚠️ [LOAD] SWR: バックグラウンド再検証失敗（キャッシュ表示を継続）:', fetchErr.message);
+          console.log('✨ [LOAD] 完全に完了 (SWR キャッシュ)');
+          return;
+        }
+        throw fetchErr; // キャッシュなし → 通常エラーとして外側の catch へ
+      }
+
+      // キャッシュを更新
+      _swrWrite(_SWR_GENRES, g);
+      _swrWrite(_SWR_SONGS,  all);
+      console.log('✅ [LOAD] フェッチ完了 - genres:', g.length, '件 / songs:', all.length, '件');
+
+      if (!isFresh) {
+        // キャッシュなし → 初回レンダリング
+        genres   = g;
+        allSongs = all;
+        console.log('💾 [LOAD] 変数代入完了 - genres.length:', genres.length, 'allSongs.length:', allSongs.length);
+        _renderUI();
+      } else if (_dataHash(g) !== _dataHash(cG.data) || _dataHash(all) !== _dataHash(cA.data)) {
+        // データが更新されていた → 差分再レンダリング
+        console.log('🔁 [LOAD] SWR: データ更新を検出 → 再レンダリング');
+        genres   = g;
+        allSongs = all;
+        _renderUI();
+      } else {
+        console.log('✅ [LOAD] SWR: データ変化なし → 再レンダリングをスキップ');
+      }
+    }
     console.log('✨ [LOAD] 完全に完了');
   } catch(e){
     console.error('❌ [LOAD] エラー発生:', e);
@@ -2029,47 +2141,48 @@ function renderFilterBar(){
   const items = [];
 
   if (currentSearch) {
-    items.push({ key:'検索', label:`「${currentSearch}」`, clear: () => {
+    items.push({ key:window.t('fbar_key_search'), label:`「${currentSearch}」`, clear: () => {
       currentSearch=''; document.getElementById('searchBox').value='';
     }});
   }
   if (showFavOnly) {
-    items.push({ key:'絞り込み', label:'♥ お気に入り', clear: () => {
+    items.push({ key:window.t('fbar_key_filter'), label:window.t('fbar_fav_label'), clear: () => {
       showFavOnly=false;
       const fb = document.getElementById('favBtn'); if (fb){fb.style.color='';fb.style.borderColor='';}
     }});
   }
   if (currentCat && currentCat !== 'all'){
     const g = genres.find(x => x.slug === currentCat);
-    items.push({ key:'ジャンル', label: g?.label_ja || currentCat, clear: () => {
+    const gLabel = window._currentLang==='en' ? (g?.label_en || g?.label_ja || currentCat) : (g?.label_ja || currentCat);
+    items.push({ key:window.t('fbar_key_genre'), label: gLabel, clear: () => {
       currentCat = 'all';
       document.querySelectorAll('#catList .catbtn').forEach(b => b.classList.toggle('active', b.dataset.cat === 'all'));
     }});
   }
   if (currentBpm){
-    const lbl = ({slow:'スロー <90',mid:'ミディアム 90-130',fast:'アップ 130+'})[currentBpm];
-    items.push({ key:'BPM', label: lbl, clear: () => {
+    const lbl = window.t({slow:'bpm_slow',mid:'bpm_mid',fast:'bpm_fast'}[currentBpm]);
+    items.push({ key:window.t('fbar_key_bpm'), label: lbl, clear: () => {
       currentBpm = null;
       document.querySelectorAll('#bpmChips .fchip').forEach(c => c.classList.remove('on'));
     }});
   }
   if (currentDur){
-    const lbl = ({short:'ショート <1分',mid:'中尺 1-2分',long:'ロング 2分+'})[currentDur];
-    items.push({ key:'尺', label: lbl, clear: () => {
+    const lbl = window.t({short:'dur_short',mid:'dur_mid',long:'dur_long'}[currentDur]);
+    items.push({ key:window.t('fbar_key_dur'), label: lbl, clear: () => {
       currentDur = null;
       document.querySelectorAll('#durChips .fchip').forEach(c => c.classList.remove('on'));
     }});
   }
   if (currentMood){
-    const lbl = ({chill:'チル・癒し',upbeat:'明るい・元気',dark:'ダーク・緊張',epic:'壮大・シネマ',cute:'かわいい',cool:'クール'})[currentMood];
-    items.push({ key:'ムード', label: lbl, clear: () => {
+    const lbl = window.t({chill:'mood_chill',upbeat:'mood_upbeat',dark:'mood_dark',epic:'mood_epic',cute:'mood_cute',cool:'mood_cool'}[currentMood]);
+    items.push({ key:window.t('fbar_key_mood'), label: lbl, clear: () => {
       currentMood = null;
       document.querySelectorAll('#moodChips .fchip').forEach(c => c.classList.remove('on'));
     }});
   }
   if (typeof currentUse !== 'undefined' && currentUse){
     const lbl = (USE_CASE_MAP[currentUse] || {}).label || currentUse;
-    items.push({ key:'用途', label: lbl, clear: () => {
+    items.push({ key:window.t('fbar_key_use'), label: lbl, clear: () => {
       currentUse = null;
       document.querySelectorAll('#useChips .uchip').forEach(c => c.classList.remove('on'));
     }});
@@ -2083,10 +2196,10 @@ function renderFilterBar(){
 
   bar.classList.add('on');
   bar.innerHTML =
-    `<span class="fbar-label">適用中</span>` +
-    items.map((it, i) => `<span class="fbar-chip" data-i="${i}"><span class="key">${escHtml(it.key)}:</span> ${escHtml(it.label)} <button class="x" data-clear="${i}" aria-label="解除">×</button></span>`).join('') +
+    `<span class="fbar-label">${window.t('fbar_active')}</span>` +
+    items.map((it, i) => `<span class="fbar-chip" data-i="${i}"><span class="key">${escHtml(it.key)}:</span> ${escHtml(it.label)} <button class="x" data-clear="${i}" aria-label="${window.t('fbar_dismiss')}">×</button></span>`).join('') +
     `<span class="fbar-count" id="fbarCount"></span>` +
-    `<button class="fbar-clear" id="fbarClearAll">✕ すべてクリア</button>`;
+    `<button class="fbar-clear" id="fbarClearAll">${window.t('fbar_clear_all')}</button>`;
 
   // 個別 ✕
   bar.querySelectorAll('[data-clear]').forEach(b => b.onclick = (e) => {
@@ -2105,25 +2218,44 @@ function renderFilterBar(){
 function updateTitle(){
   const g = genres.find(x => x.slug === currentCat);
   // ファジーフォールバック時は「なんとなく近い」表記
+  const isEn = window._currentLang === 'en';
   if (currentSearch && view._isFuzzyFallback) {
-    document.getElementById('listTitle').textContent = `🔍 「${currentSearch}」のヒットなし → なんとなく近い曲を提案`;
-    document.getElementById('listCount').textContent = `（${view.length.toLocaleString()}曲）`;
+    document.getElementById('listTitle').textContent = isEn
+      ? `🔍 No exact match for "${currentSearch}" — showing similar tracks`
+      : `🔍 「${currentSearch}」のヒットなし → なんとなく近い曲を提案`;
+    document.getElementById('listCount').textContent = isEn
+      ? `(${view.length.toLocaleString()} tracks)`
+      : `（${view.length.toLocaleString()}曲）`;
     return;
   }
-  let t = showFavOnly ? '♡ お気に入り' : (currentCat==='all' ? (currentSearch ? `「${currentSearch}」の検索結果` : '新着BGM') : g?.label_ja || '一覧');
+  let titleTxt;
+  if (showFavOnly) {
+    titleTxt = window.t('list_fav');
+  } else if (currentCat !== 'all') {
+    const g2 = genres.find(x => x.slug === currentCat);
+    titleTxt = isEn ? (g2?.label_en || g2?.label_ja || window.t('list_new')) : (g2?.label_ja || window.t('list_new'));
+  } else if (currentSearch) {
+    titleTxt = isEn ? `"${currentSearch}" results` : `「${currentSearch}」の検索結果`;
+  } else {
+    titleTxt = window.t('list_new');
+  }
   if (currentBpm || currentDur || currentMood){
     const parts = [];
-    if (currentMood) parts.push(({chill:'チル',upbeat:'明るい',dark:'ダーク',epic:'壮大',cute:'かわいい',cool:'クール'})[currentMood]);
-    if (currentBpm) parts.push(({slow:'スロー',mid:'ミディアム',fast:'アップ'})[currentBpm]);
-    if (currentDur) parts.push(({short:'ショート',mid:'中尺',long:'ロング'})[currentDur]);
-    t += ' / ' + parts.join(' × ');
+    if (currentMood) parts.push(window.t({chill:'mood_chill',upbeat:'mood_upbeat',dark:'mood_dark',epic:'mood_epic',cute:'mood_cute',cool:'mood_cool'}[currentMood]));
+    if (currentBpm)  parts.push(window.t({slow:'bpm_slow',mid:'bpm_mid',fast:'bpm_fast'}[currentBpm]));
+    if (currentDur)  parts.push(window.t({short:'dur_short',mid:'dur_mid',long:'dur_long'}[currentDur]));
+    titleTxt += ' / ' + parts.join(' × ');
   }
-  document.getElementById('listTitle').textContent = t;
-  document.getElementById('listCount').textContent = `（${view.length.toLocaleString()}曲）`;
+  document.getElementById('listTitle').textContent = titleTxt;
+  document.getElementById('listCount').textContent = isEn
+    ? `(${view.length.toLocaleString()} tracks)`
+    : `（${view.length.toLocaleString()}曲）`;
   // フィルタバーを再描画 + ヒット数を表示
   renderFilterBar();
   const cnt = document.getElementById('fbarCount');
-  if (cnt) cnt.textContent = `→ ${view.length.toLocaleString()}曲`;
+  if (cnt) cnt.textContent = window._currentLang==='en'
+    ? `→ ${view.length.toLocaleString()} tracks`
+    : `→ ${view.length.toLocaleString()}曲`;
 }
 
 // ---- RENDER ----
@@ -2171,21 +2303,21 @@ function card(s){
     <div class="cthumb">
       ${img?`<img src="${escHtml(img)}" alt="${escHtml(s.title)}" loading="lazy" onerror="this.style.display='none'">`:''}
       ${rankBadge}
-      <button class="cpick ${isPicked?'on':''}" data-pick="${escHtml(s.id)}" title="${isPicked?'プレイリストから外す':'プレイリストに追加'}" aria-label="${isPicked?'プレイリストから外す':'プレイリストに追加'}"></button>
+      <button class="cpick ${isPicked?'on':''}" data-pick="${escHtml(s.id)}" title="${isPicked?window.t('card_pick_remove'):window.t('card_pick_add')}" aria-label="${isPicked?window.t('card_pick_remove'):window.t('card_pick_add')}"></button>
       <div class="cmeta1" style="${rk?'top:36px':''}"><span class="gtag ${gCls}">${escHtml(gJa)}</span></div>
       <div class="cmeta2" style="bottom:8px;top:auto"><span class="dur">${fmtDur(s.duration)}</span></div>
-      <div class="cplay"><button class="${isPlaying?'playing':''}" data-play="${escHtml(s.id)}" aria-label="再生">${isPlaying?'⏸':'▶'}</button></div>
+      <div class="cplay"><button class="${isPlaying?'playing':''}" data-play="${escHtml(s.id)}" aria-label="${window.t('card_play_aria')}">${isPlaying?'⏸':'▶'}</button></div>
     </div>
     <div class="cbody">
       <div class="ctit" data-detail="${escHtml(s.id)}" title="${escHtml(getTitle(s))}">${escHtml(getTitle(s))}</div>
-      ${s._aiReason && s._aiReason.length ? `<div class="creason">${s._aiReason.slice(0,4).map(r=>`「${escHtml(r)}」`).join('・')}にマッチ</div>` : ''}
+      ${s._aiReason && s._aiReason.length ? (window._currentLang==='en' ? `<div class="creason">${s._aiReason.slice(0,4).map(r=>`"${escHtml(r)}"`).join(' · ')} match</div>` : `<div class="creason">${s._aiReason.slice(0,4).map(r=>`「${escHtml(r)}」`).join('・')}にマッチ</div>`) : ''}
       ${desc?`<div class="cdesc">${escHtml(desc)}</div>`:'<div class="cdesc"></div>'}
       <div class="ctags">${tags.map(t=>`<span class="ctag" data-search="${escHtml(t)}">#${escHtml(t)}</span>`).join('')}</div>
       <div class="crow">
         <span class="cbpm">♩= <b>${s.bpm?Math.round(s.bpm):'—'}</b></span>
         <div class="cact">
-          <button class="fav ${isFav?'on':''}" data-fav="${escHtml(s.id)}" title="お気に入り" aria-label="${isFav?'お気に入りから外す':'お気に入りに追加'}" aria-pressed="${isFav}">${isFav?'♥':'♡'}</button>
-          <a class="dlbtn" href="${escHtml(aud)}" download="${escHtml(s.slug||s.id)}.mp3" data-dl="${escHtml(s.id)}" title="MP3ダウンロード">⬇ DL</a>
+          <button class="fav ${isFav?'on':''}" data-fav="${escHtml(s.id)}" title="${window.t('card_fav_title')}" aria-label="${isFav?window.t('card_fav_remove'):window.t('card_fav_add')}" aria-pressed="${isFav}">${isFav?'♥':'♡'}</button>
+          <a class="dlbtn" href="${escHtml(aud)}" download="${escHtml(s.slug||s.id)}.mp3" data-dl="${escHtml(s.id)}" title="${window.t('card_dl_title')}">⬇ DL</a>
         </div>
       </div>
     </div>
@@ -2196,7 +2328,7 @@ function render(){
   const grid = document.getElementById('grid');
   const lm = document.getElementById('loadMore');
   if (view.length === 0){
-    grid.innerHTML = '<div class="empty" style="grid-column:1/-1"><div class="em">🔍</div>該当する楽曲が見つかりませんでした。<br>フィルタを解除するか、別のキーワードでお試しください。</div>';
+    grid.innerHTML = `<div class="empty" style="grid-column:1/-1"><div class="em">🔍</div>${window.t('empty_no_results')}</div>`;
     lm.style.display = 'none';
     return;
   }
@@ -2220,8 +2352,8 @@ function attachCardEvents(){
     b.textContent = favs.has(id) ? '♥' : '♡';
   });
   document.querySelectorAll('[data-detail]').forEach(b => b.onclick = () => openDetail(b.dataset.detail));
-  document.querySelectorAll('[data-dl]').forEach(b => b.addEventListener('click', () => {
-    if (USE_API) apiBeacon('/api/download', { id: b.dataset.dl });
+  document.querySelectorAll('[data-dl]').forEach(b => b.addEventListener('click', (e) => {
+    _onDlClick(e, b.href, b.getAttribute('download') || b.dataset.dl + '.mp3', b.dataset.dl);
   }));
   document.querySelectorAll('[data-search]').forEach(b => b.onclick = e => {
     e.stopPropagation();
@@ -2266,7 +2398,7 @@ async function renderPickup(){
     const desc = getDesc(s).trim();
     return `<div class="pkcard" data-pkid="${escHtml(s.id)}">
       ${img?`<img src="${escHtml(img)}" alt="${escHtml(getTitle(s))}" loading="lazy">`:''}
-      <button class="pkplay" data-play="${escHtml(s.id)}" aria-label="試聴">▶</button>
+      <button class="pkplay" data-play="${escHtml(s.id)}" aria-label="${window.t('pickup_play_aria')}">▶</button>
       <div class="pkov">
         <span class="pkg ${gCls}">${escHtml(gJa)}</span>
         <div class="pktit">${escHtml(getTitle(s))}</div>
@@ -2318,7 +2450,7 @@ async function renderGenreShowcase(){
     const cls = GENRE_CLASS[g.slug] || '';
     return `<div class="gscard ${sz}" data-gs="${escHtml(g.slug)}">
       ${cover?`<img src="${escHtml(cover)}" alt="${escHtml(g.label_ja)}" loading="lazy">`:''}
-      <span class="gscnt">${(g.count||0).toLocaleString()}曲</span>
+      <span class="gscnt">${(g.count||0).toLocaleString()}${window.t('genre_tracks_suffix')}</span>
       <div class="gsover">
         <div class="gsej">${escHtml(g.label_ja)}</div>
         <div class="gsen">${escHtml(g.label_en||'')}</div>
@@ -2489,17 +2621,16 @@ function _setupPlayerUI(s){
   }
   const dlUrl = audioOf(s);
   const dlName = (s.slug||s.id)+'.mp3';
-  document.getElementById('pDl').href = dlUrl;
-  document.getElementById('pDl').setAttribute('download', dlName);
-  document.getElementById('pDl').onclick = () => {
-    if (USE_API) apiBeacon('/api/download', { id });
-  };
-  // モバイル用ダウンロードボタン（pctrl内）
-  document.getElementById('dlBtn').onclick = () => {
-    if (USE_API) apiBeacon('/api/download', { id });
-    const a = document.createElement('a');
-    a.href = dlUrl; a.download = dlName; a.click();
-  };
+  // デスクトップ用 DL ボタン (#pDl)
+  const _pDl = document.getElementById('pDl');
+  _pDl.href = dlUrl;
+  _pDl.setAttribute('download', dlName);
+  _pDl.onclick = (e) => _onDlClick(e, dlUrl, dlName, id);
+  // モバイル用 DL ボタン (#dlBtn)
+  const _dlBtn = document.getElementById('dlBtn');
+  _dlBtn.href = dlUrl;
+  _dlBtn.setAttribute('download', dlName);
+  _dlBtn.onclick = (e) => _onDlClick(e, dlUrl, dlName, id);
   if (USE_API) apiBeacon('/api/play', { id });
 }
 
@@ -2766,7 +2897,7 @@ function openDetail(id){
   const tags = (s.tags||'').split(/[,、]/).map(t=>t.trim()).filter(Boolean);
   document.getElementById('mTags').innerHTML = tags.map(t=>
     `<span class="mtg" data-search="${escHtml(t)}" style="cursor:pointer">#${escHtml(t)}</span>`
-  ).join('') || '<span style="font-size:11px;color:var(--muted)">タグなし</span>';
+  ).join('') || `<span style="font-size:11px;color:var(--muted)">${window.t('detail_no_tags')}</span>`;
   // タグクリックで検索＆閉じる
   document.querySelectorAll('#mTags [data-search]').forEach(el => el.onclick = () => {
     closeModal();
@@ -2777,9 +2908,11 @@ function openDetail(id){
   document.getElementById('mCredit').textContent = `Music: ${s.title} / 日本一フリーMusic`;
   document.getElementById('mPlayBtn').onclick = () => play(id);
   const dl = document.getElementById('mDlBtn');
-  dl.href = audioOf(s);
-  dl.setAttribute('download', (s.slug||s.id)+'.mp3');
-  dl.onclick = () => { if (USE_API) apiBeacon('/api/download', { id }); };
+  const _mDlUrl  = audioOf(s);
+  const _mDlName = (s.slug||s.id)+'.mp3';
+  dl.href = _mDlUrl;
+  dl.setAttribute('download', _mDlName);
+  dl.onclick = (e) => _onDlClick(e, _mDlUrl, _mDlName, id);
   document.getElementById('detailModal').classList.add('on');
 }
 window.closeModal = () => document.getElementById('detailModal').classList.remove('on');
@@ -2788,7 +2921,7 @@ window.copyCredit = () => {
   navigator.clipboard.writeText(t).then(()=>{
     const btn = event.target;
     const orig = btn.textContent;
-    btn.textContent = '✓ コピーしました';
+    btn.textContent = window.t('toast_copy_credit');
     setTimeout(()=>btn.textContent=orig, 1400);
   });
 };
@@ -2821,7 +2954,7 @@ async function shareSong(id){
   }
   try {
     await navigator.clipboard.writeText(url);
-    toast('🔗 共有URLをコピーしました');
+    toast(window.t('toast_share_url'));
   } catch(_) {
     prompt('共有URL:', url);
   }
@@ -2874,19 +3007,19 @@ document.getElementById('rClear').onclick = () => {
   recent = [];
   localStorage.removeItem(RECENT_KEY);
   renderRecent();
-  toast('履歴をクリアしました');
+  toast(window.t('toast_history_cleared'));
 };
 
 // フッタ便利リンク
 const fSc = document.getElementById('fShortcuts');
 if (fSc) fSc.onclick = e => {
   e.preventDefault();
-  toast('Space▶︎ ←→次/前 ⇧←→±5秒 ↑↓音量 S シャッフル R リピート ⇧R ランダム F お気に入り / 検索 D DL');
+  toast(window.t('toast_shortcuts'));
 };
 const fCu = document.getElementById('fCopyUrl');
 if (fCu) fCu.onclick = e => {
   e.preventDefault();
-  if (navigator.clipboard) navigator.clipboard.writeText(location.href).then(()=>toast('🔗 URLをコピーしました'));
+  if (navigator.clipboard) navigator.clipboard.writeText(location.href).then(()=>toast(window.t('toast_copy_url')));
   else toast(location.href);
 };
 
@@ -2899,8 +3032,8 @@ function syncSL(){
   shufBtn.classList.toggle('on', shuffleOn);
   loopBtn.classList.toggle('on', loopOn);
 }
-shufBtn.onclick = () => { shuffleOn = !shuffleOn; localStorage.setItem('shuffle', shuffleOn?'1':'0'); syncSL(); toast(shuffleOn?'🔀 シャッフルON':'シャッフルOFF'); };
-loopBtn.onclick = () => { loopOn    = !loopOn;    localStorage.setItem('loop',    loopOn?'1':'0');    syncSL(); audio.loop = loopOn; toast(loopOn?'🔁 リピートON':'リピートOFF'); };
+shufBtn.onclick = () => { shuffleOn = !shuffleOn; localStorage.setItem('shuffle', shuffleOn?'1':'0'); syncSL(); toast(window.t(shuffleOn?'toast_shuffle_on':'toast_shuffle_off')); };
+loopBtn.onclick = () => { loopOn    = !loopOn;    localStorage.setItem('loop',    loopOn?'1':'0');    syncSL(); audio.loop = loopOn; toast(window.t(loopOn?'toast_loop_on':'toast_loop_off')); };
 audio.loop = loopOn;
 syncSL();
 
@@ -2965,17 +3098,17 @@ async function randomPlay(){
         apiGet('/api/popular').catch(()=>[])
       ]);
       const pool = [...(a.items||[]), ...(Array.isArray(b)?b:[])];
-      if (!pool.length) return toast('曲が見つかりません');
+      if (!pool.length) return toast(window.t('toast_no_song'));
       s = pool[Math.floor(Math.random()*pool.length)];
-    } catch(e){ toast('読み込みに失敗しました'); return; }
+    } catch(e){ toast(window.t('toast_load_fail')); return; }
   } else {
-    if (!allSongs.length) return toast('曲がまだ読み込まれていません');
+    if (!allSongs.length) return toast(window.t('toast_not_loaded'));
     s = allSongs[Math.floor(Math.random()*allSongs.length)];
   }
   // view に存在しなければ単曲として一時的に再生
   if (!view.find(x => x.id === s.id)) view = [s, ...view];
   play(s.id);
-  toast('🎲 ランダム再生');
+  toast(window.t('toast_random'));
 }
 document.getElementById('randomBtn').onclick = randomPlay;
 
@@ -3133,12 +3266,12 @@ document.addEventListener('keydown', e => {
           a.href = audioOf(s);
           a.download = (s.slug||s.id)+'.mp3';
           a.click();
-          toast('⬇ ダウンロード開始');
+          toast(window.t('toast_dl_start'));
         }
       }
       break;
     case '?':
-      toast('ショートカット: Space▶︎ ←→次/前 ⇧←→±5秒 ↑↓音量 S シャッフル R リピート ⇧R ランダム F お気に入り / 検索 D DL');
+      toast(window.t('toast_shortcuts'));
       break;
   }
 });
@@ -3524,7 +3657,7 @@ function aiMatch(prompt, sourceList, limit=24) {
 
 async function runAi(prompt) {
   prompt = (prompt||'').trim();
-  if (!prompt) { toast('プロンプトを入力してください'); return; }
+  if (!prompt) { toast(window.t('toast_ai_no_prompt')); return; }
 
   // ── 履歴保存 ──
   pushAiHist(prompt);
@@ -3532,18 +3665,18 @@ async function runAi(prompt) {
   // データ未ロードなら取りに行く
   let pool = allSongs;
   if (!pool.length && USE_API) {
-    toast('✨ データ取得中…');
+    toast(window.t('toast_ai_loading'));
     try {
       // AIマッチ用にまとまった量を取得
       const r = await apiGet('/api/songs', { limit: 100, page: 1, sort: 'new' });
       pool = (r.items || []);
-    } catch(e) { toast('読込エラー'); return; }
+    } catch(e) { toast(window.t('toast_load_error')); return; }
   }
   if (!pool.length) pool = view;
 
   const results = aiMatch(prompt, pool);
   if (!results.length) {
-    toast('🤔 該当する曲が見つかりませんでした');
+    toast(window.t('toast_ai_no_results'));
     return;
   }
 
@@ -3555,8 +3688,9 @@ async function runAi(prompt) {
   showFavOnly = false;
 
   // タイトル更新
-  document.getElementById('listTitle').textContent = '✨ AIマッチング結果';
-  document.getElementById('listCount').textContent = `（${results.length}曲）`;
+  const _isEn = window._currentLang === 'en';
+  document.getElementById('listTitle').textContent = window.t('toast_ai_result_title');
+  document.getElementById('listCount').textContent = _isEn ? `(${results.length} tracks)` : `（${results.length}曲）`;
 
   // 既存バナーがあれば消して新しいの挿入
   document.querySelector('.aibanner')?.remove();
@@ -3565,12 +3699,12 @@ async function runAi(prompt) {
   banner.className = 'aibanner';
   banner.innerHTML = `
     <div style="flex:1;min-width:0">
-      <div class="aibhead">✨ AI マッチング結果</div>
-      <div class="aibq">${escHtml(prompt)}</div>
-      <div class="aibsub">マッチした要素：</div>
+      <div class="aibhead">${window.t('ai_banner_head')}</div>
+      <div class="aibq">${_isEn ? `"${escHtml(prompt)}"` : `「${escHtml(prompt)}」`}</div>
+      <div class="aibsub">${window.t('ai_banner_match')}</div>
       <div class="aibtags">${allMatched.map(c => `<span class="aibchip">${escHtml(c)}</span>`).join('')}</div>
     </div>
-    <button class="aibreset" id="aiBannerReset">✕ 通常表示に戻す</button>
+    <button class="aibreset" id="aiBannerReset">${window.t('ai_banner_reset')}</button>
   `;
   const ctop = document.querySelector('.ctop');
   if (ctop) ctop.insertAdjacentElement('afterend', banner);
@@ -3634,9 +3768,9 @@ function plToggle(id){
   // カードのチェックボックスUI即時更新
   document.querySelectorAll(`[data-pick="${id}"]`).forEach(b => {
     b.classList.toggle('on', !wasIn);
-    b.title = !wasIn ? 'プレイリストから外す' : 'プレイリストに追加';
+    b.title = !wasIn ? window.t('card_pick_remove') : window.t('card_pick_add');
   });
-  toast(wasIn ? '✕ プレイリストから外しました' : '✓ プレイリストに追加');
+  toast(window.t(wasIn ? 'toast_pick_remove' : 'toast_pick_add'));
   if (document.getElementById('plDrawer')?.classList.contains('on')) plRender();
 }
 
@@ -3674,12 +3808,13 @@ function plRender(){
   const foot = document.getElementById('plFoot');
   const cnt  = document.getElementById('plCount');
   const ids = [...playlist];
-  if (cnt) cnt.textContent = `${ids.length}曲`;
+  const _plIsEn = window._currentLang === 'en';
+  if (cnt) cnt.textContent = _plIsEn ? `${ids.length} track${ids.length!==1?'s':''}` : `${ids.length}曲`;
   if (!ids.length){
     body.innerHTML = `<div class="plempty">
       <div class="em">📋</div>
-      まだプレイリストは空です。<br>
-      カードの右上 <span style="display:inline-block;width:18px;height:18px;border-radius:50%;border:2px solid var(--muted);vertical-align:middle"></span> をクリックして曲を追加してください。
+      ${window.t('pl_empty_title')}<br>
+      ${window.t('pl_empty_body')}
     </div>`;
     foot.style.display = 'none';
     return;
@@ -3696,8 +3831,8 @@ function plRender(){
         <div class="plmeta">${fmtDur(s.duration)}${s.bpm?` · ♩=${Math.round(s.bpm)}`:''}</div>
       </div>
       <div class="plact">
-        <button data-pl-play="${escHtml(s.id)}" title="再生">▶</button>
-        <button data-pl-rm="${escHtml(s.id)}" title="削除">×</button>
+        <button data-pl-play="${escHtml(s.id)}" title="${window.t('pl_item_play')}">▶</button>
+        <button data-pl-rm="${escHtml(s.id)}" title="${window.t('pl_item_rm')}">×</button>
       </div>
     </div>`;
   }).join('');
@@ -3716,14 +3851,17 @@ async function plPlayAll(){
   applySeq++;
   play(songs[0].id);
   plClose();
-  toast(`▶ プレイリスト${songs.length}曲を再生開始`);
+  toast(window._currentLang==='en' ? `▶ Playing ${songs.length} track${songs.length!==1?'s':''}` : `▶ プレイリスト${songs.length}曲を再生開始`);
 }
 
 async function plDownloadAll(){
   const ids = [...playlist];
   if (!ids.length) return;
-  if (ids.length > 5 && !confirm(`${ids.length}曲を順次ダウンロードします。\nブラウザが「複数ファイルのDL許可」を聞く場合があります。続行しますか？`)) return;
-  toast(`${ids.length}曲のダウンロードを開始…`);
+  const _dlIsEn = window._currentLang==='en';
+  if (ids.length > 5 && !confirm(_dlIsEn
+    ? `Download ${ids.length} tracks? Your browser may ask for permission to download multiple files.`
+    : `${ids.length}曲を順次ダウンロードします。\nブラウザが「複数ファイルのDL許可」を聞く場合があります。続行しますか？`)) return;
+  toast(_dlIsEn ? `⬇ Starting download of ${ids.length} tracks…` : `${ids.length}曲のダウンロードを開始…`);
   let done = 0;
   for (const id of ids) {
     const s = plLookup(id);
@@ -3739,7 +3877,7 @@ async function plDownloadAll(){
     done++;
     await new Promise(r => setTimeout(r, 300));
   }
-  toast(`✅ ${done}曲のダウンロード開始`);
+  toast(window._currentLang==='en' ? `✅ Download started for ${done} track${done!==1?'s':''}` : `✅ ${done}曲のダウンロード開始`);
 }
 
 function plExportM3U(){
@@ -3757,23 +3895,24 @@ function plExportM3U(){
   a.download = `playlist_${new Date().toISOString().slice(0,10)}.m3u`;
   a.click();
   URL.revokeObjectURL(url);
-  toast('📥 M3Uプレイリストを保存');
+  toast(window.t('toast_m3u'));
 }
 
 function plClearAll(){
   if (!playlist.size) return;
-  if (!confirm(`プレイリスト${playlist.size}曲をクリアしますか？`)) return;
+  const _clIsEn = window._currentLang==='en';
+  if (!confirm(_clIsEn ? `Clear playlist (${playlist.size} track${playlist.size!==1?'s':''})?` : `プレイリスト${playlist.size}曲をクリアしますか？`)) return;
   // カードのチェック解除UI更新
   for (const id of [...playlist]) {
     document.querySelectorAll(`[data-pick="${id}"]`).forEach(b => {
       b.classList.remove('on');
-      b.title = 'プレイリストに追加';
+      b.title = window.t('card_pick_add');
     });
   }
   playlist.clear();
   plSave();
   plRender();
-  toast('プレイリストをクリアしました');
+  toast(window.t('toast_pl_cleared'));
 }
 
 // イベント配線
@@ -3791,7 +3930,7 @@ plUpdatePill();
 // ============================================================
 function similarTo(id){
   const s = (id ? plLookup(id) : null) || (nowPlayingId ? plLookup(nowPlayingId) : null);
-  if (!s) { toast('再生中の曲がありません'); return; }
+  if (!s) { toast(window.t('toast_no_playing')); return; }
   // ジャンル + 上位タグ + descの主要語からプロンプトを作る
   const tags = (s.tags||'').split(/[,、\/]/).map(t=>t.trim()).filter(Boolean).slice(0,3);
   const gJa = getGenreLabel(s.genre);
@@ -3803,7 +3942,7 @@ function similarTo(id){
     if (conceptWords.length >= 4) break;
   }
   const prompt = [gJa, ...tags, ...conceptWords].filter(Boolean).join(' ');
-  toast(`🔮「${s.title}」に似た曲を検索中…`);
+  toast(window._currentLang==='en' ? `🔮 Finding tracks similar to "${s.title}"…` : `🔮「${s.title}」に似た曲を検索中…`);
   runAi(prompt);
 }
 
@@ -3818,7 +3957,7 @@ document.getElementById('mSimBtn').onclick = () => {
 // プレイヤーの＋ボタン (再生中曲をプレイリストに追加)
 document.getElementById('pickBtn').onclick = () => {
   if (nowPlayingId) plToggle(nowPlayingId);
-  else toast('再生中の曲がありません');
+  else toast(window.t('toast_no_playing'));
 };
 
 // ============================================================
@@ -3851,7 +3990,7 @@ function renderAiHist(){
     <div class="aihist-item" data-aih="${escHtml(p)}">
       <span class="h-icon">🕘</span>
       <span class="h-text">${escHtml(p)}</span>
-      <button class="h-rm" data-aih-rm="${escHtml(p)}" title="この履歴を削除" aria-label="削除">×</button>
+      <button class="h-rm" data-aih-rm="${escHtml(p)}" title="${window.t('ai_hist_rm_title')}" aria-label="${window.t('ai_hist_rm_aria')}">×</button>
     </div>
   `).join('');
   list.querySelectorAll('[data-aih]').forEach(b => b.onclick = e => {
@@ -3873,7 +4012,7 @@ document.getElementById('aiHistClear').onclick = () => {
   aiHist = [];
   localStorage.removeItem(AI_HIST_KEY);
   renderAiHist();
-  toast('AI履歴をクリアしました');
+  toast(window.t('toast_ai_hist_cleared'));
 };
 
 // ============================================================
@@ -4004,7 +4143,7 @@ function _renderAiRecs() {
 
   const { profile, results } = recs;
   profEl.textContent = profile.topGenres.length
-    ? `好みのジャンル: ${profile.topGenres.slice(0,2).join(' · ')}`
+    ? `${window.t('ai_recs_profile_prefix')}${profile.topGenres.slice(0,2).join(' · ')}`
     : '';
 
   list.innerHTML = results.map(s => {
@@ -4019,7 +4158,7 @@ function _renderAiRecs() {
         <div class="airecs-title">${escHtml(title)}</div>
         <div class="airecs-meta">${escHtml(meta)}</div>
       </div>
-      <button class="airecs-play" data-recplay="${escHtml(s.id)}" aria-label="再生">▶</button>
+      <button class="airecs-play" data-recplay="${escHtml(s.id)}" aria-label="${window.t('ai_rec_play_aria')}">▶</button>
     </div>`;
   }).join('');
 
@@ -4225,17 +4364,17 @@ function shuffleArr(arr) {
 }
 
 async function radioStart(prompt) {
-  if (!prompt) { toast('好みを指定してください'); return; }
+  if (!prompt) { toast(window.t('toast_radio_no_prefs')); return; }
   radioInitElems();
 
   // 候補曲を集める (allSongs があるローカルモード前提、APIモードは事前に取得)
   let pool = allSongs;
   if (!pool.length && USE_API) {
-    toast('📻 候補曲を取得中…');
+    toast(window.t('toast_radio_loading'));
     try {
       const r = await apiGet('/api/songs', { limit: 100, page: 1, sort: 'popular' });
       pool = (r.items || []);
-    } catch(e) { toast('読込エラー'); return; }
+    } catch(e) { toast(window.t('toast_load_error')); return; }
   }
   // ジャンルが明確な場合はそのジャンルに絞る（他ジャンル混入防止）
   const targetGenre = _detectRadioGenre(prompt);
@@ -4250,7 +4389,7 @@ async function radioStart(prompt) {
   // RADIOは長時間再生するので候補を多めに取得（最大80曲）
   const candidates = aiMatch(prompt, pool, 80);
   if (!candidates || candidates.length < 3) {
-    toast('該当する曲が見つかりませんでした。別のキーワードでお試しください');
+    toast(window.t('toast_radio_no_results'));
     return;
   }
 
@@ -4272,7 +4411,9 @@ async function radioStart(prompt) {
   document.getElementById('radioInd').classList.add('on');
   document.getElementById('player').classList.add('on', 'radio');
 
-  toast(`🎧 BGMチャンネル開始：${(prompt.length>16?prompt.slice(0,14)+'…':prompt)}`);
+  toast(window._currentLang==='en'
+    ? `🎧 BGM Channel started: ${prompt.length>16?prompt.slice(0,14)+'…':prompt}`
+    : `🎧 BGMチャンネル開始：${prompt.length>16?prompt.slice(0,14)+'…':prompt}`);
   radioPlayNext();
   radioWatch();
 }
@@ -4296,7 +4437,7 @@ function radioPlayNext() {
     if (!fresh.length) fresh = cands;
     RADIO.queue = _buildRadioQueue(fresh);
     if (!RADIO.queue.length) {
-      toast('もう流せる曲がありません');
+      toast(window.t('toast_radio_exhausted'));
       radioStop();
       return;
     }
@@ -4322,7 +4463,7 @@ function radioPlayNext() {
  */
 function radioTransitionTo(song) {
   if (!_howlerSrcReady()) {
-    toast('音声ライブラリが読み込まれていません');
+    toast(window._currentLang==='en' ? 'Audio library not loaded' : '音声ライブラリが読み込まれていません');
     return;
   }
   const FADE_OUT = 200;  // 旧曲フェードアウト時間(ms) — 末尾検知で早めに呼ばれるので短め
@@ -4409,8 +4550,18 @@ function radioUpdateNowPlaying(song) {
   if (!curImgEl || curImgEl.getAttribute('src') !== newSrc) {
     pt.innerHTML = newSrc ? `<img src="${escHtml(newSrc)}" alt="">` : '🎵';
   }
-  document.getElementById('pDl').href = audioOf(song);
-  document.getElementById('pDl').setAttribute('download', (song.slug||song.id)+'.mp3');
+  const _rDlUrl  = audioOf(song);
+  const _rDlName = (song.slug||song.id)+'.mp3';
+  // デスクトップ用 DL ボタン (#pDl)
+  const _rPDl = document.getElementById('pDl');
+  _rPDl.href = _rDlUrl;
+  _rPDl.setAttribute('download', _rDlName);
+  _rPDl.onclick = (e) => _onDlClick(e, _rDlUrl, _rDlName, song.id);
+  // モバイル用 DL ボタン (#dlBtn) — BGMチャンネル中も同様に更新
+  const _rDlBtn = document.getElementById('dlBtn');
+  _rDlBtn.href = _rDlUrl;
+  _rDlBtn.setAttribute('download', _rDlName);
+  _rDlBtn.onclick = (e) => _onDlClick(e, _rDlUrl, _rDlName, song.id);
   // ラジオ中は「最近聴いた曲」を更新しない (画像が次々切り替わってチラつく原因)
   // pushRecent(song);
   if (USE_API) apiBeacon('/api/play', {id: song.id});
@@ -4499,11 +4650,11 @@ function radioGood() {
   if (_rPrefs.likes.has(id)) {
     // 2回押したらキャンセル
     _rPrefs.likes.delete(id);
-    toast('👍 解除しました');
+    toast(window.t('toast_radio_good_cancel'));
   } else {
     _rPrefs.likes.add(id);
     _rPrefs.dislikes.delete(id);
-    toast('👍 この曲を優先します');
+    toast(window.t('toast_radio_good'));
   }
   _rPrefs.save();
   _radioFeedbackUpdate(id);
@@ -4515,7 +4666,7 @@ function radioBad() {
   _rPrefs.dislikes.add(id);
   _rPrefs.likes.delete(id);
   _rPrefs.save();
-  toast('👎 この曲は流れにくくなりました');
+  toast(window.t('toast_radio_bad'));
   _radioFeedbackUpdate(id);
   radioPlayNext(); // 即スキップ
 }
@@ -4523,7 +4674,7 @@ function radioBad() {
 function radioSkip() {
   if (!RADIO.on) return;
   radioPlayNext();
-  toast('⏭ 次の曲へ');
+  toast(window.t('toast_radio_skip'));
 }
 
 function radioStop() {
@@ -4550,7 +4701,7 @@ function radioStop() {
 
   document.getElementById('radioInd').classList.remove('on');
   document.getElementById('player').classList.remove('radio');
-  toast('🎧 BGMチャンネルを停止しました');
+  toast(window.t('toast_radio_stop'));
 }
 
 // ── モーダル制御 ──
@@ -4573,7 +4724,7 @@ document.querySelectorAll('#radioModal .rmcard').forEach(b => b.onclick = () => 
 document.getElementById('radioGo').onclick = () => {
   document.activeElement?.blur(); // モバイルキーボードを閉じる
   const txt = document.getElementById('radioCustom').value.trim();
-  if (!txt) { toast('好みを入力するかカードを選んでください'); return; }
+  if (!txt) { toast(window.t('toast_radio_custom_empty')); return; }
   closeRadio();
   radioStart(txt);
 };
@@ -4629,7 +4780,7 @@ play = function(id) {
     const cat  = document.getElementById('contactCat').value;
     const msg  = document.getElementById('contactMsg').value.trim();
     const from = document.getElementById('contactFrom').value.trim();
-    if(!msg){ toast('内容を入力してください'); return; }
+    if(!msg){ toast(window.t('toast_contact_empty')); return; }
 
     const subject = encodeURIComponent(`[日本一フリーMusic] ${cat}`);
     let body = `【種別】${cat}\n\n【内容】\n${msg}`;
@@ -4638,7 +4789,7 @@ play = function(id) {
 
     window.location.href = `mailto:${_em}?subject=${subject}&body=${body}`;
     document.getElementById('contactModal').classList.remove('on');
-    toast('✉️ メールアプリを開きました');
+    toast(window.t('toast_contact_sent'));
     // フォームをリセット
     document.getElementById('contactMsg').value = '';
     document.getElementById('contactFrom').value = '';
@@ -4664,7 +4815,7 @@ play = function(id) {
     const url      = a.href;
     const filename = a.getAttribute('download') || 'bgm.mp3';
 
-    toast('⬇ ダウンロード準備中…');
+    toast(window.t('toast_ios_dl_prep'));
     try {
       const resp = await fetch(url, { cache: 'force-cache' });
       if (!resp.ok) throw new Error('fetch ' + resp.status);
@@ -4694,11 +4845,11 @@ play = function(id) {
       tmp.click();
       document.body.removeChild(tmp);
       setTimeout(() => URL.revokeObjectURL(blobUrl), 60000);
-      toast('✅ ダウンロード完了');
+      toast(window.t('toast_ios_dl_done'));
     } catch(err) {
       console.warn('[iOS DL] error:', err);
       // window.open() は音楽アプリが開くので使わない → 案内のみ
-      toast('⚠️ ブラウザのダウンロードマネージャーから保存してください');
+      toast(window.t('toast_ios_dl_fallback'));
     }
   }, true);
 })();
@@ -6949,7 +7100,7 @@ const T = {
     player_good:'グッド（優先再生）', player_bad:'バッド（流れにくくする）',
     // AI modal
     ai_modal_title:'AIにおまかせマッチング',
-    ai_modal_sub:'どんな雰囲気の曲が欲しいか、自由に文章で書いてください。<br>シーン・気分・楽器・テンポなど何でもOK。AIが<span id="aiSubCount">2,090</span>曲から選び、なぜその曲が合うのか理由も教えてくれます。',
+    ai_modal_sub:'タップするだけで<span id="aiSubCount">2,090</span>曲からぴったりを選びます',
     ai_go_btn:'✨ ぴったりの曲を選んでもらう',
     ai_hist_label:'🕘 過去の検索', ai_hist_clear:'クリア',
     aiex_vlog:'朝のVlog', aiex_game:'ゲームバトル', aiex_study:'勉強・作業',
@@ -7042,6 +7193,95 @@ const T = {
     rm_guide6:'音量はプレイヤーのつまみで調整できます。ブラウザを閉じても設定は保存されます。',
     rm_guide7:'スマホで画面をスクロールしても音楽は止まりません。他のアプリを使いながら聴けます。',
     rm_guide8:'左下のインジケーターの <b>■ 停止</b> ボタンで、いつでも終了できます。',
+    // AI modal tabs
+    ai_tab_recs:'🎯 あなたへ', ai_tab_mood:'💭 気分で選ぶ', ai_tab_text:'✏️ 詳細指定',
+    // AI recs panel
+    ai_recs_empty_title:'まだ再生履歴がありません',
+    ai_recs_empty_body:'曲を聴いたり、プレイリストに追加したりすると<br>あなたの好みを学習して自動でおすすめします。',
+    ai_recs_head:'🎯 あなたの好みから', ai_recs_go:'✨ このテイストでもっと探す',
+    // AI mood tab
+    ai_mood_ttl1:'今の気分は？', ai_mood_ttl2:'どこで使う？', ai_mood_optional:'(任意)',
+    ai_mood_calm:'落ち着きたい', ai_mood_energy:'元気になりたい', ai_mood_sad:'しんみりしたい',
+    ai_mood_focus:'集中したい', ai_mood_fun:'楽しみたい', ai_mood_night:'夜にひたる',
+    ai_scene_video:'動画制作', ai_scene_game:'ゲーム', ai_scene_cafe:'カフェ・作業',
+    ai_scene_study:'勉強', ai_scene_workout:'運動', ai_scene_morning:'朝',
+    ai_scene_japanese:'和風・日本', ai_scene_party:'お祝い',
+    ai_mood_go:'✨ おすすめを見る',
+    // Skip / Header buttons
+    skip_link:'本文（楽曲一覧）へスキップ',
+    btn_random_title:'ランダム1曲再生 (R)', btn_random_aria:'ランダム再生',
+    btn_fav_title:'お気に入り (F)', btn_fav_aria:'お気に入り一覧',
+    btn_theme_title:'ダーク/ライト切替', btn_theme_aria:'テーマ切替',
+    btn_lang_aria:'言語切替',
+    search_aria:'BGMを検索', search_title:'キーワード検索',
+    ai_btn_title:'AIにおまかせ', ai_btn_aria:'AIにおまかせ',
+    radio_btn_title:'BGMチャンネル',
+    // Filter bar
+    filter_region_aria:'適用中のフィルタ',
+    fbar_active:'適用中', fbar_clear_all:'✕ すべてクリア', fbar_dismiss:'解除',
+    fbar_key_search:'検索', fbar_key_filter:'絞り込み', fbar_key_genre:'ジャンル',
+    fbar_key_bpm:'BPM', fbar_key_dur:'尺', fbar_key_mood:'ムード', fbar_key_use:'用途',
+    fbar_fav_label:'♥ お気に入り',
+    // Modals
+    modal_close_aria:'閉じる',
+    btn_dl_title:'ダウンロード', btn_dl_aria:'ダウンロード',
+    // Footer
+    footer_about_p1:'<strong style="color:rgba(255,255,255,.85)">日本一フリーMusic</strong> はAIで生成した高品質なオリジナルBGMを、完全無料・商用利用OK・クレジット表記不要で配布する音源ライブラリです。',
+    footer_about_p2:'AI生成であることを明示し、利用条件をシンプルに。動画制作・ゲーム実況・配信・映像作品で安心して使える環境を目指しています。',
+    footer_sitemap:'🗺 サイトマップ', footer_copy_url:'🔗 URLをコピー',
+    footer_logo:'🎵 日本一フリーMusic',
+    // Playlist
+    pl_empty_title:'まだプレイリストは空です。',
+    pl_empty_body:'カードの右上のボタンをクリックして曲を追加してください。',
+    pl_item_play:'再生', pl_item_rm:'削除',
+    // Card template
+    card_pick_add:'プレイリストに追加', card_pick_remove:'プレイリストから外す',
+    card_play_aria:'再生', card_fav_title:'お気に入り',
+    card_fav_add:'お気に入りに追加', card_fav_remove:'お気に入りから外す',
+    card_dl_title:'MP3ダウンロード',
+    // Detail modal
+    detail_no_tags:'タグなし',
+    // AI banner
+    ai_banner_match:'マッチした要素：', ai_banner_reset:'✕ 通常表示に戻す',
+    ai_banner_head:'✨ AI マッチング結果',
+    // AI history
+    ai_hist_rm_title:'この履歴を削除', ai_hist_rm_aria:'削除', ai_rec_play_aria:'再生',
+    // List / Empty state
+    list_fav:'♡ お気に入り',
+    empty_no_results:'該当する楽曲が見つかりませんでした。<br>フィルタを解除するか、別のキーワードでお試しください。',
+    genre_tracks_suffix:'曲',
+    // Toast messages
+    toast_history_cleared:'履歴をクリアしました',
+    toast_shortcuts:'Space▶︎ ←→次/前 ⇧←→±5秒 ↑↓音量 S シャッフル R リピート ⇧R ランダム F お気に入り / 検索 D DL',
+    toast_copy_url:'🔗 URLをコピーしました', toast_share_url:'🔗 共有URLをコピーしました',
+    toast_copy_credit:'✓ コピーしました',
+    toast_shuffle_on:'🔀 シャッフルON', toast_shuffle_off:'シャッフルOFF',
+    toast_loop_on:'🔁 リピートON', toast_loop_off:'リピートOFF',
+    toast_no_song:'曲が見つかりません', toast_load_fail:'読み込みに失敗しました',
+    toast_not_loaded:'曲がまだ読み込まれていません',
+    toast_random:'🎲 ランダム再生', toast_dl_start:'⬇ ダウンロード開始',
+    toast_ai_no_prompt:'プロンプトを入力してください',
+    toast_ai_loading:'✨ データ取得中…', toast_load_error:'読込エラー',
+    toast_ai_no_results:'🤔 該当する曲が見つかりませんでした',
+    toast_ai_result_title:'✨ AIマッチング結果',
+    toast_pick_add:'✓ プレイリストに追加', toast_pick_remove:'✕ プレイリストから外しました',
+    toast_m3u:'📥 M3Uプレイリストを保存', toast_pl_cleared:'プレイリストをクリアしました',
+    toast_no_playing:'再生中の曲がありません',
+    toast_ai_hist_cleared:'AI履歴をクリアしました',
+    toast_radio_no_prefs:'好みを指定してください',
+    toast_radio_loading:'📻 候補曲を取得中…',
+    toast_radio_no_results:'該当する曲が見つかりませんでした。別のキーワードでお試しください',
+    toast_radio_exhausted:'もう流せる曲がありません',
+    toast_radio_good_cancel:'👍 解除しました', toast_radio_good:'👍 この曲を優先します',
+    toast_radio_bad:'👎 この曲は流れにくくなりました',
+    toast_radio_skip:'⏭ 次の曲へ', toast_radio_stop:'🎧 BGMチャンネルを停止しました',
+    toast_radio_custom_empty:'好みを入力するかカードを選んでください',
+    toast_contact_empty:'内容を入力してください',
+    toast_contact_sent:'✉️ メールアプリを開きました',
+    toast_ios_dl_prep:'⬇ ダウンロード準備中…', toast_ios_dl_done:'✅ ダウンロード完了',
+    toast_ios_dl_fallback:'⚠️ ブラウザのダウンロードマネージャーから保存してください',
+    // Pickup / AI recs
+    pickup_play_aria:'試聴', ai_recs_profile_prefix:'好みのジャンル: ',
   },
   en: {
     // Nav
@@ -7107,7 +7347,7 @@ const T = {
     player_good:'Good (Play more)', player_bad:'Bad (Play less)',
     // AI modal
     ai_modal_title:'AI Song Match',
-    ai_modal_sub:'Describe the kind of music you want in your own words.<br>Scene, mood, instruments, tempo — anything works. AI picks from <span id="aiSubCount">2,090</span> tracks and explains why each one fits.',
+    ai_modal_sub:'Tap to pick — AI matches from <span id="aiSubCount">2,090</span> tracks',
     ai_go_btn:'✨ Find My Perfect Track',
     ai_hist_label:'🕘 Recent Searches', ai_hist_clear:'Clear',
     aiex_vlog:'Morning Vlog', aiex_game:'Game Battle', aiex_study:'Study / Focus',
@@ -7200,8 +7440,100 @@ const T = {
     rm_guide6:'Adjust volume with the player knob. Settings are saved after closing the browser.',
     rm_guide7:'On mobile, music keeps playing while you scroll or use other apps.',
     rm_guide8:'Tap <b>■ Stop</b> on the bottom-left indicator to end the channel anytime.',
+    // AI modal tabs
+    ai_tab_recs:'🎯 For You', ai_tab_mood:'💭 By Mood', ai_tab_text:'✏️ Custom',
+    // AI recs panel
+    ai_recs_empty_title:'No listening history yet',
+    ai_recs_empty_body:'Play some tracks or add them to your playlist<br>and we\'ll learn your taste automatically.',
+    ai_recs_head:'🎯 Based on your taste', ai_recs_go:'✨ Find more like this',
+    // AI mood tab
+    ai_mood_ttl1:"What's your mood?", ai_mood_ttl2:'Where will you use it?', ai_mood_optional:'(optional)',
+    ai_mood_calm:'Calm down', ai_mood_energy:'Get energized', ai_mood_sad:'Nostalgic',
+    ai_mood_focus:'Focus', ai_mood_fun:'Have fun', ai_mood_night:'Late night',
+    ai_scene_video:'Video', ai_scene_game:'Gaming', ai_scene_cafe:'Café / Work',
+    ai_scene_study:'Study', ai_scene_workout:'Workout', ai_scene_morning:'Morning',
+    ai_scene_japanese:'Japanese', ai_scene_party:'Party',
+    ai_mood_go:'✨ Show Recommendations',
+    // Skip / Header buttons
+    skip_link:'Skip to main content',
+    btn_random_title:'Random Track (R)', btn_random_aria:'Random Play',
+    btn_fav_title:'Favorites (F)', btn_fav_aria:'Favorites',
+    btn_theme_title:'Toggle Dark/Light', btn_theme_aria:'Toggle Theme',
+    btn_lang_aria:'Switch Language',
+    search_aria:'Search BGM', search_title:'Search',
+    ai_btn_title:'AI Match', ai_btn_aria:'AI Match',
+    radio_btn_title:'BGM Channel',
+    // Filter bar
+    filter_region_aria:'Active Filters',
+    fbar_active:'Active', fbar_clear_all:'✕ Clear All', fbar_dismiss:'Remove',
+    fbar_key_search:'Search', fbar_key_filter:'Filter', fbar_key_genre:'Genre',
+    fbar_key_bpm:'BPM', fbar_key_dur:'Length', fbar_key_mood:'Mood', fbar_key_use:'Use Case',
+    fbar_fav_label:'♥ Favorites',
+    // Modals
+    modal_close_aria:'Close',
+    btn_dl_title:'Download', btn_dl_aria:'Download',
+    // Footer
+    footer_about_p1:'<strong style="color:rgba(255,255,255,.85)">Nihonichi Free Music</strong> is a library of high-quality AI-generated BGM tracks — 100% free, commercial use OK, no credit required.',
+    footer_about_p2:'We\'re transparent about AI generation and keep the license terms simple. A reliable source for video creators, streamers, game developers, and filmmakers.',
+    footer_sitemap:'🗺 Sitemap', footer_copy_url:'🔗 Copy URL',
+    footer_logo:'🎵 Nihonichi Free Music',
+    // Playlist
+    pl_empty_title:'Your playlist is empty.',
+    pl_empty_body:'Click the button on the top-right of a card to add tracks.',
+    pl_item_play:'Play', pl_item_rm:'Remove',
+    // Card template
+    card_pick_add:'Add to playlist', card_pick_remove:'Remove from playlist',
+    card_play_aria:'Play', card_fav_title:'Favorite',
+    card_fav_add:'Add to favorites', card_fav_remove:'Remove from favorites',
+    card_dl_title:'Download MP3',
+    // Detail modal
+    detail_no_tags:'No tags',
+    // AI banner
+    ai_banner_match:'Matched elements:', ai_banner_reset:'✕ Back to normal view',
+    ai_banner_head:'✨ AI Match Results',
+    // AI history
+    ai_hist_rm_title:'Remove from history', ai_hist_rm_aria:'Remove', ai_rec_play_aria:'Play',
+    // List / Empty state
+    list_fav:'♡ Favorites',
+    empty_no_results:'No matching tracks found.<br>Try clearing filters or searching with different keywords.',
+    genre_tracks_suffix:' tracks',
+    // Toast messages
+    toast_history_cleared:'History cleared',
+    toast_shortcuts:'Space▶︎ ←→Next/Prev ⇧←→±5s ↑↓Vol S Shuffle R Loop ⇧R Random F Fav / Search D DL',
+    toast_copy_url:'🔗 URL copied', toast_share_url:'🔗 Share URL copied',
+    toast_copy_credit:'✓ Copied',
+    toast_shuffle_on:'🔀 Shuffle ON', toast_shuffle_off:'Shuffle OFF',
+    toast_loop_on:'🔁 Loop ON', toast_loop_off:'Loop OFF',
+    toast_no_song:'No tracks found', toast_load_fail:'Failed to load',
+    toast_not_loaded:'Tracks not loaded yet',
+    toast_random:'🎲 Random Play', toast_dl_start:'⬇ Download started',
+    toast_ai_no_prompt:'Please enter a search prompt',
+    toast_ai_loading:'✨ Loading…', toast_load_error:'Load error',
+    toast_ai_no_results:'🤔 No matching tracks found',
+    toast_ai_result_title:'✨ AI Match Results',
+    toast_pick_add:'✓ Added to playlist', toast_pick_remove:'✕ Removed from playlist',
+    toast_m3u:'📥 M3U playlist saved', toast_pl_cleared:'Playlist cleared',
+    toast_no_playing:'No track playing',
+    toast_ai_hist_cleared:'AI history cleared',
+    toast_radio_no_prefs:'Please select a mood or enter keywords',
+    toast_radio_loading:'📻 Loading tracks…',
+    toast_radio_no_results:'No matching tracks found. Try different keywords.',
+    toast_radio_exhausted:'No more tracks available',
+    toast_radio_good_cancel:'👍 Preference removed', toast_radio_good:'👍 Prioritizing this track',
+    toast_radio_bad:'👎 Track will play less often',
+    toast_radio_skip:'⏭ Next track', toast_radio_stop:'🎧 BGM Channel stopped',
+    toast_radio_custom_empty:'Select a card or enter keywords',
+    toast_contact_empty:'Please enter a message',
+    toast_contact_sent:'✉️ Mail app opened',
+    toast_ios_dl_prep:'⬇ Preparing download…', toast_ios_dl_done:'✅ Download complete',
+    toast_ios_dl_fallback:'⚠️ Please save from the browser download manager',
+    // Pickup / AI recs
+    pickup_play_aria:'Preview', ai_recs_profile_prefix:'Favorite genres: ',
   }
 };
+
+// ── グローバル翻訳ヘルパー ─────────────────────
+window.t = key => (T[window._currentLang] || T.ja)[key] || key;
 
 // ── 言語適用 ──────────────────────────────────
 function applyLang(lang) {
@@ -7242,6 +7574,9 @@ function applyLang(lang) {
   if (typeof render === 'function' && typeof allSongs !== 'undefined' && allSongs && allSongs.length > 0) {
     render();
   }
+  // リストタイトル・フィルタバーも再描画
+  if (typeof updateTitle === 'function') { try { updateTitle(); } catch(_){} }
+  if (typeof renderFilterBar === 'function') { try { renderFilterBar(); } catch(_){} }
 }
 
 // ── 初期化 ──────────────────────────────────

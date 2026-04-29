@@ -21,3 +21,37 @@ jobs:
           projectName: nihonichi-freemusicbgm
           directory: .
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+
+  purge-cache:
+    runs-on: ubuntu-latest
+    name: Purge Cache
+    needs: deploy
+    # CF_ZONE_ID シークレットが設定されている場合のみ実行
+    # （カスタムドメインを Cloudflare Zone に接続している環境向け）
+    env:
+      CF_ZONE_ID: ${{ secrets.CF_ZONE_ID }}
+    steps:
+      - name: Purge Cloudflare cache
+        if: env.CF_ZONE_ID != ''
+        run: |
+          echo "🧹 Purging Cloudflare cache for zone: $CF_ZONE_ID"
+          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
+            "https://api.cloudflare.com/client/v4/zones/${CF_ZONE_ID}/purge_cache" \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            --data '{
+              "files": [
+                "https://nihonichi-freemusicbgm.pages.dev/",
+                "https://nihonichi-freemusicbgm.pages.dev/index.html",
+                "https://nihonichi-freemusicbgm.pages.dev/data/index.json",
+                "https://nihonichi-freemusicbgm.pages.dev/data/genres.json"
+              ]
+            }')
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+          BODY=$(echo "$RESPONSE" | head -n-1)
+          echo "Response: $BODY"
+          if [ "$HTTP_CODE" != "200" ]; then
+            echo "⚠️ Cache purge returned HTTP $HTTP_CODE"
+            exit 1
+          fi
+          echo "✅ Cache purge succeeded"

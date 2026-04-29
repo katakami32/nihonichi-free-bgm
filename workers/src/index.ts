@@ -1,6 +1,7 @@
 /**
  * 日本一フリーBGM — Cloudflare Workers API
  *
+ *  ── パブリック API ──────────────────────────────────────────────────
  *  - GET  /api/genres                ジャンル一覧 + 件数
  *  - GET  /api/songs                 一覧 (genre, bpm, dur, mood, sort, page, limit)
  *  - GET  /api/search                全文検索 (q, page, limit)
@@ -9,9 +10,15 @@
  *  - POST /api/play       { id }     再生カウント +1
  *  - POST /api/download   { id }     DL カウント +1
  *  - GET  /api/stats                 全体統計
- *  - POST /api/admin/songs           [Bearer] 追加
- *  - PATCH/api/admin/songs/:id       [Bearer] 更新
- *  - DELETE /api/admin/songs/:id     [Bearer] 削除
+ *
+ *  ── R2 プロキシ（キャッシュヘッダーを明示制御） ────────────────────
+ *  - GET  /r2/audio/*                音楽ファイル  Cache-Control: 1年 immutable
+ *  - GET  /r2/data/*                 データ JSON   Cache-Control: no-cache
+ *
+ *  ── 管理 API（Bearer 認証必須） ────────────────────────────────────
+ *  - POST   /api/admin/songs         追加
+ *  - PATCH  /api/admin/songs/:id     更新
+ *  - DELETE /api/admin/songs/:id     削除
  */
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
@@ -20,6 +27,7 @@ import { bearerAuth } from 'hono/bearer-auth';
 type Env = {
   DB: D1Database;
   KV: KVNamespace;
+  R2: R2Bucket;            // bgm-data バケット（wrangler.toml [[r2_buckets]]）
   R2_PUBLIC_BASE: string;
   ALLOWED_ORIGIN: string;
   ADMIN_TOKEN: string;
@@ -108,6 +116,45 @@ const MOOD_TERMS: Record<string, string[]> = {
   cute: ['cute', 'kawaii', 'children', 'kids', 'toy', 'sweet', 'whimsical'],
   cool: ['cool', 'jazz', 'funk', 'swing', 'sophisticated', 'smooth', 'noir', 'retro', 'synthwave', 'urban'],
 };
+
+// ─── R2 プロキシ ──────────────────────────────────────────────────
+// /r2/audio/* → R2 の audio/ プレフィックス — 長期キャッシュ (1年 immutable)
+// /r2/data/*  → R2 の data/  プレフィックス — キャッシュなし (常に最新)
+
+app.get('/r2/audio/*', async (c) => {
+  if (!c.env.R2) return c.json({ error: 'R2 not configured' }, 503);
+  const url = new URL(c.req.url);
+  const r2Key = 'audio/' + url.pathname.replace(/^\/r2\/audio\/?/, '');
+  if (!r2Key || r2Key === 'audio/') return c.json({ error: 'key required' }, 400);
+
+  const obj = await c.env.R2.get(r2Key);
+  if (!obj) return c.json({ error: 'not found' }, 404);
+
+  const headers = new Headers();
+  headers.set('Cache-Control', 'public, max-age=31536000, immutable');
+  headers.set('Content-Type', (obj as R2ObjectBody).httpMetadata?.contentType || 'audio/mpeg');
+  const etag = (obj as R2ObjectBody).httpEtag;
+  if (etag) headers.set('ETag', etag);
+
+  return new Response((obj as R2ObjectBody).body, { headers });
+});
+
+// /r2/data/* → JSONデータ — no-cache（デプロイ後に即最新が届く）
+app.get('/r2/data/*', async (c) => {
+  if (!c.env.R2) return c.json({ error: 'R2 not configured' }, 503);
+  const url = new URL(c.req.url);
+  const r2Key = 'data/' + url.pathname.replace(/^\/r2\/data\/?/, '');
+  if (!r2Key || r2Key === 'data/') return c.json({ error: 'key required' }, 400);
+
+  const obj = await c.env.R2.get(r2Key);
+  if (!obj) return c.json({ error: 'not found' }, 404);
+
+  const headers = new Headers();
+  headers.set('Cache-Control', 'no-cache, must-revalidate');
+  headers.set('Content-Type', 'application/json; charset=utf-8');
+
+  return new Response((obj as R2ObjectBody).body, { headers });
+});
 
 // ─── public endpoints ─────────────────────────────────────────────
 
