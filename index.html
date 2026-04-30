@@ -30,8 +30,13 @@
 
 <!-- インライン SVG ファビコン (音符マーク) -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23c85a1e'/%3E%3Ctext x='32' y='44' font-family='serif' font-size='38' font-weight='900' text-anchor='middle' fill='white'%3E音%3C/text%3E%3C/svg%3E">
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23c85a1e'/%3E%3Ctext x='32' y='44' font-family='serif' font-size='38' font-weight='900' text-anchor='middle' fill='white'%3E音%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.json">
+<!-- iOS PWA -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="日本一Music">
+<meta name="mobile-web-app-capable" content="yes">
 
 <!-- 構造化データ (JSON-LD) -->
 <script type="application/ld+json">
@@ -1435,6 +1440,9 @@ window.BGM_CONFIG = {
 </script>
 
 <script>
+// i18n IIFE より先に main IIFE が実行されることがあるため早期フォールバックを定義
+// (SWR キャッシュヒット時など await 前に window.t を呼ぶ可能性がある)
+if (typeof window.t !== 'function') window.t = k => k;
 (function(){
 'use strict';
 
@@ -1736,7 +1744,8 @@ async function load(){
         console.log('⚡ [LOAD] SWR: キャッシュヒット (age:', Math.round((Date.now() - cG.ts)/1000), 's) → 即レンダリング');
         genres   = cG.data;
         allSongs = cA.data;
-        _renderUI();
+        // window.t が未定義でも fetch は必ず走るよう独立した try-catch で保護
+        try { _renderUI(); } catch(_e) { console.warn('[SWR] 即時レンダリング失敗 (バックグラウンドfetchで復旧):', _e.message); }
       }
 
       // ── バックグラウンドまたは初回フェッチ ─────────────────────
@@ -7616,6 +7625,14 @@ if (document.readyState !== 'loading') {
 }
 
 })();
+</script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(() => {});
+  });
+}
 </script>
 </body>
 </html>
