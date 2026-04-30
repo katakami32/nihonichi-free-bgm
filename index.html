@@ -289,6 +289,9 @@ body.ai-active .hsearch input{border-color:var(--gold);background:rgba(0,0,0,.6)
 .plfoot .sec:hover{border-color:var(--accent);color:var(--accent)}
 .plfoot .danger{background:transparent;color:var(--muted);border:1px solid var(--border);font-size:12px;padding:8px 14px}
 .plfoot .danger:hover{border-color:var(--accent);color:var(--accent)}
+.plfoot-row{display:flex;gap:.45rem}.plfoot-row .pri{flex:1}
+.plshuf{min-width:44px;font-size:16px}
+.plshuf.on{background:var(--accent)!important;color:#fff!important;border-color:var(--accent)!important}
 .plempty{padding:3rem 1rem;text-align:center;color:var(--muted);font-size:13px;line-height:2}
 .plempty .em{font-size:2.5rem;margin-bottom:.6rem}
 
@@ -1403,9 +1406,10 @@ html[data-theme="dark"] footer{background:#0a0805}
   </div>
   <div class="plbody" id="plBody"></div>
   <div class="plfoot" id="plFoot" style="display:none">
-    <button class="pri" id="plPlayAll" data-i18n="playlist_play_all">▶ 全曲再生</button>
-    <button class="sec" id="plDlAll" data-i18n="playlist_dl_all">⬇ 全曲ダウンロード</button>
-    <button class="sec" id="plExportM3U" data-i18n="playlist_export_m3u">📥 M3Uプレイリストとして保存</button>
+    <div class="plfoot-row">
+      <button class="pri" id="plPlayAll" data-i18n="playlist_play_all">▶ 全曲再生</button>
+      <button class="sec plshuf" id="plShufBtn" title="シャッフル再生">🔀</button>
+    </div>
     <button class="danger" id="plClear" data-i18n="playlist_clear">プレイリストをクリア</button>
   </div>
 </aside>
@@ -3030,6 +3034,8 @@ const shufBtn = document.getElementById('shufBtn');
 const loopBtn = document.getElementById('loopBtn');
 function syncSL(){
   shufBtn.classList.toggle('on', shuffleOn);
+  const plShuf = document.getElementById('plShufBtn');
+  if (plShuf) plShuf.classList.toggle('on', shuffleOn);
   loopBtn.classList.toggle('on', loopOn);
 }
 shufBtn.onclick = () => { shuffleOn = !shuffleOn; localStorage.setItem('shuffle', shuffleOn?'1':'0'); syncSL(); toast(window.t(shuffleOn?'toast_shuffle_on':'toast_shuffle_off')); };
@@ -3832,11 +3838,13 @@ function plRender(){
       </div>
       <div class="plact">
         <button data-pl-play="${escHtml(s.id)}" title="${window.t('pl_item_play')}">▶</button>
+        <button data-pl-dl="${escHtml(s.id)}" title="${window.t('btn_dl_title')}"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M7 1v8.5M3.5 6.5L7 10l3.5-3.5M2 12.5h10" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <button data-pl-rm="${escHtml(s.id)}" title="${window.t('pl_item_rm')}">×</button>
       </div>
     </div>`;
   }).join('');
   body.querySelectorAll('[data-pl-play]').forEach(b => b.onclick = () => play(b.dataset.plPlay));
+  body.querySelectorAll('[data-pl-dl]').forEach(b => b.onclick = () => plDownloadOne(b.dataset.plDl));
   body.querySelectorAll('[data-pl-rm]').forEach(b => b.onclick = () => {
     plToggle(b.dataset.plRm);
   });
@@ -3854,48 +3862,32 @@ async function plPlayAll(){
   toast(window._currentLang==='en' ? `▶ Playing ${songs.length} track${songs.length!==1?'s':''}` : `▶ プレイリスト${songs.length}曲を再生開始`);
 }
 
-async function plDownloadAll(){
-  const ids = [...playlist];
-  if (!ids.length) return;
-  const _dlIsEn = window._currentLang==='en';
-  if (ids.length > 5 && !confirm(_dlIsEn
-    ? `Download ${ids.length} tracks? Your browser may ask for permission to download multiple files.`
-    : `${ids.length}曲を順次ダウンロードします。\nブラウザが「複数ファイルのDL許可」を聞く場合があります。続行しますか？`)) return;
-  toast(_dlIsEn ? `⬇ Starting download of ${ids.length} tracks…` : `${ids.length}曲のダウンロードを開始…`);
-  let done = 0;
-  for (const id of ids) {
-    const s = plLookup(id);
-    if (!s) continue;
+// 1曲ダウンロード（blob fetch でクロスオリジンR2にも対応）
+async function plDownloadOne(id){
+  const s = plLookup(id);
+  if (!s) return;
+  const url = audioOf(s);
+  const fname = (s.slug || s.id) + '.mp3';
+  const _en = window._currentLang === 'en';
+  toast(_en ? '⬇ Downloading…' : '⬇ ダウンロード準備中…');
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(res.status);
+    const blob = await res.blob();
+    const objUrl = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = audioOf(s);
-    a.download = (s.slug||s.id) + '.mp3';
-    a.style.display = 'none';
+    a.href = objUrl;
+    a.download = fname;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-    if (USE_API) apiBeacon('/api/download', {id});
-    done++;
-    await new Promise(r => setTimeout(r, 300));
+    setTimeout(() => URL.revokeObjectURL(objUrl), 10000);
+    if (USE_API) apiBeacon('/api/download', { id });
+    toast(_en ? `✅ ${getTitle(s)}` : `✅ DL: ${getTitle(s)}`);
+  } catch {
+    // フォールバック: 別タブで開く
+    window.open(url, '_blank');
   }
-  toast(window._currentLang==='en' ? `✅ Download started for ${done} track${done!==1?'s':''}` : `✅ ${done}曲のダウンロード開始`);
-}
-
-function plExportM3U(){
-  const ids = [...playlist];
-  if (!ids.length) return;
-  const songs = ids.map(plLookup).filter(Boolean);
-  let m3u = '#EXTM3U\n';
-  for (const s of songs) {
-    m3u += `#EXTINF:${Math.round(s.duration||0)},${s.title}\n${audioOf(s)}\n`;
-  }
-  const blob = new Blob([m3u], {type:'audio/mpegurl'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `playlist_${new Date().toISOString().slice(0,10)}.m3u`;
-  a.click();
-  URL.revokeObjectURL(url);
-  toast(window.t('toast_m3u'));
 }
 
 function plClearAll(){
@@ -3920,9 +3912,13 @@ document.getElementById('plPill').onclick = plOpen;
 document.getElementById('plClose').onclick = plClose;
 document.getElementById('plBack').onclick = plClose;
 document.getElementById('plPlayAll').onclick = plPlayAll;
-document.getElementById('plDlAll').onclick = plDownloadAll;
-document.getElementById('plExportM3U').onclick = plExportM3U;
 document.getElementById('plClear').onclick = plClearAll;
+document.getElementById('plShufBtn').onclick = () => {
+  shuffleOn = !shuffleOn;
+  localStorage.setItem('shuffle', shuffleOn ? '1' : '0');
+  syncSL();
+  toast(window.t(shuffleOn ? 'toast_shuffle_on' : 'toast_shuffle_off'));
+};
 plUpdatePill();
 
 // ============================================================
