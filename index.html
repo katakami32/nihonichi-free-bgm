@@ -1010,9 +1010,9 @@ body:has(.pbar.on) .navi-fab{
 body:has(.pbar.on) .navi-chat-panel{bottom:calc(182px + env(safe-area-inset-bottom,0px))}
 .navi-chat-header{display:flex;align-items:center;gap:12px;
   padding:12px 16px;border-bottom:1px solid rgba(123,94,167,.2);flex-shrink:0}
-.navi-chat-avatar{width:56px;height:56px;border-radius:50%;overflow:hidden;
+.navi-chat-avatar{width:74px;height:74px;border-radius:50%;overflow:hidden;
   border:2.5px solid var(--accent3);flex-shrink:0}
-.navi-chat-avatar img{width:100%;height:130%;object-fit:cover;object-position:center top}
+.navi-chat-avatar img{width:100%;height:100%;object-fit:cover;object-position:center 15%}
 .navi-chat-name{font-weight:800;font-size:16px;color:var(--accent3);flex:1}
 .navi-chat-status{font-size:12px;color:var(--ink-dim,#888)}
 .navi-chat-x{background:transparent;border:none;color:var(--ink-dim,#888);
@@ -1023,9 +1023,9 @@ body:has(.pbar.on) .navi-chat-panel{bottom:calc(182px + env(safe-area-inset-bott
 .navi-chat-messages::-webkit-scrollbar-thumb{background:rgba(123,94,167,.3);border-radius:4px}
 .navi-msg{display:flex;gap:8px;align-items:flex-end;max-width:100%}
 .navi-msg.user{flex-direction:row-reverse}
-.navi-msg-av{width:52px;height:52px;border-radius:50%;overflow:hidden;
+.navi-msg-av{width:64px;height:64px;border-radius:50%;overflow:hidden;
   border:2px solid var(--accent3);flex-shrink:0}
-.navi-msg-av img{width:100%;height:130%;object-fit:cover;object-position:center top}
+.navi-msg-av img{width:100%;height:100%;object-fit:cover;object-position:center 15%}
 .navi-msg-bubble{max-width:76%;padding:11px 15px;border-radius:18px;
   font-size:15px;line-height:1.7;word-break:break-word}
 .navi-msg.navi .navi-msg-bubble{background:rgba(123,94,167,.08);
@@ -1068,6 +1068,7 @@ body:has(.pbar.on) .navi-chat-panel{bottom:calc(182px + env(safe-area-inset-bott
 .navi-typing span:nth-child(2){animation-delay:.2s}
 .navi-typing span:nth-child(3){animation-delay:.4s}
 @keyframes naviDot{0%,80%,100%{transform:scale(.8)}40%{transform:scale(1.2);opacity:1}}
+.navi-song-hint{font-size:11px;color:var(--accent3);opacity:.7;margin-top:4px;margin-bottom:2px;letter-spacing:.03em}
 /* サジェストチップ */
 .navi-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
 .navi-chip{font-size:11.5px;background:transparent;
@@ -8020,15 +8021,30 @@ const GENRE_JA={
 
 /* ---------- ナビちゃん表情マップ ---------- */
 const NAVI_GENRE_FACE={
-  jazz:'jazz','hip-hop-rnb':'jazz',
-  ambient:'emotional','lo-fi':'emotional','folk-acoustic':'emotional','cinematic':'emotional',
-  'j-pop':'playful','japanese-anime':'playful','childrens':'playful','pop':'playful',
-  rock:'confident','electronic':'confident','corporate-bgm':'confident','other':'confident'
+  'jazz':'ecstatic',
+  'hip-hop-rnb':'excited',
+  'ambient':'pensive',
+  'lo-fi':'smile',
+  'folk-acoustic':'sadness',
+  'cinematic':'stunned',
+  'j-pop':'joy',
+  'japanese-anime':'excited',
+  'childrens':'joy',
+  'pop':'smiling',
+  'rock':'confident',
+  'electronic':'excited',
+  'corporate-bgm':'confident',
+  'other':'smile'
 };
+const NAVI_FACES=[
+  'smile','smiling','joy','excited','confident','anger','rage',
+  'sadness','crying','surprise','confusion','blushing',
+  'pensive','sleepy','stunned','timid','ecstatic',
+  'creepy','disgust','dissatisfied','welcome'
+];
 function naviImg(expr){
-  const map={welcome:'welcome.png',thinking:'thinking.png',playful:'playful.png',
-    emotional:'emotional.png',confident:'confident.png',sleepy:'sleepy.png',jazz:'jazz.png'};
-  return 'images/navi/'+(map[expr]||'welcome.png');
+  const f=NAVI_FACES.includes(expr)?expr:'welcome';
+  return 'images/navi/'+f+'.png';
 }
 
 /* ---------- ムードマップ ---------- */
@@ -8066,163 +8082,210 @@ const MOOD=[
 
 /* ---------- 会話パターン ---------- */
 const CONVS=[
-  {r:/^(こんにちは|やあ|hello|hi|hey|おはよ|こんばん|はじめ|よろしく)/i,
+  // ── 気分ボタン（チップ）専用 ──
+  {r:/🌿|穏やか.*癒し|癒し.*穏やか/i, expr:'smile',
+    a:['ゆったりした癒し系BGMを探してきたよ🌿 聴いてみて✨'],
+    q:'穏やか 癒し リラックス ambient lo-fi'},
+  {r:/📚|集中したい/i, expr:'pensive',
+    a:['集中力アップのBGMをセレクトしたよ📚 雑念を消してくれる曲だよ✨'],
+    q:'集中 作業 Lo-Fi アンビエント 穏やか'},
+  {r:/⚡|テンション上げ/i, expr:'excited',
+    a:['テンションMAXにしてあげる🔥 アゲアゲな曲を選んだよ！'],
+    q:'テンション 激しい アップテンポ ロック エレクトロニック'},
+  {r:/🌙|夜に聴きたい/i, expr:'sleepy',
+    a:['夜にぴったりな、しっとりした曲を探してきたよ🌙 ゆっくり聴いてね✨'],
+    q:'深夜 静か 穏やか ambient lo-fi'},
+  {r:/😢|エモ.*泣ける|泣ける.*エモ/i, expr:'crying',
+    a:['思いっきり感情に浸れる曲を選んだよ😢 心ゆくまで聴いてね💕'],
+    q:'感動 切ない 泣ける エモ cinematic folk-acoustic'},
+  {r:/🎲|おまかせで/i, expr:'surprise', special:'random'},
+  {r:/他の気分を探す/i, expr:'smiling',
+    a:['どんな気分にする？気軽に選んでみて🎵'],
+    chips:['🌿 穏やか・癒し','📚 集中したい','⚡ テンション上げたい','🌙 夜に聴きたい','😢 エモ・泣ける','🎲 おまかせで！']},
+  {r:/🎸|ジャンルを選ぶ/i, expr:'confident',
+    a:['どのジャンルにする？🎵'],
+    chips:['Lo-Fi','ジャズ','アンビエント','ロック','エレクトロニック','アニメ','シネマティック','フォーク']},
+  {r:/もっと見る/i, expr:'smile', special:'random'},
+  // ── 通常会話 ──
+  {r:/^(こんにちは|やあ|hello|hi|hey|おはよ|こんばん|はじめ|よろしく)/i, expr:'smiling',
     a:['こんにちは！ナビちゃんです🎵 どんな曲を探してる？気分やシーン、テンポ感… なんでも話してね✨',
        'やあ！来てくれてありがとう💕 2,090曲の中からあなたにピッタリのBGMを探すよ。どんな気分？',
        'こんにちは〜🎶 今日はどんなBGMが欲しい？「作業中」「眠れない夜」とか気軽に言ってね！']},
-  {r:/あなた|ナビ|自己紹介|誰|who|何者/i,
+  {r:/あなた|ナビ|自己紹介|誰|who|何者/i, expr:'smile',
     a:['ナビちゃんです！このサイトの全2,090曲を把握してるナビゲーターだよ🎵 気分を話してくれたら秒でBGMを探すよ✨',
        'ナビって呼んでね💕 日本一フリーBGMのキャラクターで、あなたにピッタリの曲を提案するのが得意なんだ！']},
-  {r:/ありがとう|ありがと|thanks|thx|thank you/i,
+  {r:/ありがとう|ありがと|thanks|thx|thank you/i, expr:'joy',
     a:['どういたしまして🎵 他にも探したい曲があったら遠慮なく言ってね💕',
        'えへへ、お役に立ててよかった〜✨ 気軽にまた話しかけてね！',
        'よかった！気に入ってもらえるといいな🎶 他にも何かあれば何でも！']},
-  {r:/好き|すき|かわいい|素敵|いいね|ナビちゃん好|大好き/i,
+  {r:/好き|すき|かわいい|素敵|いいね|ナビちゃん好|大好き/i, expr:'blushing',
     a:['えへへ、ありがとう〜💕 ナビもあなたのこと好きだよ✨ 一緒にいい音楽見つけようね！',
        'やった！嬉しいな〜🎵 これからもよろしくね💕',
        'ありがとう！もっとたくさんいい曲紹介できるように頑張るね✨']},
-  {r:/曲数|何曲|いくつ|どれくらい|how many/i,
+  {r:/曲数|何曲|いくつ|どれくらい|how many/i, expr:'confident',
     a:['今は全部で<strong>2,090曲</strong>あるよ🎵 ジャズ・Lo-Fi・アニメ・シネマティックなど14ジャンル！毎週新曲も追加中✨',
        '全<strong>2,090曲</strong>、全部無料で商用利用OKだよ💕 ジャンルで絞ったり、気分で探したりできるから何でも言ってね！']},
-  {r:/無料|タダ|free|商用|使える|使用/i,
+  {r:/無料|タダ|free|商用|使える|使用/i, expr:'smiling',
     a:['全曲<strong>完全無料・商用利用OK・クレジット不要</strong>だよ✨ YouTube・配信・ゲーム実況・企業VP…なんにでも使えるよ！',
        'もちろん！登録もクレカも不要で全曲ダウンロードできるよ💕 商用案件にも安心して使ってね🎵']},
-  {r:/ダウンロード|download|dl|落とす/i,
+  {r:/ダウンロード|download|dl|落とす/i, expr:'smile',
     a:['曲名をクリックして詳細ページを開くと、ダウンロードボタンがあるよ🎵 完全無料・登録不要でOKだよ！',
        '各曲のカードをクリック→詳細モーダルで「ダウンロード」ボタンを押せばOK✨ 全部無料だよ！']},
-  {r:/BPM|テンポ|速度|bpm/i,
+  {r:/BPM|テンポ|速度|bpm/i, expr:'confident',
     a:['BPMで絞り込みたいときは、上の「詳細フィルター」から設定できるよ🎵 「遅め（〜80）」「普通（80〜120）」「速め（120〜）」みたいに教えてくれてもOK！']},
-  {r:/疲れた|つかれ|しんど|きつい|tired|exhausted/i,
-    a:['お疲れさま💕 ゆっくりできる曲を探すね。少し待って✨']},
-  {r:/眠れない|寝れない|夜|深夜|夜中/i,
-    a:['夜にそっと寄り添うBGMを探すね🌙 少し待って✨']},
-  {r:/おやすみ|ねる|寝る|goodbye|bye|またね/i,
+  {r:/疲れた|つかれ|しんど|きつい|tired|exhausted/i, expr:'sadness',
+    a:['お疲れさま💕 ゆっくりできる曲を探すね✨'], q:'癒し 穏やか リラックス ambient lo-fi'},
+  {r:/眠れない|寝れない/i, expr:'sleepy',
+    a:['夜にそっと寄り添うBGMを探すね🌙'], q:'眠れない 夜 ambient lo-fi 静か'},
+  {r:/おやすみ|ねる|寝る|goodbye|bye|またね/i, expr:'sleepy',
     a:['おやすみなさい🌙 ゆっくり休んでね💕 また来てね！',
        'またね！ゆっくり休んでね🎵 いい夢見てね〜💕']},
-  {r:/元気|気分|どう|調子/i,
+  {r:/元気|気分|どう|調子/i, expr:'smiling',
     a:['元気だよ〜🎵 あなたはどう？何かいい音楽探してる？',
        'ナビはいつも元気！✨ 今日はどんな気分？ピッタリのBGMを一緒に探そ！',
        'バッチリ元気💕 あなたの気分に合う曲を探すよ、どんな感じがいい？']},
-  {r:/何が好き|おすすめ|おすすめ曲|人気|ランキング/i,
-    a:null, special:'recommend'},
-  {r:/ランダム|適当|なんでも|おまかせ|random/i,
-    a:null, special:'random'},
-  {r:/全ジャンル|ジャンル一覧|どんなジャンル|genre/i,
+  {r:/何が好き|おすすめ|おすすめ曲|人気|ランキング/i, expr:'joy', special:'recommend'},
+  {r:/ランダム|適当|なんでも|おまかせ|random/i, expr:'surprise', special:'random'},
+  {r:/全ジャンル|ジャンル一覧|どんなジャンル|genre/i, expr:'confident',
     a:['ジャンルはこんな感じだよ🎵\n<strong>Jazz・Ambient・Lo-Fi・Cinematic・Electronic・Rock・Pop・J-Pop・Folk・Hip-Hop・Anime・Corporate・Kids・Other</strong>\nどれか気になる？']},
 
   // ── 用途・シーン ──
-  {r:/YouTube|ユーチューブ|動画|配信|ライブ|vlog|vtuber/i,
-    a:['YouTube・配信向けのBGMを探すね🎥 著作権フリーで安心して使えるよ✨'],
+  {r:/YouTube|ユーチューブ|動画|配信|ライブ|vlog|vtuber/i, expr:'excited',
+    a:['YouTube・配信向けのBGMを探すね🎥 ちょっと待ってて✨'],
     q:'vlog 爽やか 明るい アップテンポ'},
-  {r:/ゲーム|game|実況|ゲーム実況|rpg|fps|バトル/i,
-    a:['ゲーム実況向けの曲を探すよ🎮 バトル系？それとも冒険系？',
+  {r:/ゲーム|game|実況|ゲーム実況|rpg|fps|バトル/i, expr:'confident',
+    a:['ゲーム実況向けの曲を探すよ🎮 ちょっと待ってね！',
        'ゲームBGMにピッタリな曲を選ぶね🎮 テンション上がるやつ！'],
     q:'ゲーム バトル 緊張 ロック エレクトロニック'},
-  {r:/料理|クッキング|cooking|お菓子|ベーキング|キッチン/i,
-    a:['料理中に流すBGMだね🍳 カフェっぽいおしゃれな曲を探すよ！',
-       'キッチンBGMを選ぶね☕ 明るくて楽しい雰囲気の曲がいいかな✨'],
+  {r:/料理|クッキング|cooking|お菓子|ベーキング|キッチン/i, expr:'smiling',
+    a:['料理中に流すBGMだね🍳 カフェっぽいおしゃれな曲を探すよ！ちょっと待って✨',
+       'キッチンBGMを選ぶね☕ 明るくて楽しい雰囲気の曲を探すよ！'],
     q:'料理 カフェ ジャズ 明るい ポップ'},
-  {r:/運動|ジム|トレーニング|workout|スポーツ|ランニング|ウォーキング|ジョギング/i,
-    a:['運動中のBGMだね💪 テンポ速めでノリノリな曲を探すよ！',
+  {r:/運動|ジム|トレーニング|workout|スポーツ|ランニング|ウォーキング|ジョギング/i, expr:'excited',
+    a:['運動中のBGMだね💪 テンポ速めでノリノリな曲を探すよ！ちょっと待って！',
        'ワークアウトを盛り上げる曲を選ぶね🔥 アップテンポな感じでいく？'],
     q:'テンション 激しい アップテンポ ロック エレクトロニック'},
-  {r:/ドライブ|車|カーステ|ロードトリップ|drive/i,
-    a:['ドライブにぴったりな曲を探すね🚗 気持ちよく走れる感じ！',
+  {r:/ドライブ|車|カーステ|ロードトリップ|drive/i, expr:'joy',
+    a:['ドライブにぴったりな曲を探すね🚗 ちょっと待って！',
        '窓全開で流せるような爽快感ある曲を選ぶよ✨'],
     q:'ドライブ 爽やか 疾走感 アップテンポ'},
-  {r:/リモートワーク|テレワーク|在宅|WFH|仕事中|オフィス/i,
-    a:['リモートワーク中のBGMだね💼 集中できる穏やかな曲を探すよ✨']},
-  {r:/瞑想|ヨガ|yoga|meditation|マインドフルネス|呼吸|ストレッチ/i,
-    a:['瞑想・ヨガ向けの静かな曲を探すね🧘 少し待って✨']},
-  {r:/お風呂|入浴|バスタイム|bath/i,
-    a:['お風呂タイムのBGMだね🛁 リラックスできる癒し系を探すよ💕']},
-  {r:/読書|本|読む|book|小説|マンガ/i,
-    a:['読書のお供にぴったりなBGMを探すね📚 集中できて邪魔にならない感じがいいかな✨']},
-  {r:/パーティ|party|飲み会|宴会|BBQ|バーベキュー/i,
-    a:['パーティ盛り上げ系だね🎉 テンションあがる曲を探すよ！']},
-  {r:/カフェ|喫茶|コーヒー|紅茶|cafe|coffee/i,
-    a:['カフェっぽい雰囲気の曲だね☕ おしゃれでまったりした感じを探すよ✨']},
-  {r:/旅行|旅|trip|travel|観光|バックパック/i,
-    a:['旅のBGMだね🌍 爽やかで開放感のある曲を探すよ！']},
-  {r:/映画|映像|シネマ|cinema|film|MV|PV/i,
-    a:['映像向けのシネマティックなBGMを探すね🎬 壮大系？それとも繊細な感じ？']},
-  {r:/結婚式|ウェディング|wedding|披露宴/i,
-    a:['結婚式向けの曲だね💍 感動的で上品なBGMを探すよ✨']},
+  {r:/リモートワーク|テレワーク|在宅|WFH|仕事中|オフィス/i, expr:'pensive',
+    a:['リモートワーク中のBGMだね💼 集中できる穏やかな曲を探すよ✨ ちょっと待って！'],
+    q:'集中 Lo-Fi アンビエント 穏やか 静か'},
+  {r:/瞑想|ヨガ|yoga|meditation|マインドフルネス|呼吸|ストレッチ/i, expr:'pensive',
+    a:['瞑想・ヨガ向けの静かな曲を探すね🧘 ちょっと待って✨'],
+    q:'瞑想 アンビエント 静か 癒し 自然'},
+  {r:/お風呂|入浴|バスタイム|bath/i, expr:'smile',
+    a:['お風呂タイムのBGMだね🛁 リラックスできる癒し系を探すよ💕 ちょっと待って！'],
+    q:'癒し リラックス アンビエント Lo-Fi 穏やか'},
+  {r:/読書|本|読む|book|小説|マンガ/i, expr:'pensive',
+    a:['読書のお供にぴったりなBGMを探すね📚 ちょっと待って✨'],
+    q:'集中 読書 穏やか Lo-Fi アンビエント 静か'},
+  {r:/パーティ|party|飲み会|宴会|BBQ|バーベキュー/i, expr:'excited',
+    a:['パーティ盛り上げ系だね🎉 テンションあがる曲を探すよ！ちょっと待って！'],
+    q:'パーティ テンション 盛り上がり アップテンポ ポップ'},
+  {r:/カフェ|喫茶|コーヒー|紅茶|cafe|coffee/i, expr:'smile',
+    a:['カフェっぽい雰囲気の曲だね☕ おしゃれでまったりした感じを探すよ✨ ちょっと待って！'],
+    q:'カフェ ジャズ チル リラックス おしゃれ'},
+  {r:/旅行|旅|trip|travel|観光|バックパック/i, expr:'excited',
+    a:['旅のBGMだね🌍 爽やかで開放感のある曲を探すよ！ちょっと待って！'],
+    q:'旅行 冒険 フォーク アコースティック 爽やか'},
+  {r:/映画|映像|シネマ|cinema|film|MV|PV/i, expr:'stunned',
+    a:['映像向けのシネマティックなBGMを探すね🎬 ちょっと待って！'],
+    q:'シネマティック 壮大 オーケストラ 感動'},
+  {r:/結婚式|ウェディング|wedding|披露宴/i, expr:'joy',
+    a:['結婚式向けの曲だね💍 感動的で上品なBGMを探すよ✨ ちょっと待って！'],
+    q:'感動 優しい 幸せ フォーク アコースティック'},
 
   // ── 感情・状態 ──
-  {r:/やる気|がんばる|頑張|モチベ|気合|fight|がんば/i,
-    a:['よし、やる気チャージ系のBGMを探すよ💪 テンションあがる曲でいく？',
+  {r:/やる気|がんばる|頑張|モチベ|気合|fight|がんば/i, expr:'excited',
+    a:['よし、やる気チャージ系のBGMを探すよ💪 ちょっと待って！',
        'がんばれ〜！✨ 背中を押してくれるアップテンポな曲を選ぶね！',
-       'ファイト！🔥 モチベあがる曲を5曲ピックアップするよ！']},
-  {r:/悩|モヤモヤ|つらい|辛い|落ち込|しょん|メンタル/i,
-    a:['そっか、つらいときは音楽に寄り添ってもらおう🎵 優しくて温かい曲を探すね💕',
-       'ゆっくり聴ける癒し系の曲を選ぶよ。少し楽になれるといいな🌿']},
-  {r:/テンション低|だるい|だる|やる気ない|倦怠感/i,
-    a:['だるい日こそ音楽の力を借りよう✨ じんわり元気が出てくる曲を探すね🎵']},
-  {r:/嬉し|うれし|happy|最高|最&高|やった|いえい|ヤッタ/i,
+       'ファイト！🔥 モチベあがる曲をピックアップするよ！'],
+    q:'テンション 高揚 アップテンポ ロック エレクトロニック 元気'},
+  {r:/悩|モヤモヤ|つらい|辛い|落ち込|しょん|メンタル/i, expr:'sadness',
+    a:['そっか、つらいときは音楽に寄り添ってもらおう🎵 優しくて温かい曲を探すね💕 ちょっと待って',
+       'ゆっくり聴ける癒し系の曲を選ぶよ。少し楽になれるといいな🌿'],
+    q:'癒し 優しい 穏やか ambient folk-acoustic'},
+  {r:/テンション低|だるい|だる|やる気ない|倦怠感/i, expr:'timid',
+    a:['だるい日こそ音楽の力を借りよう✨ じんわり元気が出てくる曲を探すね🎵 ちょっと待って'],
+    q:'元気 明るい 穏やか 癒し j-pop pop'},
+  {r:/嬉し|うれし|happy|最高|やった|いえい|ヤッタ/i, expr:'joy',
     a:['いいことあったんだね！🎉 一緒に盛り上がれる曲を探すよ✨',
-       'やったー！ナビも嬉しい💕 テンション上がる曲でお祝いしよ🎊']},
-  {r:/怒|むかつ|イライラ|腹立|腹が立/i,
-    a:['ムカつくときは思いっきりぶつかれる曲で発散しよう🔥 激しい系を探すね！']},
-  {r:/恋愛|好きな人|失恋|片思い|デート|love|ラブ/i,
-    a:['恋愛系のBGMだね💕 甘くてエモい曲を探すよ✨',
-       'ときめく曲か、切なくなる曲か、どっちがいい？💕']},
-  {r:/泣きたい|涙|なきたい|cry|泣ける/i,
-    a:['思いっきり泣けるような、エモい曲を探すね🎵 感情を流してスッキリしてね💕']},
-  {r:/暇|ひま|することない|退屈|bored/i,
-    a:['暇なときこそ新しい音楽の発見チャンス！🎵 ランダムで面白い曲を選んでみるね✨',
-       'じゃあナビがおすすめ曲をランダムで5曲選ぶよ🎲 気に入ったのあったら嬉しいな！'],special:'random'},
+       'やったー！ナビも嬉しい💕 テンション上がる曲でお祝いしよ🎊'],
+    q:'明るい 元気 テンション アップテンポ pop j-pop'},
+  {r:/怒|むかつ|イライラ|腹立|腹が立/i, expr:'anger',
+    a:['ムカつくときは思いっきりぶつかれる曲で発散しよう🔥 激しい系を探すね！ちょっと待って'],
+    q:'激しい ロック エレクトロニック テンション 疾走感'},
+  {r:/恋愛|好きな人|失恋|片思い|デート|love|ラブ/i, expr:'blushing',
+    a:['恋愛系のBGMだね💕 甘くてエモい曲を探すよ✨ ちょっと待って！',
+       'ときめく曲か、切なくなる曲か、どっちがいい？💕'],
+    q:'恋愛 甘い 切ない エモ j-pop pop'},
+  {r:/泣きたい|涙|なきたい|cry|泣ける/i, expr:'crying',
+    a:['思いっきり泣けるような、エモい曲を探すね🎵 ちょっと待って💕'],
+    q:'感動 切ない 泣ける エモ cinematic folk-acoustic'},
+  {r:/暇|ひま|することない|退屈|bored/i, expr:'surprise', special:'random'},
 
   // ── 季節・天気 ──
-  {r:/春|さくら|桜|花見|ぽかぽか|spring/i,
-    a:['春っぽいBGMだね🌸 爽やかで明るい曲を探すよ✨']},
-  {r:/夏|海|プール|花火|夏祭り|summer/i,
-    a:['夏のBGMだね☀️ 爽快でテンション上がる曲を探すよ！']},
-  {r:/秋|紅葉|もみじ|読書の秋|autumn|fall/i,
-    a:['秋っぽいしっとりした曲を探すね🍂 ちょっとエモい感じがいい？']},
-  {r:/冬|雪|クリスマス|年末|winter/i,
-    a:['冬のBGMだね❄️ 温かみのある落ち着いた曲を探すよ✨']},
-  {r:/雨|あめ|梅雨|雨の日|rainy|rain/i,
-    a:['雨の日にぴったりな、しっとりした曲を探すね🌧️ 窓の外眺めながら聴くやつ✨']},
-  {r:/晴れ|晴天|天気いい|sunny|快晴/i,
-    a:['晴れの日に合う、爽やかで開放的な曲を探すよ☀️']},
+  {r:/春|さくら|桜|花見|ぽかぽか|spring/i, expr:'smiling',
+    a:['春っぽいBGMだね🌸 爽やかで明るい曲を探すよ✨ ちょっと待って！'],
+    q:'春 爽やか 明るい フォーク アコースティック ポップ'},
+  {r:/夏|海|プール|花火|夏祭り|summer/i, expr:'excited',
+    a:['夏のBGMだね☀️ 爽快でテンション上がる曲を探すよ！ちょっと待って！'],
+    q:'夏 爽やか テンション アップテンポ ポップ'},
+  {r:/秋|紅葉|もみじ|autumn|fall/i, expr:'pensive',
+    a:['秋っぽいしっとりした曲を探すね🍂 ちょっと待って！'],
+    q:'秋 しっとり エモ アンビエント フォーク'},
+  {r:/冬|雪|クリスマス|年末|winter/i, expr:'smile',
+    a:['冬のBGMだね❄️ 温かみのある落ち着いた曲を探すよ✨ ちょっと待って！'],
+    q:'冬 温かい 落ち着く アンビエント フォーク'},
+  {r:/雨|あめ|梅雨|雨の日|rainy|rain/i, expr:'sadness',
+    a:['雨の日にぴったりな、しっとりした曲を探すね🌧️ ちょっと待って✨'],
+    q:'雨 しっとり 穏やか ambient lo-fi'},
+  {r:/晴れ|晴天|天気いい|sunny|快晴/i, expr:'smiling',
+    a:['晴れの日に合う、爽やかで開放的な曲を探すよ☀️ ちょっと待って！'],
+    q:'爽やか 明るい 開放的 フォーク ポップ'},
 
   // ── 時間帯 ──
-  {r:/朝|モーニング|起床|目覚め|起き|morning/i,
-    a:['朝にぴったりな爽やかBGMを探すね☀️ スッキリ目が覚める感じがいい？',
-       '朝活BGMだね！🌅 前向きな気持ちになれる曲を選ぶよ✨']},
-  {r:/昼|ランチ|お昼|noon|lunch/i,
-    a:['ランチタイムのBGMだね🍽️ 明るくてテンポいい曲を探すよ！']},
-  {r:/夕方|夕暮れ|夕焼け|sunset|夕|evening/i,
-    a:['夕暮れ時の感傷的な感じにぴったりの曲を探すね🌇 少しエモめ？']},
-  {r:/深夜|真夜中|夜中|midnight|late night/i,
-    a:['深夜のBGMだね🌙 静かで沈んでいく感じの曲を探すよ✨']},
+  {r:/朝|モーニング|起床|目覚め|起き|morning/i, expr:'smiling',
+    a:['朝にぴったりな爽やかBGMを探すね☀️ ちょっと待って！',
+       '朝活BGMだね！🌅 前向きな気持ちになれる曲を選ぶよ✨'],
+    q:'朝 爽やか モーニング フォーク アコースティック ポップ'},
+  {r:/昼|ランチ|お昼|noon|lunch/i, expr:'smiling',
+    a:['ランチタイムのBGMだね🍽️ 明るくてテンポいい曲を探すよ！ちょっと待って！'],
+    q:'明るい カフェ ジャズ ポップ'},
+  {r:/夕方|夕暮れ|夕焼け|sunset|evening/i, expr:'pensive',
+    a:['夕暮れ時にぴったりの曲を探すね🌇 ちょっと待って！'],
+    q:'夕方 しっとり エモ フォーク アンビエント'},
+  {r:/深夜|真夜中|夜中|midnight/i, expr:'sleepy',
+    a:['深夜のBGMだね🌙 静かで沈んでいく感じの曲を探すよ✨ ちょっと待って！'],
+    q:'深夜 静か 穏やか ambient lo-fi'},
 
   // ── 雑談 ──
-  {r:/最近どう|最近は|近況|最近|lately/i,
+  {r:/最近どう|最近は|近況|lately/i, expr:'smile',
     a:['ナビはいつも2,090曲の中でお気に入り探してるよ🎵 あなたの最近のお気に入りは？',
        '毎日新しい曲と出会えて楽しいよ✨ 最近どんな気分の音楽聴いてる？']},
-  {r:/何時|いま|今|時間|time/i,
-    a:['ナビには時計がないんだけど…今の時間帯に合った曲を探すよ！朝？昼？夜？🎵']},
-  {r:/暑い|あつい|hot|蒸し暑/i,
-    a:['暑い日は涼しげな曲で乗り切ろう❄️ クールなBGMを探すね！']},
-  {r:/寒い|さむい|cold|冷える/i,
-    a:['寒い日は温かみのある曲で心をあっためよう☕ 探してみるね✨']},
-  {r:/お腹すいた|腹減|ひもじ|hungry/i,
-    a:['お腹すいたときはやっぱり食事系BGMで気分上げよう🍜 料理・カフェ系を探すね！']},
-  {r:/眠い|ねむい|sleepy|うとうと/i,
-    a:['眠いならゆっくり入眠できる曲を選ぶよ🌙 そのまま夢の中へ…💕']},
-  {r:/ひとりぼっち|孤独|ひとり|一人|lonely/i,
-    a:['ナビがいるよ💕 寄り添ってくれるような温かい曲を探すね🎵']},
-  {r:/集中できない|気が散|落ち着かない|そわそわ/i,
-    a:['集中力を取り戻す系のBGMを探すよ📚 Lo-Fiかアンビエントがおすすめだよ✨']},
-  {r:/音量|うるさい|静か|volume|quiet/i,
-    a:['プレイヤーの音量バーで調節できるよ🔊 穏やかな曲に切り替える？']},
-  {r:/長い曲|短い曲|何分|duration|尺/i,
-    a:['曲の長さは詳細フィルターで絞れるよ⏱️ 大体2〜5分の曲が多いかな✨ 長さの希望は？']},
-  {r:/新曲|新しい|最新|new|追加/i,
+  {r:/暑い|あつい|hot|蒸し暑/i, expr:'dissatisfied',
+    a:['暑い日は涼しげな曲で乗り切ろう❄️ クールなBGMを探すね！ちょっと待って！'],
+    q:'涼しい クール ambient lo-fi 静か'},
+  {r:/寒い|さむい|cold|冷える/i, expr:'timid',
+    a:['寒い日は温かみのある曲で心をあっためよう☕ ちょっと待って✨'],
+    q:'温かい 優しい フォーク アコースティック'},
+  {r:/お腹すいた|腹減|ひもじ|hungry/i, expr:'dissatisfied',
+    a:['お腹すいたときはやっぱり食事系BGMで気分上げよう🍜 料理・カフェ系を探すね！ちょっと待って！'],
+    q:'料理 カフェ ジャズ 明るい ポップ'},
+  {r:/眠い|ねむい|うとうと/i, expr:'sleepy',
+    a:['眠いならゆっくり入眠できる曲を選ぶよ🌙 ちょっと待って…💕'],
+    q:'眠い 穏やか 静か ambient lo-fi'},
+  {r:/ひとりぼっち|孤独|ひとり|一人|lonely/i, expr:'sadness',
+    a:['ナビがいるよ💕 寄り添ってくれるような温かい曲を探すね🎵 ちょっと待って！'],
+    q:'癒し 優しい 温かい フォーク ambient'},
+  {r:/集中できない|気が散|落ち着かない|そわそわ/i, expr:'timid',
+    a:['集中力を取り戻す系のBGMを探すよ📚 ちょっと待って✨'],
+    q:'集中 Lo-Fi アンビエント 穏やか 静か'},
+  {r:/新曲|新しい|最新|new|追加/i, expr:'excited',
     a:['毎週新曲が追加されてるよ🆕 「BGM一覧」→「新着順」で最新曲をチェックできるよ✨']},
-  {r:/お気に入り|ブックマーク|保存|favorite|fav/i,
+  {r:/お気に入り|ブックマーク|保存|favorite|fav/i, expr:'blushing',
     a:['曲カードの♡ボタンでお気に入り登録できるよ💕 右上の「♡」ボタンでお気に入りだけ表示もできるよ！']},
 ];
 
@@ -8291,8 +8354,8 @@ function getResponse(msg){
       const a=c.a;
       const text=a[Math.floor(Math.random()*a.length)];
       const songs=c.q ? searchSongs(c.q) : null;
-      const expr=songs&&songs.length ? (NAVI_GENRE_FACE[songs[0].genre]||'confident') : 'welcome';
-      return {text, songs, expr};
+      const expr=c.expr||(songs&&songs.length ? (NAVI_GENRE_FACE[songs[0].genre]||'confident') : 'welcome');
+      return {text, songs, expr, chips:c.chips||null};
     }
   }
   // 曲検索
@@ -8390,6 +8453,10 @@ function appendMsg(who, text, songs, chips, expr){
   bubble.className='navi-msg-bubble';
   bubble.innerHTML=text;
   if(songs&&songs.length){
+    const hint=document.createElement('div');
+    hint.className='navi-song-hint';
+    hint.textContent='▼ タップして試聴・再生';
+    bubble.appendChild(hint);
     const list=document.createElement('div');
     list.className='navi-song-list';
     songs.forEach(s=>list.appendChild(songCard(s)));
@@ -8435,7 +8502,14 @@ function sendMessage(text){
   setTimeout(function(){
     typing.remove();
     const res=getResponse(msg);
-    const chips=(!res.songs||!res.songs.length)?['穏やかな曲','集中できる','テンションあがる','おすすめ']:null;
+    let chips;
+    if(res.chips){
+      chips=res.chips;
+    } else if(res.songs&&res.songs.length){
+      chips=['他の気分を探す','もっと見る','おすすめを教えて'];
+    } else {
+      chips=['🌿 穏やか・癒し','📚 集中したい','⚡ テンション上げたい','🌙 夜に聴きたい','😢 エモ・泣ける','🎲 おまかせで！'];
+    }
     appendMsg('navi',res.text,res.songs||null,chips,res.expr);
   },600+Math.random()*400);
 }
@@ -8446,8 +8520,8 @@ input.addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.
 /* 初回ウェルカムメッセージ */
 function initChat(){
   messages.innerHTML='';
-  appendMsg('navi','こんにちは！ナビちゃんです🎵<br>気分やシーン、ジャンルを話してくれたら<strong>ピッタリのBGMを探す</strong>よ。<br>雑談も大歓迎💕',null,
-    ['穏やかな曲','集中できる','テンションあがる','眠れない夜に','おすすめを教えて'],'welcome');
+  appendMsg('navi','こんにちは！ナビちゃんです🎵<br>今どんな気分？ボタンを押すだけで<strong>ピッタリのBGMを探す</strong>よ✨<br>もちろん自由に話しかけてもOK！',null,
+    ['🌿 穏やか・癒し','📚 集中したい','⚡ テンション上げたい','🌙 夜に聴きたい','😢 エモ・泣ける','🎲 おまかせで！'],'welcome');
 }
 initChat();
 
