@@ -1172,7 +1172,7 @@ html[data-theme="dark"] footer{background:#0a0805}
       <div class="fcol">
         <h3 data-i18n="footer_kbd_title">キーボード操作</h3>
         <a href="#" id="fShortcuts">⌨ <span data-i18n="footer_shortcuts">ショートカット一覧</span></a>
-        <a href="robots.txt">🤖 robots.txt</a>
+
         <a href="#" id="fCopyUrl" data-i18n="footer_copy_url">🔗 URLをコピー</a>
       </div>
     </div>
@@ -4772,8 +4772,10 @@ play = function(id) {
     document.getElementById('contactModal').classList.add('on');
   }
   document.getElementById('contactLink').addEventListener('click', openContact);
-  const _privacyLink = document.getElementById('privacyContactLink');
-  if (_privacyLink) _privacyLink.addEventListener('click', openContact);
+  // privacyContactLink はi18nがHTMLを置き換えるたびに消えるためイベント委譲で対応
+  document.addEventListener('click', e => {
+    if (e.target.closest('#privacyContactLink')) openContact(e);
+  });
 
   // モーダル外クリックで閉じる
   document.getElementById('contactModal').addEventListener('click', e => {
