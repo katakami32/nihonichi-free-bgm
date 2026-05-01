@@ -2873,6 +2873,15 @@ favBtn.onclick = () => {
   apply();
 };
 document.getElementById('favLink').onclick = e => { e.preventDefault(); favBtn.click(); window.scrollTo({top:document.getElementById('browse').offsetTop-80,behavior:'smooth'}); };
+// フッター「ライブラリ」セクションのアンカーリンクを明示的にスクロール処理
+['browse','mood','bpm'].forEach(id => {
+  const link = document.querySelector(`footer a[href="#${id}"]`);
+  if (link) link.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.getElementById(id);
+    if (target) window.scrollTo({top: target.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth'});
+  });
+});
 
 // ---- AUDIO PLAYER ----
 const playBtn = document.getElementById('playBtn');
