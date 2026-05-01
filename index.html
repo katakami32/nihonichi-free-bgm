@@ -2901,6 +2901,8 @@ function findSong(id){
 // 🎵 Howler.js ベースのプレイヤー (Web Audio API 経由)
 // HTML <audio> でクリック音が出ていた問題の根本対策
 // ============================================================
+// iOS バックグラウンド再生: AudioContext の自動サスペンドを無効化
+if (typeof Howler !== 'undefined') { Howler.autoSuspend = false; }
 let currentHowl = null;       // 再生中の Howl インスタンス
 let savedVolume = 0.8;        // ユーザー音量設定 (localStorage 復元)
 let progressRaf = null;       // 進捗バー rAF ID
@@ -2929,6 +2931,10 @@ function _updateProgress(){
     const pct = t/d*100;
     document.getElementById('fill').style.width = pct + '%';
     _updateKnob(pct);
+    // ロック画面のシークバー更新（iOS / Android 対応）
+    if ('mediaSession' in navigator && navigator.mediaSession.setPositionState) {
+      try { navigator.mediaSession.setPositionState({ duration: d, playbackRate: 1, position: Math.min(t, d) }); } catch(_) {}
+    }
   }
   document.getElementById('curTime').textContent = fmtDur(t);
   document.getElementById('durTime').textContent = fmtDur(d);
@@ -3460,13 +3466,49 @@ play = function(id){
         album: getGenreLabel(s.genre),
         artwork: img ? [{ src: img, sizes: '512x512', type: 'image/jpeg' }] : []
       });
-      navigator.mediaSession.setActionHandler('play', () => audio.play());
-      navigator.mediaSession.setActionHandler('pause', () => audio.pause());
+      navigator.mediaSession.playbackState = 'playing';
+      // ロック画面 play/pause → Howler 経由で制御（audio 要素直接操作は NG）
+      navigator.mediaSession.setActionHandler('play', () => {
+        const h = _activeHowl();
+        if (h) { h.volume(0); h.play(); setTimeout(() => { try { h.fade(0, savedVolume, 40); } catch(_){} }, 10); }
+        else if (audio.src) audio.play().catch(()=>{});
+        if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'playing';
+      });
+      navigator.mediaSession.setActionHandler('pause', () => {
+        const h = _activeHowl();
+        if (h) { h.fade(h.volume(), 0, 60); setTimeout(() => { try { h.pause(); } catch(_){} }, 70); }
+        else audio.pause();
+        if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'paused';
+      });
       navigator.mediaSession.setActionHandler('previoustrack', prevSongV2);
       navigator.mediaSession.setActionHandler('nexttrack', nextSongV2);
+      // ロック画面シークバー対応
+      try {
+        navigator.mediaSession.setActionHandler('seekto', (d) => {
+          if (d.seekTime != null) {
+            const h = _activeHowl();
+            const dur = h ? h.duration() : 0;
+            if (dur > 0) _doSeek(d.seekTime / dur);
+          }
+        });
+      } catch(_) {}
     }
   }
 };
+
+// ---- iOS 画面ロック後の AudioContext 復帰 ----
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState !== 'visible') return;
+  // Web Audio API の AudioContext が suspend されている場合に resume
+  if (typeof Howler !== 'undefined' && Howler.ctx && Howler.ctx.state === 'suspended') {
+    Howler.ctx.resume().catch(()=>{});
+  }
+  // html5 モードで再生中なのに止まっていたら再開
+  const h = _activeHowl();
+  if (h && !h.playing() && playBtn && playBtn.textContent === '⏸') {
+    try { h.play(); } catch(_){}
+  }
+});
 
 // ---- ハッシュルーティング ----
 function applyHash(){
