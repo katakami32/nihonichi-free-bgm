@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://nihonichi-free-auto.pages.dev/sitemap.xml
+Sitemap: https://nihonichi-bgm.com/sitemap.xml
 
 # このサイトはフリー素材配布サイトです。すべてのクローラを歓迎します。
 # AI 学習クローラも許可（楽曲ファイル自体の再配布は利用規約で禁止）

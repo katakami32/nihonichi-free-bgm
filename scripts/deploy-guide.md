@@ -139,7 +139,7 @@ npx wrangler pages deploy . \
 ## ④ 本番環境の動作確認チェックリスト
 
 ```bash
-BASE="https://nihonichi-free-auto.pages.dev"
+BASE="https://nihonichi-bgm.com"
 R2="https://pub-c8052da2182b4317bc252b78e473584c.r2.dev"
 
 # データファイル確認

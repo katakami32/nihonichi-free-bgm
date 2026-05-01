@@ -41,10 +41,10 @@ jobs:
             -H "Content-Type: application/json" \
             --data '{
               "files": [
-                "https://nihonichi-free-auto.pages.dev/",
-                "https://nihonichi-free-auto.pages.dev/index.html",
-                "https://nihonichi-free-auto.pages.dev/data/index.json",
-                "https://nihonichi-free-auto.pages.dev/data/genres.json"
+                "https://nihonichi-bgm.com/",
+                "https://nihonichi-bgm.com/index.html",
+                "https://nihonichi-bgm.com/data/index.json",
+                "https://nihonichi-bgm.com/data/genres.json"
               ]
             }')
           HTTP_CODE=$(echo "$RESPONSE" | tail -n1)

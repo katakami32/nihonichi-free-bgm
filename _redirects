@@ -1,0 +1,9 @@
+# Cloudflare Pages リダイレクトルール
+# pages.dev サブドメイン経由のアクセスは独自ドメイン（正規 URL）へ301転送
+# SEO評価の集約とドメイン重複の解消が目的
+
+https://nihonichi-free-auto.pages.dev/* https://nihonichi-bgm.com/:splat 301!
+https://nihonichi-freemusicbgm.pages.dev/* https://nihonichi-bgm.com/:splat 301!
+
+# www → 非www に統一（GSC のプロパティと canonical を一本化）
+https://www.nihonichi-bgm.com/* https://nihonichi-bgm.com/:splat 301!

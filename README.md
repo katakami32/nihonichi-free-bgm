@@ -2,7 +2,7 @@
 
 2,070曲以上を無料で使えるフリーBGMサイト。
 
-🌐 **本番URL**: https://nihonichi-free-auto.pages.dev
+🌐 **本番URL**: https://nihonichi-bgm.com
 
 ---
 
