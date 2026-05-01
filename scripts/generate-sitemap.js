@@ -19,7 +19,7 @@ const fs   = require('fs');
 const path = require('path');
 
 // ---- 設定 ----------------------------------------------------------------
-const DEFAULT_BASE = 'https://nihonichi-freemusicbgm.pages.dev';
+const DEFAULT_BASE = 'https://nihonichi-free-auto.pages.dev';
 const arg   = process.argv.find(a => a.startsWith('--base='));
 const BASE  = arg ? arg.split('=')[1].replace(/\/$/, '') : DEFAULT_BASE;
 

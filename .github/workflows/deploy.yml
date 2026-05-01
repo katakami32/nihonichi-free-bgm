@@ -18,7 +18,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: dec079cbb6f80e5bf626941e3f83844b
-          projectName: nihonichi-freemusicbgm
+          projectName: nihonichi-free-auto
           directory: .
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
@@ -41,10 +41,10 @@ jobs:
             -H "Content-Type: application/json" \
             --data '{
               "files": [
-                "https://nihonichi-freemusicbgm.pages.dev/",
-                "https://nihonichi-freemusicbgm.pages.dev/index.html",
-                "https://nihonichi-freemusicbgm.pages.dev/data/index.json",
-                "https://nihonichi-freemusicbgm.pages.dev/data/genres.json"
+                "https://nihonichi-free-auto.pages.dev/",
+                "https://nihonichi-free-auto.pages.dev/index.html",
+                "https://nihonichi-free-auto.pages.dev/data/index.json",
+                "https://nihonichi-free-auto.pages.dev/data/genres.json"
               ]
             }')
           HTTP_CODE=$(echo "$RESPONSE" | tail -n1)

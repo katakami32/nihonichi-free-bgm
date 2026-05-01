@@ -92,7 +92,7 @@ git push origin main
 1. **Cloudflare ダッシュボール** にログイン
    → https://dash.cloudflare.com
 
-2. **Pages** → **nihonichi-freemusicbgm** を選択
+2. **Pages** → **nihonichi-free-auto** を選択
 
 3. **Settings（設定）** タブ → **Build & deployments** セクション
 
@@ -130,7 +130,7 @@ export CLOUDFLARE_API_TOKEN="YOUR_TOKEN_HERE"
 export CLOUDFLARE_ACCOUNT_ID="dec079cbb6f80e5bf626941e3f83844b"
 
 npx wrangler pages deploy . \
-  --project-name nihonichi-freemusicbgm \
+  --project-name nihonichi-free-auto \
   --branch main
 ```
 
@@ -139,7 +139,7 @@ npx wrangler pages deploy . \
 ## ④ 本番環境の動作確認チェックリスト
 
 ```bash
-BASE="https://nihonichi-freemusicbgm.pages.dev"
+BASE="https://nihonichi-free-auto.pages.dev"
 R2="https://pub-c8052da2182b4317bc252b78e473584c.r2.dev"
 
 # データファイル確認

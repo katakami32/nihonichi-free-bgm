@@ -25,7 +25,7 @@ const path = require('path');
 const ROOT      = path.resolve(__dirname, '..');
 const DATA_FILE = path.join(ROOT, 'data', 'index.json');
 const OUT_DIR   = path.join(ROOT, 'songs');
-const BASE_URL  = 'https://nihonichi-freemusicbgm.pages.dev';
+const BASE_URL  = 'https://nihonichi-free-auto.pages.dev';
 const R2_BASE   = 'https://pub-c8052da2182b4317bc252b78e473584c.r2.dev';
 
 const CLEAN     = process.argv.includes('--clean');

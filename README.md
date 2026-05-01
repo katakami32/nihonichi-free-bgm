@@ -2,7 +2,7 @@
 
 2,070曲以上を無料で使えるフリーBGMサイト。
 
-🌐 **本番URL**: https://nihonichi-freemusicbgm.pages.dev
+🌐 **本番URL**: https://nihonichi-free-auto.pages.dev
 
 ---
 
@@ -67,14 +67,14 @@ git push origin main
 
 ### 手動デプロイ（GitHub連携が切れている場合）
 
-1. Cloudflare ダッシュボール → Pages → nihonichi-freemusicbgm
+1. Cloudflare ダッシュボール → Pages → nihonichi-free-auto
 2. 「デプロイ」→ 最新コミットを選択 → 実行
 
 ### wrangler CLI でのデプロイ（Pages:Edit 権限のトークンが必要）
 
 ```bash
 export CLOUDFLARE_API_TOKEN="your_token_here"
-npx wrangler pages deploy . --project-name nihonichi-freemusicbgm
+npx wrangler pages deploy . --project-name nihonichi-free-auto
 ```
 
 ---
