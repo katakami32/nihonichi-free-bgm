@@ -12,6 +12,9 @@
 /audio/*
   Cache-Control: public, max-age=31536000, immutable
 
+/images/navi/*
+  Cache-Control: public, max-age=86400
+
 /images/*
   Cache-Control: public, max-age=31536000, immutable
 
