@@ -30,6 +30,7 @@ audio.backup/
 # 画像ファイル（226MB → R2）、ただしサイト用素材は除外しない
 images/*
 !images/site
+!images/navi
 
 # data/ は Pages で配信するため Git に含める
 # 不要な重いファイルのみ除外

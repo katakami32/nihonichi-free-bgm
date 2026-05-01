@@ -854,6 +854,146 @@ html[data-theme="dark"] footer{background:#0a0805}
   /* フッターの列を1列に */
   .fcol a{color:rgba(255,255,255,.7)}
 }
+
+/* ===== ナビちゃん（ナビゲーターキャラ） ===== */
+.navi-chan{display:flex;align-items:flex-end;gap:14px;position:relative}
+.navi-chan.right{flex-direction:row-reverse}
+.navi-img{width:110px;height:165px;flex-shrink:0;
+  border-radius:14px;overflow:hidden;
+  border:2px solid var(--accent3);
+  box-shadow:0 0 18px rgba(123,94,167,.35),0 6px 24px rgba(0,0,0,.18);
+  background:#000;position:relative}
+.navi-img img{width:100%;height:100%;object-fit:cover;display:block}
+.navi-img .navi-name{position:absolute;left:0;right:0;bottom:0;
+  background:linear-gradient(180deg,transparent,rgba(0,0,0,.85));
+  color:#fff;text-align:center;font-size:10px;font-weight:bold;
+  padding:14px 4px 6px;letter-spacing:.5px}
+.navi-bubble{background:rgba(123,94,167,.07);border:1.5px solid var(--accent3);
+  border-radius:16px;padding:14px 18px;max-width:560px;
+  font-size:14.5px;color:var(--ink);position:relative;line-height:1.7;
+  box-shadow:0 0 12px rgba(123,94,167,.1)}
+.navi-bubble strong{color:var(--accent3)}
+.navi-bubble::before{content:"";position:absolute;width:12px;height:12px;
+  background:var(--paper);border:1.5px solid var(--accent3);
+  border-top:none;border-right:none;
+  transform:rotate(45deg);bottom:18px;left:-7px}
+.navi-chan.right .navi-bubble::before{
+  border:1.5px solid var(--accent3);border-bottom:none;border-left:none;
+  left:auto;right:-7px}
+.navi-tag{display:inline-block;font-family:'Menlo','SFMono-Regular',monospace;
+  font-size:10px;color:var(--accent3);background:rgba(123,94,167,.14);
+  padding:2px 8px;border-radius:6px;margin-right:8px;letter-spacing:.5px}
+.navi-qa{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
+.navi-qa button{font-size:12px;background:transparent;
+  border:1px solid var(--accent3);color:var(--accent3);padding:6px 12px;
+  border-radius:999px;cursor:pointer;font-family:inherit;transition:all .15s}
+.navi-qa button:hover{background:var(--accent3);color:#fff}
+
+/* ヒーロー直下の挨拶バンド (ヒーローと同じ黒で連続感) */
+.navi-greet{background:#0d0b08;padding:0 1.5rem 60px;color:#fff;
+  position:relative}
+html[data-theme="dark"] .navi-greet{background:#0a0805}
+.navi-greet::after{content:'';position:absolute;left:0;right:0;bottom:-1px;
+  height:60px;background:linear-gradient(180deg,transparent,var(--paper))}
+.navi-greet-wrap{max-width:1100px;margin:0 auto;position:relative;z-index:1}
+.navi-greet .navi-bubble{background:rgba(123,94,167,.14);color:#f3ece1;
+  border-color:#a988d4}
+.navi-greet .navi-bubble strong{color:#c5a8e8}
+.navi-greet .navi-bubble::before{background:#0d0b08;border-color:#a988d4}
+.navi-greet .navi-tag{color:#c5a8e8;background:rgba(123,94,167,.25)}
+.navi-greet .navi-qa button{border-color:#a988d4;color:#c5a8e8}
+.navi-greet .navi-qa button:hover{background:#a988d4;color:#0d0b08}
+
+/* FAQ末尾コンパニオン */
+.navi-card{background:rgba(123,94,167,.06);border:1px solid var(--accent3);
+  border-radius:14px;padding:18px;margin-top:24px;display:flex;gap:14px;
+  align-items:flex-start}
+.navi-card .navi-img{width:80px;height:120px}
+.navi-card-text{font-size:14px;color:var(--ink);line-height:1.7}
+.navi-who{font-size:11px;color:var(--accent3);
+  font-family:'Menlo',monospace;letter-spacing:1px;margin-bottom:4px}
+
+/* 右下フローティング常駐 */
+.navi-fab{position:fixed;
+  bottom:calc(18px + env(safe-area-inset-bottom, 0px));
+  right:calc(18px + env(safe-area-inset-right, 0px));
+  z-index:170;
+  display:flex;flex-direction:column;align-items:flex-end;gap:10px;
+  pointer-events:none;
+  transition:bottom .3s ease}
+.navi-fab > *{pointer-events:auto}
+/* プレイヤーバー表示時は上にずらす */
+body:has(.pbar.on) .navi-fab{
+  bottom:calc(96px + env(safe-area-inset-bottom, 0px))}
+.navi-fab-bubble{max-width:260px;font-size:13px;line-height:1.6;
+  background:var(--paper);border:1.5px solid var(--accent3);
+  border-radius:14px;padding:12px 14px;color:var(--ink);
+  box-shadow:0 6px 20px rgba(0,0,0,.18);
+  display:none;animation:naviPop .35s ease-out;position:relative}
+.navi-fab-bubble strong{color:var(--accent3)}
+.navi-fab-bubble .navi-close{position:absolute;top:6px;right:8px;
+  background:transparent;border:none;color:var(--ink-dim,#888);
+  cursor:pointer;font-size:16px;line-height:1;padding:4px 8px}
+.navi-fab.open .navi-fab-bubble{display:block}
+.navi-fab-btn{width:60px;height:60px;border-radius:50%;
+  border:2px solid var(--accent3);overflow:hidden;cursor:pointer;
+  box-shadow:0 0 18px rgba(123,94,167,.5),0 6px 18px rgba(0,0,0,.3);
+  background:#000;animation:naviPulse 3s ease-in-out infinite;
+  padding:0;transition:transform .2s;
+  /* iOSでタップハイライトを抑える */
+  -webkit-tap-highlight-color:transparent}
+.navi-fab-btn img{width:100%;height:140%;object-fit:cover;
+  object-position:center top;display:block}
+.navi-fab-btn:hover{transform:scale(1.06)}
+.navi-fab-quick{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.navi-fab-quick a{font-size:12px;text-decoration:none;
+  color:var(--accent3);padding:6px 12px;border:1px solid var(--accent3);
+  border-radius:999px;background:transparent;text-align:center;transition:all .15s}
+.navi-fab-quick a:hover{background:var(--accent3);color:#fff}
+
+@keyframes naviPulse{
+  0%,100%{box-shadow:0 0 18px rgba(123,94,167,.5),0 6px 18px rgba(0,0,0,.3)}
+  50%{box-shadow:0 0 32px rgba(123,94,167,.8),0 6px 22px rgba(0,0,0,.4)}
+}
+@keyframes naviPop{
+  from{opacity:0;transform:translateY(8px) scale(.95)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+
+/* タブレット〜スマホ */
+@media (max-width:760px){
+  .navi-greet{padding:24px 1rem 36px}
+  .navi-img{width:96px;height:144px}
+  .navi-bubble{font-size:13.5px;padding:12px 14px;line-height:1.65}
+  .navi-bubble::before{bottom:14px}
+  .navi-qa button{font-size:11.5px;padding:5px 10px}
+  .navi-card{padding:14px;flex-wrap:wrap}
+  .navi-card .navi-img{width:74px;height:110px}
+}
+
+/* 狭い縦長スマホ: 画像と吹き出しを縦積みにして横はみ出しを防ぐ */
+@media (max-width:480px){
+  .navi-chan{flex-direction:column;align-items:flex-start;gap:10px}
+  .navi-chan.right{flex-direction:column;align-items:flex-end}
+  .navi-img{width:84px;height:126px}
+  .navi-bubble{max-width:100%;width:100%}
+  .navi-bubble::before{display:none}
+  .navi-qa{gap:6px}
+  .navi-fab-btn{width:54px;height:54px;
+    animation:naviPulse 3.5s ease-in-out infinite}
+  .navi-fab-bubble{max-width:calc(100vw - 88px);font-size:12.5px;padding:10px 12px;
+    /* ぶつからないように右マージン */}
+  .navi-fab-bubble .navi-close{font-size:18px;padding:6px 10px}
+  .navi-fab-quick a{font-size:11.5px;padding:6px 10px}
+  body:has(.pbar.on) .navi-fab{
+    bottom:calc(86px + env(safe-area-inset-bottom, 0px))}
+}
+
+/* 体感パフォーマンス: 動きを苦手とするユーザー向けにアニメ無効 */
+@media (prefers-reduced-motion: reduce){
+  .navi-fab-btn{animation:none}
+  .navi-fab-bubble{animation:none}
+}
 </style>
 </head>
 <body>
@@ -916,6 +1056,29 @@ html[data-theme="dark"] footer{background:#0a0805}
     </div>
     <div class="hvis" id="heroVis" aria-hidden="true">
       <img src="images/site/promo.png" alt="日本一フリーBGM" style="width:100%;max-width:400px;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.6),0 0 40px rgba(29,233,182,.1);animation:floatImg 6s ease-in-out infinite">
+    </div>
+  </div>
+</section>
+
+<!-- ナビちゃん挨拶 -->
+<section class="navi-greet" aria-label="ナビゲーター ナビちゃんからの挨拶">
+  <div class="navi-greet-wrap">
+    <div class="navi-chan">
+      <div class="navi-img">
+        <img src="images/navi/welcome.png" alt="ナビちゃん（笑顔）" data-i18n-alt="navi_alt_smile" loading="lazy">
+        <div class="navi-name">NAVI</div>
+      </div>
+      <div class="navi-bubble">
+        <span class="navi-tag">▸ NAVI</span>
+        <span data-i18n-html="navi_greet_text">ようこそ！ナビゲーターの<strong>ナビちゃん</strong>です✨<br>
+        気分やシーンを話してくれれば、ピッタリのBGMをAIが秒で見つけるよ。<br>
+        分からないことは右下の私に、いつでも聞いてね💡</span>
+        <div class="navi-qa">
+          <button data-i18n="navi_greet_btn_ai" onclick="document.getElementById('aiOpen')?.click()">✨ AIにおまかせを試す</button>
+          <button data-i18n="navi_greet_btn_radio" onclick="document.getElementById('radioOpen')?.click()">🎧 BGMチャンネルを開く</button>
+          <button data-i18n="navi_greet_btn_faq" onclick="document.getElementById('faq')?.scrollIntoView({behavior:'smooth'})">❓ よくある質問</button>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1105,6 +1268,24 @@ html[data-theme="dark"] footer{background:#0a0805}
       <summary class="faqq" data-i18n="faq_q10">配信元として安定して使えますか？</summary>
       <div class="faqa" data-i18n-html="faq_a10">基本的に楽曲が<b>削除されることはなく</b>、利用規約も後からの改悪はしない方針です（追加や緩和はあり）。一度ダウンロードした楽曲は、ローカルに保存しておけばサイト側の都合に左右されず使い続けられます。</div>
     </details>
+
+    <!-- ナビちゃんコンパニオン -->
+    <div class="navi-card" role="complementary" aria-label="ナビちゃんからのお声がけ">
+      <div class="navi-img">
+        <img src="images/navi/welcome.png" alt="ナビちゃん" data-i18n-alt="navi_alt" loading="lazy">
+        <div class="navi-name">NAVI</div>
+      </div>
+      <div class="navi-card-text">
+        <div class="navi-who">▸ NAVI</div>
+        <span data-i18n-html="navi_card_text">ほかに気になることある？<br>
+        <strong>ライセンスのこと</strong>とか、<strong>使い方</strong>とか、なんでも聞いてね💡</span><br>
+        <span style="display:inline-block;margin-top:8px">
+          <a href="#license" data-i18n="navi_card_btn_license" style="color:var(--accent3);text-decoration:none;border:1px solid var(--accent3);padding:6px 14px;border-radius:999px;font-size:13px">📜 利用規約を見る</a>
+          &nbsp;
+          <a href="#privacy" data-i18n="navi_card_btn_privacy" style="color:var(--accent3);text-decoration:none;border:1px solid var(--accent3);padding:6px 14px;border-radius:999px;font-size:13px">🔒 プライバシー</a>
+        </span>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -7195,6 +7376,23 @@ const T = {
     faq_a9:'大歓迎です。フッターのお問い合わせから送ってもらえれば、優先的に生成します。',
     faq_q10:'配信元として安定して使えますか？',
     faq_a10:'基本的に楽曲が<b>削除されることはなく</b>、利用規約も後からの改悪はしない方針です。一度ダウンロードした楽曲はローカルに保存しておけば安心です。',
+    // Navi-chan
+    navi_alt:'ナビちゃん',
+    navi_alt_smile:'ナビちゃん（笑顔）',
+    navi_close_aria:'閉じる',
+    navi_fab_aria:'ナビちゃんに話しかける',
+    navi_fab_title:'ナビちゃん',
+    navi_greet_text:'ようこそ！ナビゲーターの<strong>ナビちゃん</strong>です✨<br>気分やシーンを話してくれれば、ピッタリのBGMをAIが秒で見つけるよ。<br>分からないことは右下の私に、いつでも聞いてね💡',
+    navi_greet_btn_ai:'✨ AIにおまかせを試す',
+    navi_greet_btn_radio:'🎧 BGMチャンネルを開く',
+    navi_greet_btn_faq:'❓ よくある質問',
+    navi_card_text:'ほかに気になることある？<br><strong>ライセンスのこと</strong>とか、<strong>使い方</strong>とか、なんでも聞いてね💡',
+    navi_card_btn_license:'📜 利用規約を見る',
+    navi_card_btn_privacy:'🔒 プライバシー',
+    navi_fab_text:'お探しのBGMがある？<strong>気軽に話しかけて</strong>💕',
+    navi_fab_quick_ai:'✨ AIにおまかせ',
+    navi_fab_quick_radio:'🎧 BGMチャンネル',
+    navi_fab_quick_faq:'❓ よくある質問',
     // Playlist
     playlist_pill_label:'プレイリスト', playlist_title_label:'プレイリスト',
     playlist_open_aria:'プレイリストを開く',
@@ -7442,6 +7640,23 @@ const T = {
     faq_a9:'Absolutely welcome. Send your request via the footer contact form and we\'ll prioritize generating it. AI generation makes specific requests easy to fulfill.',
     faq_q10:'Is this a stable long-term source?',
     faq_a10:'Tracks are not deleted, and the license terms will not be made more restrictive (additions or relaxations only). Downloaded tracks stored locally will remain usable regardless of site changes.',
+    // Navi-chan
+    navi_alt:'Navi',
+    navi_alt_smile:'Navi (smiling)',
+    navi_close_aria:'Close',
+    navi_fab_aria:'Talk to Navi',
+    navi_fab_title:'Navi',
+    navi_greet_text:'Welcome! I\'m <strong>Navi</strong>, your guide ✨<br>Tell me your mood or scene — AI finds the perfect BGM in seconds.<br>Stuck? Tap me anytime in the bottom-right corner 💡',
+    navi_greet_btn_ai:'✨ Try AI Match',
+    navi_greet_btn_radio:'🎧 Open BGM Channel',
+    navi_greet_btn_faq:'❓ FAQ',
+    navi_card_text:'Anything else on your mind?<br>Ask me about <strong>licensing</strong>, <strong>how to use it</strong>, anything 💡',
+    navi_card_btn_license:'📜 Terms of Use',
+    navi_card_btn_privacy:'🔒 Privacy',
+    navi_fab_text:'Looking for the right BGM? <strong>Tap to chat</strong> 💕',
+    navi_fab_quick_ai:'✨ AI Match',
+    navi_fab_quick_radio:'🎧 BGM Channel',
+    navi_fab_quick_faq:'❓ FAQ',
     // Playlist
     playlist_pill_label:'Playlist', playlist_title_label:'Playlist',
     playlist_open_aria:'Open Playlist',
@@ -7600,6 +7815,10 @@ function applyLang(lang) {
   document.querySelectorAll('[data-i18n-aria]').forEach(el => {
     const v = t[el.dataset.i18nAria]; if (v !== undefined) el.setAttribute('aria-label', v);
   });
+  // alt 属性 (画像)
+  document.querySelectorAll('[data-i18n-alt]').forEach(el => {
+    const v = t[el.dataset.i18nAlt]; if (v !== undefined) el.setAttribute('alt', v);
+  });
   // <html> lang 属性
   document.documentElement.lang = lang === 'en' ? 'en' : 'ja';
   // 🌐ボタンのラベル更新
@@ -7667,5 +7886,52 @@ if ('serviceWorker' in navigator) {
   });
 }
 </script>
+
+<!-- ===== ナビちゃん フローティング常駐 ===== -->
+<div class="navi-fab" id="naviFab" aria-label="ナビちゃん（ナビゲーター）">
+  <div class="navi-fab-bubble" id="naviFabBubble" role="dialog" aria-live="polite">
+    <button class="navi-close" id="naviFabClose" data-i18n-aria="navi_close_aria" aria-label="閉じる">×</button>
+    <span class="navi-tag">▸ NAVI</span><br>
+    <span data-i18n-html="navi_fab_text">お探しのBGMがある？<strong>気軽に話しかけて</strong>💕</span>
+    <div class="navi-fab-quick">
+      <a href="#top" data-i18n="navi_fab_quick_ai" onclick="document.getElementById('aiOpen')?.click();return false">✨ AIにおまかせ</a>
+      <a href="#top" data-i18n="navi_fab_quick_radio" onclick="document.getElementById('radioOpen')?.click();return false">🎧 BGMチャンネル</a>
+      <a href="#faq" data-i18n="navi_fab_quick_faq">❓ よくある質問</a>
+    </div>
+  </div>
+  <button class="navi-fab-btn" id="naviFabBtn" data-i18n-aria="navi_fab_aria" data-i18n-title="navi_fab_title" aria-label="ナビちゃんに話しかける" title="ナビちゃん">
+    <img src="images/navi/welcome.png" alt="ナビちゃん" data-i18n-alt="navi_alt">
+  </button>
+</div>
+<script>
+(function(){
+  var fab = document.getElementById('naviFab');
+  var btn = document.getElementById('naviFabBtn');
+  var closeBtn = document.getElementById('naviFabClose');
+  if(!fab || !btn) return;
+  function toggle(force){
+    var open = (typeof force === 'boolean') ? force : !fab.classList.contains('open');
+    fab.classList.toggle('open', open);
+  }
+  btn.addEventListener('click', function(e){ e.stopPropagation(); toggle(); });
+  closeBtn && closeBtn.addEventListener('click', function(e){
+    e.stopPropagation(); toggle(false);
+    try{ localStorage.setItem('naviFabClosed', String(Date.now())); }catch(_){}
+  });
+  document.addEventListener('click', function(e){
+    if(!fab.contains(e.target)) toggle(false);
+  });
+  // 初回訪問時のみ自動表示（30日に1回）
+  try{
+    var last = parseInt(localStorage.getItem('naviFabClosed')||'0', 10);
+    var THIRTY = 30*24*60*60*1000;
+    if(!last || (Date.now() - last) > THIRTY){
+      setTimeout(function(){ toggle(true); }, 2500);
+      setTimeout(function(){ toggle(false); }, 12000);
+    }
+  }catch(_){}
+})();
+</script>
+
 </body>
 </html>
