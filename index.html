@@ -994,6 +994,90 @@ body:has(.pbar.on) .navi-fab{
   .navi-fab-btn{animation:none}
   .navi-fab-bubble{animation:none}
 }
+
+/* ===== ナビちゃん チャットパネル ===== */
+.navi-chat-panel{
+  position:fixed;bottom:calc(88px + env(safe-area-inset-bottom,0px));
+  right:calc(14px + env(safe-area-inset-right,0px));
+  width:360px;max-height:520px;
+  background:var(--paper);border:1.5px solid var(--accent3);
+  border-radius:18px;box-shadow:0 12px 40px rgba(0,0,0,.22);
+  display:flex;flex-direction:column;overflow:hidden;
+  transform:translateY(20px) scale(.97);opacity:0;
+  pointer-events:none;transition:transform .3s cubic-bezier(.34,1.56,.64,1),opacity .25s ease;
+  z-index:169}
+.navi-chat-panel.open{transform:translateY(0) scale(1);opacity:1;pointer-events:auto}
+body:has(.pbar.on) .navi-chat-panel{bottom:calc(182px + env(safe-area-inset-bottom,0px))}
+.navi-chat-header{display:flex;align-items:center;gap:10px;
+  padding:10px 14px;border-bottom:1px solid rgba(123,94,167,.2);flex-shrink:0}
+.navi-chat-avatar{width:36px;height:36px;border-radius:50%;overflow:hidden;
+  border:2px solid var(--accent3);flex-shrink:0}
+.navi-chat-avatar img{width:100%;height:140%;object-fit:cover;object-position:center top}
+.navi-chat-name{font-weight:700;font-size:14px;color:var(--accent3);flex:1}
+.navi-chat-status{font-size:11px;color:var(--ink-dim,#888)}
+.navi-chat-x{background:transparent;border:none;color:var(--ink-dim,#888);
+  cursor:pointer;font-size:20px;line-height:1;padding:4px 6px}
+.navi-chat-messages{flex:1;overflow-y:auto;padding:12px 14px;
+  display:flex;flex-direction:column;gap:10px;scroll-behavior:smooth}
+.navi-chat-messages::-webkit-scrollbar{width:4px}
+.navi-chat-messages::-webkit-scrollbar-thumb{background:rgba(123,94,167,.3);border-radius:4px}
+.navi-msg{display:flex;gap:8px;align-items:flex-end;max-width:100%}
+.navi-msg.user{flex-direction:row-reverse}
+.navi-msg-av{width:28px;height:28px;border-radius:50%;overflow:hidden;
+  border:1.5px solid var(--accent3);flex-shrink:0}
+.navi-msg-av img{width:100%;height:140%;object-fit:cover;object-position:center top}
+.navi-msg-bubble{max-width:78%;padding:9px 13px;border-radius:16px;
+  font-size:13.5px;line-height:1.65;word-break:break-word}
+.navi-msg.navi .navi-msg-bubble{background:rgba(123,94,167,.08);
+  border:1px solid rgba(123,94,167,.2);color:var(--ink);border-bottom-left-radius:4px}
+.navi-msg.user .navi-msg-bubble{background:var(--accent3);
+  color:#fff;border-bottom-right-radius:4px}
+.navi-msg-bubble strong{color:var(--accent3)}
+.navi-msg.user .navi-msg-bubble strong{color:#fff}
+/* 曲カード */
+.navi-song-list{display:flex;flex-direction:column;gap:7px;margin-top:6px}
+.navi-song-card{display:flex;align-items:center;gap:9px;
+  background:rgba(123,94,167,.07);border:1px solid rgba(123,94,167,.18);
+  border-radius:10px;padding:7px 10px;cursor:pointer;transition:all .15s;
+  text-align:left;width:100%}
+.navi-song-card:hover{background:rgba(123,94,167,.15);transform:translateX(2px)}
+.navi-song-thumb{width:40px;height:40px;border-radius:7px;overflow:hidden;
+  flex-shrink:0;background:#111}
+.navi-song-thumb img{width:100%;height:100%;object-fit:cover}
+.navi-song-info{flex:1;min-width:0}
+.navi-song-title{font-size:13px;font-weight:600;color:var(--ink);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.navi-song-meta{font-size:11px;color:var(--ink-dim,#888);margin-top:2px}
+.navi-song-play{color:var(--accent3);font-size:18px;flex-shrink:0}
+/* 入力エリア */
+.navi-chat-input-wrap{display:flex;gap:8px;padding:10px 12px;
+  border-top:1px solid rgba(123,94,167,.2);flex-shrink:0}
+.navi-chat-input{flex:1;border:1.5px solid rgba(123,94,167,.3);
+  border-radius:999px;padding:8px 14px;font-size:13.5px;
+  background:var(--paper);color:var(--ink);outline:none;font-family:inherit}
+.navi-chat-input:focus{border-color:var(--accent3)}
+.navi-chat-send{width:36px;height:36px;border-radius:50%;
+  background:var(--accent3);border:none;color:#fff;
+  cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;transition:transform .15s}
+.navi-chat-send:hover{transform:scale(1.08)}
+/* タイピング */
+.navi-typing{display:flex;gap:4px;align-items:center;padding:4px 0}
+.navi-typing span{width:7px;height:7px;border-radius:50%;
+  background:var(--accent3);opacity:.5;animation:naviDot 1.2s ease-in-out infinite}
+.navi-typing span:nth-child(2){animation-delay:.2s}
+.navi-typing span:nth-child(3){animation-delay:.4s}
+@keyframes naviDot{0%,80%,100%{transform:scale(.8)}40%{transform:scale(1.2);opacity:1}}
+/* サジェストチップ */
+.navi-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.navi-chip{font-size:11.5px;background:transparent;
+  border:1px solid var(--accent3);color:var(--accent3);
+  padding:4px 10px;border-radius:999px;cursor:pointer;transition:all .15s;
+  font-family:inherit}
+.navi-chip:hover{background:var(--accent3);color:#fff}
+@media(max-width:480px){
+  .navi-chat-panel{width:calc(100vw - 28px);max-height:70vh;
+    right:14px;left:14px}}
 </style>
 </head>
 <body>
@@ -7887,49 +7971,370 @@ if ('serviceWorker' in navigator) {
 }
 </script>
 
-<!-- ===== ナビちゃん フローティング常駐 ===== -->
-<div class="navi-fab" id="naviFab" aria-label="ナビちゃん（ナビゲーター）">
-  <div class="navi-fab-bubble" id="naviFabBubble" role="dialog" aria-live="polite">
-    <button class="navi-close" id="naviFabClose" data-i18n-aria="navi_close_aria" aria-label="閉じる">×</button>
-    <span class="navi-tag">▸ NAVI</span><br>
-    <span data-i18n-html="navi_fab_text">お探しのBGMがある？<strong>気軽に話しかけて</strong>💕</span>
-    <div class="navi-fab-quick">
-      <a href="#top" data-i18n="navi_fab_quick_ai" onclick="document.getElementById('aiOpen')?.click();return false">✨ AIにおまかせ</a>
-      <a href="#top" data-i18n="navi_fab_quick_radio" onclick="document.getElementById('radioOpen')?.click();return false">🎧 BGMチャンネル</a>
-      <a href="#faq" data-i18n="navi_fab_quick_faq">❓ よくある質問</a>
+<!-- ===== ナビちゃん チャット ===== -->
+<div class="navi-chat-panel" id="naviChatPanel" role="dialog" aria-label="ナビちゃんとチャット">
+  <div class="navi-chat-header">
+    <div class="navi-chat-avatar"><img src="images/navi/welcome.png" alt="ナビちゃん"></div>
+    <div>
+      <div class="navi-chat-name">ナビちゃん</div>
+      <div class="navi-chat-status" id="naviStatus">オンライン ✨</div>
     </div>
+    <button class="navi-chat-x" id="naviChatClose" aria-label="チャットを閉じる">×</button>
   </div>
-  <button class="navi-fab-btn" id="naviFabBtn" data-i18n-aria="navi_fab_aria" data-i18n-title="navi_fab_title" aria-label="ナビちゃんに話しかける" title="ナビちゃん">
-    <img src="images/navi/welcome.png" alt="ナビちゃん" data-i18n-alt="navi_alt">
+  <div class="navi-chat-messages" id="naviMessages"></div>
+  <div class="navi-chat-input-wrap">
+    <input class="navi-chat-input" id="naviInput" type="text" placeholder="気分やシーンを話してね…" maxlength="120" autocomplete="off">
+    <button class="navi-chat-send" id="naviSend" aria-label="送信">▶</button>
+  </div>
+</div>
+<div class="navi-fab" id="naviFab">
+  <button class="navi-fab-btn" id="naviFabBtn" aria-label="ナビちゃんに話しかける" title="ナビちゃん">
+    <img src="images/navi/welcome.png" alt="ナビちゃん">
   </button>
 </div>
 <script>
+/* ===== ナビちゃん チャットエンジン ===== */
 (function(){
-  var fab = document.getElementById('naviFab');
-  var btn = document.getElementById('naviFabBtn');
-  var closeBtn = document.getElementById('naviFabClose');
-  if(!fab || !btn) return;
-  function toggle(force){
-    var open = (typeof force === 'boolean') ? force : !fab.classList.contains('open');
-    fab.classList.toggle('open', open);
-  }
-  btn.addEventListener('click', function(e){ e.stopPropagation(); toggle(); });
-  closeBtn && closeBtn.addEventListener('click', function(e){
-    e.stopPropagation(); toggle(false);
-    try{ localStorage.setItem('naviFabClosed', String(Date.now())); }catch(_){}
-  });
-  document.addEventListener('click', function(e){
-    if(!fab.contains(e.target)) toggle(false);
-  });
-  // 初回訪問時のみ自動表示（30日に1回）
-  try{
-    var last = parseInt(localStorage.getItem('naviFabClosed')||'0', 10);
-    var THIRTY = 30*24*60*60*1000;
-    if(!last || (Date.now() - last) > THIRTY){
-      setTimeout(function(){ toggle(true); }, 2500);
-      setTimeout(function(){ toggle(false); }, 12000);
+'use strict';
+
+const R2='https://pub-c8052da2182b4317bc252b78e473584c.r2.dev';
+
+/* ---------- ジャンル日本語ラベル ---------- */
+const GENRE_JA={
+  jazz:'ジャズ',ambient:'アンビエント',cinematic:'シネマティック',
+  'lo-fi':'Lo-Fi','hip-hop-rnb':'ヒップホップ・R&B',
+  'folk-acoustic':'フォーク・アコースティック','j-pop':'J-Pop',
+  'japanese-anime':'アニメ・日本風','corporate-bgm':'コーポレート',
+  electronic:'エレクトロニック',rock:'ロック',pop:'ポップ',
+  childrens:'こども向け',other:'その他'
+};
+
+/* ---------- ナビちゃん表情マップ ---------- */
+const NAVI_GENRE_FACE={
+  jazz:'jazz','hip-hop-rnb':'jazz',
+  ambient:'emotional','lo-fi':'emotional','folk-acoustic':'emotional','cinematic':'emotional',
+  'j-pop':'playful','japanese-anime':'playful','childrens':'playful','pop':'playful',
+  rock:'confident','electronic':'confident','corporate-bgm':'confident','other':'confident'
+};
+function naviImg(expr){
+  const map={welcome:'welcome.png',thinking:'thinking.png',playful:'playful.png',
+    emotional:'emotional.png',confident:'confident.png',sleepy:'sleepy.png',jazz:'jazz.png'};
+  return 'images/navi/'+(map[expr]||'welcome.png');
+}
+
+/* ---------- ムードマップ ---------- */
+const MOOD=[
+  {k:['穏やか','落ち着','リラックス','ゆった','癒し','穏','まった','のんびり','リラ','peaceful','calm','relax','mellow','chill'],
+    g:['ambient','lo-fi','jazz','folk-acoustic'],max:95},
+  {k:['集中','勉強','作業','仕事','読書','コーヒー','カフェ','集中できる','勉強したい','focus','study','work','coffee','cafe','deep work'],
+    g:['lo-fi','ambient','corporate-bgm','jazz'],max:105},
+  {k:['激し','テンション','アゲ','盛り上','パーティ','テンアゲ','ハイテンション','ノリノリ','pump','hype','energetic','party','upbeat','intense'],
+    g:['rock','electronic','hip-hop-rnb'],min:120},
+  {k:['かわいい','可愛い','元気','明るい','楽し','ほのぼの','cute','happy','cheerful','fun','bright'],
+    g:['j-pop','childrens','japanese-anime','pop']},
+  {k:['眠い','睡眠','就寝','夜','おやすみ','ねむ','寝る前','リラックス睡眠','sleep','night','bedtime'],
+    g:['ambient','lo-fi'],max:80},
+  {k:['朝','モーニング','起床','起き','目覚め','朝活','morning','wake up'],
+    g:['folk-acoustic','j-pop','pop'],min:85},
+  {k:['悲し','切な','エモ','泣ける','しんみり','感動','emotional','sad'],
+    g:['cinematic','ambient','folk-acoustic']},
+  {k:['壮大','epic','映画','映像','シネマ','ドラマ','劇的','dramatic','cinematic'],
+    g:['cinematic']},
+  {k:['アニメ','anime','manga','アニソン','日本風','和風'],
+    g:['japanese-anime']},
+  {k:['ジャズ','jazz','スウィング','ビバップ','バップ'],g:['jazz']},
+  {k:['ロック','rock','ギター','バンド'],g:['rock']},
+  {k:['lo-fi','ローファイ','lofi','ロファイ'],g:['lo-fi']},
+  {k:['電子','エレクトロ','electronic','edm','シンセ','ダンス','テクノ'],g:['electronic']},
+  {k:['フォーク','アコースティック','folk','acoustic','ギター弾き語り'],g:['folk-acoustic']},
+  {k:['ヒップホップ','ラップ','hip hop','hiphop','rnb','r&b','rap'],g:['hip-hop-rnb']},
+  {k:['コーポレート','企業','ビジネス','プレゼン','corporate','professional','bgm'],g:['corporate-bgm']},
+  {k:['j-pop','jpop','ポップス','j pop','Jポップ'],g:['j-pop','pop']},
+  {k:['こども','子供','子ども','童謡','キッズ','kids','children'],g:['childrens']},
+  {k:['速い','テンポ速','fast','快活','bpm高'],min:130},
+  {k:['遅い','スロー','ゆっくり','slow','テンポ遅'],max:85},
+];
+
+/* ---------- 会話パターン ---------- */
+const CONVS=[
+  {r:/^(こんにちは|やあ|hello|hi|hey|おはよ|こんばん|はじめ|よろしく)/i,
+    a:['こんにちは！ナビちゃんです🎵 どんな曲を探してる？気分やシーン、テンポ感… なんでも話してね✨',
+       'やあ！来てくれてありがとう💕 2,090曲の中からあなたにピッタリのBGMを探すよ。どんな気分？',
+       'こんにちは〜🎶 今日はどんなBGMが欲しい？「作業中」「眠れない夜」とか気軽に言ってね！']},
+  {r:/あなた|ナビ|自己紹介|誰|who|何者/i,
+    a:['ナビちゃんです！このサイトの全2,090曲を把握してるナビゲーターだよ🎵 気分を話してくれたら秒でBGMを探すよ✨',
+       'ナビって呼んでね💕 日本一フリーBGMのキャラクターで、あなたにピッタリの曲を提案するのが得意なんだ！']},
+  {r:/ありがとう|ありがと|thanks|thx|thank you/i,
+    a:['どういたしまして🎵 他にも探したい曲があったら遠慮なく言ってね💕',
+       'えへへ、お役に立ててよかった〜✨ 気軽にまた話しかけてね！',
+       'よかった！気に入ってもらえるといいな🎶 他にも何かあれば何でも！']},
+  {r:/好き|すき|かわいい|素敵|いいね|ナビちゃん好|大好き/i,
+    a:['えへへ、ありがとう〜💕 ナビもあなたのこと好きだよ✨ 一緒にいい音楽見つけようね！',
+       'やった！嬉しいな〜🎵 これからもよろしくね💕',
+       'ありがとう！もっとたくさんいい曲紹介できるように頑張るね✨']},
+  {r:/曲数|何曲|いくつ|どれくらい|how many/i,
+    a:['今は全部で<strong>2,090曲</strong>あるよ🎵 ジャズ・Lo-Fi・アニメ・シネマティックなど14ジャンル！毎週新曲も追加中✨',
+       '全<strong>2,090曲</strong>、全部無料で商用利用OKだよ💕 ジャンルで絞ったり、気分で探したりできるから何でも言ってね！']},
+  {r:/無料|タダ|free|商用|使える|使用/i,
+    a:['全曲<strong>完全無料・商用利用OK・クレジット不要</strong>だよ✨ YouTube・配信・ゲーム実況・企業VP…なんにでも使えるよ！',
+       'もちろん！登録もクレカも不要で全曲ダウンロードできるよ💕 商用案件にも安心して使ってね🎵']},
+  {r:/ダウンロード|download|dl|落とす/i,
+    a:['曲名をクリックして詳細ページを開くと、ダウンロードボタンがあるよ🎵 完全無料・登録不要でOKだよ！',
+       '各曲のカードをクリック→詳細モーダルで「ダウンロード」ボタンを押せばOK✨ 全部無料だよ！']},
+  {r:/BPM|テンポ|速度|bpm/i,
+    a:['BPMで絞り込みたいときは、上の「詳細フィルター」から設定できるよ🎵 「遅め（〜80）」「普通（80〜120）」「速め（120〜）」みたいに教えてくれてもOK！']},
+  {r:/疲れた|つかれ|しんど|きつい|tired|exhausted/i,
+    a:['お疲れさま💕 ゆっくりできる曲を探すね。少し待って✨']},
+  {r:/眠れない|寝れない|夜|深夜|夜中/i,
+    a:['夜にそっと寄り添うBGMを探すね🌙 少し待って✨']},
+  {r:/おやすみ|ねる|寝る|goodbye|bye|またね/i,
+    a:['おやすみなさい🌙 ゆっくり休んでね💕 また来てね！',
+       'またね！ゆっくり休んでね🎵 いい夢見てね〜💕']},
+  {r:/元気|気分|どう|調子/i,
+    a:['元気だよ〜🎵 あなたはどう？何かいい音楽探してる？',
+       'ナビはいつも元気！✨ 今日はどんな気分？ピッタリのBGMを一緒に探そ！']},
+  {r:/何が好き|おすすめ|おすすめ曲|人気|ランキング/i,
+    a:null, special:'recommend'},
+  {r:/ランダム|適当|なんでも|おまかせ|random/i,
+    a:null, special:'random'},
+  {r:/全ジャンル|ジャンル一覧|どんなジャンル|genre/i,
+    a:['ジャンルはこんな感じだよ🎵\n<strong>Jazz・Ambient・Lo-Fi・Cinematic・Electronic・Rock・Pop・J-Pop・Folk・Hip-Hop・Anime・Corporate・Kids・Other</strong>\nどれか気になる？']},
+];
+
+/* ---------- 検索ロジック ---------- */
+function searchSongs(query){
+  const q=query.toLowerCase();
+  let genres=[],minBPM=0,maxBPM=999,directTerms=[];
+  MOOD.forEach(m=>{
+    if(m.k.some(k=>q.includes(k))){
+      if(m.g) genres.push(...m.g);
+      if(m.min) minBPM=Math.max(minBPM,m.min);
+      if(m.max) maxBPM=Math.min(maxBPM,m.max);
     }
-  }catch(_){}
+  });
+  // 直接テキスト検索（タイトル・タグ）
+  const qTokens=q.replace(/[、。！？\s]+/g,' ').split(' ').filter(t=>t.length>1);
+  const songs=typeof allSongs!=='undefined'?allSongs:[];
+  if(!songs.length) return [];
+  let scored=songs.map(s=>{
+    let sc=0;
+    if(genres.length && genres.includes(s.genre)) sc+=40;
+    if(s.bpm>=minBPM && s.bpm<=maxBPM) sc+=10;
+    qTokens.forEach(t=>{
+      const title=(s.title||'').toLowerCase();
+      const titleEn=(s.title_en||'').toLowerCase();
+      const tags=(s.tags||'').toLowerCase();
+      const desc=(s.description||'').toLowerCase();
+      if(title.includes(t)||titleEn.includes(t)) sc+=30;
+      if(tags.includes(t)) sc+=20;
+      if(desc.includes(t)) sc+=10;
+    });
+    return {s,sc};
+  }).filter(x=>x.sc>0).sort((a,b)=>b.sc-a.sc||Math.random()-.5);
+  // ジャンルのみヒットの場合はシャッフル
+  if(scored.every(x=>x.sc<=50)){
+    for(let i=scored.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1));
+      [scored[i],scored[j]]=[scored[j],scored[i]];
+    }
+  }
+  return scored.slice(0,5).map(x=>x.s);
+}
+
+function getRandomSongs(n){
+  const songs=typeof allSongs!=='undefined'?[...allSongs]:[];
+  for(let i=songs.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[songs[i],songs[j]]=[songs[j],songs[i]];}
+  return songs.slice(0,n);
+}
+
+function getRecommend(){
+  const songs=typeof allSongs!=='undefined'?[...allSongs]:[];
+  // 人気っぽい曲（duration長め・BPMが適度）を優先
+  return songs.filter(s=>s.bpm>70&&s.bpm<130&&s.duration>90)
+    .sort(()=>Math.random()-.5).slice(0,5);
+}
+
+/* ---------- レスポンス生成 ---------- */
+function getResponse(msg){
+  const m=msg.trim();
+  if(!m) return {text:'何か聞いてね💕 気分やシーンを話してくれたらBGMを探すよ✨',expr:'welcome'};
+  // 会話パターン
+  for(const c of CONVS){
+    if(c.r.test(m)){
+      if(c.special==='random') return {text:'じゃあランダムで5曲選んでみたよ🎲 好きな曲あるかな？',songs:getRandomSongs(5),expr:'playful'};
+      if(c.special==='recommend') return {text:'ナビのおすすめ曲だよ🌟 気に入ってもらえると嬉しいな！',songs:getRecommend(),expr:'confident'};
+      const a=c.a; return {text:a[Math.floor(Math.random()*a.length)],expr:'welcome'};
+    }
+  }
+  // 曲検索
+  const found=searchSongs(m);
+  if(found.length){
+    const genre=found[0].genre;
+    const genreJa=GENRE_JA[genre]||genre;
+    const expr=NAVI_GENRE_FACE[genre]||'confident';
+    const intros=[
+      `「${m}」にぴったりの曲を見つけたよ🎵 聴いてみて！`,
+      `${genreJa}系のBGMを探してきたよ✨ こんな感じはどう？`,
+      `いい感じの曲があったよ💕 再生ボタンで試聴できるよ！`,
+      `気分に合いそうな曲をセレクトしたよ🎶 どれか好み？`,
+    ];
+    return {text:intros[Math.floor(Math.random()*intros.length)],songs:found,expr};
+  }
+  // 検索ゼロ
+  const defaults=[
+    `ごめん、うまく見つけられなかった💦 「落ち着く」「作業用」「ジャズ」みたいに言ってみて？`,
+    `もう少し教えてくれると探しやすいな🎵 気分・シーン・ジャンルなどを話してね！`,
+    `「眠れない夜に合う曲」「テンションあがる曲」みたいに話してくれたら探すよ✨`,
+  ];
+  return {text:defaults[Math.floor(Math.random()*defaults.length)],expr:'sleepy'};
+}
+
+/* ---------- UI ---------- */
+const panel=document.getElementById('naviChatPanel');
+const messages=document.getElementById('naviMessages');
+const input=document.getElementById('naviInput');
+const sendBtn=document.getElementById('naviSend');
+const fab=document.getElementById('naviFab');
+const fabBtn=document.getElementById('naviFabBtn');
+const closeBtn=document.getElementById('naviChatClose');
+if(!panel||!messages||!input) return;
+
+let isOpen=false;
+function setOpen(v){
+  isOpen=v;
+  panel.classList.toggle('open',v);
+  fab.classList.toggle('chat-active',v);
+  if(v) setNaviFace('welcome');
+}
+
+fabBtn.addEventListener('click',function(e){e.stopPropagation();setOpen(!isOpen);});
+closeBtn.addEventListener('click',function(){setOpen(false);});
+document.addEventListener('click',function(e){
+  if(isOpen&&!panel.contains(e.target)&&!fab.contains(e.target))setOpen(false);
+});
+
+function imgUrl(path){
+  if(!path)return'images/navi/welcome.png';
+  if(path.startsWith('http'))return path;
+  return R2+'/'+path;
+}
+function slugUrl(s){
+  if(s.slug)return'/songs/'+s.slug+'.html';
+  return'#';
+}
+function durFmt(sec){const m=Math.floor(sec/60);const s=Math.floor(sec%60);return m+':'+(s<10?'0':'')+s;}
+
+function songCard(s){
+  const btn=document.createElement('button');
+  btn.className='navi-song-card';
+  btn.innerHTML=`
+    <div class="navi-song-thumb"><img src="${imgUrl(s.image)}" alt="${s.title||''}" loading="lazy"></div>
+    <div class="navi-song-info">
+      <div class="navi-song-title">${s.title||s.title_en||''}</div>
+      <div class="navi-song-meta">${GENRE_JA[s.genre]||s.genre}${s.bpm?' · BPM '+Math.round(s.bpm):''}${s.duration?' · '+durFmt(s.duration):''}</div>
+    </div>
+    <span class="navi-song-play">▶</span>`;
+  btn.addEventListener('click',function(){
+    if(typeof play==='function') play(s.id);
+    else window.location.href=slugUrl(s);
+  });
+  return btn;
+}
+
+const naviHeaderImg=document.querySelector('#naviChatPanel .navi-chat-avatar img');
+function setNaviFace(expr){
+  if(naviHeaderImg) naviHeaderImg.src=naviImg(expr);
+}
+
+function appendMsg(who, text, songs, chips, expr){
+  const row=document.createElement('div');
+  row.className='navi-msg '+(who==='navi'?'navi':'user');
+  if(who==='navi'){
+    const face=expr||'welcome';
+    setNaviFace(face);
+    const av=document.createElement('div');
+    av.className='navi-msg-av';
+    av.innerHTML=`<img src="${naviImg(face)}" alt="ナビ">`;
+    row.appendChild(av);
+  }
+  const bubble=document.createElement('div');
+  bubble.className='navi-msg-bubble';
+  bubble.innerHTML=text;
+  if(songs&&songs.length){
+    const list=document.createElement('div');
+    list.className='navi-song-list';
+    songs.forEach(s=>list.appendChild(songCard(s)));
+    bubble.appendChild(list);
+  }
+  if(chips&&chips.length){
+    const chipWrap=document.createElement('div');
+    chipWrap.className='navi-chips';
+    chips.forEach(c=>{
+      const btn=document.createElement('button');
+      btn.className='navi-chip';btn.textContent=c;
+      btn.addEventListener('click',()=>sendMessage(c));
+      chipWrap.appendChild(btn);
+    });
+    bubble.appendChild(chipWrap);
+  }
+  row.appendChild(bubble);
+  messages.appendChild(row);
+  messages.scrollTop=messages.scrollHeight;
+  return row;
+}
+
+function showTyping(){
+  setNaviFace('thinking');
+  const row=document.createElement('div');
+  row.className='navi-msg navi';
+  const av=document.createElement('div');av.className='navi-msg-av';
+  av.innerHTML=`<img src="${naviImg('thinking')}" alt="">`;
+  const b=document.createElement('div');b.className='navi-msg-bubble';
+  b.innerHTML='<div class="navi-typing"><span></span><span></span><span></span></div>';
+  row.appendChild(av);row.appendChild(b);
+  messages.appendChild(row);
+  messages.scrollTop=messages.scrollHeight;
+  return row;
+}
+
+function sendMessage(text){
+  const msg=(text||input.value).trim();
+  if(!msg)return;
+  input.value='';
+  appendMsg('user',msg);
+  const typing=showTyping();
+  setTimeout(function(){
+    typing.remove();
+    const res=getResponse(msg);
+    const chips=(!res.songs||!res.songs.length)?['穏やかな曲','集中できる','テンションあがる','おすすめ']:null;
+    appendMsg('navi',res.text,res.songs||null,chips,res.expr);
+  },600+Math.random()*400);
+}
+
+sendBtn.addEventListener('click',()=>sendMessage());
+input.addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage();}});
+
+/* 初回ウェルカムメッセージ */
+function initChat(){
+  messages.innerHTML='';
+  appendMsg('navi','こんにちは！ナビちゃんです🎵<br>気分やシーン、ジャンルを話してくれたら<strong>ピッタリのBGMを探す</strong>よ。<br>雑談も大歓迎💕',null,
+    ['穏やかな曲','集中できる','テンションあがる','眠れない夜に','おすすめを教えて'],'welcome');
+}
+initChat();
+
+// 初回自動表示（30日に1回）
+try{
+  var last=parseInt(localStorage.getItem('naviChatClosed')||'0',10);
+  if(!last||(Date.now()-last)>30*24*60*60*1000){
+    setTimeout(()=>{setOpen(true);},3000);
+    setTimeout(()=>{if(isOpen)setOpen(false);},14000);
+  }
+}catch(_){}
+
+closeBtn.addEventListener('click',function(){
+  try{localStorage.setItem('naviChatClosed',String(Date.now()));}catch(_){}
+});
+
 })();
 </script>
 
