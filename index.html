@@ -8254,7 +8254,7 @@ function appendMsg(who, text, songs, chips, expr){
     setNaviFace(face);
     const av=document.createElement('div');
     av.className='navi-msg-av';
-    av.innerHTML=`<img src="${naviImg(face)}" alt="ナビ">`;
+    av.innerHTML=`<img src="${naviImg(face)}" alt="ナビ" onerror="this.src='images/navi/welcome.png'">`;
     row.appendChild(av);
   }
   const bubble=document.createElement('div');
