@@ -2424,24 +2424,7 @@ async function renderPickup(){
 
   row.querySelectorAll('[data-pkid]').forEach(c => c.onclick = e => {
     if (e.target.closest('[data-play]')) return;
-    // ピックアップ本体クリックは「全曲の一覧」へスクロール（フィルタはリセット）
-    currentCat = 'all';
-    currentSearch = '';
-    currentBpm = null;
-    currentDur = null;
-    currentMood = null;
-    currentUse = null;
-    showFavOnly = false;
-    document.body.classList.remove('use-active');
-    const sb = document.getElementById('searchBox'); if (sb) sb.value = '';
-    document.querySelectorAll('#useChips .uchip').forEach(x => x.classList.remove('on'));
-    document.querySelectorAll('#bpmChips .fchip').forEach(x => x.classList.remove('on'));
-    document.querySelectorAll('#durChips .fchip').forEach(x => x.classList.remove('on'));
-    document.querySelectorAll('#moodChips .fchip').forEach(x => x.classList.remove('on'));
-    document.querySelectorAll('#catList .catbtn').forEach(b => b.classList.toggle('active', b.dataset.cat === 'all'));
-    apply();
-    const browse = document.getElementById('browse');
-    if (browse) window.scrollTo({ top: browse.offsetTop - 70, behavior: 'smooth' });
+    openDetail(c.dataset.pkid);
   });
   row.querySelectorAll('[data-play]').forEach(b => b.onclick = e => {
     e.stopPropagation();
