@@ -2038,6 +2038,15 @@ async function load(){
     renderCats();
     renderGenreShowcase();
     renderPickup();
+    // window.t がまだフォールバック（i18n IIFE未実行）の場合、適用後に再レンダリングを予約
+    if (window.t('genre_tracks_suffix') === 'genre_tracks_suffix') {
+      const _rerenderI18n = () => { renderGenreShowcase(); renderPickup(); };
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', _rerenderI18n, {once: true});
+      } else {
+        setTimeout(_rerenderI18n, 0);
+      }
+    }
     apply();
   }
 
@@ -3609,6 +3618,9 @@ document.addEventListener('keydown', e => {
       if (document.activeElement === last) { e.preventDefault(); first.focus(); }
     }
   });
+
+  // i18n IIFEの applyLang() から呼べるよう再レンダリング関数を公開
+  window._bgmRerender = () => { renderGenreShowcase(); renderPickup(); };
 })();
 
 // ============================================================
