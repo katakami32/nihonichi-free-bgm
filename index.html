@@ -2035,6 +2035,9 @@ async function load(){
     const aiSub = document.getElementById('aiSubCount');
     if (aiSub) aiSub.textContent = total.toLocaleString();
     console.log('🎨 [LOAD] UI レンダリング開始');
+    // ナビちゃんのIIFEからアクセスできるようグローバルに公開
+    window.allSongs = allSongs;
+    window.genres = genres;
     renderCats();
     renderGenreShowcase();
     renderPickup();
