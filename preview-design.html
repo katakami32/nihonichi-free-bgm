@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>デザインプレビュー — 日本一フリーBGM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Shippori+Mincho:wght@700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --accent:#c85a1e;
+  --gold:#d4a843;
+  --teal:#4a9b7f;
+  --ink:#1a1008;
+  --paper:#faf6f0;
+  --card:#fff;
+  --border:#e8ddd0;
+  --muted:#8a7060;
+  --warm:#f5ede3;
+  --font:'Noto Sans JP',system-ui,sans-serif;
+  --serif:'Shippori Mincho',serif;
+  --glow-teal:rgba(74,155,127,.6);
+  --glow-purple:rgba(140,100,220,.5);
+}
+body{font-family:var(--font);background:#0d0b08;color:#fff;min-height:200vh}
+
+/* ══════════════════════════════════════
+   HEADER
+══════════════════════════════════════ */
+header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(13,11,8,.75);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+.hwrap{
+  max-width:1280px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+  height:66px;gap:1rem;padding:0 1.5rem;
+}
+
+/* ロゴ */
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;flex-shrink:0}
+.logo-mark{
+  width:42px;height:42px;border-radius:12px;
+  background:linear-gradient(135deg,#1de9b6 0%,#7c4dff 100%);
+  display:grid;place-items:center;
+  box-shadow:0 0 16px rgba(29,233,182,.4),0 0 30px rgba(124,77,255,.25);
+  position:relative;overflow:hidden;
+}
+.logo-mark::before{
+  content:'';position:absolute;inset:-1px;
+  background:linear-gradient(135deg,rgba(29,233,182,.3),rgba(124,77,255,.3));
+  border-radius:inherit;
+}
+.logo-mark svg{position:relative;z-index:1}
+.logo-name{
+  font-size:15px;font-weight:900;letter-spacing:.04em;line-height:1.2;
+  background:linear-gradient(135deg,#fff 0%,rgba(255,255,255,.7) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.logo-sub{font-size:9.5px;color:rgba(255,255,255,.35);letter-spacing:.12em;margin-top:1px}
+
+/* ナビ */
+nav{display:flex;gap:2px;flex:1;justify-content:center}
+nav a{
+  text-decoration:none;color:rgba(255,255,255,.5);
+  font-size:12.5px;font-weight:500;padding:7px 12px;
+  border-radius:8px;transition:all .18s;white-space:nowrap;
+}
+nav a:hover{color:#fff;background:rgba(255,255,255,.08)}
+nav a.active{color:#1de9b6;font-weight:700;background:rgba(29,233,182,.1)}
+
+/* ツールボタン */
+.htools{display:flex;gap:6px;align-items:center}
+.iconbtn{
+  width:38px;height:38px;border-radius:10px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.05);
+  color:rgba(255,255,255,.7);
+  cursor:pointer;display:grid;place-items:center;
+  font-size:15px;transition:all .18s;
+}
+.iconbtn:hover{
+  border-color:rgba(29,233,182,.5);
+  background:rgba(29,233,182,.08);
+  color:#1de9b6;
+  box-shadow:0 0 10px rgba(29,233,182,.2);
+}
+
+/* ══════════════════════════════════════
+   HERO
+══════════════════════════════════════ */
+.hero{
+  background:#0d0b08;
+  padding:5rem 1.5rem 4rem;
+  position:relative;overflow:hidden;
+  min-height:520px;
+}
+
+/* 背景グラデーション */
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 50% 70% at 75% 50%, rgba(29,233,182,.12) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 20% 80%, rgba(124,77,255,.1) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 50% at 90% 10%, rgba(200,90,30,.12) 0%, transparent 50%);
+  pointer-events:none;
+}
+
+/* キラキラパーティクル */
+.hero::after{
+  content:'✦';
+  position:absolute;top:12%;right:28%;
+  font-size:10px;color:rgba(29,233,182,.4);
+  animation:sparkle 3s ease-in-out infinite;
+}
+@keyframes sparkle{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:1;transform:scale(1.3)}}
+
+.herowrap{
+  max-width:1280px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 420px;
+  gap:3rem;align-items:center;position:relative;
+}
+
+/* バッジ */
+.htag{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(29,233,182,.1);
+  border:1px solid rgba(29,233,182,.3);
+  color:#1de9b6;font-size:11.5px;font-weight:700;
+  padding:6px 14px;border-radius:20px;
+  margin-bottom:1.4rem;letter-spacing:.05em;
+  box-shadow:0 0 16px rgba(29,233,182,.15);
+}
+
+/* H1 */
+.hero h1{
+  font-family:var(--serif);
+  font-size:clamp(2.2rem,3.8vw,3.4rem);
+  font-weight:700;line-height:1.28;
+  margin-bottom:1.2rem;letter-spacing:.02em;
+}
+.hero h1 em{
+  font-style:normal;
+  background:linear-gradient(135deg,#1de9b6 0%,#7c4dff 60%,#d4a843 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+
+/* リード文 */
+.hero p.lead{
+  font-size:14px;color:rgba(255,255,255,.65);
+  max-width:520px;line-height:1.95;margin-bottom:2rem;
+}
+.hero p.lead b{color:#fff;font-weight:700}
+
+/* 検索エリア */
+.hsearch{display:flex;gap:8px;max-width:580px;flex-wrap:wrap;margin-bottom:.8rem}
+.hsearch input{
+  flex:1;min-width:200px;
+  background:rgba(255,255,255,.06);
+  border:1.5px solid rgba(255,255,255,.15);
+  color:#fff;font-family:var(--font);font-size:14px;
+  padding:14px 20px;border-radius:12px;
+  outline:none;transition:all .25s;
+  backdrop-filter:blur(12px);font-weight:500;
+}
+.hsearch input::placeholder{color:rgba(255,255,255,.4)}
+.hsearch input:focus{
+  border-color:rgba(29,233,182,.6);
+  background:rgba(29,233,182,.06);
+  box-shadow:0 0 0 3px rgba(29,233,182,.12),0 0 20px rgba(29,233,182,.1);
+}
+.hsearch .searchbtn{
+  background:linear-gradient(135deg,#1de9b6 0%,#00b8d4 100%);
+  color:#0d0b08;border:none;font-size:14px;font-weight:800;
+  padding:14px 24px;border-radius:12px;cursor:pointer;
+  transition:all .2s;white-space:nowrap;
+  box-shadow:0 4px 16px rgba(29,233,182,.3);
+}
+.hsearch .searchbtn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(29,233,182,.4)}
+.hsearch .aibtn{
+  background:linear-gradient(135deg,rgba(124,77,255,.8) 0%,rgba(200,90,30,.8) 100%);
+  color:#fff;border:none;display:inline-flex;align-items:center;gap:7px;
+  font-size:13.5px;font-weight:700;padding:14px 20px;border-radius:12px;
+  cursor:pointer;transition:all .2s;white-space:nowrap;
+  border:1px solid rgba(124,77,255,.4);
+  backdrop-filter:blur(8px);
+}
+.hsearch .aibtn:hover{transform:translateY(-2px);filter:brightness(1.15)}
+.hsearch .radiobtn{
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.15);
+  color:#fff;display:inline-flex;flex-direction:column;
+  align-items:center;gap:2px;font-size:13px;font-weight:700;
+  padding:10px 18px;border-radius:12px;cursor:pointer;transition:all .2s;
+}
+.hsearch .radiobtn:hover{border-color:rgba(212,168,67,.5);background:rgba(212,168,67,.08)}
+.radiosub{font-size:9.5px;font-weight:400;opacity:.6;letter-spacing:.02em}
+
+/* AIクイックタグ */
+.aitips{display:flex;flex-wrap:wrap;gap:6px;margin-top:.4rem}
+.aitip{
+  font-size:11.5px;color:rgba(255,255,255,.75);
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);
+  padding:5px 12px;border-radius:20px;
+  cursor:pointer;transition:all .18s;font-weight:500;
+}
+.aitip:hover{background:rgba(29,233,182,.1);border-color:rgba(29,233,182,.4);color:#1de9b6}
+
+/* 統計 */
+.hstats{display:flex;gap:2.5rem;margin-top:2rem;flex-wrap:wrap}
+.hstat .num{display:block;font-size:1.9rem;font-weight:900;font-family:var(--serif);color:#fff;line-height:1;margin-bottom:4px}
+.hstat .lbl{font-size:11px;color:rgba(255,255,255,.45);letter-spacing:.07em;font-weight:500}
+
+/* 右側ビジュアル */
+.hero-visual{
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+}
+.hero-visual img{
+  width:100%;max-width:400px;border-radius:20px;
+  box-shadow:0 20px 60px rgba(0,0,0,.6),0 0 40px rgba(29,233,182,.1);
+  animation:floatImg 6s ease-in-out infinite;
+}
+@keyframes floatImg{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-10px)}
+}
+
+/* プレースホルダー（画像がない時） */
+.hero-visual-placeholder{
+  width:380px;height:380px;border-radius:20px;
+  background:linear-gradient(135deg,rgba(29,233,182,.08) 0%,rgba(124,77,255,.08) 100%);
+  border:1px solid rgba(29,233,182,.15);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;
+  box-shadow:0 20px 60px rgba(0,0,0,.4),0 0 40px rgba(29,233,182,.08);
+  animation:floatImg 6s ease-in-out infinite;
+}
+.placeholder-note{
+  font-size:80px;filter:drop-shadow(0 0 20px rgba(29,233,182,.6));
+  animation:glow 3s ease-in-out infinite alternate;
+}
+@keyframes glow{from{filter:drop-shadow(0 0 15px rgba(29,233,182,.4))}to{filter:drop-shadow(0 0 30px rgba(29,233,182,.8))}}
+.placeholder-text{font-size:13px;color:rgba(255,255,255,.4);text-align:center;line-height:1.6}
+
+/* ══════════════════════════════════════
+   TRUST BAR
+══════════════════════════════════════ */
+.trust{
+  background:rgba(255,255,255,.03);
+  border-top:1px solid rgba(255,255,255,.06);
+  border-bottom:1px solid rgba(255,255,255,.06);
+  padding:1.4rem 1.5rem;
+}
+.trustinner{
+  max-width:1280px;margin:0 auto;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:10px;
+}
+.tcell{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 12px;border-radius:10px;
+}
+.tcell .ic{font-size:20px}
+.tcell strong{display:block;font-size:13px;font-weight:700;color:#fff;margin-bottom:2px}
+.tcell span{font-size:11.5px;color:rgba(255,255,255,.4)}
+
+/* ダミーコンテンツ */
+.dummy{height:40px;background:rgba(255,255,255,.03);margin:40px 20px;border-radius:12px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.3);font-size:13px}
+
+/* レスポンシブ */
+@media(max-width:768px){
+  .herowrap{grid-template-columns:1fr}
+  .hero-visual,.hero-visual-placeholder{display:none}
+  nav{display:none}
+  .trustinner{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ヘッダー -->
+<header>
+  <div class="hwrap">
+    <a class="logo" href="#">
+      <div class="logo-mark">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M9 18V5l12-2v13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="6" cy="18" r="3" stroke="white" stroke-width="2"/>
+          <circle cx="18" cy="16" r="3" stroke="white" stroke-width="2"/>
+        </svg>
+      </div>
+      <div>
+        <div class="logo-name">日本一フリーBGM</div>
+        <div class="logo-sub">NIHONICHI FREE MUSIC</div>
+      </div>
+    </a>
+    <nav>
+      <a href="#" class="active">ホーム</a>
+      <a href="#">ピックアップ</a>
+      <a href="#">ジャンル</a>
+      <a href="#">用途別</a>
+      <a href="#">BGM一覧</a>
+      <a href="#">よくある質問</a>
+      <a href="#">利用規約</a>
+    </nav>
+    <div class="htools">
+      <button class="iconbtn" title="ランダム再生">🎲</button>
+      <button class="iconbtn" title="お気に入り">♡</button>
+      <button class="iconbtn" title="テーマ切替">🌗</button>
+    </div>
+  </div>
+</header>
+
+<!-- ヒーロー -->
+<section class="hero" id="top">
+  <div class="herowrap">
+    <div>
+      <div class="htag">✦ 完全無料・商用利用OK・登録不要・クレジット表記不要</div>
+      <h1>すべての<em>クリエイター</em>に、<br>日本一の音を。</h1>
+      <p class="lead">高品質なAI生成BGMを<b>2,070曲</b>、すべて無料・商用利用OKでダウンロードできます。BPM・尺・ムードで秒で見つかる検索体験。YouTube・ゲーム実況・Vlog・配信・映像制作にどうぞ。</p>
+      <div class="hsearch">
+        <input type="text" placeholder="例：ジャズ、夜カフェ、戦闘、ローファイ、爽やか">
+        <button class="searchbtn">検索</button>
+        <button class="aibtn">✨ AIにおまかせ</button>
+        <button class="radiobtn">🎧 BGMチャンネル<span class="radiosub">気分を選ぶだけ・自動で流れ続ける</span></button>
+      </div>
+      <div class="aitips">
+        <span class="aitip">☀️ 朝の散歩で気持ち良くなれる音楽</span>
+        <span class="aitip">🌙 夜カフェでまったりするチル</span>
+        <span class="aitip">😱 ホラー実況・怖い曲</span>
+        <span class="aitip">💍 結婚式オープニング</span>
+      </div>
+      <div class="hstats">
+        <div class="hstat"><span class="num">2,070</span><span class="lbl">楽曲数</span></div>
+        <div class="hstat"><span class="num">14</span><span class="lbl">ジャンル</span></div>
+        <div class="hstat"><span class="num">登録不要</span><span class="lbl">ワンクリックDL</span></div>
+        <div class="hstat"><span class="num">商用OK</span><span class="lbl">クレジット任意</span></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <img src="/images/site/promo.png" alt="日本一フリーBGM">
+    </div>
+  </div>
+</section>
+
+<!-- トラストバー -->
+<div class="trust">
+  <div class="trustinner">
+    <div class="tcell"><div class="ic">🎁</div><div><strong>完全無料・登録不要</strong><span>クレカ・メール登録一切不要</span></div></div>
+    <div class="tcell"><div class="ic">✅</div><div><strong>商用利用OK</strong><span>YouTube・配信・広告に</span></div></div>
+    <div class="tcell"><div class="ic">📝</div><div><strong>クレジット不要</strong><span>表記なしでも自由に使用可</span></div></div>
+    <div class="tcell"><div class="ic">🤖</div><div><strong>AI生成と明示</strong><span>AIで全曲生成・透明性100%</span></div></div>
+  </div>
+</div>
+
+<div class="dummy">↓ 以下は既存のコンテンツ（ピックアップ・曲一覧など）がそのまま入ります ↓</div>
+
+</body>
+</html>

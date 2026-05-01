@@ -1,6 +1,6 @@
 {
-  "name": "日本一フリーMusic",
-  "short_name": "日本一Music",
+  "name": "日本一フリーBGM",
+  "short_name": "日本一BGM",
   "description": "AI生成の高品質フリーBGMを完全無料・商用利用OKで配布。BPM・尺・ムードで秒で見つかる。",
   "start_url": "/",
   "scope": "/",
@@ -29,7 +29,7 @@
       "sizes": "1280x720",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "日本一フリーMusicのトップページ"
+      "label": "日本一フリーBGMのトップページ"
     }
   ],
   "categories": ["music", "entertainment", "productivity"]

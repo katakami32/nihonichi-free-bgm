@@ -1,4 +1,4 @@
-# 日本一フリーMusic — Cloudflare Workers / D1 バックエンド
+# 日本一フリーBGM — Cloudflare Workers / D1 バックエンド
 
 このディレクトリは、フロントエンド (`../index.html`) を支える検索/再生/DLカウントAPIです。
 ローカル開発時は `index.html` がそのまま `site/data/*.json` を読むので **APIを立てなくても動きます**。
