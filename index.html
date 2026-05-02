@@ -315,7 +315,7 @@ body.ai-active .hsearch input{border-color:var(--gold);background:rgba(0,0,0,.6)
 /* プレイリストドロワー */
 .plback{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:225;display:none;backdrop-filter:blur(4px)}
 .plback.on{display:block}
-.pldraw{position:fixed;bottom:0;right:0;top:0;width:400px;max-width:100vw;background:var(--card);color:var(--ink);border-left:1px solid var(--border);box-shadow:-12px 0 36px rgba(0,0,0,.3);z-index:230;transform:translateX(100%);transition:transform .28s ease;display:flex;flex-direction:column}
+.pldraw{position:fixed;bottom:0;right:0;top:0;width:400px;max-width:100vw;background:var(--card);color:var(--ink);border-left:1px solid var(--border);box-shadow:-12px 0 36px rgba(0,0,0,.3);z-index:230;transform:translateX(100%);transition:transform .28s ease;display:none;flex-direction:column}
 .pldraw.on{transform:translateX(0)}
 .plhead{padding:1.3rem 1.4rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
 .plttl{font-family:var(--serif);font-size:1.2rem;font-weight:700;display:flex;align-items:center;gap:8px}
@@ -4189,13 +4189,22 @@ function plUpdatePill(){
 }
 
 function plOpen(){
-  document.getElementById('plBack').classList.add('on');
-  document.getElementById('plDrawer').classList.add('on');
-  plRender();
+  const drawer = document.getElementById('plDrawer');
+  drawer.style.display = 'flex';
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    document.getElementById('plBack').classList.add('on');
+    drawer.classList.add('on');
+    plRender();
+  }));
 }
 function plClose(){
+  const drawer = document.getElementById('plDrawer');
   document.getElementById('plBack').classList.remove('on');
-  document.getElementById('plDrawer').classList.remove('on');
+  drawer.classList.remove('on');
+  let done = false;
+  const hide = () => { if (!done){ done = true; drawer.style.display = 'none'; } };
+  drawer.addEventListener('transitionend', hide, { once: true });
+  setTimeout(hide, 350);
 }
 
 function plLookup(id){
