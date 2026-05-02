@@ -208,6 +208,7 @@ html[data-theme="dark"] .hero{background:#0a0805}
 .hero h1 em{font-style:normal;background:linear-gradient(135deg,#1de9b6 0%,#7c4dff 55%,#d4a843 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .hero p.lead{font-size:14px;color:rgba(255,255,255,.65);max-width:520px;line-height:1.95;margin-bottom:1.8rem}
 .hsearch{display:flex;gap:8px;max-width:580px;flex-wrap:wrap}
+.hbtns{display:contents}
 .hsearch input{flex:1;min-width:200px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.15);color:#fff;font-family:var(--font);font-size:14px;padding:14px 20px;border-radius:12px;outline:none;transition:all .25s;backdrop-filter:blur(12px);font-weight:500}
 .hsearch input::placeholder{color:rgba(255,255,255,.4)}
 .hsearch input:focus{border-color:rgba(29,233,182,.6);background:rgba(29,233,182,.06);box-shadow:0 0 0 3px rgba(29,233,182,.12)}
@@ -797,7 +798,8 @@ html[data-theme="dark"] footer{background:#0a0805}
   .hsearch{max-width:100%}
   /* 入力欄+検索ボタンを1行目、AI/ラジオを2行目に */
   .hsearch input{min-width:0;font-size:16px;flex:1 1 160px}
-  .hsearch .aibtn,.hsearch .radiobtn{flex:1 1 calc(50% - 4px);justify-content:center}
+  .hbtns{display:flex;gap:8px;flex:1 1 100%}
+  .hbtns .aibtn,.hbtns .radiobtn{flex:1;min-width:0;justify-content:center}
   /* モバイルプレイヤー分の余白 (3行で~140px) */
   body{padding-bottom:160px}
   /* ======== モバイルプレイヤー 3行レイアウト ======== */
@@ -1136,8 +1138,10 @@ body:has(.pbar.on) .navi-chat-panel{bottom:calc(182px + env(safe-area-inset-bott
       <div class="hsearch">
         <input type="text" id="searchBox" placeholder="例：ジャズ、夜カフェ、戦闘、ローファイ、爽やか" data-i18n-placeholder="search_placeholder" data-i18n-aria="search_aria" aria-label="BGMを検索">
         <button onclick="doSearch()" data-i18n-title="search_title" data-i18n-aria="search_title" title="キーワード検索" aria-label="キーワード検索" data-i18n="search_btn">検索</button>
-        <button class="aibtn" id="aiOpen" data-i18n-title="ai_btn_title" data-i18n-aria="ai_btn_aria" title="AIにおまかせ" aria-label="AIにおまかせ" data-i18n-html="ai_btn">✨ AIにおまかせ</button>
-        <button class="radiobtn" id="radioOpen" data-i18n-title="radio_btn_title" data-i18n-aria="radio_btn_title" title="BGMチャンネル" aria-label="BGMチャンネル">🎧 <span data-i18n="radio_btn">BGMチャンネル</span><span class="radiosub" data-i18n="radio_sub">気分を選ぶだけ・自動で流れ続ける</span></button>
+        <div class="hbtns">
+          <button class="aibtn" id="aiOpen" data-i18n-title="ai_btn_title" data-i18n-aria="ai_btn_aria" title="AIにおまかせ" aria-label="AIにおまかせ" data-i18n-html="ai_btn">✨ AIにおまかせ</button>
+          <button class="radiobtn" id="radioOpen" data-i18n-title="radio_btn_title" data-i18n-aria="radio_btn_title" title="BGMチャンネル" aria-label="BGMチャンネル">🎧 <span data-i18n="radio_btn">BGMチャンネル</span><span class="radiosub" data-i18n="radio_sub">気分を選ぶだけ・自動で流れ続ける</span></button>
+        </div>
       </div>
       <div class="aitips" id="aitips">
         <span class="aitip" data-q="朝の散歩で気持ち良くなれる音楽" data-i18n="tip1">☀️ 朝の散歩で気持ち良くなれる音楽</span>
