@@ -8131,7 +8131,11 @@ const NAVI_FACES=[
   'creepy','disgust','dissatisfied','welcome'
 ];
 function naviImg(expr){
-  const f=NAVI_FACES.includes(expr)?expr:'welcome';
+  // 存在しない表情名を既存画像にマッピング
+  const EXPR_MAP={'scared':'creepy','playful':'joy','anger_mild':'timid',
+    'smiling_big':'smiling','ecstatic_dance':'ecstatic','wink':'smiling'};
+  const e=EXPR_MAP[expr]||expr;
+  const f=NAVI_FACES.includes(e)?e:'welcome';
   return 'images/navi/'+f+'.png';
 }
 
@@ -8159,8 +8163,12 @@ const MOOD=[
     g:['cinematic','ambient','folk-acoustic']},
   {k:['壮大','epic','映画','映像','シネマ','ドラマ','劇的','dramatic','cinematic','trailer','ヒロイック'],
     g:['cinematic']},
-  {k:['ダーク','dark','怖い','不穏','不気味','ホラー','mysterious','ミステリアス','暗い','ホラゲ'],
-    g:['cinematic','electronic']},
+  // ホラー系（怖い・不気味）は ambient を最優先 — dark ambient/horror ambient タグ曲が多い
+  {k:['ホラー','怖い','恐怖','怖め','お化け','幽霊','ghost','horror','scary','spooky','eerie','creepy','haunted','怪談','鬼','ゾッと','ゾクゾク','肝試し','ホラゲ','ホラーゲーム'],
+    g:['ambient','cinematic'],max:110},
+  // ダーク全般（ホラーよりやや広い）
+  {k:['ダーク','dark','不穏','不気味','mysterious','ミステリアス','暗い','不気味','サスペンス','suspense'],
+    g:['cinematic','ambient','electronic']},
   {k:['おしゃれ','洒落','エレガント','elegant','sophisticated','都会的','ラグジュアリー'],
     g:['jazz','lo-fi','electronic']},
   {k:['アニメ','anime','manga','アニソン','日本風','和風'],
@@ -8203,7 +8211,7 @@ const CONVS=[
   {r:/🎸|ジャンルを選ぶ/i, expr:'confident',
     a:['どのジャンルにする？🎵'],
     chips:['Lo-Fi','ジャズ','アンビエント','ロック','エレクトロニック','アニメ','シネマティック','フォーク']},
-  {r:/もっと見る/i, expr:'smile', special:'random'},
+  {r:/もっと見る/i, expr:'smile', special:'searchMore'},
   // ── 通常会話 ──
   {r:/^(こんにちは|やあ|hello|hi|hey|おはよ|こんばん|はじめ|よろしく)/i, expr:'smiling',
     a:['こんにちは！ナビちゃんです🎵 どんな曲を探してる？気分やシーン、テンポ感… なんでも話してね✨',
@@ -8216,7 +8224,14 @@ const CONVS=[
     a:['どういたしまして🎵 他にも探したい曲があったら遠慮なく言ってね💕',
        'えへへ、お役に立ててよかった〜✨ 気軽にまた話しかけてね！',
        'よかった！気に入ってもらえるといいな🎶 他にも何かあれば何でも！']},
-  {r:/好き|すき|かわいい|素敵|いいね|ナビちゃん好|大好き/i, expr:'blushing',
+  // 「子供が好きな曲」「子どもに好まれる」等は子供向け音楽を優先（「好き」単体の前に判定）
+  {r:/子供.*好|子ども.*好|こども.*好|子供.*向け|こども.*向け|子ども.*向け|子供.*喜|こども.*喜|キッズ.*好|kids.*like|children.*like/i, expr:'smiling',
+    a:['子供が喜ぶかわいいBGMを探してきたよ🧸 明るくてポップな曲だよ！',
+       'キッズ向けの楽しい曲をセレクトしたよ🎪 子供と一緒に聴いてみて！',
+       '子供に大人気の明るい曲を選んだよ🌈 テンション上がる系だよ！'],
+    q:'こども キッズ 明るい 楽しい j-pop childrens pop'},
+  // ナビちゃんへの愛情表現（「子供が好き」等と区別するため具体的なパターンに絞る）
+  {r:/ナビちゃん好|ナビ好き|ナビが好|ナビかわい|大好き|素敵だね|ナビ.*いいね|いいね.*ナビ/i, expr:'blushing',
     a:['えへへ、ありがとう〜💕 ナビもあなたのこと好きだよ✨ 一緒にいい音楽見つけようね！',
        'やった！嬉しいな〜🎵 これからもよろしくね💕',
        'ありがとう！もっとたくさんいい曲紹介できるように頑張るね✨']},
@@ -8252,6 +8267,17 @@ const CONVS=[
     a:['かわいい系のBGMを探してきたよ🌸 ポップでほんわかした曲だよ！',
        'かわいい雰囲気の曲を選んだよ💕 ほっこりできるやつ！'],
     q:'かわいい j-pop pop childrens'},
+  // ── ホラー・怖い系（明示的に ambient を含む検索クエリを渡す） ──
+  {r:/ホラー|怖い曲|怖め.*曲|曲.*怖め|恐怖|幽霊|お化け|ghost|horror|spooky|eerie|creepy|haunted|怪談|鬼.*曲|曲.*鬼|ゾッと|ゾクゾク|肝試し|ホラゲ|ホラーゲーム|不気味.*曲|曲.*不気味/i, expr:'scared',
+    a:['ホラー系のBGMを探してきたよ👻 暗くてゾクゾクする曲を選んだよ！',
+       'こわ〜い雰囲気の曲をセレクトしたよ😱 ホラー実況や怪談配信にピッタリ！',
+       'ゾクゾクする不気味な曲を見つけたよ👻 心臓に気をつけてね…💀'],
+    q:'ホラー 怖い 不気味 eerie horror dark ambient spooky haunted'},
+  // ダーク・サスペンス系（ホラーより一段階緩め）
+  {r:/ダーク.*曲|曲.*ダーク|不穏|サスペンス|緊張.*曲|曲.*緊張|ミステリアス|謎めいた|dark.*music|suspense/i, expr:'pensive',
+    a:['ダークな雰囲気のBGMを探してきたよ🌑 緊張感のある曲を選んだよ！',
+       'サスペンス系の不穏なBGMをセレクトしたよ🎭 映像制作にも使えるよ！'],
+    q:'ダーク 不穏 サスペンス mysterious cinematic dark ambient'},
   {r:/何が好き|おすすめ|おすすめ曲|人気|ランキング/i, expr:'joy', special:'recommend'},
   {r:/ランダム|適当|なんでも|おまかせ|random/i, expr:'surprise', special:'random'},
   {r:/全ジャンル|ジャンル一覧|どんなジャンル|genre/i, expr:'confident',
@@ -8261,6 +8287,11 @@ const CONVS=[
   {r:/YouTube|ユーチューブ|動画|配信|ライブ|vlog|vtuber/i, expr:'excited',
     a:['YouTube・配信向けのBGMを探すね🎥 ちょっと待ってて✨'],
     q:'vlog 爽やか 明るい アップテンポ'},
+  // ゲーム×ホラー複合は先に判定
+  {r:/(ゲーム|game|実況).*(ホラー|怖|horror|scary)|(ホラー|怖|horror|scary).*(ゲーム|game|実況)|ホラゲ|ホラーゲーム実況/i, expr:'creepy',
+    a:['ホラーゲーム実況にピッタリな不気味BGMを探してきたよ👻 ゾクゾクする曲を選んだよ！',
+       'ホラゲ実況向けの怖い雰囲気の曲をセレクトしたよ😱 視聴者もびっくりしそう！'],
+    q:'ホラー 怖い eerie horror dark ambient spooky haunted cinematic'},
   {r:/ゲーム|game|実況|ゲーム実況|rpg|fps|バトル/i, expr:'confident',
     a:['ゲーム実況向けの曲を探すよ🎮 ちょっと待ってね！',
        'ゲームBGMにピッタリな曲を選ぶね🎮 テンション上がるやつ！'],
@@ -8369,6 +8400,17 @@ const CONVS=[
     a:['深夜のBGMだね🌙 静かで沈んでいく感じの曲を探すよ✨ ちょっと待って！'],
     q:'深夜 静か 穏やか ambient lo-fi'},
 
+  // ── 子供・キッズ系（子供が好きな以外のパターンも網羅） ──
+  {r:/こども.*曲|子供.*曲|子ども.*曲|キッズ.*曲|赤ちゃん.*曲|幼稚園|保育園|childrenS|kids.*song|kid.*music/i, expr:'joy',
+    a:['子供向けのかわいいBGMを探してきたよ🧸 明るくてポップな曲だよ！',
+       'キッズBGMをセレクトしたよ🎪 子供と一緒に楽しめる曲だよ！',
+       'かわいくて楽しいキッズ向けの曲を選んだよ🌈 一緒に聴いてみてね！'],
+    q:'こども キッズ 明るい 楽しい childrens j-pop'},
+  {r:/子供|子ども|こども|キッズ|kids|children(?!s)/i, expr:'joy',
+    a:['子供向けのかわいいBGMを探してきたよ🧸',
+       'キッズにぴったりな明るい曲を選んだよ🎪'],
+    q:'こども キッズ 明るい 楽しい childrens'},
+
   // ── 雑談 ──
   {r:/最近どう|最近は|近況|lately/i, expr:'smile',
     a:['ナビはいつも2,090曲の中でお気に入り探してるよ🎵 あなたの最近のお気に入りは？',
@@ -8397,10 +8439,39 @@ const CONVS=[
     a:['曲カードの♡ボタンでお気に入り登録できるよ💕 右上の「♡」ボタンでお気に入りだけ表示もできるよ！']},
 ];
 
+/* ---------- タグ同義語マップ（ナビちゃんチャット検索用） ---------- */
+// 日本語クエリ→英語タグへの展開（曲のtags/titleは英語が多いため）
+const QUERY_EXPAND={
+  'ホラー':['horror','horror ambient','dark ambient','horror film','spooky','eerie','haunted','creepy'],
+  '怖い':['horror','horror ambient','dark ambient','spooky','eerie','scary','haunted','creepy','dark','ghost'],
+  '不気味':['eerie','creepy','dark ambient','mysterious','spooky','unsettling'],
+  '幽霊':['ghost','horror','haunted','spirit','eerie'],
+  'ghost':['ghost','horror','haunted','spirit','eerie'],
+  'horror':['horror','horror ambient','dark ambient','spooky','eerie','haunted'],
+  'spooky':['spooky','horror','eerie','haunted','creepy'],
+  'eerie':['eerie','horror ambient','dark ambient','mysterious','spooky'],
+  'haunted':['haunted','horror ambient','dark ambient','ghost','eerie'],
+  'こども':['children','kids','childrens','kawaii','playful','fun','bouncy','ukulele'],
+  '子供':['children','kids','childrens','kawaii','playful','fun','bouncy'],
+  'キッズ':['kids','children','childrens','fun','playful','bouncy'],
+  'かわいい':['kawaii','cute','playful','sweet','whimsical','adorable','girly'],
+  'かっこいい':['rock','punk','cool','epic','aggressive','powerful','bold','swagger'],
+  '癒し':['healing','relaxing','calm','peaceful','ambient','nature'],
+  '集中':['focus','concentration','study','deep work','instrumental'],
+  'ジャズ':['jazz','swing','bossa nova','bebop'],
+  'アンビエント':['ambient','atmospheric','drone','soundscape'],
+  'ロック':['rock','punk','hard rock','j-rock','electric'],
+  'ヒップホップ':['hip hop','hiphop','trap','rap','boom bap'],
+  'エレクトロ':['electronic','edm','synthwave','techno','house'],
+  'シネマティック':['cinematic','orchestral','epic','dramatic','film score'],
+  '和風':['japanese','wa-pop','traditional japanese','koto','shakuhachi','taiko'],
+  'アニメ':['anime','j-pop','japanese-anime','manga'],
+};
+
 /* ---------- 検索ロジック ---------- */
 function searchSongs(query){
   const q=query.toLowerCase();
-  let genres=[],minBPM=0,maxBPM=999,directTerms=[];
+  let genres=[],minBPM=0,maxBPM=999;
   MOOD.forEach(m=>{
     if(m.k.some(k=>q.includes(k))){
       if(m.g) genres.push(...m.g);
@@ -8408,8 +8479,14 @@ function searchSongs(query){
       if(m.max) maxBPM=Math.min(maxBPM,m.max);
     }
   });
-  // 直接テキスト検索（タイトル・タグ）
-  const qTokens=q.replace(/[、。！？\s]+/g,' ').split(' ').filter(t=>t.length>1);
+  // クエリトークン展開（日本語→英語タグシノニム）
+  const rawTokens=q.replace(/[、。！？！？\s]+/g,' ').split(' ').filter(t=>t.length>1);
+  const expandedTags=new Set();
+  rawTokens.forEach(t=>{
+    if(QUERY_EXPAND[t]) QUERY_EXPAND[t].forEach(e=>expandedTags.add(e));
+  });
+  // 元トークン + 展開済みタグを合わせて検索
+  const qTokens=[...new Set([...rawTokens,...expandedTags])];
   const songs=typeof allSongs!=='undefined'?allSongs:[];
   if(!songs.length) return [];
   const hasBpmConstraint = minBPM > 0 || maxBPM < 999;
@@ -8425,8 +8502,9 @@ function searchSongs(query){
       const titleEn=(s.title_en||'').toLowerCase();
       const tags=(s.tags||'').toLowerCase();
       const desc=(s.description||'').toLowerCase();
+      // タグ完全一致は高得点（"horror ambient"等のフレーズを正確に拾う）
+      if(tags.includes(t)) sc += (expandedTags.has(t) ? 25 : 20);
       if(title.includes(t)||titleEn.includes(t)) sc+=30;
-      if(tags.includes(t)) sc+=20;
       if(desc.includes(t)) sc+=10;
     });
     return {s,sc};
@@ -8454,6 +8532,59 @@ function getRecommend(){
     .sort(()=>Math.random()-.5).slice(0,5);
 }
 
+/* ---------- 直前の検索状態（「もっと見る」で再利用） ---------- */
+let _lastSearchQuery = '';    // 直前のsearchSongs用クエリ
+let _shownSongIds = new Set(); // 今セッションで表示済みの曲ID
+
+function _searchMore(){
+  // 直前クエリで未表示の曲をさらに5曲返す
+  if(!_lastSearchQuery) return getRandomSongs(5);
+  const q=_lastSearchQuery.toLowerCase();
+  let genres=[],minBPM=0,maxBPM=999;
+  MOOD.forEach(m=>{
+    if(m.k.some(k=>q.includes(k))){
+      if(m.g) genres.push(...m.g);
+      if(m.min) minBPM=Math.max(minBPM,m.min);
+      if(m.max) maxBPM=Math.min(maxBPM,m.max);
+    }
+  });
+  const rawTokens=q.replace(/[、。！？！？\s]+/g,' ').split(' ').filter(t=>t.length>1);
+  const expandedTags=new Set();
+  rawTokens.forEach(t=>{if(QUERY_EXPAND[t])QUERY_EXPAND[t].forEach(e=>expandedTags.add(e));});
+  const qTokens=[...new Set([...rawTokens,...expandedTags])];
+  const songs=typeof allSongs!=='undefined'?allSongs:[];
+  const hasBpmConstraint=minBPM>0||maxBPM<999;
+  let scored=songs
+    .filter(s=>!_shownSongIds.has(s.id)) // 表示済みを除外
+    .map(s=>{
+      let sc=0;
+      if(genres.length&&genres.includes(s.genre)) sc+=40;
+      if(hasBpmConstraint&&s.bpm>=minBPM&&s.bpm<=maxBPM) sc+=15;
+      if(hasBpmConstraint&&genres.length&&(s.bpm<minBPM||s.bpm>maxBPM)) sc-=20;
+      qTokens.forEach(t=>{
+        const tags=(s.tags||'').toLowerCase();
+        const title=(s.title||'').toLowerCase();
+        const titleEn=(s.title_en||'').toLowerCase();
+        const desc=(s.description||'').toLowerCase();
+        if(tags.includes(t)) sc+=(expandedTags.has(t)?25:20);
+        if(title.includes(t)||titleEn.includes(t)) sc+=30;
+        if(desc.includes(t)) sc+=10;
+      });
+      return {s,sc};
+    }).filter(x=>x.sc>0).sort((a,b)=>b.sc-a.sc||Math.random()-.5);
+  if(scored.length&&scored.every(x=>x.sc<=40)){
+    for(let i=scored.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1));[scored[i],scored[j]]=[scored[j],scored[i]];
+    }
+  }
+  const results=scored.slice(0,5).map(x=>x.s);
+  // 表示済みに追加
+  if(results.length) results.forEach(s=>_shownSongIds.add(s.id));
+  // 未表示が5曲以下ならランダムで補完
+  if(results.length<3) return getRandomSongs(5);
+  return results;
+}
+
 /* ---------- レスポンス生成 ---------- */
 function getResponse(msg){
   const m=msg.trim();
@@ -8462,17 +8593,34 @@ function getResponse(msg){
   for(const c of CONVS){
     if(c.r.test(m)){
       if(c.special==='random') return {text:'じゃあランダムで5曲選んでみたよ🎲 好きな曲あるかな？',songs:getRandomSongs(5),expr:'playful'};
+      if(c.special==='searchMore'){
+        const more=_searchMore();
+        const moreTxt=_lastSearchQuery
+          ? ['同じ雰囲気でもっと探してきたよ🎵 こんな感じはどう？',
+             'さっきとは違う曲を選んでみたよ✨ 聴いてみて！',
+             '続けてセレクトしたよ🎶 気に入る曲があるといいな！'][Math.floor(Math.random()*3)]
+          : 'ランダムで5曲選んでみたよ🎲';
+        return {text:moreTxt,songs:more,expr:'smile'};
+      }
       if(c.special==='recommend') return {text:'ナビのおすすめ曲だよ🌟 気に入ってもらえると嬉しいな！',songs:getRecommend(),expr:'confident'};
       const a=c.a;
       const text=a[Math.floor(Math.random()*a.length)];
+      if(c.q){
+        _lastSearchQuery=c.q;
+        _shownSongIds.clear();
+      }
       const songs=c.q ? searchSongs(c.q) : null;
+      if(songs) songs.forEach(s=>_shownSongIds.add(s.id));
       const expr=c.expr||(songs&&songs.length ? (NAVI_GENRE_FACE[songs[0].genre]||'confident') : 'welcome');
       return {text, songs, expr, chips:c.chips||null};
     }
   }
-  // 曲検索
+  // 曲検索（自由入力）
+  _lastSearchQuery=m;
+  _shownSongIds.clear();
   const found=searchSongs(m);
   if(found.length){
+    found.forEach(s=>_shownSongIds.add(s.id));
     const genre=found[0].genre;
     const genreJa=GENRE_JA[genre]||genre;
     const expr=NAVI_GENRE_FACE[genre]||'confident';
