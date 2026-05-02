@@ -652,6 +652,8 @@ html[data-theme="dark"] .ccount{background:rgba(255,255,255,.1)}
 .gtag.g-hiphop{background:rgba(80,80,80,.85)}
 .gtag.g-childrens{background:rgba(255,140,170,.85)}
 .gtag.g-anime{background:rgba(190,80,120,.85)}
+.gtag.g-horror{background:rgba(80,20,20,.9)}
+.gtag.g-wafu{background:rgba(160,60,80,.85)}
 .gtag.g-corporate{background:rgba(70,130,170,.85)}
 .gtag.g-other{background:rgba(120,120,120,.85)}
 .fav{width:30px;height:30px;border-radius:50%;border:1px solid var(--border);background:var(--card);cursor:pointer;display:grid;place-items:center;font-size:14px;color:var(--muted);transition:all .15s}
@@ -1685,6 +1687,8 @@ body:has(.pbar.on) .navi-chat-panel{bottom:calc(182px + env(safe-area-inset-bott
         <button class="rmcard" data-rm="朝 散歩 爽やか アコースティック ギター" data-genres="folk-acoustic,j-pop,pop"><div class="ic">☀️</div><b data-i18n="rm_morning">朝の散歩</b><small data-i18n="rm_morning_sub">爽やか & ギター</small></button>
         <button class="rmcard" data-rm="キッズ こども 可愛い 明るい 楽しい" data-genres="childrens,j-pop,pop,japanese-anime"><div class="ic">🧸</div><b data-i18n="rm_kids">キッズ・こども</b><small data-i18n="rm_kids_sub">明るく楽しい</small></button>
         <button class="rmcard" data-rm="synthwave ネオン 真夜中 neon midnight シンセ 疾走感 retro 高揚 アップテンポ ドライブ ナイトドライブ レトロウェーヴ" data-genres="electronic"><div class="ic">🌃</div><b data-i18n="rm_drive">ナイトドライブ</b><small data-i18n="rm_drive_sub">シンセウェーヴ・夜の疾走</small></button>
+        <button class="rmcard" data-rm="ホラー 怖い 不気味 サスペンス 幽霊 心霊 dark ambient" data-genres="horror"><div class="ic">👻</div><b>ホラー・ダーク</b><small>怖い・不気味な雰囲気</small></button>
+        <button class="rmcard" data-rm="和風 日本 祭り 和楽器 太鼓 三味線 琴 尺八 神社 侍" data-genres="wafu"><div class="ic">⛩</div><b>和風・日本伝統</b><small>祭り・和楽器・侍</small></button>
       </div>
       <div class="rmcustom">
         <label data-i18n="rm_custom_label">または自由に指定</label>
@@ -2189,7 +2193,7 @@ function renderCats(){
   const list = document.getElementById('catList');
   const total = allSongs.length;
   let html = `<button class="catbtn ${currentCat==='all'?'active':''}" data-cat="all"><span>🎼 すべて</span><span class="ccount">${total}</span></button>`;
-  const ic = {ambient:'🌌',cinematic:'🎬','j-pop':'🌸',jazz:'🎷','lo-fi':'☕',electronic:'🎛','folk-acoustic':'🎸','hip-hop-rnb':'🎤',rock:'🎸',pop:'⭐',childrens:'🧸','japanese-anime':'⛩','corporate-bgm':'💼',other:'🎵'};
+  const ic = {ambient:'🌌',cinematic:'🎬','j-pop':'🌸',jazz:'🎷','lo-fi':'☕',electronic:'🎛','folk-acoustic':'🎸','hip-hop-rnb':'🎤',rock:'🎸',pop:'⭐',childrens:'🧸','japanese-anime':'🎌',horror:'👻',wafu:'⛩','corporate-bgm':'💼',other:'🎵'};
   for (const g of genres){
     html += `<button class="catbtn ${currentCat===g.slug?'active':''}" data-cat="${g.slug}"><span>${ic[g.slug]||'🎵'} ${g.label_ja}</span><span class="ccount">${g.count}</span></button>`;
   }
@@ -2607,7 +2611,8 @@ const GENRE_CLASS = {
   'ambient':'g-ambient','cinematic':'g-cinematic','jazz':'g-jazz','lo-fi':'g-lo-fi',
   'j-pop':'g-jpop','electronic':'g-electronic','rock':'g-rock','pop':'g-pop',
   'folk-acoustic':'g-folk','hip-hop-rnb':'g-hiphop','childrens':'g-childrens',
-  'japanese-anime':'g-anime','corporate-bgm':'g-corporate','other':'g-other'
+  'japanese-anime':'g-anime','horror':'g-horror','wafu':'g-wafu',
+  'corporate-bgm':'g-corporate','other':'g-other'
 };
 
 // 紹介文を綺麗に整形（最大90文字でカット、カンマ分割しない）
@@ -4482,7 +4487,7 @@ const SCENE_MAP = {
   study:    '勉強 集中 Lo-Fi 静か 作業 study focus',
   workout:  '運動 スポーツ アップテンポ トレーニング workout energetic',
   morning:  '朝 爽やか アコースティック 清々しい morning fresh acoustic',
-  japanese: '和風 日本 アニメ 和楽器 桜 japan traditional koto shakuhachi',
+  japanese: '和風 日本 和楽器 桜 japan traditional koto shakuhachi matsuri 祭り',
   party:    'お祝い パーティー 祭り 楽しい party celebration festive',
 };
 
@@ -6051,41 +6056,41 @@ load().then(() => {
   </section>
 
   <section class="seo-genre-block">
-    <h3>アニメ・日本風のフリーBGM（28曲）</h3>
+    <h3>和風・日本伝統のフリーBGM（28曲）</h3>
     <ul>
-      <li><a href="/songs/track_a2507bf5">花火の夜</a> — タグ: Japanese festival (matsuri) / taiko / traditional instrumental [BPM 140 / 1分59秒] — アニメ・日本風フリーBGM 商用利用可</li>
-      <li><a href="/songs/track_bc9f739a">花火の夜・幻想</a> — タグ: Japanese festival (matsuri) / taiko / traditional instrumental [BPM 148 / 2分12秒] — アニメ・日本風フリーBGM 商用利用可</li>
-      <li><a href="/songs/fireworks-at-matsuri_128be8be">Fireworks・At・祭り</a> — タグ: Japanese festival music, taiko, world music [BPM 143 / 1分34秒] — アニメ・日本風フリーBGM 商用利用可</li>
-      <li><a href="/songs/fireworks-at-matsuri_85cd8c31">Fireworks・At・祭り・幻想</a> — タグ: Japanese festival music, taiko, world music [BPM 146 / 2分17秒] — アニメ・日本風フリーBGM 商用利用可</li>
-      <li><a href="/songs/hanabi-parade_d27c2d3e">Hanabi・パレード</a> — タグ: Japanese festival music, taiko, shamisen [BPM 146 / 2分11秒] — アニメ・日本風フリーBGM 商用利用可</li>
-      <li><a href="/songs/hanabi-parade_2fd756d2">Hanabi・パレード・小川</a> — タグ: Japanese festival music, taiko, shamisen [BPM 143 / 1分17秒] — アニメ・日本風フリーBGM 商用利用可</li>
-      <li><a href="/songs/cherry-blossom-courtyard_4ad6475f">桜・花・Courtyard・魔法</a> — タグ: Japanese traditional, shakuhachi music, koto ensemble [BPM 116 / 3分14秒] — アニメ・日本風フリーBGM 商用利用可</li>
-      <li><a href="/songs/cherry-blossom-courtyard_0eaa02b0">桜・花・Courtyard・桜吹雪</a> — タグ: Japanese traditional, shakuhachi music, koto ensemble [BPM 77 / 3分14秒] — アニメ・日本風フリーBGM 商用利用可</li>
-      <li><a href="/songs/hanabi-yoi_0eaea508">Hanabi・Yoi</a> — タグ: Japanese festival / matsuri-inspired instrumental, taiko-driven world percussion [BPM 143 / 1分36秒] — アニメ・日本風フリーBGM 商用利用可</li>
-      <li><a href="/songs/hanabi-yoi_8e6d4788">Hanabi・Yoi・幻想</a> — タグ: Japanese festival / matsuri-inspired instrumental, taiko-driven world percussion [BPM 144 / 2分4秒] — アニメ・日本風フリーBGM 商用利用可</li>
-      <li><a href="/songs/sakura-parade_fcd6553d">桜・パレード・魔法</a> — タグ: Japanese festival instrumental, light joyful, 92 BPM — **traditional Japanese (taiko/festival feel) [BPM 92 / 1分36秒] — アニメ・日本風フリーBGM 商用利用可</li>
-      <li><a href="/songs/sakura-parade_bfdf397b">桜・パレード・桜吹雪</a> — タグ: Japanese festival instrumental, light joyful, 92 BPM — **traditional Japanese (taiko/festival feel) [BPM 92 / 2分18秒] — アニメ・日本風フリーBGM 商用利用可</li>
-      <li><a href="/songs/hanabi-yatai_e29eeb8a">Hanabi・Yatai</a> — タグ: Japanese festival (matsuri) instrumental, taiko, shamisen [BPM 142 / 1分48秒] — アニメ・日本風フリーBGM 商用利用可</li>
-      <li><a href="/songs/hanabi-yatai_13830f7d">Hanabi・Yatai・幻想</a> — タグ: Japanese festival (matsuri) instrumental, taiko, shamisen [BPM 134 / 1分25秒] — アニメ・日本風フリーBGM 商用利用可</li>
-      <li><a href="/songs/sakura-temple-path_3edf2461">桜・寺院・道・スペース</a> — タグ: japanese traditional, koto, shakuhachi [BPM 87 / 2分53秒] — アニメ・日本風フリーBGM 商用利用可</li>
-      <li><a href="/songs/sakura-temple-path_a8c32049">桜・寺院・道・ヘイズ</a> — タグ: japanese traditional, koto, shakuhachi [BPM 117 / 2分39秒] — アニメ・日本風フリーBGM 商用利用可</li>
-      <li><a href="/songs/hanabi-matsuri_75cf6bc1">Hanabi・祭り・魔法</a> — タグ: Japanese festival / matsuri instrumental, taiko, upbeat dance-funk (4-on-the-floor) [BPM 146 / 2分32秒] — アニメ・日本風フリーBGM 商用利用可</li>
-      <li><a href="/songs/hanabi-matsuri_649f12d0">Hanabi・祭り・桜吹雪</a> — タグ: Japanese festival / matsuri instrumental, taiko, upbeat dance-funk (4-on-the-floor) [BPM 173 / 1分13秒] — アニメ・日本風フリーBGM 商用利用可</li>
-      <li><a href="/songs/hanabi-yokocho_f7cea7ba">Hanabi・Yokocho</a> — タグ: Japanese festival music, taiko, instrumental BGM [BPM 135 / 2分11秒] — アニメ・日本風フリーBGM 商用利用可</li>
-      <li><a href="/songs/hanabi-yokocho_51c84cda">Hanabi・Yokocho・幻想</a> — タグ: Japanese festival music, taiko, instrumental BGM [BPM 137 / 2分6秒] — アニメ・日本風フリーBGM 商用利用可</li>
-      <li><a href="/songs/hanabi-matsuri_b4cc241f">Hanabi・祭り・蛍</a> — タグ: Japanese festival music, taiko, shamisen [BPM 141 / 2分22秒] — アニメ・日本風フリーBGM 商用利用可</li>
-      <li><a href="/songs/hanabi-matsuri_8ef5c5db">Hanabi・祭り・サムライ</a> — タグ: Japanese festival music, taiko, shamisen [BPM 143 / 2分11秒] — アニメ・日本風フリーBGM 商用利用可</li>
-      <li><a href="/songs/hatsuhinode-bells_e76a80f4">Hatsuhinode・Bells</a> — タグ: Japanese traditional, BGM, koto-based instrumental [BPM 120 / 3分2秒] — アニメ・日本風フリーBGM 商用利用可</li>
-      <li><a href="/songs/hatsuhinode-bells_b6d2d882">Hatsuhinode・Bells・幻想</a> — タグ: Japanese traditional, BGM, koto-based instrumental [BPM 124 / 2分42秒] — アニメ・日本風フリーBGM 商用利用可</li>
-      <li><a href="/songs/hatsu-hinode_9f1f9109">Hatsu・Hinode</a> — タグ: Japanese traditional, gagaku-inspired, celebratory festival BGM [BPM 133 / 2分48秒] — アニメ・日本風フリーBGM 商用利用可</li>
-      <li><a href="/songs/hatsu-hinode_5d55d038">Hatsu・Hinode・幻想</a> — タグ: Japanese traditional, gagaku-inspired, celebratory festival BGM [BPM 129 / 2分46秒] — アニメ・日本風フリーBGM 商用利用可</li>
-      <li><a href="/songs/shokunin-hands_a5453795">Shokunin・Hands</a> — タグ: minimal, Japanese traditional instrumental, taiko/BGM [BPM 135 / 2分54秒] — アニメ・日本風フリーBGM 商用利用可</li>
-      <li><a href="/songs/shokunin-hands_6cc1160d">Shokunin・Hands・幻想</a> — タグ: minimal, Japanese traditional instrumental, taiko/BGM [BPM 126 / 2分53秒] — アニメ・日本風フリーBGM 商用利用可</li>
+      <li><a href="/songs/track_a2507bf5">花火の夜</a> — タグ: Japanese festival (matsuri) / taiko / traditional instrumental [BPM 140 / 1分59秒] — 和風・日本伝統フリーBGM 商用利用可</li>
+      <li><a href="/songs/track_bc9f739a">花火の夜・幻想</a> — タグ: Japanese festival (matsuri) / taiko / traditional instrumental [BPM 148 / 2分12秒] — 和風・日本伝統フリーBGM 商用利用可</li>
+      <li><a href="/songs/fireworks-at-matsuri_128be8be">Fireworks・At・祭り</a> — タグ: Japanese festival music, taiko, world music [BPM 143 / 1分34秒] — 和風・日本伝統フリーBGM 商用利用可</li>
+      <li><a href="/songs/fireworks-at-matsuri_85cd8c31">Fireworks・At・祭り・幻想</a> — タグ: Japanese festival music, taiko, world music [BPM 146 / 2分17秒] — 和風・日本伝統フリーBGM 商用利用可</li>
+      <li><a href="/songs/hanabi-parade_d27c2d3e">Hanabi・パレード</a> — タグ: Japanese festival music, taiko, shamisen [BPM 146 / 2分11秒] — 和風・日本伝統フリーBGM 商用利用可</li>
+      <li><a href="/songs/hanabi-parade_2fd756d2">Hanabi・パレード・小川</a> — タグ: Japanese festival music, taiko, shamisen [BPM 143 / 1分17秒] — 和風・日本伝統フリーBGM 商用利用可</li>
+      <li><a href="/songs/cherry-blossom-courtyard_4ad6475f">桜・花・Courtyard・魔法</a> — タグ: Japanese traditional, shakuhachi music, koto ensemble [BPM 116 / 3分14秒] — 和風・日本伝統フリーBGM 商用利用可</li>
+      <li><a href="/songs/cherry-blossom-courtyard_0eaa02b0">桜・花・Courtyard・桜吹雪</a> — タグ: Japanese traditional, shakuhachi music, koto ensemble [BPM 77 / 3分14秒] — 和風・日本伝統フリーBGM 商用利用可</li>
+      <li><a href="/songs/hanabi-yoi_0eaea508">Hanabi・Yoi</a> — タグ: Japanese festival / matsuri-inspired instrumental, taiko-driven world percussion [BPM 143 / 1分36秒] — 和風・日本伝統フリーBGM 商用利用可</li>
+      <li><a href="/songs/hanabi-yoi_8e6d4788">Hanabi・Yoi・幻想</a> — タグ: Japanese festival / matsuri-inspired instrumental, taiko-driven world percussion [BPM 144 / 2分4秒] — 和風・日本伝統フリーBGM 商用利用可</li>
+      <li><a href="/songs/sakura-parade_fcd6553d">桜・パレード・魔法</a> — タグ: Japanese festival instrumental, light joyful, 92 BPM — **traditional Japanese (taiko/festival feel) [BPM 92 / 1分36秒] — 和風・日本伝統フリーBGM 商用利用可</li>
+      <li><a href="/songs/sakura-parade_bfdf397b">桜・パレード・桜吹雪</a> — タグ: Japanese festival instrumental, light joyful, 92 BPM — **traditional Japanese (taiko/festival feel) [BPM 92 / 2分18秒] — 和風・日本伝統フリーBGM 商用利用可</li>
+      <li><a href="/songs/hanabi-yatai_e29eeb8a">Hanabi・Yatai</a> — タグ: Japanese festival (matsuri) instrumental, taiko, shamisen [BPM 142 / 1分48秒] — 和風・日本伝統フリーBGM 商用利用可</li>
+      <li><a href="/songs/hanabi-yatai_13830f7d">Hanabi・Yatai・幻想</a> — タグ: Japanese festival (matsuri) instrumental, taiko, shamisen [BPM 134 / 1分25秒] — 和風・日本伝統フリーBGM 商用利用可</li>
+      <li><a href="/songs/sakura-temple-path_3edf2461">桜・寺院・道・スペース</a> — タグ: japanese traditional, koto, shakuhachi [BPM 87 / 2分53秒] — 和風・日本伝統フリーBGM 商用利用可</li>
+      <li><a href="/songs/sakura-temple-path_a8c32049">桜・寺院・道・ヘイズ</a> — タグ: japanese traditional, koto, shakuhachi [BPM 117 / 2分39秒] — 和風・日本伝統フリーBGM 商用利用可</li>
+      <li><a href="/songs/hanabi-matsuri_75cf6bc1">Hanabi・祭り・魔法</a> — タグ: Japanese festival / matsuri instrumental, taiko, upbeat dance-funk (4-on-the-floor) [BPM 146 / 2分32秒] — 和風・日本伝統フリーBGM 商用利用可</li>
+      <li><a href="/songs/hanabi-matsuri_649f12d0">Hanabi・祭り・桜吹雪</a> — タグ: Japanese festival / matsuri instrumental, taiko, upbeat dance-funk (4-on-the-floor) [BPM 173 / 1分13秒] — 和風・日本伝統フリーBGM 商用利用可</li>
+      <li><a href="/songs/hanabi-yokocho_f7cea7ba">Hanabi・Yokocho</a> — タグ: Japanese festival music, taiko, instrumental BGM [BPM 135 / 2分11秒] — 和風・日本伝統フリーBGM 商用利用可</li>
+      <li><a href="/songs/hanabi-yokocho_51c84cda">Hanabi・Yokocho・幻想</a> — タグ: Japanese festival music, taiko, instrumental BGM [BPM 137 / 2分6秒] — 和風・日本伝統フリーBGM 商用利用可</li>
+      <li><a href="/songs/hanabi-matsuri_b4cc241f">Hanabi・祭り・蛍</a> — タグ: Japanese festival music, taiko, shamisen [BPM 141 / 2分22秒] — 和風・日本伝統フリーBGM 商用利用可</li>
+      <li><a href="/songs/hanabi-matsuri_8ef5c5db">Hanabi・祭り・サムライ</a> — タグ: Japanese festival music, taiko, shamisen [BPM 143 / 2分11秒] — 和風・日本伝統フリーBGM 商用利用可</li>
+      <li><a href="/songs/hatsuhinode-bells_e76a80f4">Hatsuhinode・Bells</a> — タグ: Japanese traditional, BGM, koto-based instrumental [BPM 120 / 3分2秒] — 和風・日本伝統フリーBGM 商用利用可</li>
+      <li><a href="/songs/hatsuhinode-bells_b6d2d882">Hatsuhinode・Bells・幻想</a> — タグ: Japanese traditional, BGM, koto-based instrumental [BPM 124 / 2分42秒] — 和風・日本伝統フリーBGM 商用利用可</li>
+      <li><a href="/songs/hatsu-hinode_9f1f9109">Hatsu・Hinode</a> — タグ: Japanese traditional, gagaku-inspired, celebratory festival BGM [BPM 133 / 2分48秒] — 和風・日本伝統フリーBGM 商用利用可</li>
+      <li><a href="/songs/hatsu-hinode_5d55d038">Hatsu・Hinode・幻想</a> — タグ: Japanese traditional, gagaku-inspired, celebratory festival BGM [BPM 129 / 2分46秒] — 和風・日本伝統フリーBGM 商用利用可</li>
+      <li><a href="/songs/shokunin-hands_a5453795">Shokunin・Hands</a> — タグ: minimal, Japanese traditional instrumental, taiko/BGM [BPM 135 / 2分54秒] — 和風・日本伝統フリーBGM 商用利用可</li>
+      <li><a href="/songs/shokunin-hands_6cc1160d">Shokunin・Hands・幻想</a> — タグ: minimal, Japanese traditional instrumental, taiko/BGM [BPM 126 / 2分53秒] — 和風・日本伝統フリーBGM 商用利用可</li>
     </ul>
   </section>
 
   <section class="seo-genre-block">
-    <h3>アンビエントのフリーBGM（436曲）</h3>
+    <h3>アンビエントのフリーBGM（362曲）</h3>
     <ul>
       <li><a href="/songs/merry-eve-snowfall_0d9e8f9f">聖夜の雪</a> — タグ: Christmas, waltz, romantic, magical (warm ambient/soft piano) [BPM 143 / 1分33秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/merry-eve-snowfall_ce84ec94">聖夜の雪・ドリフト</a> — タグ: Christmas, waltz, romantic, magical (warm ambient/soft piano) [BPM 143 / 1分42秒] — アンビエントフリーBGM 商用利用可</li>
@@ -6097,10 +6102,10 @@ load().then(() => {
       <li><a href="/songs/river-moss-morning_c45eb961">川・Moss・朝・ドリフト</a> — タグ: ambient, new-age, meditation [BPM 131 / 3分8秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/ramen-steam_c2946646">ラーメン・湯気</a> — タグ: ambient, Japanese traditional, documentary BGM [BPM 98 / 2分17秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/ramen-steam_cfafc17c">ラーメン・湯気・ドリフト</a> — タグ: ambient, Japanese traditional, documentary BGM [BPM 97 / 2分23秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/fox-bell-shrine_e5a5b729">狐・Bell・神社</a> — タグ: dark ambient, Japanese horror, cinematic ambient [BPM 122 / 3分9秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/fox-bell-shrine_8716cee9">狐・Bell・神社・シャドウ</a> — タグ: dark ambient, Japanese horror, cinematic ambient [BPM 110 / 2分19秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/haunted-glass-hall_c27b14bb">Haunted・ガラス・Hall</a> — タグ: ambient, horror ambient, dark ambient [BPM 118 / 2分43秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/haunted-glass-hall_01b79666">Haunted・ガラス・Hall・シャドウ</a> — タグ: ambient, horror ambient, dark ambient [BPM 134 / 2分21秒] — アンビエントフリーBGM 商用利用可</li>
+      <li><a href="/songs/fox-bell-shrine_e5a5b729">狐・Bell・神社</a> — タグ: dark ambient, Japanese horror, cinematic ambient [BPM 122 / 3分9秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/fox-bell-shrine_8716cee9">狐・Bell・神社・シャドウ</a> — タグ: dark ambient, Japanese horror, cinematic ambient [BPM 110 / 2分19秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/haunted-glass-hall_c27b14bb">Haunted・ガラス・Hall</a> — タグ: ambient, horror ambient, dark ambient [BPM 118 / 2分43秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/haunted-glass-hall_01b79666">Haunted・ガラス・Hall・シャドウ</a> — タグ: ambient, horror ambient, dark ambient [BPM 134 / 2分21秒] — ホラー・ダークフリーBGM 商用利用可</li>
       <li><a href="/songs/boardroom-momentum_bdc7d388">会議室の高揚</a> — タグ: corporate BGM, cinematic/ambient, minimalist piano [BPM 140 / 2分2秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/boardroom-momentum_ecfdcaca">会議室の高揚・ビジョン</a> — タグ: corporate BGM, cinematic/ambient, minimalist piano [BPM 130 / 2分34秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/sakura-temple-path_7b2535ad">桜・寺院・道</a> — タグ: japanese traditional, ambient, koto/shakuhachi (instrumental) [BPM 121 / 2分58秒] — アンビエントフリーBGM 商用利用可</li>
@@ -6111,10 +6116,10 @@ load().then(() => {
       <li><a href="/songs/morning-river-path_77ebb582">朝・川・道・ドリフト</a> — タグ: ambient, nature ambient, meditation [BPM 66 / 3分8秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/ramen-steam_6cc9ca06">ラーメン・湯気・フォグ</a> — タグ: traditional Japanese instrumental, ambient, ballad [BPM 138 / 2分48秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/ramen-steam_d2d22b33">ラーメン・湯気・ウェイブ</a> — タグ: traditional Japanese instrumental, ambient, ballad [BPM 88 / 2分4秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/lanterns-at-the-torii_d598ebf6">Lanterns・at・the・Torii</a> — タグ: dark ambient, Japanese horror BGM, ambient drone [BPM 91 / 3分28秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/lanterns-at-the-torii_19fbabbb">Lanterns・at・the・Torii・シャドウ</a> — タグ: dark ambient, Japanese horror BGM, ambient drone [BPM 112 / 2分58秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/haunted-corridor_e87957f1">Haunted・Corridor</a> — タグ: dark ambient, horror ambient, cinematic atmospheric [BPM 119 / 2分14秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/haunted-corridor_b2f11edb">Haunted・Corridor・シャドウ</a> — タグ: dark ambient, horror ambient, cinematic atmospheric [BPM 120 / 2分49秒] — アンビエントフリーBGM 商用利用可</li>
+      <li><a href="/songs/lanterns-at-the-torii_d598ebf6">Lanterns・at・the・Torii</a> — タグ: dark ambient, Japanese horror BGM, ambient drone [BPM 91 / 3分28秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/lanterns-at-the-torii_19fbabbb">Lanterns・at・the・Torii・シャドウ</a> — タグ: dark ambient, Japanese horror BGM, ambient drone [BPM 112 / 2分58秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/haunted-corridor_e87957f1">Haunted・Corridor</a> — タグ: dark ambient, horror ambient, cinematic atmospheric [BPM 119 / 2分14秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/haunted-corridor_b2f11edb">Haunted・Corridor・シャドウ</a> — タグ: dark ambient, horror ambient, cinematic atmospheric [BPM 120 / 2分49秒] — ホラー・ダークフリーBGM 商用利用可</li>
       <li><a href="/songs/mossfall-market_93e430a1">Mossfall・Market</a> — タグ: fantasy BGM, lilting folk, cinematic ambient [BPM 85 / 1分48秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/mossfall-market_05a54b7d">Mossfall・Market・ドリフト</a> — タグ: fantasy BGM, lilting folk, cinematic ambient [BPM 179 / 2分12秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/sakura-parade_5542ab8d">桜・パレード</a> — タグ: j-ambient BGM, waltz, light orchestral / ambient [BPM 180 / 2分39秒] — アンビエントフリーBGM 商用利用可</li>
@@ -6124,8 +6129,8 @@ load().then(() => {
       <li><a href="/songs/morning-river-drift_f4a43a2a">朝・川・漂い</a> — タグ: ambient, meditation, nature BGM [BPM 131 / 3分7秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/morning-river-drift_da0f2b8e">朝・川・漂い・ドリフト</a> — タグ: ambient, meditation, nature BGM [BPM 116 / 3分4秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/steam-over-ramen_1f5196ae">湯気・越え・ラーメン</a> — タグ: traditional Japanese instrumental, documentary-style ambient, cinematic underscoring [BPM 133 / 2分33秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/haunted-corridor_15aee1a7">Haunted・Corridor・ダーク</a> — タグ: dark ambient, horror ambient, cinematic thriller [BPM 114 / 3分2秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/haunted-corridor_b4c102e7">Haunted・Corridor・グレイブ</a> — タグ: dark ambient, horror ambient, cinematic thriller [BPM 120 / 2分22秒] — アンビエントフリーBGM 商用利用可</li>
+      <li><a href="/songs/haunted-corridor_15aee1a7">Haunted・Corridor・ダーク</a> — タグ: dark ambient, horror ambient, cinematic thriller [BPM 114 / 3分2秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/haunted-corridor_b4c102e7">Haunted・Corridor・グレイブ</a> — タグ: dark ambient, horror ambient, cinematic thriller [BPM 120 / 2分22秒] — ホラー・ダークフリーBGM 商用利用可</li>
       <li><a href="/songs/misty-ryokan_1f19e6b6">Misty・Ryokan</a> — タグ: traditional Japanese, ambient, instrumental BGM [BPM 118 / 2分58秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/misty-ryokan_6821a063">Misty・Ryokan・ドリフト</a> — タグ: traditional Japanese, ambient, instrumental BGM [BPM 127 / 2分49秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/shizuku-under-sakura_1a5b8296">Shizuku・Under・桜</a> — タグ: Japanese traditional, ambient, cinematic [BPM 113 / 7分59秒] — アンビエントフリーBGM 商用利用可</li>
@@ -6142,9 +6147,9 @@ load().then(() => {
       <li><a href="/songs/morning-river-grove_48c39642">朝・川・Grove・ドリフト</a> — タグ: ambient, new age, meditation [BPM 123 / 2分28秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/ramen-steam_2dd683c1">ラーメン・湯気・スペース</a> — タグ: Japanese documentary BGM, ambient, traditional instrumentation (shamisen/koto/flute) [BPM 79 / 2分8秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/ramen-steam_34bd411f">ラーメン・湯気・ヘイズ</a> — タグ: Japanese documentary BGM, ambient, traditional instrumentation (shamisen/koto/flute) [BPM 136 / 2分16秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/yurei-shrine_ff93b69f">Yurei・神社</a> — タグ: dark ambient, Japanese horror BGM, ambient drone [BPM 114 / 2分58秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/haunted-hallway_e038c6b2">Haunted・Hallway</a> — タグ: dark ambient, horror film score, ambient drone [BPM 143 / 2分44秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/haunted-hallway_a45b0697">Haunted・Hallway・シャドウ</a> — タグ: dark ambient, horror film score, ambient drone [BPM 119 / 2分49秒] — アンビエントフリーBGM 商用利用可</li>
+      <li><a href="/songs/yurei-shrine_ff93b69f">Yurei・神社</a> — タグ: dark ambient, Japanese horror BGM, ambient drone [BPM 114 / 2分58秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/haunted-hallway_e038c6b2">Haunted・Hallway</a> — タグ: dark ambient, horror film score, ambient drone [BPM 143 / 2分44秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/haunted-hallway_a45b0697">Haunted・Hallway・シャドウ</a> — タグ: dark ambient, horror film score, ambient drone [BPM 119 / 2分49秒] — ホラー・ダークフリーBGM 商用利用可</li>
       <li><a href="/songs/conference-room-glow_2a8ea9b4">Conference・Room・輝き</a> — タグ: corporate BGM, cinematic ambient, easy listening [BPM 128 / 2分37秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/conference-room-glow_f0f4d315">Conference・Room・輝き・ビジョン</a> — タグ: corporate BGM, cinematic ambient, easy listening [BPM 126 / 0分59秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/caps-and-petals_27ef7d54">Caps・And・花びら</a> — タグ: cinematic instrumental, orchestral film score, ambient piano ballad [BPM 71 / 2分34秒] — アンビエントフリーBGM 商用利用可</li>
@@ -6155,10 +6160,10 @@ load().then(() => {
       <li><a href="/songs/morning-river-path_3452c042">朝・川・道・ウェイブ</a> — タグ: ambient, new-age, meditative [BPM 130 / 3分24秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/ramen-steam_79169fa4">ラーメン・湯気・フロート</a> — タグ: Japanese documentary BGM, ambient, traditional/folk (shamisen-inspired) [BPM 106 / 2分4秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/ramen-steam_1115d302">ラーメン・湯気・クリスタル</a> — タグ: Japanese documentary BGM, ambient, traditional/folk (shamisen-inspired) [BPM 97 / 2分4秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/yurei-shrine_81334e0e">Yurei・神社・ダーク</a> — タグ: dark ambient, Japanese horror, ritual/ambient drone [BPM 90 / 2分54秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/yurei-shrine_ae25dc0c">Yurei・神社・グレイブ</a> — タグ: dark ambient, Japanese horror, ritual/ambient drone [BPM 70 / 2分39秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/broken-hallway_f4907e54">Broken・Hallway</a> — タグ: ambient, horror ambient, dark ambient [BPM 124 / 2分14秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/broken-hallway_5c9c5ce2">Broken・Hallway・シャドウ</a> — タグ: ambient, horror ambient, dark ambient [BPM 109 / 2分21秒] — アンビエントフリーBGM 商用利用可</li>
+      <li><a href="/songs/yurei-shrine_81334e0e">Yurei・神社・ダーク</a> — タグ: dark ambient, Japanese horror, ritual/ambient drone [BPM 90 / 2分54秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/yurei-shrine_ae25dc0c">Yurei・神社・グレイブ</a> — タグ: dark ambient, Japanese horror, ritual/ambient drone [BPM 70 / 2分39秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/broken-hallway_f4907e54">Broken・Hallway</a> — タグ: ambient, horror ambient, dark ambient [BPM 124 / 2分14秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/broken-hallway_5c9c5ce2">Broken・Hallway・シャドウ</a> — タグ: ambient, horror ambient, dark ambient [BPM 109 / 2分21秒] — ホラー・ダークフリーBGM 商用利用可</li>
       <li><a href="/songs/boardroom-momentum_716314b3">会議室の高揚・マーチ</a> — タグ: corporate BGM, cinematic/ambient pop, minimalist instrumental [BPM 131 / 1分42秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/boardroom-momentum_5d4b1c39">会議室の高揚・ステップ</a> — タグ: corporate BGM, cinematic/ambient pop, minimalist instrumental [BPM 93 / 2分2秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/morning-mist-ryokan_6cb98853">朝・霞・Ryokan</a> — タグ: ambient, Japanese ambient, minimalism [BPM 125 / 3分9秒] — アンビエントフリーBGM 商用利用可</li>
@@ -6172,20 +6177,20 @@ load().then(() => {
       <li><a href="/songs/morning-river_d495d449">朝・川</a> — タグ: ambient, meditation, minimalist piano [BPM 132 / 2分53秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/morning-river_493450cc">朝・川・ドリフト</a> — タグ: ambient, meditation, minimalist piano [BPM 129 / 3分2秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/ramen-steam-room_73e25ac7">ラーメン・湯気・Room・ドリフト</a> — タグ: Japanese documentary BGM, traditional shamisen, gentle ambient [BPM 144 / 1分38秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/foxfire-shrine_375bff76">Foxfire・神社</a> — タグ: dark ambient, Japanese horror BGM, eerie koto drone [BPM 114 / 3分3秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/foxfire-shrine_6cfad9a4">Foxfire・神社・シャドウ</a> — タグ: dark ambient, Japanese horror BGM, eerie koto drone [BPM 82 / 2分44秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/haunted-hallway-tape_e834d3b2">Haunted・Hallway・Tape</a> — タグ: ambient, horror ambient, cinematic [BPM 107 / 2分29秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/haunted-hallway-tape_1fe22539">Haunted・Hallway・Tape・シャドウ</a> — タグ: ambient, horror ambient, cinematic [BPM 95 / 3分4秒] — アンビエントフリーBGM 商用利用可</li>
+      <li><a href="/songs/foxfire-shrine_375bff76">Foxfire・神社</a> — タグ: dark ambient, Japanese horror BGM, eerie koto drone [BPM 114 / 3分3秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/foxfire-shrine_6cfad9a4">Foxfire・神社・シャドウ</a> — タグ: dark ambient, Japanese horror BGM, eerie koto drone [BPM 82 / 2分44秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/haunted-hallway-tape_e834d3b2">Haunted・Hallway・Tape</a> — タグ: ambient, horror ambient, cinematic [BPM 107 / 2分29秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/haunted-hallway-tape_1fe22539">Haunted・Hallway・Tape・シャドウ</a> — タグ: ambient, horror ambient, cinematic [BPM 95 / 3分4秒] — ホラー・ダークフリーBGM 商用利用可</li>
       <li><a href="/songs/tideline-drift_df35a2c7">Tideline・漂い</a> — タグ: ambient, cinematic, field-recording [BPM 128 / 2分54秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/tideline-drift_5d6c145a">Tideline・漂い・ドリフト</a> — タグ: ambient, cinematic, field-recording [BPM 120 / 2分58秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/morning-river_900146a7">朝・川・フォグ</a> — タグ: ambient, meditation, nature BGM [BPM 69 / 3分2秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/morning-river_10b20a07">朝・川・ウェイブ</a> — タグ: ambient, meditation, nature BGM [BPM 66 / 3分53秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/ramen-steam-morning_1f06c2af">ラーメン・湯気・朝</a> — タグ: ambient, Japanese instrumental, documentary BGM [BPM 92 / 2分27秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/ramen-steam-morning_ea90f462">ラーメン・湯気・朝・ドリフト</a> — タグ: ambient, Japanese instrumental, documentary BGM [BPM 132 / 3分1秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/track_b9033c1d">狐灯の社</a> — タグ: dark ambient, Japanese horror BGM, ambient/drone [BPM 102 / 3分4秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/track_84cdf3eb">狐灯の社・シャドウ</a> — タグ: dark ambient, Japanese horror BGM, ambient/drone [BPM 74 / 2分39秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/moth-hall_fbb34d09">Moth・Hall</a> — タグ: dark ambient, horror ambient, cinematic [BPM 128 / 2分48秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/moth-hall_881ae8ea">Moth・Hall・シャドウ</a> — タグ: dark ambient, horror ambient, cinematic [BPM 89 / 3分9秒] — アンビエントフリーBGM 商用利用可</li>
+      <li><a href="/songs/track_b9033c1d">狐灯の社</a> — タグ: dark ambient, Japanese horror BGM, ambient/drone [BPM 102 / 3分4秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/track_84cdf3eb">狐灯の社・シャドウ</a> — タグ: dark ambient, Japanese horror BGM, ambient/drone [BPM 74 / 2分39秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/moth-hall_fbb34d09">Moth・Hall</a> — タグ: dark ambient, horror ambient, cinematic [BPM 128 / 2分48秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/moth-hall_881ae8ea">Moth・Hall・シャドウ</a> — タグ: dark ambient, horror ambient, cinematic [BPM 89 / 3分9秒] — ホラー・ダークフリーBGM 商用利用可</li>
       <li><a href="/songs/mist-at-the-ryokan_5bc63064">霞・at・the・Ryokan</a> — タグ: ambient, Japanese traditional, meditative [BPM 116 / 2分39秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/mist-at-the-ryokan_9d50b772">霞・at・the・Ryokan・ドリフト</a> — タグ: ambient, Japanese traditional, meditative [BPM 118 / 3分4秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/first-light-keys_00c16c24">最初の・光・Keys</a> — タグ: piano ballad, cinematic ambient, easy listening [BPM 137 / 1分57秒] — アンビエントフリーBGM 商用利用可</li>
@@ -6196,10 +6201,10 @@ load().then(() => {
       <li><a href="/songs/morning-river-path_988127d0">朝・川・道・ヘイズ</a> — タグ: ambient, new age, meditative [BPM 119 / 2分44秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/ramen-steam-morning_70d8e32b">ラーメン・湯気・朝・フォグ</a> — タグ: Japanese documentary BGM, ambient, cinematic [BPM 77 / 1分51秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/ramen-steam-morning_1a9a7a89">ラーメン・湯気・朝・ウェイブ</a> — タグ: Japanese documentary BGM, ambient, cinematic [BPM 91 / 1分37秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/haunted-shrine-echo_12a674a8">Haunted・神社・響き</a> — タグ: dark ambient, Japanese horror BGM, eerie ambient/drone [BPM 115 / 2分53秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/haunted-shrine-echo_851fb8a4">Haunted・神社・響き・シャドウ</a> — タグ: dark ambient, Japanese horror BGM, eerie ambient/drone [BPM 96 / 2分43秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/basement-door_b0fc9415">Basement・扉</a> — タグ: ambient, horror ambient, psychological thriller [BPM 120 / 2分24秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/basement-door_bd16dc80">Basement・扉・シャドウ</a> — タグ: ambient, horror ambient, psychological thriller [BPM 118 / 2分37秒] — アンビエントフリーBGM 商用利用可</li>
+      <li><a href="/songs/haunted-shrine-echo_12a674a8">Haunted・神社・響き</a> — タグ: dark ambient, Japanese horror BGM, eerie ambient/drone [BPM 115 / 2分53秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/haunted-shrine-echo_851fb8a4">Haunted・神社・響き・シャドウ</a> — タグ: dark ambient, Japanese horror BGM, eerie ambient/drone [BPM 96 / 2分43秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/basement-door_b0fc9415">Basement・扉</a> — タグ: ambient, horror ambient, psychological thriller [BPM 120 / 2分24秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/basement-door_bd16dc80">Basement・扉・シャドウ</a> — タグ: ambient, horror ambient, psychological thriller [BPM 118 / 2分37秒] — ホラー・ダークフリーBGM 商用利用可</li>
       <li><a href="/songs/morning-breeze_6aab7562">朝・そよ風</a> — タグ: acoustic, fingerstyle, ambient [BPM 137 / 2分27秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/morning-breeze_1df849df">朝・そよ風・ドリフト</a> — タグ: acoustic, fingerstyle, ambient [BPM 69 / 2分12秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/sakura-koto-path_92cf32da">桜・Koto・道</a> — タグ: japanese traditional, ceremonial, cinematic ambient [BPM 123 / 2分52秒] — アンビエントフリーBGM 商用利用可</li>
@@ -6210,10 +6215,10 @@ load().then(() => {
       <li><a href="/songs/morning-river-steps_360f33d0">朝・川・足音・ドリフト</a> — タグ: ambient, meditation, minimalist [BPM 131 / 3分4秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/ramen-steam-table_399fc113">ラーメン・湯気・Table</a> — タグ: Japanese documentary BGM, traditional Japanese instrumentation, ambient/neo-traditional [BPM 139 / 2分11秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/ramen-steam-table_65803163">ラーメン・湯気・Table・ドリフト</a> — タグ: Japanese documentary BGM, traditional Japanese instrumentation, ambient/neo-traditional [BPM 77 / 2分7秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/foxfire-shrine_b7532cea">Foxfire・神社・ダーク</a> — タグ: dark ambient, Japanese horror, ambient drone [BPM 114 / 3分24秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/foxfire-shrine_92e1b476">Foxfire・神社・グレイブ</a> — タグ: dark ambient, Japanese horror, ambient drone [BPM 111 / 2分42秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/basement-tape_d2794ba4">Basement・Tape</a> — タグ: ambient, horror ambient, dark ambient [BPM 124 / 2分38秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/basement-tape_13c8b753">Basement・Tape・シャドウ</a> — タグ: ambient, horror ambient, dark ambient [BPM 177 / 1分54秒] — アンビエントフリーBGM 商用利用可</li>
+      <li><a href="/songs/foxfire-shrine_b7532cea">Foxfire・神社・ダーク</a> — タグ: dark ambient, Japanese horror, ambient drone [BPM 114 / 3分24秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/foxfire-shrine_92e1b476">Foxfire・神社・グレイブ</a> — タグ: dark ambient, Japanese horror, ambient drone [BPM 111 / 2分42秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/basement-tape_d2794ba4">Basement・Tape</a> — タグ: ambient, horror ambient, dark ambient [BPM 124 / 2分38秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/basement-tape_13c8b753">Basement・Tape・シャドウ</a> — タグ: ambient, horror ambient, dark ambient [BPM 177 / 1分54秒] — ホラー・ダークフリーBGM 商用利用可</li>
       <li><a href="/songs/boardroom-momentum_8c9bf494">会議室の高揚・ゴール</a> — タグ: corporate BGM, instrumental pop, cinematic ambient [BPM 95 / 1分1秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/boardroom-momentum_c7e1d009">会議室の高揚・フォーカス</a> — タグ: corporate BGM, instrumental pop, cinematic ambient [BPM 129 / 1分43秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/tidepool-drift_3620df16">Tidepool・漂い</a> — タグ: ambient, relaxing, gentle [BPM 127 / 2分52秒] — アンビエントフリーBGM 商用利用可</li>
@@ -6222,10 +6227,10 @@ load().then(() => {
       <li><a href="/songs/morning-river_4389dbe0">朝・川・ヘイズ</a> — タグ: ambient, meditation, nature ambient [BPM 71 / 2分48秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/ramen-steam-morning_05321b78">ラーメン・湯気・朝・スペース</a> — タグ: Japanese instrumental, documentary/film score, ambient-folk [BPM 91 / 2分12秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/ramen-steam-morning_aef60e1e">ラーメン・湯気・朝・ヘイズ</a> — タグ: Japanese instrumental, documentary/film score, ambient-folk [BPM 133 / 1分21秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/haunted-shrine-echo_b6ee81c8">Haunted・神社・響き・ダーク</a> — タグ: dark ambient, Japanese horror, eerie ritual percussion [BPM 125 / 3分28秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/haunted-shrine-echo_c9f1e356">Haunted・神社・響き・グレイブ</a> — タグ: dark ambient, Japanese horror, eerie ritual percussion [BPM 114 / 3分30秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/haunted-hallway_d68732c4">Haunted・Hallway・ダーク</a> — タグ: dark ambient, horror ambient, cinematic thriller [BPM 120 / 3分0秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/haunted-hallway_8f12dc73">Haunted・Hallway・グレイブ</a> — タグ: dark ambient, horror ambient, cinematic thriller [BPM 120 / 3分4秒] — アンビエントフリーBGM 商用利用可</li>
+      <li><a href="/songs/haunted-shrine-echo_b6ee81c8">Haunted・神社・響き・ダーク</a> — タグ: dark ambient, Japanese horror, eerie ritual percussion [BPM 125 / 3分28秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/haunted-shrine-echo_c9f1e356">Haunted・神社・響き・グレイブ</a> — タグ: dark ambient, Japanese horror, eerie ritual percussion [BPM 114 / 3分30秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/haunted-hallway_d68732c4">Haunted・Hallway・ダーク</a> — タグ: dark ambient, horror ambient, cinematic thriller [BPM 120 / 3分0秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/haunted-hallway_8f12dc73">Haunted・Hallway・グレイブ</a> — タグ: dark ambient, horror ambient, cinematic thriller [BPM 120 / 3分4秒] — ホラー・ダークフリーBGM 商用利用可</li>
       <li><a href="/songs/boardroom-momentum_804db273">会議室の高揚・ビルド</a> — タグ: corporate BGM, cinematic ambient, smooth piano pop [BPM 94 / 0分49秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/boardroom-momentum_86884f28">会議室の高揚・シフト</a> — タグ: corporate BGM, cinematic ambient, smooth piano pop [BPM 132 / 1分48秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/birdsong-morning_1a52aabc">Birdsong・朝</a> — タグ: acoustic, fingerstyle, ambient [BPM 142 / 1分57秒] — アンビエントフリーBGM 商用利用可</li>
@@ -6244,10 +6249,10 @@ load().then(() => {
       <li><a href="/songs/morning-river-glade_981f7452">朝・川・Glade・ドリフト</a> — タグ: ambient, new age, meditative, gentle [BPM 131 / 3分19秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/ramen-steam_d1eec188">ラーメン・湯気・プリズム</a> — タグ: Japanese folk, ambient, documentary score [BPM 93 / 2分2秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/ramen-steam_f28ef582">ラーメン・湯気・デプス</a> — タグ: Japanese folk, ambient, documentary score [BPM 139 / 2分49秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/yurei-shrine_fee72e42">Yurei・神社・ルーン</a> — タグ: dark ambient, horror score, ambient drone [BPM 126 / 3分9秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/yurei-shrine_1903b6cc">Yurei・神社・クリプト</a> — タグ: dark ambient, horror score, ambient drone [BPM 130 / 2分44秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/glass-house-pulse_5ecc9777">ガラス・House・脈動</a> — タグ: dark ambient, ambient horror, drone [BPM 123 / 2分13秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/glass-house-pulse_e9b8820c">ガラス・House・脈動・シャドウ</a> — タグ: dark ambient, ambient horror, drone [BPM 120 / 2分39秒] — アンビエントフリーBGM 商用利用可</li>
+      <li><a href="/songs/yurei-shrine_fee72e42">Yurei・神社・ルーン</a> — タグ: dark ambient, horror score, ambient drone [BPM 126 / 3分9秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/yurei-shrine_1903b6cc">Yurei・神社・クリプト</a> — タグ: dark ambient, horror score, ambient drone [BPM 130 / 2分44秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/glass-house-pulse_5ecc9777">ガラス・House・脈動</a> — タグ: dark ambient, ambient horror, drone [BPM 123 / 2分13秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/glass-house-pulse_e9b8820c">ガラス・House・脈動・シャドウ</a> — タグ: dark ambient, ambient horror, drone [BPM 120 / 2分39秒] — ホラー・ダークフリーBGM 商用利用可</li>
       <li><a href="/songs/morning-mist-ryokan_9508c140">朝・霞・Ryokan・フォグ</a> — タグ: ambient, Japanese traditional, cinematic BGM [BPM 99 / 2分29秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/morning-mist-ryokan_7c786050">朝・霞・Ryokan・ウェイブ</a> — タグ: ambient, Japanese traditional, cinematic BGM [BPM 126 / 2分44秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/sakura-temple-path_915781a7">桜・寺院・道・フォグ</a> — タグ: japanese traditional, ambient, instrumental, serene [BPM 138 / 3分9秒] — アンビエントフリーBGM 商用利用可</li>
@@ -6258,10 +6263,10 @@ load().then(() => {
       <li><a href="/songs/morning-river-grove_34251d79">朝・川・Grove・ウェイブ</a> — タグ: ambient, meditation, nature ambience [BPM 121 / 3分22秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/ramen-steam-morning_7d98f5e9">ラーメン・湯気・朝・フロート</a> — タグ: Japanese documentary BGM, ambient, folk (shamisen/koto) [BPM 89 / 1分33秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/ramen-steam-morning_a3029279">ラーメン・湯気・朝・クリスタル</a> — タグ: Japanese documentary BGM, ambient, folk (shamisen/koto) [BPM 84 / 1分34秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/torii-in-ash_f7d64148">Torii・in・Ash</a> — タグ: dark ambient, Japanese horror BGM, drone [BPM 97 / 3分4秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/torii-in-ash_dee3fab5">Torii・in・Ash・シャドウ</a> — タグ: dark ambient, Japanese horror BGM, drone [BPM 119 / 2分39秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/whispered-hall_8f0e21b8">Whispered・Hall</a> — タグ: dark ambient, ambient horror, cinematic thriller [BPM 117 / 2分17秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/whispered-hall_935cac47">Whispered・Hall・シャドウ</a> — タグ: dark ambient, ambient horror, cinematic thriller [BPM 137 / 2分58秒] — アンビエントフリーBGM 商用利用可</li>
+      <li><a href="/songs/torii-in-ash_f7d64148">Torii・in・Ash</a> — タグ: dark ambient, Japanese horror BGM, drone [BPM 97 / 3分4秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/torii-in-ash_dee3fab5">Torii・in・Ash・シャドウ</a> — タグ: dark ambient, Japanese horror BGM, drone [BPM 119 / 2分39秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/whispered-hall_8f0e21b8">Whispered・Hall</a> — タグ: dark ambient, ambient horror, cinematic thriller [BPM 117 / 2分17秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/whispered-hall_935cac47">Whispered・Hall・シャドウ</a> — タグ: dark ambient, ambient horror, cinematic thriller [BPM 137 / 2分58秒] — ホラー・ダークフリーBGM 商用利用可</li>
       <li><a href="/songs/morning-breeze-path_1577e13a">朝・そよ風・道・木漏れ日</a> — タグ: folk, fingerstyle acoustic, ambient [BPM 77 / 2分21秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/tideglass-afternoon_ba080379">Tideglass・午後</a> — タグ: ambient, new age, relaxing [BPM 124 / 3分28秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/tideglass-afternoon_49d15ce3">Tideglass・午後・ドリフト</a> — タグ: ambient, new age, relaxing [BPM 68 / 3分4秒] — アンビエントフリーBGM 商用利用可</li>
@@ -6269,9 +6274,9 @@ load().then(() => {
       <li><a href="/songs/morning-river-path_42e468db">朝・川・道・クリスタル</a> — タグ: ambient, soft, meditation, gentle [BPM 125 / 2分54秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/ramen-steam-morning_fef75837">ラーメン・湯気・朝・プリズム</a> — タグ: japanese documentary BGM, ambient, folk-instrumental [BPM 100 / 1分49秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/ramen-steam-morning_07b92dd4">ラーメン・湯気・朝・デプス</a> — タグ: japanese documentary BGM, ambient, folk-instrumental [BPM 94 / 1分38秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/foxfire-shrine_d198d20e">Foxfire・神社・ルーン</a> — タグ: dark ambient, Japanese horror game BGM, cinematic ambient horror [BPM 86 / 3分14秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/haunted-hallway_afeb4eb6">Haunted・Hallway・ルーン</a> — タグ: ambient, horror ambient, dark ambient [BPM 70 / 1分59秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/haunted-hallway_89cc93e9">Haunted・Hallway・クリプト</a> — タグ: ambient, horror ambient, dark ambient [BPM 120 / 2分33秒] — アンビエントフリーBGM 商用利用可</li>
+      <li><a href="/songs/foxfire-shrine_d198d20e">Foxfire・神社・ルーン</a> — タグ: dark ambient, Japanese horror game BGM, cinematic ambient horror [BPM 86 / 3分14秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/haunted-hallway_afeb4eb6">Haunted・Hallway・ルーン</a> — タグ: ambient, horror ambient, dark ambient [BPM 70 / 1分59秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/haunted-hallway_89cc93e9">Haunted・Hallway・クリプト</a> — タグ: ambient, horror ambient, dark ambient [BPM 120 / 2分33秒] — ホラー・ダークフリーBGM 商用利用可</li>
       <li><a href="/songs/boardroom-horizon_0a5f6da2">会議室・Horizon・ビルド</a> — タグ: corporate BGM, ambient pop, instrumental (film/ads) [BPM 115 / 1分43秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/boardroom-horizon_234dcd13">会議室・Horizon・シフト</a> — タグ: corporate BGM, ambient pop, instrumental (film/ads) [BPM 96 / 1分43秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/last-bell-garden_5f9ca651">最後の・Bell・庭</a> — タグ: cinematic, orchestral, ambient [BPM 134 / 3分9秒] — アンビエントフリーBGM 商用利用可</li>
@@ -6285,10 +6290,10 @@ load().then(() => {
       <li><a href="/songs/morning-river-path_3ada1eed">朝・川・道・デプス</a> — タグ: ambient, nature ambience, cinematic meditation [BPM 121 / 3分34秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/ramen-steam_546738fc">ラーメン・湯気・スウェル</a> — タグ: Japanese documentary BGM, ambient, traditional Japanese instrumentation [BPM 133 / 2分39秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/ramen-steam_c43e9a64">ラーメン・湯気・シマー</a> — タグ: Japanese documentary BGM, ambient, traditional Japanese instrumentation [BPM 75 / 2分38秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/yurei-shrine_0937d626">Yurei・神社・ハント</a> — タグ: dark ambient, Japanese horror BGM, ritualistic ambient [BPM 120 / 2分39秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/yurei-shrine_9ba662e1">Yurei・神社・ファントム</a> — タグ: dark ambient, Japanese horror BGM, ritualistic ambient [BPM 82 / 2分54秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/black-room-waltz_bb671332">黒・Room・ワルツ</a> — タグ: dark ambient, cinematic ambient, horror ambient [BPM 121 / 1分59秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/black-room-waltz_5644a3a4">黒・Room・ワルツ・シャドウ</a> — タグ: dark ambient, cinematic ambient, horror ambient [BPM 120 / 2分59秒] — アンビエントフリーBGM 商用利用可</li>
+      <li><a href="/songs/yurei-shrine_0937d626">Yurei・神社・ハント</a> — タグ: dark ambient, Japanese horror BGM, ritualistic ambient [BPM 120 / 2分39秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/yurei-shrine_9ba662e1">Yurei・神社・ファントム</a> — タグ: dark ambient, Japanese horror BGM, ritualistic ambient [BPM 82 / 2分54秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/black-room-waltz_bb671332">黒・Room・ワルツ</a> — タグ: dark ambient, cinematic ambient, horror ambient [BPM 121 / 1分59秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/black-room-waltz_5644a3a4">黒・Room・ワルツ・シャドウ</a> — タグ: dark ambient, cinematic ambient, horror ambient [BPM 120 / 2分59秒] — ホラー・ダークフリーBGM 商用利用可</li>
       <li><a href="/songs/boardroom-momentum_7b597b46">会議室の高揚・チーム</a> — タグ: corporate ambient, easy listening, cinematic / motivational BGM [BPM 130 / 1分22秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/boardroom-momentum_fcbf7788">会議室の高揚・ストライド</a> — タグ: corporate ambient, easy listening, cinematic / motivational BGM [BPM 129 / 1分9秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/morning-breeze_f39084bc">朝・そよ風・フォグ</a> — タグ: acoustic folk, fingerstyle, ambient [BPM 93 / 2分19秒] — アンビエントフリーBGM 商用利用可</li>
@@ -6299,8 +6304,8 @@ load().then(() => {
       <li><a href="/songs/morning-river-path_d4a1c5f5">朝・川・道・シマー</a> — タグ: ambient, new-age, meditation [BPM 124 / 3分18秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/ramen-steam-drift_50d60d0f">ラーメンの湯気</a> — タグ: Japanese documentary BGM, ambient, traditional Japanese instrumentation [BPM 88 / 1分46秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/ramen-steam-drift_df512a4a">ラーメンの湯気・ドリフト</a> — タグ: Japanese documentary BGM, ambient, traditional Japanese instrumentation [BPM 79 / 1分54秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/yurei-shrine_41bfeae7">Yurei・神社・ミスト</a> — タグ: dark ambient, horror ambient, Japanese horror BGM [BPM 120 / 3分19秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/yurei-shrine_8ed8e7a0">Yurei・神社・レイス</a> — タグ: dark ambient, horror ambient, Japanese horror BGM [BPM 121 / 2分44秒] — アンビエントフリーBGM 商用利用可</li>
+      <li><a href="/songs/yurei-shrine_41bfeae7">Yurei・神社・ミスト</a> — タグ: dark ambient, horror ambient, Japanese horror BGM [BPM 120 / 3分19秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/yurei-shrine_8ed8e7a0">Yurei・神社・レイス</a> — タグ: dark ambient, horror ambient, Japanese horror BGM [BPM 121 / 2分44秒] — ホラー・ダークフリーBGM 商用利用可</li>
       <li><a href="/songs/morning-breeze_764443cd">朝・そよ風・スペース</a> — タグ: ambient, acoustic, fingerstyle [BPM 70 / 2分43秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/morning-breeze_bb64345f">朝・そよ風・ヘイズ</a> — タグ: ambient, acoustic, fingerstyle [BPM 78 / 1分44秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/morning-mist-ryokan_12d01a20">朝・霞・Ryokan・スペース</a> — タグ: Japanese ambient BGM, ambient, meditative, cinematic [BPM 134 / 3分4秒] — アンビエントフリーBGM 商用利用可</li>
@@ -6313,10 +6318,10 @@ load().then(() => {
       <li><a href="/songs/morning-river-path_c430057d">朝・川・道・グロウ</a> — タグ: ambient, meditation, light piano [BPM 121 / 2分57秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/ramen-steam_dc01b568">ラーメン・湯気・ヴェール</a> — タグ: Japanese documentary BGM, ambient, traditional Japanese instruments [BPM 75 / 2分18秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/ramen-steam_d2565639">ラーメン・湯気・グロウ</a> — タグ: Japanese documentary BGM, ambient, traditional Japanese instruments [BPM 75 / 2分29秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/foxfire-shrine_f504c5ae">Foxfire・神社・ハント</a> — タグ: dark ambient, Japanese horror BGM, cinematic atmospheric [BPM 100 / 3分4秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/foxfire-shrine_4bcbb504">Foxfire・神社・ファントム</a> — タグ: dark ambient, Japanese horror BGM, cinematic atmospheric [BPM 113 / 3分4秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/haunted-room-13_e05e5113">Haunted・Room・13</a> — タグ: dark ambient, horror ambient, ambient drone [BPM 120 / 2分30秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/haunted-room-13_8ae0f714">Haunted・Room・13・シャドウ</a> — タグ: dark ambient, horror ambient, ambient drone [BPM 98 / 2分22秒] — アンビエントフリーBGM 商用利用可</li>
+      <li><a href="/songs/foxfire-shrine_f504c5ae">Foxfire・神社・ハント</a> — タグ: dark ambient, Japanese horror BGM, cinematic atmospheric [BPM 100 / 3分4秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/foxfire-shrine_4bcbb504">Foxfire・神社・ファントム</a> — タグ: dark ambient, Japanese horror BGM, cinematic atmospheric [BPM 113 / 3分4秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/haunted-room-13_e05e5113">Haunted・Room・13</a> — タグ: dark ambient, horror ambient, ambient drone [BPM 120 / 2分30秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/haunted-room-13_8ae0f714">Haunted・Room・13・シャドウ</a> — タグ: dark ambient, horror ambient, ambient drone [BPM 98 / 2分22秒] — ホラー・ダークフリーBGM 商用利用可</li>
       <li><a href="/songs/boardroom-momentum_54f253cb">会議室の高揚・クリア</a> — タグ: corporate instrumental, modern orchestral, ambient pop [BPM 98 / 1分28秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/boardroom-momentum_829bc93a">会議室の高揚・グロース</a> — タグ: corporate instrumental, modern orchestral, ambient pop [BPM 97 / 2分6秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/mossy-market-morning_ec4f6032">Mossy・Market・朝</a> — タグ: ambient folk-pop, ambient, whimsical folk-pop [BPM 89 / 1分59秒] — アンビエントフリーBGM 商用利用可</li>
@@ -6329,12 +6334,12 @@ load().then(() => {
       <li><a href="/songs/morning-river-glade_73992607">朝・川・Glade・ウェイブ</a> — タグ: ambient, meditation, light gentle [BPM 126 / 2分59秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/ramen-counter-glow_d81764e7">ラーメン・Counter・輝き</a> — タグ: world music, traditional Japanese, ambient [BPM 80 / 1分46秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/ramen-counter-glow_0f317d1e">ラーメン・Counter・輝き・ドリフト</a> — タグ: world music, traditional Japanese, ambient [BPM 82 / 1分24秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/yurei-shrine_54e37ec2">Yurei・神社・アビス</a> — タグ: dark ambient, Japanese horror BGM, ambient/drone [BPM 92 / 7分59秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/yurei-shrine_697304ca">Yurei・神社・カース</a> — タグ: dark ambient, Japanese horror BGM, ambient/drone [BPM 111 / 3分18秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/foxfire-shrine_9345da91">Foxfire・神社・ミスト</a> — タグ: dark ambient, Japanese horror BGM, eerie cinematic/temple ambience [BPM 121 / 2分29秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/foxfire-shrine_bc2c867d">Foxfire・神社・レイス</a> — タグ: dark ambient, Japanese horror BGM, eerie cinematic/temple ambience [BPM 67 / 3分8秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/moth-house_6d04682b">Moth・House</a> — タグ: ambient, dark horror ambient, cinematic [BPM 120 / 2分34秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/moth-house_c9a21cb9">Moth・House・シャドウ</a> — タグ: ambient, dark horror ambient, cinematic [BPM 118 / 2分39秒] — アンビエントフリーBGM 商用利用可</li>
+      <li><a href="/songs/yurei-shrine_54e37ec2">Yurei・神社・アビス</a> — タグ: dark ambient, Japanese horror BGM, ambient/drone [BPM 92 / 7分59秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/yurei-shrine_697304ca">Yurei・神社・カース</a> — タグ: dark ambient, Japanese horror BGM, ambient/drone [BPM 111 / 3分18秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/foxfire-shrine_9345da91">Foxfire・神社・ミスト</a> — タグ: dark ambient, Japanese horror BGM, eerie cinematic/temple ambience [BPM 121 / 2分29秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/foxfire-shrine_bc2c867d">Foxfire・神社・レイス</a> — タグ: dark ambient, Japanese horror BGM, eerie cinematic/temple ambience [BPM 67 / 3分8秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/moth-house_6d04682b">Moth・House</a> — タグ: ambient, dark horror ambient, cinematic [BPM 120 / 2分34秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/moth-house_c9a21cb9">Moth・House・シャドウ</a> — タグ: ambient, dark horror ambient, cinematic [BPM 118 / 2分39秒] — ホラー・ダークフリーBGM 商用利用可</li>
       <li><a href="/songs/ashi-no-kaze_a4b8b279">Ashi・no・Kaze</a> — タグ: ambient, Japanese traditional, cinematic/drone [BPM 89 / 3分1秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/ashi-no-kaze_0c86d50a">Ashi・no・Kaze・ドリフト</a> — タグ: ambient, Japanese traditional, cinematic/drone [BPM 135 / 2分49秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/aqua-silk-retreat_5e24d8a9">Aqua・シルク・Retreat</a> — タグ: ambient, new age, cinematic/relaxing instrumental [BPM 69 / 2分58秒] — アンビエントフリーBGM 商用利用可</li>
@@ -6401,8 +6406,8 @@ load().then(() => {
       <li><a href="/songs/velvet-circuit-drift_9131e172">ベルベット・Circuit・漂い・ドリフト</a> — タグ: downtempo ambient electronica, ambient, glitch [BPM 94 / 2分58秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/polaroid-drift_c5fa5de4">Polaroid・漂い</a> — タグ: dream pop, shoegaze, ambient [BPM 84 / 3分13秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/polaroid-drift_24d8846d">Polaroid・漂い・ドリフト</a> — タグ: dream pop, shoegaze, ambient [BPM 76 / 3分19秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/paper-lantern-rot_eec2aa91">紙・Lantern・Rot</a> — タグ: dark ambient, horror ambient, drone [BPM 107 / 2分9秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/paper-lantern-rot_62d3ad01">紙・Lantern・Rot・シャドウ</a> — タグ: dark ambient, horror ambient, drone [BPM 111 / 2分28秒] — アンビエントフリーBGM 商用利用可</li>
+      <li><a href="/songs/paper-lantern-rot_eec2aa91">紙・Lantern・Rot</a> — タグ: dark ambient, horror ambient, drone [BPM 107 / 2分9秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/paper-lantern-rot_62d3ad01">紙・Lantern・Rot・シャドウ</a> — タグ: dark ambient, horror ambient, drone [BPM 111 / 2分28秒] — ホラー・ダークフリーBGM 商用利用可</li>
       <li><a href="/songs/moonlit-kintsugi_174d7bde">Moonlit・Kintsugi</a> — タグ: ambient, meditation, healing, calming [BPM 129 / 3分14秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/moonlit-kintsugi_bca7f3c6">Moonlit・Kintsugi・ドリフト</a> — タグ: ambient, meditation, healing, calming [BPM 134 / 2分54秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/sakura-after-rain_f76edc3e">桜・After・雨</a> — タグ: Japanese piano ballad BGM, tender rubato, cinematic ambient [BPM 128 / 2分52秒] — アンビエントフリーBGM 商用利用可</li>
@@ -6417,8 +6422,8 @@ load().then(() => {
       <li><a href="/songs/bamboo-watering-can_4e09ee44">竹・Watering・Can・ドリフト</a> — タグ: acoustic folk, instrumental, ambient [BPM 89 / 1分30秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/countryside-line_99b1afe9">Countryside・Line</a> — タグ: ambient, BGM, piano-driven, cinematic [BPM 94 / 2分37秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/countryside-line_693ba682">Countryside・Line・ドリフト</a> — タグ: ambient, BGM, piano-driven, cinematic [BPM 90 / 1分57秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/haikyo-echoes_48b0f795">Haikyo・Echoes</a> — タグ: ambient, cinematic drone, dark ambient [BPM 142 / 3分23秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/haikyo-echoes_63216b02">Haikyo・Echoes・ドリフト</a> — タグ: ambient, cinematic drone, dark ambient [BPM 130 / 3分29秒] — アンビエントフリーBGM 商用利用可</li>
+      <li><a href="/songs/haikyo-echoes_48b0f795">Haikyo・Echoes</a> — タグ: ambient, cinematic drone, dark ambient [BPM 142 / 3分23秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/haikyo-echoes_63216b02">Haikyo・Echoes・ドリフト</a> — タグ: ambient, cinematic drone, dark ambient [BPM 130 / 3分29秒] — ホラー・ダークフリーBGM 商用利用可</li>
       <li><a href="/songs/steam-bath-quiet_fdce878e">湯気・Bath・静かな</a> — タグ: ambient, drone, shakuhachi/kaidan-inspired traditional Japanese ambience [BPM 99 / 2分39秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/steam-bath-quiet_c2ff00bd">湯気・Bath・静かな・ドリフト</a> — タグ: ambient, drone, shakuhachi/kaidan-inspired traditional Japanese ambience [BPM 132 / 3分3秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/frosted-window-drift_35eac51e">Frosted・窓・漂い</a> — タグ: ambient, cinematic, melancholic piano [BPM 134 / 2分37秒] — アンビエントフリーBGM 商用利用可</li>
@@ -6447,8 +6452,8 @@ load().then(() => {
       <li><a href="/songs/moss-stone-pond_37ba72f3">Moss・石・Pond・ドリフト</a> — タグ: ambient, Japanese ambient, minimalist [BPM 76 / 2分59秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/track_2bc3cf08">苔庭の鯉</a> — タグ: ambient, Japanese ambient, meditative [BPM 112 / 3分29秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/track_ce90b3d7">苔庭の鯉・ドリフト</a> — タグ: ambient, Japanese ambient, meditative [BPM 126 / 3分9秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/cold-case-files_c1319691">冷たい・Case・Files</a> — タグ: dark ambient [BPM 93 / 2分28秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/cold-case-files_f104e54e">冷たい・Case・Files・ドリフト</a> — タグ: dark ambient [BPM 90 / 2分54秒] — アンビエントフリーBGM 商用利用可</li>
+      <li><a href="/songs/cold-case-files_c1319691">冷たい・Case・Files</a> — タグ: dark ambient [BPM 93 / 2分28秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/cold-case-files_f104e54e">冷たい・Case・Files・ドリフト</a> — タグ: dark ambient [BPM 90 / 2分54秒] — ホラー・ダークフリーBGM 商用利用可</li>
       <li><a href="/songs/moonlit-tongue-drum_83484c0e">Moonlit・Tongue・ドラム</a> — タグ: ambient, healing, cinematic [BPM 135 / 2分54秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/moonlit-tongue-drum_bc3510e6">Moonlit・Tongue・ドラム・ドリフト</a> — タグ: ambient, healing, cinematic [BPM 87 / 3分8秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/white-hokkaido-drift_7ded68f2">白・Hokkaido・漂い</a> — タグ: cinematic ambient, orchestral, film score BGM [BPM 102 / 3分9秒] — アンビエントフリーBGM 商用利用可</li>
@@ -6501,12 +6506,12 @@ load().then(() => {
       <li><a href="/songs/riverbank-sunday_3134e72c">Riverbank・Sunday・ドリフト</a> — タグ: ambient folk, ambient, acoustic [BPM 68 / 2分43秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/steam-and-cedar_dce25133">湯気・and・Cedar</a> — タグ: ambient, Japanese relaxation (BGM), soft piano [BPM 137 / 2分49秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/steam-and-cedar_5ad777e1">湯気・and・Cedar・ドリフト</a> — タグ: ambient, Japanese relaxation (BGM), soft piano [BPM 102 / 2分42秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/kaidan-moon_a96cbf55">Kaidan・月</a> — タグ: Japanese horror BGM, ambient, dark drone [BPM 138 / 3分12秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/kaidan-moon_c748940b">Kaidan・月・シャドウ</a> — タグ: Japanese horror BGM, ambient, dark drone [BPM 120 / 3分7秒] — アンビエントフリーBGM 商用利用可</li>
+      <li><a href="/songs/kaidan-moon_a96cbf55">Kaidan・月</a> — タグ: Japanese horror BGM, ambient, dark drone [BPM 138 / 3分12秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/kaidan-moon_c748940b">Kaidan・月・シャドウ</a> — タグ: Japanese horror BGM, ambient, dark drone [BPM 120 / 3分7秒] — ホラー・ダークフリーBGM 商用利用可</li>
       <li><a href="/songs/quiet-chalk-notes_5f24bc6b">静かな・Chalk・音符</a> — タグ: ambient, minimalist, instrumental [BPM 70 / 2分29秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/quiet-chalk-notes_9136e4f9">静かな・Chalk・音符・ドリフト</a> — タグ: ambient, minimalist, instrumental [BPM 69 / 2分59秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/black-glass-room_056bd3e3">黒・ガラス・Room</a> — タグ: film score, cinematic thriller, dark ambient [BPM 70 / 2分54秒] — アンビエントフリーBGM 商用利用可</li>
-      <li><a href="/songs/black-glass-room_82111d5e">黒・ガラス・Room・ドリフト</a> — タグ: film score, cinematic thriller, dark ambient [BPM 70 / 2分27秒] — アンビエントフリーBGM 商用利用可</li>
+      <li><a href="/songs/black-glass-room_056bd3e3">黒・ガラス・Room</a> — タグ: film score, cinematic thriller, dark ambient [BPM 70 / 2分54秒] — ホラー・ダークフリーBGM 商用利用可</li>
+      <li><a href="/songs/black-glass-room_82111d5e">黒・ガラス・Room・ドリフト</a> — タグ: film score, cinematic thriller, dark ambient [BPM 70 / 2分27秒] — ホラー・ダークフリーBGM 商用利用可</li>
       <li><a href="/songs/sakura-path_692c7636">桜・道</a> — タグ: japanese traditional, ambient, minimalism [BPM 101 / 2分49秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/sakura-path_921481b9">桜・道・ドリフト</a> — タグ: japanese traditional, ambient, minimalism [BPM 75 / 3分4秒] — アンビエントフリーBGM 商用利用可</li>
       <li><a href="/songs/forest-drift_90c30af7">森・漂い</a> — タグ: ambient, soundscape, atmospheric [BPM 114 / 3分14秒] — アンビエントフリーBGM 商用利用可</li>
@@ -8117,6 +8122,8 @@ const NAVI_GENRE_FACE={
   'cinematic':'stunned',
   'j-pop':'joy',
   'japanese-anime':'excited',
+  'horror':'pensive',
+  'wafu':'stunned',
   'childrens':'joy',
   'pop':'smiling',
   'rock':'confident',
@@ -8165,13 +8172,15 @@ const MOOD=[
     g:['cinematic']},
   // ホラー系（怖い・不気味）は ambient を最優先 — dark ambient/horror ambient タグ曲が多い
   {k:['ホラー','怖い','恐怖','怖め','お化け','幽霊','ghost','horror','scary','spooky','eerie','creepy','haunted','怪談','鬼','ゾッと','ゾクゾク','肝試し','ホラゲ','ホラーゲーム'],
-    g:['ambient','cinematic'],max:110},
+    g:['horror','cinematic'],max:110},
   // ダーク全般（ホラーよりやや広い）
   {k:['ダーク','dark','不穏','不気味','mysterious','ミステリアス','暗い','不気味','サスペンス','suspense'],
-    g:['cinematic','ambient','electronic']},
+    g:['horror','cinematic','ambient','electronic']},
   {k:['おしゃれ','洒落','エレガント','elegant','sophisticated','都会的','ラグジュアリー'],
     g:['jazz','lo-fi','electronic']},
-  {k:['アニメ','anime','manga','アニソン','日本風','和風'],
+  {k:['和風','日本伝統','祭り','太鼓','三味線','琴','尺八','神社','侍','matsuri','taiko','koto','shakuhachi','wafu'],
+    g:['wafu']},
+  {k:['アニメ','anime','manga','アニソン','アイドル','idol'],
     g:['japanese-anime']},
   {k:['ジャズ','jazz','スウィング','ビバップ','バップ'],g:['jazz']},
   {k:['ロック','rock','ギター','バンド'],g:['rock']},
