@@ -153,6 +153,8 @@
   pointer-events:none;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+img,video{max-width:100%;height:auto}
+body{overflow-wrap:break-word}
 :root{
   --ink:#1a1008; --paper:#faf6f0; --warm:#f5ede0; --warm2:#ede2cf;
   --accent:#c85a1e; --accent-h:#a84812; --accent2:#4a9b7f; --accent3:#7b5ea7;
@@ -1091,13 +1093,6 @@ body:has(.pbar.on) .navi-chat-panel{bottom:calc(182px + env(safe-area-inset-bott
   .navi-chat-panel{width:calc(100vw - 28px);max-height:70vh;
     right:14px;left:14px}}
 </style>
-<!-- DEBUG START -->
-<style>
-html, body { background: yellow !important; }
-body * { outline: 1px solid red !important; }
-html { overflow-x: scroll !important; }
-</style>
-<!-- DEBUG END -->
 </head>
 <body>
 
