@@ -3772,8 +3772,12 @@ const AI_CONCEPTS = {
   '迫力':      ['迫力','epic','grand','powerful','huge','massive','大迫力','壮大','ドラマティック','劇的'],
   '希望':      ['希望','hope','hopeful','uplifting','optimistic','明るい未来','bright','前向き','勇気','やる気'],
   'もふもふ':  ['もふもふ','ふわふわ','cute','soft','playful','warm','cozy','ほのぼの'],
-  'かっこいい': ['かっこいい','カッコイイ','格好いい','cool','クール','かっこ良い','スタイリッシュ','stylish','洗練','かっこ','格好','impressive','ドラマティック','dramatic','バッドアス','badass','渋い','渋','sharp','決まってる'],
-  '可愛い':    ['可愛い','かわいい','cute','kawaii','playful','童謡','sweet','innocent','あどけ','チャーミング'],
+  'かっこいい': ['かっこいい','カッコイイ','格好いい','cool','クール','かっこ良い','スタイリッシュ','stylish','洗練','かっこ','格好','impressive','ドラマティック','dramatic','バッドアス','badass','渋い','渋','sharp','決まってる',
+    // 実際の曲タグに含まれる英語ワードを追加
+    'rock','punk','punk rock','hard rock','hardcore','metal','electric','j-rock','arena rock','skate punk',
+    'hip hop','hiphop','trap','underground rap','boom bap','aggressive','powerful','fierce','bold','swagger',
+    'synthwave','edm','drum and bass','intense','rebellious','strong','badass','gritty'],
+  '可愛い':    ['可愛い','かわいい','kawaii','童謡','あどけ','チャーミング','ふわふわ','girly','adorable','whimsical'],
   'キッズ':    ['キッズ','kids','こども','子供','子ども','children','childrens',"children's",'幼児','保育','知育','童謡','絵本','遊び','ウクレレ','ukulele','bouncy'],
   'セクシー':  ['セクシー','sexy','sensual','官能','魅惑','charm','魅力'],
   'クール':    ['クール','cool','sophisticated','smooth','urban','noir','funky','洗練','coolジャズ','冷たい','冷徹','ミニマル','minimal','sterile'],
@@ -8141,16 +8145,26 @@ const MOOD=[
     g:['lo-fi','ambient','corporate-bgm','jazz'],max:105},
   {k:['激し','テンション','アゲ','盛り上','パーティ','テンアゲ','ハイテンション','ノリノリ','pump','hype','energetic','party','upbeat','intense'],
     g:['rock','electronic','hip-hop-rnb'],min:120},
-  {k:['かわいい','可愛い','元気','明るい','楽し','ほのぼの','cute','happy','cheerful','fun','bright'],
+  // かっこいい系 — rock/electronic/hip-hop を明示的に優先
+  {k:['かっこいい','カッコイイ','格好いい','かっこ良い','かっこ','格好','クール','cool','スタイリッシュ','stylish','渋い','渋','バッドアス','badass','fierce','bold','ロック','rock','punk','metal','ハードロック','hard rock'],
+    g:['rock','electronic','hip-hop-rnb','cinematic'],min:100},
+  // かわいい系 — j-pop/childrens のみに絞る（かっこいいと混ざらないよう）
+  {k:['かわいい','可愛い','ほのぼの','ふわふわ','cute','kawaii','adorable','girly','ほっこり'],
     g:['j-pop','childrens','japanese-anime','pop']},
+  {k:['元気','明るい','楽し','happy','cheerful','fun','bright','ポジティブ','前向き'],
+    g:['j-pop','pop','folk-acoustic']},
   {k:['眠い','睡眠','就寝','夜','おやすみ','ねむ','寝る前','リラックス睡眠','sleep','night','bedtime'],
     g:['ambient','lo-fi'],max:80},
   {k:['朝','モーニング','起床','起き','目覚め','朝活','morning','wake up'],
     g:['folk-acoustic','j-pop','pop'],min:85},
   {k:['悲し','切な','エモ','泣ける','しんみり','感動','emotional','sad'],
     g:['cinematic','ambient','folk-acoustic']},
-  {k:['壮大','epic','映画','映像','シネマ','ドラマ','劇的','dramatic','cinematic'],
+  {k:['壮大','epic','映画','映像','シネマ','ドラマ','劇的','dramatic','cinematic','trailer','ヒロイック'],
     g:['cinematic']},
+  {k:['ダーク','dark','怖い','不穏','不気味','ホラー','mysterious','ミステリアス','暗い','ホラゲ'],
+    g:['cinematic','electronic']},
+  {k:['おしゃれ','洒落','エレガント','elegant','sophisticated','都会的','ラグジュアリー'],
+    g:['jazz','lo-fi','electronic']},
   {k:['アニメ','anime','manga','アニソン','日本風','和風'],
     g:['japanese-anime']},
   {k:['ジャズ','jazz','スウィング','ビバップ','バップ'],g:['jazz']},
@@ -8230,6 +8244,16 @@ const CONVS=[
     a:['元気だよ〜🎵 あなたはどう？何かいい音楽探してる？',
        'ナビはいつも元気！✨ 今日はどんな気分？ピッタリのBGMを一緒に探そ！',
        'バッチリ元気💕 あなたの気分に合う曲を探すよ、どんな感じがいい？']},
+  // ── ムード直接指定（かっこいい系 / かわいい系を明確に分岐） ──
+  {r:/かっこいい|カッコイイ|格好いい|かっこ良い|クール.*曲|渋い|badass|強い曲|激しめ|ロック.*曲|パンク/i, expr:'confident',
+    a:['かっこいい曲を探してきたよ🎸 ロック・エレクトロ・ヒップホップ系でセレクト！',
+       'クールな曲をチョイスしたよ😎 どれか気に入ったら再生してみて！',
+       'かっこいい系ならこれ！🔥 テンション上がる曲を選んだよ！'],
+    q:'かっこいい rock punk electronic hip hop'},
+  {r:/かわいい|可愛い|ほのぼの|ふわふわ|元気.*かわいい|かわいい.*元気/i, expr:'joy',
+    a:['かわいい系のBGMを探してきたよ🌸 ポップでほんわかした曲だよ！',
+       'かわいい雰囲気の曲を選んだよ💕 ほっこりできるやつ！'],
+    q:'かわいい j-pop pop childrens'},
   {r:/何が好き|おすすめ|おすすめ曲|人気|ランキング/i, expr:'joy', special:'recommend'},
   {r:/ランダム|適当|なんでも|おまかせ|random/i, expr:'surprise', special:'random'},
   {r:/全ジャンル|ジャンル一覧|どんなジャンル|genre/i, expr:'confident',
@@ -8390,10 +8414,14 @@ function searchSongs(query){
   const qTokens=q.replace(/[、。！？\s]+/g,' ').split(' ').filter(t=>t.length>1);
   const songs=typeof allSongs!=='undefined'?allSongs:[];
   if(!songs.length) return [];
+  const hasBpmConstraint = minBPM > 0 || maxBPM < 999;
   let scored=songs.map(s=>{
     let sc=0;
     if(genres.length && genres.includes(s.genre)) sc+=40;
-    if(s.bpm>=minBPM && s.bpm<=maxBPM) sc+=10;
+    // BPMスコアはBPM制約がある場合のみ付与（全曲+10で結果がランダム化するのを防ぐ）
+    if(hasBpmConstraint && s.bpm>=minBPM && s.bpm<=maxBPM) sc+=15;
+    // BPM制約があるのに範囲外の曲はペナルティ
+    if(hasBpmConstraint && genres.length && (s.bpm<minBPM || s.bpm>maxBPM)) sc-=20;
     qTokens.forEach(t=>{
       const title=(s.title||'').toLowerCase();
       const titleEn=(s.title_en||'').toLowerCase();
@@ -8405,8 +8433,8 @@ function searchSongs(query){
     });
     return {s,sc};
   }).filter(x=>x.sc>0).sort((a,b)=>b.sc-a.sc||Math.random()-.5);
-  // ジャンルのみヒットの場合はシャッフル
-  if(scored.every(x=>x.sc<=50)){
+  // ジャンルのみヒット（スコア40のみ）の場合はシャッフルして多様性を出す
+  if(scored.length && scored.every(x=>x.sc<=40)){
     for(let i=scored.length-1;i>0;i--){
       const j=Math.floor(Math.random()*(i+1));
       [scored[i],scored[j]]=[scored[j],scored[i]];
