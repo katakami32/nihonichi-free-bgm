@@ -1,4 +1,4 @@
-const CACHE = 'bgm-v4';
+const CACHE = 'bgm-v5';
 const PRECACHE = [
   '/',
   '/index.html',
