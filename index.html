@@ -1168,7 +1168,7 @@ body:has(.pbar.on) .navi-chat-panel{bottom:calc(182px + env(safe-area-inset-bott
           <button data-i18n="navi_greet_btn_ai" onclick="document.getElementById('aiOpen')?.click()">✨ AIにおまかせを試す</button>
           <button data-i18n="navi_greet_btn_radio" onclick="document.getElementById('radioOpen')?.click()">🎧 BGMチャンネルを開く</button>
           <button data-i18n="navi_greet_btn_faq" onclick="document.getElementById('faq')?.scrollIntoView({behavior:'smooth'})">❓ よくある質問</button>
-          <button data-i18n="navi_greet_btn_chat" onclick="document.getElementById('naviFabBtn')?.click()">💬 ナビちゃんとチャット</button>
+          <button data-i18n="navi_greet_btn_chat" onclick="event.stopPropagation();window.openNaviChat&&window.openNaviChat()">💬 ナビちゃんとチャット</button>
         </div>
       </div>
     </div>
@@ -2988,12 +2988,12 @@ function play(id, fromQueue=false){
   // 同じ曲が再生中 → トグル（ポーズはフェードアウト、再開はフェードイン）
   if (currentHowl && nowPlayingId === id) {
     if (currentHowl.playing()) {
-      currentHowl.fade(currentHowl.volume(), 0, 60);
-      setTimeout(() => { try { currentHowl && currentHowl.pause(); } catch(_){} }, 70);
+      currentHowl.fade(currentHowl.volume(), 0, 180);
+      setTimeout(() => { try { currentHowl && currentHowl.pause(); } catch(_){} }, 200);
     } else {
       currentHowl.volume(0);
       currentHowl.play();
-      setTimeout(() => { try { currentHowl && currentHowl.fade(0, savedVolume, 40); } catch(_){} }, 10);
+      setTimeout(() => { try { currentHowl && currentHowl.fade(0, savedVolume, 150); } catch(_){} }, 10);
     }
     return;
   }
@@ -3012,8 +3012,8 @@ function play(id, fromQueue=false){
   if (currentHowl) {
     const dying = currentHowl;
     try {
-      dying.fade(dying.volume(), 0, 80);
-      setTimeout(() => { try { dying.stop(); dying.unload(); } catch(_){} }, 100);
+      dying.fade(dying.volume(), 0, 200);
+      setTimeout(() => { try { dying.stop(); dying.unload(); } catch(_){} }, 230);
     } catch(_) {
       try { dying.stop(); dying.unload(); } catch(_){}
     }
@@ -3037,8 +3037,8 @@ function play(id, fromQueue=false){
       document.getElementById('durTime').textContent = fmtDur(howl.duration());
     },
     onplay: () => {
-      // フェードイン（40ms）で開始ぷつぷつを消す
-      howl.fade(0, savedVolume, 40);
+      // フェードイン（150ms）で開始ぷつぷつを消す
+      howl.fade(0, savedVolume, 150);
       document.getElementById('playBtn').textContent = '⏸';
       document.getElementById('player').classList.add('playing');
       _stopProgressLoop();
@@ -3086,13 +3086,13 @@ playBtn.onclick = () => {
   if (h) {
     if (playBtn.textContent === '⏸') {
       // ポーズ: フェードアウト後に停止（ぷつぷつ防止）
-      h.fade(h.volume(), 0, 60);
-      setTimeout(() => { try { h.pause(); } catch(_){} }, 70);
+      h.fade(h.volume(), 0, 180);
+      setTimeout(() => { try { h.pause(); } catch(_){} }, 200);
     } else {
       // 再開: 無音から再生してフェードイン
       h.volume(0);
       h.play();
-      setTimeout(() => { try { h.fade(0, savedVolume, 40); } catch(_){} }, 10);
+      setTimeout(() => { try { h.fade(0, savedVolume, 150); } catch(_){} }, 10);
     }
     return;
   }
@@ -3134,8 +3134,8 @@ function _doSeek(ratio){
         const vol = h.volume();
         h.volume(0);
         try { h.seek(ratio * d); } catch(e){ console.warn('seek err', e); }
-        // 30ms後にフェードイン
-        setTimeout(() => { try { h.fade(0, vol > 0 ? vol : savedVolume, 30); } catch(_){} }, 30);
+        // 80ms後にフェードイン（シーク直後のバッファ待ちでプツプツしないよう余裕を持たせる）
+        setTimeout(() => { try { h.fade(0, vol > 0 ? vol : savedVolume, 120); } catch(_){} }, 80);
         // 進捗バーを即時更新 (Howler内部の状態反映を待たない)
         const pct = ratio*100;
         document.getElementById('fill').style.width = pct + '%';
@@ -3481,7 +3481,7 @@ play = function(id){
       // ロック画面 play/pause → Howler 経由で制御（audio 要素直接操作は NG）
       navigator.mediaSession.setActionHandler('play', () => {
         const h = _activeHowl();
-        if (h) { h.volume(0); h.play(); setTimeout(() => { try { h.fade(0, savedVolume, 40); } catch(_){} }, 10); }
+        if (h) { h.volume(0); h.play(); setTimeout(() => { try { h.fade(0, savedVolume, 150); } catch(_){} }, 10); }
         else if (audio.src) audio.play().catch(()=>{});
         if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'playing';
       });
@@ -8490,6 +8490,8 @@ closeBtn.addEventListener('click',function(){setOpen(false);});
 document.addEventListener('click',function(e){
   if(isOpen&&!panel.contains(e.target)&&!fab.contains(e.target))setOpen(false);
 });
+// 挨拶セクション等の外部ボタンからチャットを開くためのグローバル関数
+window.openNaviChat=function(){setOpen(true);};
 
 function imgUrl(path){
   if(!path)return'images/navi/welcome.png';
