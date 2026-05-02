@@ -214,7 +214,8 @@ html[data-theme="dark"] .hero{background:#0a0805}
 .hsearch input:focus{border-color:rgba(29,233,182,.6);background:rgba(29,233,182,.06);box-shadow:0 0 0 3px rgba(29,233,182,.12)}
 .hsearch button{background:linear-gradient(135deg,#1de9b6 0%,#00b8d4 100%);color:#0d0b08;border:none;font-size:14px;font-weight:800;padding:14px 24px;border-radius:12px;cursor:pointer;transition:all .2s;white-space:nowrap;box-shadow:0 4px 16px rgba(29,233,182,.3)}
 .hsearch button:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(29,233,182,.4)}
-.hsearch .aibtn{background:linear-gradient(135deg,rgba(124,77,255,.85) 0%,rgba(200,90,30,.85) 100%);color:#fff;display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(124,77,255,.4)}
+.hsearch .aibtn{background:linear-gradient(135deg,rgba(124,77,255,.85) 0%,rgba(200,90,30,.85) 100%);color:#fff;display:inline-flex;flex-direction:column;align-items:center;gap:2px;border:1px solid rgba(124,77,255,.4)}
+.aibtn-sub{font-size:10px;font-weight:500;opacity:.88;letter-spacing:.02em;white-space:normal;max-width:100%}
 .hsearch .aibtn:hover{filter:brightness(1.15);transform:translateY(-1px)}
 .aitips{display:flex;flex-wrap:wrap;gap:6px;margin-top:.7rem}
 .aitip{font-size:11.5px;color:rgba(255,255,255,.7);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);padding:5px 12px;border-radius:20px;cursor:pointer;transition:all .18s;font-weight:500}
@@ -1133,13 +1134,13 @@ body:has(.pbar.on) .navi-chat-panel{bottom:calc(182px + env(safe-area-inset-bott
   <div class="herowrap">
     <div>
       <div class="htag" data-i18n="hero_badge">⭐ 完全無料・商用利用OK・登録不要・クレジット表記不要</div>
-      <h1 data-i18n-html="hero_h1">すべての<em>クリエイター</em>に、<br>日本一の<em>フリーBGM</em>を。</h1>
+      <h1 data-i18n-html="hero_h1">気分を伝えるだけ。<br>AIが<em>ぴったりのBGM</em>を選びます。</h1>
       <p class="lead" data-i18n-html="hero_lead">高品質なAI生成BGMを<b id="totalCount">2,090</b>曲、すべて無料・商用利用OKでダウンロードできます。BPM・尺・ムードで秒で見つかる検索体験。YouTube・ゲーム実況・Vlog・配信・映像制作にどうぞ。</p>
       <div class="hsearch">
-        <input type="text" id="searchBox" placeholder="例：ジャズ、夜カフェ、戦闘、ローファイ、爽やか" data-i18n-placeholder="search_placeholder" data-i18n-aria="search_aria" aria-label="BGMを検索">
+        <input type="text" id="searchBox" placeholder="作業用BGM・癒し・Vlog・ゲーム実況…" data-i18n-placeholder="search_placeholder" data-i18n-aria="search_aria" aria-label="BGMを検索">
         <button onclick="doSearch()" data-i18n-title="search_title" data-i18n-aria="search_title" title="キーワード検索" aria-label="キーワード検索" data-i18n="search_btn">検索</button>
         <div class="hbtns">
-          <button class="aibtn" id="aiOpen" data-i18n-title="ai_btn_title" data-i18n-aria="ai_btn_aria" title="AIにおまかせ" aria-label="AIにおまかせ" data-i18n-html="ai_btn">✨ AIにおまかせ</button>
+          <button class="aibtn" id="aiOpen" data-i18n-title="ai_btn_title" data-i18n-aria="ai_btn_aria" title="AIにおまかせ" aria-label="AIにおまかせ"><span data-i18n="ai_btn">✨ AIにおまかせ</span><span class="aibtn-sub" data-i18n="ai_btn_sub">好みに合わせてAIが選ぶ</span></button>
           <button class="radiobtn" id="radioOpen" data-i18n-title="radio_btn_title" data-i18n-aria="radio_btn_title" title="BGMチャンネル" aria-label="BGMチャンネル">🎧 <span data-i18n="radio_btn">BGMチャンネル</span><span class="radiosub" data-i18n="radio_sub">気分を選ぶだけ・自動で流れ続ける</span></button>
         </div>
       </div>
@@ -7459,11 +7460,12 @@ const T = {
     nav_usage:'用途別', nav_browse:'BGM一覧', nav_faq:'よくある質問', nav_license:'利用規約',
     // Hero
     hero_badge:'⭐ 完全無料・商用利用OK・登録不要・クレジット表記不要',
-    hero_h1:'すべての<em>クリエイター</em>に、<br>日本一の<em>フリーBGM</em>を。',
+    hero_h1:'気分を伝えるだけ。<br>AIが<em>ぴったりのBGM</em>を選びます。',
     hero_lead:'高品質なAI生成BGMを<b id="totalCount">2,090</b>曲、すべて無料・商用利用OKでダウンロードできます。BPM・尺・ムードで秒で見つかる検索体験。YouTube・ゲーム実況・Vlog・配信・映像制作にどうぞ。',
-    search_placeholder:'例：ジャズ、夜カフェ、戦闘、ローファイ、爽やか',
+    search_placeholder:'作業用BGM・癒し・Vlog・ゲーム実況…',
     search_btn:'検索',
     ai_btn:'✨ AIにおまかせ',
+    ai_btn_sub:'好みに合わせてAIが選ぶ',
     radio_btn:'BGMチャンネル',
     radio_sub:'気分を選ぶだけ・自動で流れ続ける',
     tip1:'☀️ 朝の散歩で気持ち良くなれる音楽',
@@ -7723,11 +7725,12 @@ const T = {
     nav_usage:'Use Cases', nav_browse:'All BGM', nav_faq:'FAQ', nav_license:'License',
     // Hero
     hero_badge:'⭐ 100% Free · Commercial Use OK · No Sign-up · No Credit Required',
-    hero_h1:'The best music<br>for every <em>creator</em>.',
+    hero_h1:'Just describe your mood.<br>AI picks the <em>perfect BGM</em> for you.',
     hero_lead:'<b id="totalCount">2,090</b> high-quality AI-generated BGM tracks — all free, commercial use OK, no registration required. Find the perfect track by BPM, length, or mood in seconds. Perfect for YouTube, gaming, Vlogs, streams & films.',
-    search_placeholder:'e.g. jazz, chill café, battle, lo-fi, upbeat',
+    search_placeholder:'study music, chill, Vlog, gaming…',
     search_btn:'Search',
     ai_btn:'✨ AI Match',
+    ai_btn_sub:'AI picks based on your taste',
     radio_btn:'BGM Channel',
     radio_sub:'Pick a vibe · music plays on',
     tip1:'☀️ Morning walk feel-good music',
