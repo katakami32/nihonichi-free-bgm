@@ -1011,7 +1011,7 @@ body:has(.pbar.on) .navi-fab{
   display:flex;flex-direction:column;overflow:hidden;
   transform:translateY(20px) scale(.97);opacity:0;
   pointer-events:none;transition:transform .3s cubic-bezier(.34,1.56,.64,1),opacity .25s ease;
-  z-index:169}
+  z-index:220}
 .navi-chat-panel.open{transform:translateY(0) scale(1);opacity:1;pointer-events:auto}
 body:has(.pbar.on) .navi-chat-panel{bottom:calc(182px + env(safe-area-inset-bottom,0px))}
 .navi-chat-header{display:flex;align-items:center;gap:12px;
@@ -3506,6 +3506,8 @@ play = function(id){
     }
   }
 };
+// ナビちゃんIIFE等の別スコープからアクセスできるようグローバルに公開
+window.play = play;
 
 // ---- iOS 画面ロック後の AudioContext 復帰 ----
 document.addEventListener('visibilitychange', () => {
@@ -8511,7 +8513,8 @@ function songCard(s){
     </div>
     <span class="navi-song-play">▶</span>`;
   btn.addEventListener('click',function(){
-    if(typeof play==='function') play(s.id);
+    // play は main IIFE 内のローカル変数のため window.play 経由で呼ぶ
+    if(typeof window.play==='function') window.play(s.id);
     else window.location.href=slugUrl(s);
     // チャットパネルを閉じて再生に集中させる
     setOpen(false);
