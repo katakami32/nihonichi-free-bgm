@@ -313,7 +313,7 @@ body.ai-active .hsearch input{border-color:var(--gold);background:rgba(0,0,0,.6)
 .plpill:hover .ct{background:#fff;color:var(--accent)}
 
 /* プレイリストドロワー */
-.plback{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:220;display:none;backdrop-filter:blur(4px)}
+.plback{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:225;display:none;backdrop-filter:blur(4px)}
 .plback.on{display:block}
 .pldraw{position:fixed;bottom:0;right:0;top:0;width:400px;max-width:100vw;background:var(--card);color:var(--ink);border-left:1px solid var(--border);box-shadow:-12px 0 36px rgba(0,0,0,.3);z-index:230;transform:translateX(100%);transition:transform .28s ease;display:flex;flex-direction:column}
 .pldraw.on{transform:translateX(0)}
@@ -1781,13 +1781,11 @@ const DATA_BASE = '/data';
 // 画像は R2 から配信（<img>タグなのでCORS不要）
 const IMAGES_BASE_URL = isLocalhost ? '/images' : `${R2_BASE_URL}/images`;
 
-// 環境を正確に報告
-console.log('[BGM] Environment Detection');
-console.log('[BGM] hostname:', window.location.hostname);
-console.log('[BGM] isLocalhost:', isLocalhost);
-console.log('[BGM] Mode:', isLocalhost ? '🖥️ LOCALHOST (Local files)' : '☁️ PRODUCTION (R2 Cloud)');
-console.log('[BGM] DATA_BASE:', DATA_BASE);
-console.log('[BGM] IMAGES_BASE_URL:', IMAGES_BASE_URL);
+// デバッグログ: 本番環境では無効化
+const dbg = isLocalhost ? console.log.bind(console) : () => {};
+
+// 環境を正確に報告（ローカル開発時のみ）
+dbg('[BGM] Environment:', isLocalhost ? '🖥️ LOCALHOST' : '☁️ PRODUCTION', '| DATA_BASE:', DATA_BASE, '| IMAGES_BASE_URL:', IMAGES_BASE_URL);
 
 const ASSET_BASE = (CFG.assetBase || '').replace(/\/$/, '');
 
@@ -2027,7 +2025,7 @@ function _dataHash(arr) {
 
 // ---- LOAD ----
 async function load(){
-  console.log('🚀 [LOAD] 開始 - DATA_BASE:', DATA_BASE, 'USE_API:', USE_API);
+  dbg('🚀 [LOAD] 開始 - DATA_BASE:', DATA_BASE, 'USE_API:', USE_API);
 
   // データ取得後の共通レンダリング処理
   function _renderUI() {
@@ -2035,13 +2033,13 @@ async function load(){
       ? genres.reduce((a,g)=>a+(g.count||0),0)
       : allSongs.length;
     totalCount = total;
-    console.log('🎯 [LOAD] 合計曲数:', total);
+    dbg('🎯 [LOAD] 合計曲数:', total);
     countUp(document.getElementById('totalCount'), total, 1100);
     countUp(document.getElementById('statSongs'),  total, 1100);
     countUp(document.getElementById('statGenres'), genres.length, 800);
     const aiSub = document.getElementById('aiSubCount');
     if (aiSub) aiSub.textContent = total.toLocaleString();
-    console.log('🎨 [LOAD] UI レンダリング開始');
+    dbg('🎨 [LOAD] UI レンダリング開始');
     // ナビちゃんのIIFEからアクセスできるようグローバルに公開
     window.allSongs = allSongs;
     window.genres = genres;
@@ -2062,10 +2060,10 @@ async function load(){
 
   try {
     if (USE_API){
-      console.log('📡 [LOAD] API モード - API URL:', API);
+      dbg('📡 [LOAD] API モード - API URL:', API);
       const g = await apiGet('/api/genres');
       genres = g;
-      console.log('✅ [LOAD] genres 取得完了:', genres.length, '件');
+      dbg('✅ [LOAD] genres 取得完了:', genres.length, '件');
       _renderUI();
     } else {
       // ── SWR: キャッシュがあれば即座に描画 ──────────────────────
@@ -2074,7 +2072,7 @@ async function load(){
       const isFresh = cG && cA && (Date.now() - cG.ts) < _SWR_TTL;
 
       if (isFresh) {
-        console.log('⚡ [LOAD] SWR: キャッシュヒット (age:', Math.round((Date.now() - cG.ts)/1000), 's) → 即レンダリング');
+        dbg('⚡ [LOAD] SWR: キャッシュヒット (age:', Math.round((Date.now() - cG.ts)/1000), 's) → 即レンダリング');
         genres   = cG.data;
         allSongs = cA.data;
         // window.t が未定義でも fetch は必ず走るよう独立した try-catch で保護
@@ -2082,18 +2080,18 @@ async function load(){
       }
 
       // ── バックグラウンドまたは初回フェッチ ─────────────────────
-      console.log(isFresh ? '🔄 [LOAD] SWR: バックグラウンド再検証中...' : '📦 [LOAD] 初回フェッチ開始');
+      dbg(isFresh ? '🔄 [LOAD] SWR: バックグラウンド再検証中...' : '📦 [LOAD] 初回フェッチ開始');
       const v = Date.now();
       let g, all;
       try {
         [g, all] = await Promise.all([
           fetch(`${DATA_BASE}/genres.json?v=${v}`, {cache:'no-cache'}).then(r=>{
-            console.log('📥 [LOAD] genres.json 取得:', r.status);
+            dbg('📥 [LOAD] genres.json 取得:', r.status);
             if (!r.ok) throw new Error(`Failed to load genres.json: ${r.status} ${r.statusText}`);
             return r.json();
           }),
           fetch(`${DATA_BASE}/index.json?v=${v}`,  {cache:'no-cache'}).then(r=>{
-            console.log('📥 [LOAD] index.json 取得:', r.status);
+            dbg('📥 [LOAD] index.json 取得:', r.status);
             if (!r.ok) throw new Error(`Failed to load index.json: ${r.status} ${r.statusText}`);
             return r.json();
           })
@@ -2102,7 +2100,7 @@ async function load(){
         if (isFresh) {
           // キャッシュで表示済み → バックグラウンドエラーは静かに記録
           console.warn('⚠️ [LOAD] SWR: バックグラウンド再検証失敗（キャッシュ表示を継続）:', fetchErr.message);
-          console.log('✨ [LOAD] 完全に完了 (SWR キャッシュ)');
+          dbg('✨ [LOAD] 完全に完了 (SWR キャッシュ)');
           return;
         }
         throw fetchErr; // キャッシュなし → 通常エラーとして外側の catch へ
@@ -2111,25 +2109,25 @@ async function load(){
       // キャッシュを更新
       _swrWrite(_SWR_GENRES, g);
       _swrWrite(_SWR_SONGS,  all);
-      console.log('✅ [LOAD] フェッチ完了 - genres:', g.length, '件 / songs:', all.length, '件');
+      dbg('✅ [LOAD] フェッチ完了 - genres:', g.length, '件 / songs:', all.length, '件');
 
       if (!isFresh) {
         // キャッシュなし → 初回レンダリング
         genres   = g;
         allSongs = all;
-        console.log('💾 [LOAD] 変数代入完了 - genres.length:', genres.length, 'allSongs.length:', allSongs.length);
+        dbg('💾 [LOAD] 変数代入完了 - genres.length:', genres.length, 'allSongs.length:', allSongs.length);
         _renderUI();
       } else if (_dataHash(g) !== _dataHash(cG.data) || _dataHash(all) !== _dataHash(cA.data)) {
         // データが更新されていた → 差分再レンダリング
-        console.log('🔁 [LOAD] SWR: データ更新を検出 → 再レンダリング');
+        dbg('🔁 [LOAD] SWR: データ更新を検出 → 再レンダリング');
         genres   = g;
         allSongs = all;
         _renderUI();
       } else {
-        console.log('✅ [LOAD] SWR: データ変化なし → 再レンダリングをスキップ');
+        dbg('✅ [LOAD] SWR: データ変化なし → 再レンダリングをスキップ');
       }
     }
-    console.log('✨ [LOAD] 完全に完了');
+    dbg('✨ [LOAD] 完全に完了');
   } catch(e){
     console.error('❌ [LOAD] エラー発生:', e);
     console.error('❌ [LOAD] エラー詳細:', {
