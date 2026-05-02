@@ -3,21 +3,28 @@
     "slug": "ambient",
     "label_ja": "アンビエント",
     "label_en": "Ambient",
-    "count": 436,
+    "count": 362,
     "cover": "images/ambient/merry-eve-snowfall_0d9e8f9f.jpeg"
+  },
+  {
+    "slug": "horror",
+    "label_ja": "ホラー・ダーク",
+    "label_en": "Horror / Dark",
+    "count": 76,
+    "cover": "images/ambient/fox-bell-shrine_e5a5b729.jpeg"
   },
   {
     "slug": "cinematic",
     "label_ja": "シネマティック",
     "label_en": "Cinematic / Orchestral",
-    "count": 393,
+    "count": 375,
     "cover": "images/cinematic/breaking-report_b2968b16.jpeg"
   },
   {
     "slug": "j-pop",
     "label_ja": "J-POP / シティポップ",
     "label_en": "J-Pop / City Pop",
-    "count": 233,
+    "count": 205,
     "cover": "images/j-pop/summit-signal_2846248c.jpeg"
   },
   {
@@ -31,14 +38,14 @@
     "slug": "lo-fi",
     "label_ja": "Lo-Fi",
     "label_en": "Lo-Fi / Chill",
-    "count": 197,
+    "count": 193,
     "cover": "images/lo-fi/window-rain-loops_cfe433ce.jpeg"
   },
   {
     "slug": "electronic",
     "label_ja": "エレクトロニック",
     "label_en": "Electronic / Synthwave",
-    "count": 157,
+    "count": 155,
     "cover": "images/electronic/paper-skies_50984de4.jpeg"
   },
   {
@@ -84,11 +91,18 @@
     "cover": "images/childrens/cookie-parade_916045fa.jpeg"
   },
   {
-    "slug": "japanese-anime",
-    "label_ja": "和風・アニメ",
-    "label_en": "Japanese / Anime",
+    "slug": "wafu",
+    "label_ja": "和風・日本伝統",
+    "label_en": "Japanese Traditional",
     "count": 28,
     "cover": "images/japanese-anime/track_a2507bf5.jpeg"
+  },
+  {
+    "slug": "japanese-anime",
+    "label_ja": "アニメ・アイドル",
+    "label_en": "Anime / J-Idol",
+    "count": 50,
+    "cover": "images/cinematic/sakura-after-the-rain_8347f549.jpeg"
   },
   {
     "slug": "corporate-bgm",
