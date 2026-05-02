@@ -892,6 +892,8 @@ html[data-theme="dark"] footer{background:#0a0805}
 .navi-qa button:hover{background:var(--accent3);color:#fff}
 
 /* ヒーロー直下の挨拶バンド (ヒーローと同じ黒で連続感) */
+.navi-greet .navi-img{width:150px;height:240px}
+.navi-greet .navi-img img{object-position:center top}
 .navi-greet{background:#0d0b08;padding:0 1.5rem 60px;color:#fff;
   position:relative}
 html[data-theme="dark"] .navi-greet{background:#0a0805}
@@ -919,14 +921,14 @@ html[data-theme="dark"] .navi-greet{background:#0a0805}
 .navi-fab{position:fixed;
   bottom:calc(18px + env(safe-area-inset-bottom, 0px));
   right:calc(18px + env(safe-area-inset-right, 0px));
-  z-index:170;
+  z-index:210;
   display:flex;flex-direction:column;align-items:flex-end;gap:10px;
   pointer-events:none;
   transition:bottom .3s ease}
 .navi-fab > *{pointer-events:auto}
-/* プレイヤーバー表示時は上にずらす */
+/* プレイヤーバー表示時は上にずらす（プレイヤー高さ約160px分） */
 body:has(.pbar.on) .navi-fab{
-  bottom:calc(96px + env(safe-area-inset-bottom, 0px))}
+  bottom:calc(172px + env(safe-area-inset-bottom, 0px))}
 .navi-fab-bubble{max-width:260px;font-size:13px;line-height:1.6;
   background:var(--paper);border:1.5px solid var(--accent3);
   border-radius:14px;padding:12px 14px;color:var(--ink);
@@ -966,6 +968,7 @@ body:has(.pbar.on) .navi-fab{
 @media (max-width:760px){
   .navi-greet{padding:24px 1rem 36px}
   .navi-img{width:96px;height:144px}
+  .navi-greet .navi-img{width:120px;height:190px}
   .navi-bubble{font-size:13.5px;padding:12px 14px;line-height:1.65}
   .navi-bubble::before{bottom:14px}
   .navi-qa button{font-size:11.5px;padding:5px 10px}
@@ -978,6 +981,7 @@ body:has(.pbar.on) .navi-fab{
   .navi-chan{flex-direction:column;align-items:flex-start;gap:10px}
   .navi-chan.right{flex-direction:column;align-items:flex-end}
   .navi-img{width:84px;height:126px}
+  .navi-greet .navi-img{width:100px;height:160px}
   .navi-bubble{max-width:100%;width:100%}
   .navi-bubble::before{display:none}
   .navi-qa{gap:6px}
@@ -988,7 +992,7 @@ body:has(.pbar.on) .navi-fab{
   .navi-fab-bubble .navi-close{font-size:18px;padding:6px 10px}
   .navi-fab-quick a{font-size:11.5px;padding:6px 10px}
   body:has(.pbar.on) .navi-fab{
-    bottom:calc(86px + env(safe-area-inset-bottom, 0px))}
+    bottom:calc(156px + env(safe-area-inset-bottom, 0px))}
 }
 
 /* 体感パフォーマンス: 動きを苦手とするユーザー向けにアニメ無効 */
@@ -1164,6 +1168,7 @@ body:has(.pbar.on) .navi-chat-panel{bottom:calc(182px + env(safe-area-inset-bott
           <button data-i18n="navi_greet_btn_ai" onclick="document.getElementById('aiOpen')?.click()">✨ AIにおまかせを試す</button>
           <button data-i18n="navi_greet_btn_radio" onclick="document.getElementById('radioOpen')?.click()">🎧 BGMチャンネルを開く</button>
           <button data-i18n="navi_greet_btn_faq" onclick="document.getElementById('faq')?.scrollIntoView({behavior:'smooth'})">❓ よくある質問</button>
+          <button data-i18n="navi_greet_btn_chat" onclick="document.getElementById('naviFabBtn')?.click()">💬 ナビちゃんとチャット</button>
         </div>
       </div>
     </div>
