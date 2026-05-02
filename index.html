@@ -1217,7 +1217,7 @@ body:has(.pbar.on) .navi-chat-panel{bottom:calc(182px + env(safe-area-inset-bott
     <div class="gshead">
       <div>
         <div class="gsttl" data-i18n="genre_title">ジャンルから探す</div>
-        <div class="gssub" data-i18n="genre_sub">14ジャンル、すべて無料。クリックで一覧へ。</div>
+        <div class="gssub" data-i18n="genre_sub">16ジャンル、すべて無料。クリックで一覧へ。</div>
       </div>
     </div>
     <div class="gsgrid" id="gsGrid"></div>
@@ -2774,7 +2774,7 @@ async function renderGenreShowcase(){
 
   // 件数で並べ替え、上位を大きく見せる Bento レイアウト
   const sorted = [...genres].sort((a,b)=>(b.count||0)-(a.count||0));
-  const sizeOrder = ['big','med','med','','','','','','','','','','','']; // 1: big(2x2), 2-3: med(1x2), 残り 1x1
+  const sizeOrder = ['big','med','med','','','','','','','','','','','','','']; // 1: big(2x2), 2-3: med(1x2), 残り 1x1
 
   grid.innerHTML = sorted.map((g,i) => {
     const sz = sizeOrder[i] || '';
@@ -7463,7 +7463,7 @@ const T = {
     // Sections
     recent_title:'最近聴いた曲', recent_clear:'履歴をクリア',
     pickup_title:'今週のピックアップ', pickup_sub:'編集部おすすめのBGM。気分・シーンに合わせてどうぞ。', pickup_shuffle:'🔀 シャッフル',
-    genre_title:'ジャンルから探す', genre_sub:'14ジャンル、すべて無料。クリックで一覧へ。',
+    genre_title:'ジャンルから探す', genre_sub:'16ジャンル、すべて無料。クリックで一覧へ。',
     usage_title:'用途・シーン別', usage_sub:'動画・配信のシーンに合わせてフィルタ',
     use_vlog:'Vlog', use_game:'ゲーム実況', use_opening:'オープニング', use_ending:'エンディング',
     use_cooking:'料理・工作', use_study:'勉強・作業', use_morning:'朝・始まり', use_night:'夜・カフェ',
@@ -7727,7 +7727,7 @@ const T = {
     // Sections
     recent_title:'Recently Played', recent_clear:'Clear History',
     pickup_title:"This Week's Featured", pickup_sub:"Editor's picks. Choose by mood or scene.", pickup_shuffle:'🔀 Shuffle',
-    genre_title:'Browse by Genre', genre_sub:'14 genres, all free. Click to explore.',
+    genre_title:'Browse by Genre', genre_sub:'16 genres, all free. Click to explore.',
     usage_title:'Browse by Use Case', usage_sub:'Filter by video & streaming scene',
     use_vlog:'Vlog', use_game:'Gaming', use_opening:'Opening', use_ending:'Ending',
     use_cooking:'Cooking / Craft', use_study:'Study / Work', use_morning:'Morning / Start', use_night:'Night / Café',
@@ -8245,7 +8245,7 @@ const CONVS=[
        'やった！嬉しいな〜🎵 これからもよろしくね💕',
        'ありがとう！もっとたくさんいい曲紹介できるように頑張るね✨']},
   {r:/曲数|何曲|いくつ|どれくらい|how many/i, expr:'confident',
-    a:['今は全部で<strong>2,090曲</strong>あるよ🎵 ジャズ・Lo-Fi・アニメ・シネマティックなど14ジャンル！毎週新曲も追加中✨',
+    a:['今は全部で<strong>2,090曲</strong>あるよ🎵 ジャズ・Lo-Fi・ホラー・和風・シネマティックなど16ジャンル！毎週新曲も追加中✨',
        '全<strong>2,090曲</strong>、全部無料で商用利用OKだよ💕 ジャンルで絞ったり、気分で探したりできるから何でも言ってね！']},
   {r:/無料|タダ|free|商用|使える|使用/i, expr:'smiling',
     a:['全曲<strong>完全無料・商用利用OK・クレジット不要</strong>だよ✨ YouTube・配信・ゲーム実況・企業VP…なんにでも使えるよ！',
