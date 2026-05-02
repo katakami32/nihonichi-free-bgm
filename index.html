@@ -207,8 +207,10 @@ html[data-theme="dark"] .hero{background:#0a0805}
 .hero h1{font-family:var(--serif);font-size:clamp(2rem,3.6vw,3.2rem);font-weight:700;line-height:1.32;margin-bottom:1.2rem;letter-spacing:.02em;color:#fff}
 .hero h1 em{font-style:normal;background:linear-gradient(135deg,#1de9b6 0%,#7c4dff 55%,#d4a843 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .hero p.lead{font-size:14px;color:rgba(255,255,255,.65);max-width:520px;line-height:1.95;margin-bottom:1.8rem}
-.hsearch{display:flex;gap:8px;max-width:580px;flex-wrap:wrap}
-.hbtns{display:contents}
+.hsearch{display:flex;gap:8px;max-width:580px;flex-wrap:wrap;box-sizing:border-box}
+.hbtns{display:flex;flex-direction:column;gap:6px;flex:1 1 100%;min-width:0;box-sizing:border-box}
+.hbtns-label{font-size:12px;font-weight:700;color:rgba(255,255,255,.7);letter-spacing:.04em}
+.hbtns-row{display:flex;gap:8px;width:100%;box-sizing:border-box}
 .hsearch input{flex:1;min-width:0;width:100%;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.15);color:#fff;font-family:var(--font);font-size:14px;padding:14px 20px;border-radius:12px;outline:none;transition:all .25s;backdrop-filter:blur(12px);font-weight:500}
 .hsearch input::placeholder{color:rgba(255,255,255,.4)}
 .hsearch input:focus{border-color:rgba(29,233,182,.6);background:rgba(29,233,182,.06);box-shadow:0 0 0 3px rgba(29,233,182,.12)}
@@ -799,8 +801,8 @@ html[data-theme="dark"] footer{background:#0a0805}
   .hsearch{max-width:100%}
   /* 入力欄+検索ボタンを1行目、AI/ラジオを2行目に */
   .hsearch input{min-width:0;font-size:16px;flex:1 1 160px}
-  .hbtns{display:flex;gap:8px;flex:1 1 100%}
-  .hbtns .aibtn,.hbtns .radiobtn{flex:1;min-width:0;justify-content:center}
+  .hbtns{flex:1 1 100%}
+  .hbtns-row .aibtn,.hbtns-row .radiobtn{flex:1;min-width:0;justify-content:center}
   /* モバイルプレイヤー分の余白 (3行で~140px) */
   body{padding-bottom:160px}
   /* ======== モバイルプレイヤー 3行レイアウト ======== */
@@ -1140,8 +1142,11 @@ body:has(.pbar.on) .navi-chat-panel{bottom:calc(182px + env(safe-area-inset-bott
         <input type="text" id="searchBox" placeholder="作業用BGM・癒し・Vlog・ゲーム実況…" data-i18n-placeholder="search_placeholder" data-i18n-aria="search_aria" aria-label="BGMを検索">
         <button onclick="doSearch()" data-i18n-title="search_title" data-i18n-aria="search_title" title="キーワード検索" aria-label="キーワード検索" data-i18n="search_btn">検索</button>
         <div class="hbtns">
-          <button class="aibtn" id="aiOpen" data-i18n-title="ai_btn_title" data-i18n-aria="ai_btn_aria" title="AIにおまかせ" aria-label="AIにおまかせ"><span data-i18n="ai_btn">✨ AIにおまかせ</span><span class="aibtn-sub" data-i18n="ai_btn_sub">好みに合わせてAIが選ぶ</span></button>
-          <button class="radiobtn" id="radioOpen" data-i18n-title="radio_btn_title" data-i18n-aria="radio_btn_title" title="BGMチャンネル" aria-label="BGMチャンネル">🎧 <span data-i18n="radio_btn">BGMチャンネル</span><span class="radiosub" data-i18n="radio_sub">気分を選ぶだけ・自動で流れ続ける</span></button>
+          <div class="hbtns-label" data-i18n="hbtns_label">どんな気分？5曲おすすめするよ😊</div>
+          <div class="hbtns-row">
+            <button class="aibtn" id="aiOpen" data-i18n-title="ai_btn_title" data-i18n-aria="ai_btn_aria" title="AIにおまかせ（人気）" aria-label="AIにおまかせ（人気）"><span data-i18n="ai_btn">✨ AIにおまかせ（人気）</span><span class="aibtn-sub" data-i18n="ai_btn_sub">おすすめ5曲</span></button>
+            <button class="radiobtn" id="radioOpen" data-i18n-title="radio_btn_title" data-i18n-aria="radio_btn_title" title="BGMチャンネル" aria-label="BGMチャンネル"><span data-i18n="radio_btn">🎧 BGMチャンネル</span><span class="radiosub" data-i18n="radio_sub">おすすめ5曲</span></button>
+          </div>
         </div>
       </div>
       <div class="aitips" id="aitips">
@@ -7464,10 +7469,11 @@ const T = {
     hero_lead:'高品質なAI生成BGMを<b id="totalCount">2,090</b>曲、すべて無料・商用利用OKでダウンロードできます。BPM・尺・ムードで秒で見つかる検索体験。YouTube・ゲーム実況・Vlog・配信・映像制作にどうぞ。',
     search_placeholder:'作業用BGM・癒し・Vlog・ゲーム実況…',
     search_btn:'検索',
-    ai_btn:'✨ AIにおまかせ',
-    ai_btn_sub:'好みに合わせてAIが選ぶ',
+    hbtns_label:'どんな気分？5曲おすすめするよ😊',
+    ai_btn:'✨ AIにおまかせ（人気）',
+    ai_btn_sub:'おすすめ5曲',
     radio_btn:'BGMチャンネル',
-    radio_sub:'気分を選ぶだけ・自動で流れ続ける',
+    radio_sub:'おすすめ5曲',
     tip1:'☀️ 朝の散歩で気持ち良くなれる音楽',
     tip2:'🌙 夜カフェでまったりするチル',
     tip3:'😱 ホラー実況・怖い曲',
@@ -7650,7 +7656,7 @@ const T = {
     btn_theme_title:'ダーク/ライト切替', btn_theme_aria:'テーマ切替',
     btn_lang_aria:'言語切替',
     search_aria:'BGMを検索', search_title:'キーワード検索',
-    ai_btn_title:'AIにおまかせ', ai_btn_aria:'AIにおまかせ',
+    ai_btn_title:'AIにおまかせ（人気）', ai_btn_aria:'AIにおまかせ（人気）',
     radio_btn_title:'BGMチャンネル',
     // Filter bar
     filter_region_aria:'適用中のフィルタ',
