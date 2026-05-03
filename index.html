@@ -5195,6 +5195,7 @@ play = function(id) {
   }
   return _origPlayForRadio(id);
 };
+window.play = play; // ナビちゃん等の別スコープからの呼び出しにも適用
 
 // ---- お問い合わせフォーム ----------------------------------------
 (function(){
