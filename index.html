@@ -3528,17 +3528,27 @@ play = function(id){
 window.play = play;
 
 // ---- iOS 画面ロック後の AudioContext 復帰 ----
-document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState !== 'visible') return;
-  // Web Audio API の AudioContext が suspend されている場合に resume
+function _resumeAllAudioCtx() {
+  // Howler の AudioContext
   if (typeof Howler !== 'undefined' && Howler.ctx && Howler.ctx.state === 'suspended') {
     Howler.ctx.resume().catch(()=>{});
   }
+  // クロスフェード用カスタム AudioContext (_actx は後方で定義されるため関数参照)
+  if (typeof resumeAudioCtx === 'function') resumeAudioCtx();
+}
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState !== 'visible') return;
+  _resumeAllAudioCtx();
   // html5 モードで再生中なのに止まっていたら再開
   const h = _activeHowl();
   if (h && !h.playing() && playBtn && playBtn.textContent === '⏸') {
     try { h.play(); } catch(_){}
   }
+});
+// iOS BFCache（戻るボタンでページ復元）からの復帰対応
+window.addEventListener('pageshow', (e) => {
+  if (!e.persisted) return;
+  _resumeAllAudioCtx();
 });
 
 // ---- ハッシュルーティング ----
@@ -5185,6 +5195,7 @@ play = function(id) {
   }
   return _origPlayForRadio(id);
 };
+window.play = play; // ナビちゃん等の別スコープからの呼び出しにも適用
 
 // ---- お問い合わせフォーム ----------------------------------------
 (function(){
@@ -7479,7 +7490,7 @@ const T = {
     search_btn:'検索',
     hbtns_label:'どんな気分？5曲おすすめするよ😊',
     ai_btn:'✨ AIにおまかせ（人気）',
-    ai_btn_sub:'おすすめ5曲',
+    ai_btn_sub:'あなたの好みに合わせてAIが選ぶ',
     radio_btn:'BGMチャンネル',
     radio_sub:'おすすめ5曲',
     tip1:'☀️ 朝の散歩で気持ち良くなれる音楽',
