@@ -8127,7 +8127,7 @@ if ('serviceWorker' in navigator) {
     <div class="navi-chat-avatar"><img src="images/navi/welcome.png" alt="ナビちゃん"></div>
     <div>
       <div class="navi-chat-name">ナビちゃん</div>
-      <div class="navi-chat-status" id="naviStatus">オンライン ✨</div>
+      <div class="navi-chat-status" id="naviStatus">曲を探す・使い方案内</div>
     </div>
     <button class="navi-chat-x" id="naviChatClose" aria-label="チャットを閉じる">×</button>
   </div>
@@ -8138,7 +8138,7 @@ if ('serviceWorker' in navigator) {
   </div>
 </div>
 <div class="navi-fab" id="naviFab">
-  <button class="navi-fab-btn" id="naviFabBtn" aria-label="ナビちゃんに話しかける" title="ナビちゃん">
+  <button class="navi-fab-btn" id="naviFabBtn" aria-label="ナビちゃんに話しかける（曲を探す・使い方案内）" title="ナビちゃん — 曲を探す・使い方案内">
     <img src="images/navi/welcome.png" alt="ナビちゃん">
   </button>
 </div>
@@ -8260,14 +8260,15 @@ const CONVS=[
   {r:/😢|エモ.*泣ける|泣ける.*エモ/i, expr:'crying',
     a:['思いっきり感情に浸れる曲を選んだよ😢 心ゆくまで聴いてね💕'],
     q:'感動 切ない 泣ける エモ cinematic folk-acoustic'},
-  {r:/🎲|おまかせで/i, expr:'surprise', special:'random'},
+  {r:/🎲|おまかせで/i, expr:'surprise',
+    a:['おまかせ！いろんな系統からセレクトしてみたよ🎲 気に入る曲あるかな？'],
+    q:'明るい 癒し j-pop ambient lo-fi'},
   {r:/他の気分を探す/i, expr:'smiling',
     a:['どんな気分にする？気軽に選んでみて🎵'],
     chips:['🌿 穏やか・癒し','📚 集中したい','⚡ テンション上げたい','🌙 夜に聴きたい','😢 エモ・泣ける','🎲 おまかせで！']},
   {r:/🎸|ジャンルを選ぶ/i, expr:'confident',
     a:['どのジャンルにする？🎵'],
     chips:['Lo-Fi','ジャズ','アンビエント','ロック','エレクトロニック','アニメ','シネマティック','フォーク']},
-  {r:/もっと見る/i, expr:'smile', special:'searchMore'},
   // ── 通常会話 ──
   {r:/^(こんにちは|やあ|hello|hi|hey|おはよ|こんばん|はじめ|よろしく)/i, expr:'smiling',
     a:['こんにちは！ナビちゃんです🎵 どんな曲を探してる？気分やシーン、テンポ感… なんでも話してね✨',
@@ -8334,8 +8335,8 @@ const CONVS=[
     a:['ダークな雰囲気のBGMを探してきたよ🌑 緊張感のある曲を選んだよ！',
        'サスペンス系の不穏なBGMをセレクトしたよ🎭 映像制作にも使えるよ！'],
     q:'ダーク 不穏 サスペンス mysterious cinematic dark ambient'},
-  {r:/何が好き|おすすめ|おすすめ曲|人気|ランキング/i, expr:'joy', special:'recommend'},
-  {r:/ランダム|適当|なんでも|おまかせ|random/i, expr:'surprise', special:'random'},
+  {r:/このサイト|何のサイト|サイト.*説明|使い方|どう使う|何ができ|機能.*教えて|教えて.*機能/i, expr:'confident',
+    a:['日本一フリーBGMは<strong>2,090曲以上が完全無料</strong>で使えるBGMサイトだよ🎵<br>・商用利用OK／登録不要／クレジット表記不要<br>・検索やジャンルで曲を見つけてダウンロードできるよ！<br>・わたし（ナビちゃん）に気分やシーンを話してくれたら曲を探すよ✨']},
   {r:/全ジャンル|ジャンル一覧|どんなジャンル|genre/i, expr:'confident',
     a:['ジャンルはこんな感じだよ🎵\n<strong>Jazz・Ambient・Lo-Fi・Cinematic・Electronic・Rock・Pop・J-Pop・Folk・Hip-Hop・Anime・Corporate・Kids・Other</strong>\nどれか気になる？']},
 
@@ -8419,7 +8420,9 @@ const CONVS=[
   {r:/泣きたい|涙|なきたい|cry|泣ける/i, expr:'crying',
     a:['思いっきり泣けるような、エモい曲を探すね🎵 ちょっと待って💕'],
     q:'感動 切ない 泣ける エモ cinematic folk-acoustic'},
-  {r:/暇|ひま|することない|退屈|bored/i, expr:'surprise', special:'random'},
+  {r:/暇|ひま|することない|退屈|bored/i, expr:'surprise',
+    a:['暇なときはBGMで気分転換しよ🎲 いろんな系統からセレクトしてみたよ！'],
+    q:'明るい 癒し j-pop ambient lo-fi'},
 
   // ── 季節・天気 ──
   {r:/春|さくら|桜|花見|ぽかぽか|spring/i, expr:'smiling',
@@ -8575,71 +8578,6 @@ function searchSongs(query){
   return scored.slice(0,5).map(x=>x.s);
 }
 
-function getRandomSongs(n){
-  const songs=typeof allSongs!=='undefined'?[...allSongs]:[];
-  for(let i=songs.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[songs[i],songs[j]]=[songs[j],songs[i]];}
-  return songs.slice(0,n);
-}
-
-function getRecommend(){
-  const songs=typeof allSongs!=='undefined'?[...allSongs]:[];
-  // 人気っぽい曲（duration長め・BPMが適度）を優先
-  return songs.filter(s=>s.bpm>70&&s.bpm<130&&s.duration>90)
-    .sort(()=>Math.random()-.5).slice(0,5);
-}
-
-/* ---------- 直前の検索状態（「もっと見る」で再利用） ---------- */
-let _lastSearchQuery = '';    // 直前のsearchSongs用クエリ
-let _shownSongIds = new Set(); // 今セッションで表示済みの曲ID
-
-function _searchMore(){
-  // 直前クエリで未表示の曲をさらに5曲返す
-  if(!_lastSearchQuery) return getRandomSongs(5);
-  const q=_lastSearchQuery.toLowerCase();
-  let genres=[],minBPM=0,maxBPM=999;
-  MOOD.forEach(m=>{
-    if(m.k.some(k=>q.includes(k))){
-      if(m.g) genres.push(...m.g);
-      if(m.min) minBPM=Math.max(minBPM,m.min);
-      if(m.max) maxBPM=Math.min(maxBPM,m.max);
-    }
-  });
-  const rawTokens=q.replace(/[、。！？！？\s]+/g,' ').split(' ').filter(t=>t.length>1);
-  const expandedTags=new Set();
-  rawTokens.forEach(t=>{if(QUERY_EXPAND[t])QUERY_EXPAND[t].forEach(e=>expandedTags.add(e));});
-  const qTokens=[...new Set([...rawTokens,...expandedTags])];
-  const songs=typeof allSongs!=='undefined'?allSongs:[];
-  const hasBpmConstraint=minBPM>0||maxBPM<999;
-  let scored=songs
-    .filter(s=>!_shownSongIds.has(s.id)) // 表示済みを除外
-    .map(s=>{
-      let sc=0;
-      if(genres.length&&genres.includes(s.genre)) sc+=40;
-      if(hasBpmConstraint&&s.bpm>=minBPM&&s.bpm<=maxBPM) sc+=15;
-      if(hasBpmConstraint&&genres.length&&(s.bpm<minBPM||s.bpm>maxBPM)) sc-=20;
-      qTokens.forEach(t=>{
-        const tags=(s.tags||'').toLowerCase();
-        const title=(s.title||'').toLowerCase();
-        const titleEn=(s.title_en||'').toLowerCase();
-        const desc=(s.description||'').toLowerCase();
-        if(tags.includes(t)) sc+=(expandedTags.has(t)?25:20);
-        if(title.includes(t)||titleEn.includes(t)) sc+=30;
-        if(desc.includes(t)) sc+=10;
-      });
-      return {s,sc};
-    }).filter(x=>x.sc>0).sort((a,b)=>b.sc-a.sc||Math.random()-.5);
-  if(scored.length&&scored.every(x=>x.sc<=40)){
-    for(let i=scored.length-1;i>0;i--){
-      const j=Math.floor(Math.random()*(i+1));[scored[i],scored[j]]=[scored[j],scored[i]];
-    }
-  }
-  const results=scored.slice(0,5).map(x=>x.s);
-  // 表示済みに追加
-  if(results.length) results.forEach(s=>_shownSongIds.add(s.id));
-  // 未表示が5曲以下ならランダムで補完
-  if(results.length<3) return getRandomSongs(5);
-  return results;
-}
 
 /* ---------- レスポンス生成 ---------- */
 function getResponse(msg){
@@ -8648,35 +8586,16 @@ function getResponse(msg){
   // 会話パターン
   for(const c of CONVS){
     if(c.r.test(m)){
-      if(c.special==='random') return {text:'じゃあランダムで5曲選んでみたよ🎲 好きな曲あるかな？',songs:getRandomSongs(5),expr:'playful'};
-      if(c.special==='searchMore'){
-        const more=_searchMore();
-        const moreTxt=_lastSearchQuery
-          ? ['同じ雰囲気でもっと探してきたよ🎵 こんな感じはどう？',
-             'さっきとは違う曲を選んでみたよ✨ 聴いてみて！',
-             '続けてセレクトしたよ🎶 気に入る曲があるといいな！'][Math.floor(Math.random()*3)]
-          : 'ランダムで5曲選んでみたよ🎲';
-        return {text:moreTxt,songs:more,expr:'smile'};
-      }
-      if(c.special==='recommend') return {text:'ナビのおすすめ曲だよ🌟 気に入ってもらえると嬉しいな！',songs:getRecommend(),expr:'confident'};
       const a=c.a;
       const text=a[Math.floor(Math.random()*a.length)];
-      if(c.q){
-        _lastSearchQuery=c.q;
-        _shownSongIds.clear();
-      }
       const songs=c.q ? searchSongs(c.q) : null;
-      if(songs) songs.forEach(s=>_shownSongIds.add(s.id));
       const expr=c.expr||(songs&&songs.length ? (NAVI_GENRE_FACE[songs[0].genre]||'confident') : 'welcome');
       return {text, songs, expr, chips:c.chips||null};
     }
   }
   // 曲検索（自由入力）
-  _lastSearchQuery=m;
-  _shownSongIds.clear();
   const found=searchSongs(m);
   if(found.length){
-    found.forEach(s=>_shownSongIds.add(s.id));
     const genre=found[0].genre;
     const genreJa=GENRE_JA[genre]||genre;
     const expr=NAVI_GENRE_FACE[genre]||'confident';
