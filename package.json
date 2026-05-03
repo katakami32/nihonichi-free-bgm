@@ -1,6 +1,8 @@
 {
   "scripts": {
     "dev": "browser-sync start --config bs-config.js",
+    "bump-sw": "node scripts/bump-sw-version.js",
+    "prebuild": "node scripts/bump-sw-version.js",
     "sitemap": "node scripts/generate-sitemap.js",
     "sitemap:prod": "node scripts/generate-sitemap.js --base=https://nihonichi-bgm.com",
     "seo:inject": "node scripts/inject-seo-list.js",
