@@ -4791,9 +4791,17 @@ async function radioStart(prompt, allowedGenres) {
   // プリセットカードの明示ジャンルで絞り込む（最優先）
   let targetGenre = null;
   if (allowedGenres && allowedGenres.length) {
-    const genreSet = new Set(allowedGenres);
-    const genrePool = pool.filter(s => genreSet.has(s.genre));
-    if (genrePool.length >= 5) { pool = genrePool; targetGenre = allowedGenres[0]; }
+    targetGenre = allowedGenres[0];
+    // 主ジャンル（先頭）に曲が十分あれば主ジャンルのみ使用
+    const primaryPool = pool.filter(s => s.genre === targetGenre);
+    if (primaryPool.length >= 5) {
+      pool = primaryPool;
+    } else {
+      // 主ジャンルが少ない場合は全指定ジャンルで絞り込む
+      const genreSet = new Set(allowedGenres);
+      const genrePool = pool.filter(s => genreSet.has(s.genre));
+      if (genrePool.length >= 5) pool = genrePool;
+    }
   } else {
     // 自由入力時はキーワードからジャンルを推測
     targetGenre = _detectRadioGenre(prompt);
