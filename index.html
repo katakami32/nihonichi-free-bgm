@@ -8238,8 +8238,27 @@ const MOOD=[
   {k:['コーポレート','企業','ビジネス','プレゼン','corporate','professional','bgm'],g:['corporate-bgm']},
   {k:['j-pop','jpop','ポップス','j pop','Jポップ'],g:['j-pop','pop']},
   {k:['こども','子供','子ども','童謡','キッズ','kids','children'],g:['childrens']},
-  {k:['速い','テンポ速','fast','快活','bpm高'],min:130},
+  {k:['速い','テンポ速','fast','快活','bpm高','疾走感','駆け抜ける','スピード感','爆走'],min:130},
   {k:['遅い','スロー','ゆっくり','slow','テンポ遅'],max:85},
+  // ニュアンス系
+  {k:['疾走感','駆け抜ける','スピード感','爆走','chase','race','sprint'],
+    g:['rock','electronic','cinematic'],min:130},
+  {k:['浮遊感','ふわふわ','漂う','floating','ethereal','dreamy'],
+    g:['ambient','lo-fi','electronic'],max:100},
+  {k:['エモい','切ない','感傷','ノスタルジア','nostalgic','melancholic'],
+    g:['cinematic','folk-acoustic','ambient']},
+  {k:['ほっこり','温かい','ぬくもり','heartwarming','cozy','wholesome'],
+    g:['folk-acoustic','j-pop','ambient'],max:110},
+  {k:['高揚','解放感','開放感','uplifting','triumphant','euphoric'],
+    g:['cinematic','electronic','rock'],min:100},
+  {k:['ゾクゾク','緊張感','スリル','thrilling','tense','suspenseful'],
+    g:['cinematic','horror','electronic']},
+  {k:['神秘的','幻想的','mystical','ethereal','magical'],
+    g:['ambient','cinematic','electronic'],max:110},
+  {k:['哀愁','哀れ','wistful','melancholy','longing'],
+    g:['cinematic','folk-acoustic','jazz']},
+  {k:['爽やか','清々しい','refreshing','crisp','bright'],
+    g:['folk-acoustic','pop','j-pop'],min:90},
 ];
 
 /* ---------- 会話パターン ---------- */
@@ -8263,6 +8282,9 @@ const CONVS=[
   {r:/🎲|おまかせで/i, expr:'surprise',
     a:['おまかせ！いろんな系統からセレクトしてみたよ🎲 気に入る曲あるかな？'],
     q:'明るい 癒し j-pop ambient lo-fi'},
+  {r:/ℹ️|サイトについて$/i, expr:'smile',
+    a:['「日本一フリーBGMサイト」について教えるね📋'],
+    chips:['無料？商用OK？','ダウンロードの仕方','禁止事項は？','ライセンスについて','BGMチャンネルとは？','新曲の追加頻度は？']},
   {r:/他の気分を探す/i, expr:'smiling',
     a:['どんな気分にする？気軽に選んでみて🎵'],
     chips:['🌿 穏やか・癒し','📚 集中したい','⚡ テンション上げたい','🌙 夜に聴きたい','😢 エモ・泣ける','🎲 おまかせで！']},
@@ -8496,6 +8518,24 @@ const CONVS=[
     a:['毎週新曲が追加されてるよ🆕 「BGM一覧」→「新着順」で最新曲をチェックできるよ✨']},
   {r:/お気に入り|ブックマーク|保存|favorite|fav/i, expr:'blushing',
     a:['曲カードの♡ボタンでお気に入り登録できるよ💕 右上の「♡」ボタンでお気に入りだけ表示もできるよ！']},
+
+  // ── サイトFAQ ──
+  {r:/ライセンス|著作権|権利|利用規約|規約|terms|license|copyright/i, expr:'confident',
+    a:['全曲<strong>著作権フリー</strong>だよ✨<br>・商用利用OK（YouTube・配信・ゲーム・企業VP・アプリ等）<br>・クレジット表記不要<br>・登録不要・無料<br>詳しくはサイトのフッター「利用規約」で確認してね！']},
+  {r:/禁止|ダメ|使えない|NG|できない.*こと|してはいけない|prohibited/i, expr:'pensive',
+    a:['禁止されてることを教えるね！<br>・曲自体を販売・再配布すること<br>・素材として他のフリー素材サイトに転載<br>・AIの学習データへの利用<br>・違法コンテンツへの使用<br>それ以外はほぼOKだよ✨ 詳しくはフッターの利用規約で確認してね！']},
+  {r:/BGMチャンネル|チャンネル機能|連続再生|自動再生|playlist|プレイリスト/i, expr:'excited',
+    a:['BGMチャンネルはジャンルを選ぶと<strong>同じジャンルの曲を自動で連続再生</strong>してくれる機能だよ🎵<br>ヒーローセクションの「BGMチャンネル」ボタンから使えるよ✨ 作業中や配信のBGMにぴったり！']},
+  {r:/サイトについて|どんなサイト|運営|誰が作|作者|制作者|サービス.*説明/i, expr:'smile',
+    a:['「日本一フリーBGMサイト」は、<strong>完全無料でBGMが使い放題</strong>のサービスだよ🎵<br>・2,090曲以上・全曲商用利用OK・登録不要・クレジット表記不要<br>・AIナビ（ナビちゃん）による気分検索<br>・BGMチャンネルで連続再生<br>・毎週新曲追加中✨<br>全部タダで使えるよ！気軽に活用してね💕']},
+  {r:/使い方.*教|教.*使い方|how.*use|使い方.*わかr|操作.*教|基本.*使/i, expr:'smiling',
+    a:['簡単に使えるよ🎵<br>①気分やジャンルで曲を絞り込む<br>②曲カードをクリックして試聴<br>③「ダウンロード」で無料DL<br>④ナビちゃん（わたし）に話しかけると気分に合う曲を提案するよ✨<br>全部タダで登録不要！']},
+  {r:/検索.*使い方|検索.*コツ|うまく検索|検索.*方法/i, expr:'confident',
+    a:['検索のコツを教えるね🔍<br>・気分やシーン（「疾走感」「ほっこり」「深夜」等）で話しかけるとナビちゃんが探すよ<br>・上の検索バーでタイトル・ジャンルを直接検索もできるよ<br>・「詳細フィルター」でBPMやジャンルを絞れるよ✨']},
+  {r:/更新|追加.*頻度|新曲.*いつ|どのくらい.*曲|曲.*増え/i, expr:'excited',
+    a:['毎週新曲を追加してるよ🆕 「新着順」フィルターで最新曲が見られるよ✨ どんどん増えてるから楽しみにしてて！']},
+  {r:/スマホ|モバイル|アプリ|app|スマートフォン/i, expr:'smiling',
+    a:['スマホのブラウザからそのまま使えるよ📱 アプリは今のところないけど、ブラウザでも全機能が使えるよ✨ ホーム画面に追加するとアプリっぽく使えるよ！']},
 ];
 
 /* ---------- タグ同義語マップ（ナビちゃんチャット検索用） ---------- */
@@ -8525,6 +8565,27 @@ const QUERY_EXPAND={
   'シネマティック':['cinematic','orchestral','epic','dramatic','film score'],
   '和風':['japanese','wa-pop','traditional japanese','koto','shakuhachi','taiko'],
   'アニメ':['anime','j-pop','japanese-anime','manga'],
+  // ── 感覚・ニュアンス系 ──
+  '疾走感':['driving','fast-paced','chase','action','sprint','running','energetic','adrenaline','race'],
+  '浮遊感':['floating','ethereal','dreamy','ambient','atmospheric','airy','weightless','spacious'],
+  'ふわふわ':['fluffy','dreamy','ethereal','ambient','soft','whimsical','light','airy'],
+  'エモい':['emotional','melancholic','nostalgic','bittersweet','sentimental','touching','evocative'],
+  'ゾクゾク':['thrilling','tense','suspenseful','eerie','spine-tingling','intense','dramatic'],
+  'ほっこり':['warm','cozy','heartwarming','gentle','tender','wholesome','soft'],
+  '切ない':['melancholic','bittersweet','nostalgic','sad','emotional','longing','wistful'],
+  '高揚':['uplifting','euphoric','triumphant','soaring','empowering','inspiring'],
+  'ドラマチック':['dramatic','cinematic','epic','orchestral','powerful','intense'],
+  '哀愁':['melancholy','nostalgic','wistful','sad','bittersweet','longing'],
+  '感動':['emotional','moving','touching','dramatic','cinematic','inspiring','uplifting'],
+  '神秘的':['mysterious','mystical','ethereal','magical','otherworldly','mystical'],
+  '温かい':['warm','cozy','heartwarming','acoustic','gentle','tender'],
+  '爽やか':['fresh','breezy','upbeat','refreshing','bright','clean','crisp'],
+  '幻想的':['fantastical','dreamlike','ethereal','magical','mystical','otherworldly'],
+  'ノスタルジア':['nostalgic','retro','vintage','old-school','sentimental'],
+  'メランコリー':['melancholy','melancholic','sad','wistful','bittersweet'],
+  '緊張感':['tense','suspenseful','dramatic','intense','thriller','action'],
+  '開放感':['open','spacious','free','expansive','wide','ambient'],
+  '壮大':['epic','grand','orchestral','cinematic','majestic','powerful'],
 };
 
 /* ---------- 検索ロジック ---------- */
@@ -8761,7 +8822,7 @@ input.addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.
 function initChat(){
   messages.innerHTML='';
   appendMsg('navi','こんにちは！ナビちゃんです🎵<br>今どんな気分？ボタンを押すだけで<strong>ピッタリのBGMを探す</strong>よ✨<br>もちろん自由に話しかけてもOK！',null,
-    ['🌿 穏やか・癒し','📚 集中したい','⚡ テンション上げたい','🌙 夜に聴きたい','😢 エモ・泣ける','🎲 おまかせで！'],'welcome');
+    ['🌿 穏やか・癒し','📚 集中したい','⚡ テンション上げたい','🌙 夜に聴きたい','😢 エモ・泣ける','🎲 おまかせで！','ℹ️ サイトについて'],'welcome');
 }
 initChat();
 
