@@ -8113,6 +8113,10 @@ if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/sw.js').catch(() => {});
   });
+  // SW更新時（新バージョンdeployされたとき）に自動リロード
+  navigator.serviceWorker.addEventListener('message', e => {
+    if (e.data?.type === 'SW_UPDATED') window.location.reload();
+  });
 }
 </script>
 
