@@ -202,7 +202,7 @@ nav a.active{color:#1de9b6;font-weight:700;background:rgba(29,233,182,.1)}
 .hero{background:#0d0b08;color:#fff;padding:5rem 1.5rem 4rem;position:relative;overflow:hidden}
 html[data-theme="dark"] .hero{background:#0a0805}
 .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 70% at 75% 50%,rgba(29,233,182,.12) 0%,transparent 60%),radial-gradient(ellipse 60% 80% at 20% 80%,rgba(124,77,255,.1) 0%,transparent 55%),radial-gradient(ellipse 40% 50% at 90% 10%,rgba(200,90,30,.1) 0%,transparent 50%);pointer-events:none}
-.herowrap{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 420px;gap:3rem;align-items:center;position:relative}
+.herowrap{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1fr 560px;gap:2.5rem;align-items:center;position:relative}
 .htag{display:inline-flex;align-items:center;gap:6px;background:rgba(29,233,182,.1);border:1px solid rgba(29,233,182,.3);color:#1de9b6;font-size:11.5px;font-weight:700;padding:6px 14px;border-radius:20px;margin-bottom:1.4rem;letter-spacing:.05em;box-shadow:0 0 16px rgba(29,233,182,.15)}
 .hero h1{font-family:var(--serif);font-size:clamp(2rem,3.6vw,3.2rem);font-weight:700;line-height:1.32;margin-bottom:1.2rem;letter-spacing:.02em;color:#fff}
 .hero h1 em{font-style:normal;background:linear-gradient(135deg,#1de9b6 0%,#7c4dff 55%,#d4a843 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
@@ -766,6 +766,9 @@ html[data-theme="dark"] footer{background:#0a0805}
 .fcopy{font-size:11px;color:rgba(255,255,255,.3)}
 
 /* RESPONSIVE */
+@media(max-width:1200px){
+  .herowrap{grid-template-columns:1fr 460px;gap:2rem}
+}
 @media(max-width:980px){
   .main{grid-template-columns:1fr}
   .side{position:static;flex-direction:row;flex-wrap:wrap;gap:.8rem}
@@ -1163,7 +1166,7 @@ body:has(.pbar.on) .navi-chat-panel{bottom:calc(182px + env(safe-area-inset-bott
       </div>
     </div>
     <div class="hvis" id="heroVis" aria-hidden="true">
-      <img src="images/site/navi-hero-banner.png" alt="日本一フリーBGM ナビちゃん" style="width:100%;max-width:100%;height:auto;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.6),0 0 40px rgba(29,233,182,.1);animation:floatImg 6s ease-in-out infinite;display:block">
+      <img src="images/site/hero-display.png" alt="日本一フリーBGM AIがあなたにぴったりのBGMを提案" style="width:100%;max-width:100%;height:auto;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.6),0 0 40px rgba(29,233,182,.1);animation:floatImg 6s ease-in-out infinite;display:block">
     </div>
   </div>
 </section>
