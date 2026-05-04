@@ -312,7 +312,7 @@ body.ai-active .hsearch input{border-color:var(--gold);background:rgba(0,0,0,.6)
 .scard:has(.cpick) .cmeta2{top:auto;bottom:8px}
 
 /* プレイリストフローティングピル */
-.plpill{position:fixed;bottom:88px;right:20px;background:var(--ink);color:#fff;border:none;padding:11px 18px;border-radius:24px;font-size:13px;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.35);cursor:pointer;display:none;align-items:center;gap:9px;z-index:180;transition:all .2s}
+.plpill{position:fixed;bottom:88px;right:20px;background:var(--ink);color:#fff;border:none;padding:11px 18px;border-radius:24px;font-size:13px;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.35);cursor:pointer;display:none;align-items:center;gap:9px;z-index:215;transition:all .2s}
 .plpill.on{display:inline-flex}
 .plpill:hover{background:var(--accent);transform:translateY(-2px) scale(1.02)}
 .plpill .ct{background:var(--accent);color:#fff;font-size:11px;font-weight:800;padding:1px 8px;border-radius:10px;font-variant-numeric:tabular-nums}
@@ -4279,6 +4279,8 @@ async function plPlayAll(){
   view = songs;
   applySeq++;
   play(songs[0].id);
+  // playQueueをプレイリスト曲に明示固定（apply()等でviewが上書きされても連続再生を維持）
+  playQueue = songs.slice();
   plClose();
   toast(window._currentLang==='en' ? `▶ Playing ${songs.length} track${songs.length!==1?'s':''}` : `▶ プレイリスト${songs.length}曲を再生開始`);
 }
@@ -4829,6 +4831,7 @@ async function radioStart(prompt, allowedGenres) {
   RADIO.prompt = prompt;
   RADIO.mode = prompt;
   RADIO.targetGenre = targetGenre; // キュー枯渇時の補充でも同ジャンルを維持
+  RADIO.allowedGenres = allowedGenres ? new Set(allowedGenres) : null; // 複数ジャンル補充用
   // グッド曲を2倍の確率で再生（シャッフル配列に重複追加）
   RADIO.queue = _buildRadioQueue(candidates);
   RADIO.history = [];
@@ -4854,25 +4857,41 @@ async function radioStart(prompt, allowedGenres) {
 function radioPlayNext() {
   if (!RADIO.on) return;
 
-  // キュー枯渇 → 同ジャンル絞り込みを維持して補充
+  // キュー枯渇 → 選択ジャンルを維持して補充
   if (RADIO.queue.length === 0) {
-    let pool = allSongs.length ? allSongs : view;
-    if (RADIO.targetGenre) {
-      const gp = pool.filter(s => s.genre === RADIO.targetGenre);
-      if (gp.length >= 5) pool = gp;
+    const base = allSongs.length ? allSongs : view;
+
+    // ① 選択ジャンルで絞り込む（allowedGenres優先、次にtargetGenre単体）
+    let pool;
+    if (RADIO.allowedGenres && RADIO.allowedGenres.size) {
+      const gp = base.filter(s => RADIO.allowedGenres.has(s.genre));
+      pool = gp.length >= 3 ? gp : base; // ジャンル曲が少なすぎる場合のみ全体へ
+    } else if (RADIO.targetGenre) {
+      const gp = base.filter(s => s.genre === RADIO.targetGenre);
+      pool = gp.length >= 3 ? gp : base;
+    } else {
+      pool = base;
     }
-    // バッド曲を除外
+
+    // ② バッド曲を除外
     pool = pool.filter(s => !_rPrefs.dislikes.has(s.id));
-    const cands = aiMatch(RADIO.mode, pool, 80) || [];
+
+    // ③ コンセプトマッチ → 取れなければジャンルプールからランダム補充（ジャンル維持）
+    let cands = aiMatch(RADIO.mode, pool, 80) || [];
+    if (!cands.length) cands = shuffleArr(pool.slice()).slice(0, 80);
+
+    // ④ recent履歴除外（グッド曲は除外しない）
     const recentIds = new Set(RADIO.history.slice(-15).map(s => s.id));
-    // グッド曲は recent でも除外しない（好きな曲は繰り返し流す）
     let fresh = cands.filter(s => !recentIds.has(s.id) || _rPrefs.likes.has(s.id));
-    if (!fresh.length) fresh = cands;
+    if (!fresh.length) fresh = cands; // 全曲が recent なら繰り返す
+
     RADIO.queue = _buildRadioQueue(fresh);
+
+    // ⑤ 最終フォールバック: ジャンル内で再シャッフル（ジャンル維持を優先）
     if (!RADIO.queue.length) {
-      toast(window.t('toast_radio_exhausted'));
-      radioStop();
-      return;
+      const fallback = shuffleArr(pool.slice());
+      if (!fallback.length) { toast(window.t('toast_radio_exhausted')); radioStop(); return; }
+      RADIO.queue = fallback.slice(0, 20);
     }
   }
 
@@ -5183,12 +5202,15 @@ document.getElementById('radioInd').onclick = () => {
 };
 
 // ラジオ中にユーザーが手動で曲を再生 → ラジオ停止
+// ※ fromQueue引数を必ず引き継ぐ（プレイリスト連続再生のplayQueue保持に必要）
 const _origPlayForRadio = play;
-play = function(id) {
-  if (RADIO.on) {
+play = function(id, fromQueue) {
+  if (RADIO.on && !fromQueue) {
+    // キュー自動送り（fromQueue=true）ではラジオ停止しない
+    // ユーザー手動再生（fromQueue=false/undefined）のみラジオ停止
     radioStop();
   }
-  return _origPlayForRadio(id);
+  return _origPlayForRadio(id, fromQueue);
 };
 window.play = play; // ナビちゃん等の別スコープからの呼び出しにも適用
 
