@@ -4279,6 +4279,8 @@ async function plPlayAll(){
   view = songs;
   applySeq++;
   play(songs[0].id);
+  // playQueueをプレイリスト曲に明示固定（apply()等でviewが上書きされても連続再生を維持）
+  playQueue = songs.slice();
   plClose();
   toast(window._currentLang==='en' ? `▶ Playing ${songs.length} track${songs.length!==1?'s':''}` : `▶ プレイリスト${songs.length}曲を再生開始`);
 }
@@ -4863,16 +4865,19 @@ function radioPlayNext() {
     }
     // バッド曲を除外
     pool = pool.filter(s => !_rPrefs.dislikes.has(s.id));
-    const cands = aiMatch(RADIO.mode, pool, 80) || [];
+    let cands = aiMatch(RADIO.mode, pool, 80) || [];
+    // フォールバック: コンセプトマッチが取れない場合はプールからランダム補充（停止しない）
+    if (!cands.length) cands = shuffleArr(pool.slice()).slice(0, 80);
     const recentIds = new Set(RADIO.history.slice(-15).map(s => s.id));
     // グッド曲は recent でも除外しない（好きな曲は繰り返し流す）
     let fresh = cands.filter(s => !recentIds.has(s.id) || _rPrefs.likes.has(s.id));
     if (!fresh.length) fresh = cands;
     RADIO.queue = _buildRadioQueue(fresh);
     if (!RADIO.queue.length) {
-      toast(window.t('toast_radio_exhausted'));
-      radioStop();
-      return;
+      // 最終フォールバック: プール全体からランダム補充（本当に曲が0曲の場合のみ停止）
+      const fallback = shuffleArr((allSongs.length ? allSongs : view).filter(s => !_rPrefs.dislikes.has(s.id)));
+      if (!fallback.length) { toast(window.t('toast_radio_exhausted')); radioStop(); return; }
+      RADIO.queue = fallback.slice(0, 20);
     }
   }
 
@@ -5183,12 +5188,15 @@ document.getElementById('radioInd').onclick = () => {
 };
 
 // ラジオ中にユーザーが手動で曲を再生 → ラジオ停止
+// ※ fromQueue引数を必ず引き継ぐ（プレイリスト連続再生のplayQueue保持に必要）
 const _origPlayForRadio = play;
-play = function(id) {
-  if (RADIO.on) {
+play = function(id, fromQueue) {
+  if (RADIO.on && !fromQueue) {
+    // キュー自動送り（fromQueue=true）ではラジオ停止しない
+    // ユーザー手動再生（fromQueue=false/undefined）のみラジオ停止
     radioStop();
   }
-  return _origPlayForRadio(id);
+  return _origPlayForRadio(id, fromQueue);
 };
 window.play = play; // ナビちゃん等の別スコープからの呼び出しにも適用
 
