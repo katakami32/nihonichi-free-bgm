@@ -4831,6 +4831,7 @@ async function radioStart(prompt, allowedGenres) {
   RADIO.prompt = prompt;
   RADIO.mode = prompt;
   RADIO.targetGenre = targetGenre; // キュー枯渇時の補充でも同ジャンルを維持
+  RADIO.allowedGenres = allowedGenres ? new Set(allowedGenres) : null; // 複数ジャンル補充用
   // グッド曲を2倍の確率で再生（シャッフル配列に重複追加）
   RADIO.queue = _buildRadioQueue(candidates);
   RADIO.history = [];
@@ -4856,26 +4857,39 @@ async function radioStart(prompt, allowedGenres) {
 function radioPlayNext() {
   if (!RADIO.on) return;
 
-  // キュー枯渇 → 同ジャンル絞り込みを維持して補充
+  // キュー枯渇 → 選択ジャンルを維持して補充
   if (RADIO.queue.length === 0) {
-    let pool = allSongs.length ? allSongs : view;
-    if (RADIO.targetGenre) {
-      const gp = pool.filter(s => s.genre === RADIO.targetGenre);
-      if (gp.length >= 5) pool = gp;
+    const base = allSongs.length ? allSongs : view;
+
+    // ① 選択ジャンルで絞り込む（allowedGenres優先、次にtargetGenre単体）
+    let pool;
+    if (RADIO.allowedGenres && RADIO.allowedGenres.size) {
+      const gp = base.filter(s => RADIO.allowedGenres.has(s.genre));
+      pool = gp.length >= 3 ? gp : base; // ジャンル曲が少なすぎる場合のみ全体へ
+    } else if (RADIO.targetGenre) {
+      const gp = base.filter(s => s.genre === RADIO.targetGenre);
+      pool = gp.length >= 3 ? gp : base;
+    } else {
+      pool = base;
     }
-    // バッド曲を除外
+
+    // ② バッド曲を除外
     pool = pool.filter(s => !_rPrefs.dislikes.has(s.id));
+
+    // ③ コンセプトマッチ → 取れなければジャンルプールからランダム補充（ジャンル維持）
     let cands = aiMatch(RADIO.mode, pool, 80) || [];
-    // フォールバック: コンセプトマッチが取れない場合はプールからランダム補充（停止しない）
     if (!cands.length) cands = shuffleArr(pool.slice()).slice(0, 80);
+
+    // ④ recent履歴除外（グッド曲は除外しない）
     const recentIds = new Set(RADIO.history.slice(-15).map(s => s.id));
-    // グッド曲は recent でも除外しない（好きな曲は繰り返し流す）
     let fresh = cands.filter(s => !recentIds.has(s.id) || _rPrefs.likes.has(s.id));
-    if (!fresh.length) fresh = cands;
+    if (!fresh.length) fresh = cands; // 全曲が recent なら繰り返す
+
     RADIO.queue = _buildRadioQueue(fresh);
+
+    // ⑤ 最終フォールバック: ジャンル内で再シャッフル（ジャンル維持を優先）
     if (!RADIO.queue.length) {
-      // 最終フォールバック: プール全体からランダム補充（本当に曲が0曲の場合のみ停止）
-      const fallback = shuffleArr((allSongs.length ? allSongs : view).filter(s => !_rPrefs.dislikes.has(s.id)));
+      const fallback = shuffleArr(pool.slice());
       if (!fallback.length) { toast(window.t('toast_radio_exhausted')); radioStop(); return; }
       RADIO.queue = fallback.slice(0, 20);
     }
