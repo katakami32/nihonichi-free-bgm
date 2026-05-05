@@ -4806,6 +4806,8 @@ async function radioStart(prompt, allowedGenres) {
     const primaryPool = pool.filter(s => s.genre === targetGenre);
     if (primaryPool.length >= 5) {
       pool = primaryPool;
+      // 補充時も同じジャンルに限定するため allowedGenres を主ジャンル単体に絞る
+      allowedGenres = [targetGenre];
     } else {
       // 主ジャンルが少ない場合は全指定ジャンルで絞り込む
       const genreSet = new Set(allowedGenres);
