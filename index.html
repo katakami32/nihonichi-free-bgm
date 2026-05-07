@@ -198,6 +198,15 @@ nav a.active{color:#1de9b6;font-weight:700;background:rgba(29,233,182,.1)}
 #favBtn{display:none!important}
 .hbadge{background:var(--accent);color:#fff;font-size:11px;font-weight:700;padding:6px 14px;border-radius:20px;letter-spacing:.05em}
 
+/* SEO内部リンクナビ */
+.seo-nav-section{background:var(--warm);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:2rem 1.5rem}
+.seonav-wrap{max-width:1280px;margin:0 auto;display:flex;flex-direction:column;gap:1.5rem}
+.seonav-block{}
+.seonav-ttl{font-size:13px;font-weight:800;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.7rem}
+.seonav-grid{display:flex;flex-wrap:wrap;gap:.4rem}
+.seonav-link{display:inline-flex;background:var(--card);border:1px solid var(--border);color:var(--ink);font-size:12.5px;font-weight:600;padding:5px 12px;border-radius:20px;text-decoration:none;transition:all .15s}
+.seonav-link:hover{border-color:var(--accent);color:var(--accent);background:#fff8f5;text-decoration:none}
+
 /* HERO (元の構成) */
 .hero{background:#0d0b08;color:#fff;padding:5rem 1.5rem 4rem;position:relative;overflow:hidden}
 html[data-theme="dark"] .hero{background:#0a0805}
@@ -1239,6 +1248,42 @@ body:has(.pbar.on) .navi-chat-panel{bottom:calc(182px + env(safe-area-inset-bott
       </div>
     </div>
     <div class="gsgrid" id="gsGrid"></div>
+  </div>
+</section>
+
+<!-- ジャンル別・用途別ランディングページへのSEO内部リンク -->
+<section class="seo-nav-section" aria-label="ジャンル別・用途別フリーBGMページ一覧">
+  <div class="seonav-wrap">
+    <div class="seonav-block">
+      <h2 class="seonav-ttl">ジャンル別フリーBGM</h2>
+      <div class="seonav-grid">
+        <a href="/genre/jazz/" class="seonav-link">ジャズのフリーBGM（232曲）</a>
+        <a href="/genre/lo-fi/" class="seonav-link">Lo-FiのフリーBGM（193曲）</a>
+        <a href="/genre/ambient/" class="seonav-link">アンビエントのフリーBGM（362曲）</a>
+        <a href="/genre/cinematic/" class="seonav-link">シネマティックのフリーBGM（375曲）</a>
+        <a href="/genre/j-pop/" class="seonav-link">J-POPのフリーBGM（205曲）</a>
+        <a href="/genre/electronic/" class="seonav-link">エレクトロニックのフリーBGM（155曲）</a>
+        <a href="/genre/rock/" class="seonav-link">ロックのフリーBGM（52曲）</a>
+        <a href="/genre/pop/" class="seonav-link">ポップスのフリーBGM（47曲）</a>
+        <a href="/genre/hip-hop-rnb/" class="seonav-link">ヒップホップ・R&amp;BのフリーBGM（82曲）</a>
+        <a href="/genre/folk-acoustic/" class="seonav-link">フォーク・アコースティックのフリーBGM（100曲）</a>
+        <a href="/genre/childrens/" class="seonav-link">キッズ・童謡のフリーBGM（38曲）</a>
+        <a href="/genre/wafu/" class="seonav-link">和風・日本伝統のフリーBGM（28曲）</a>
+        <a href="/genre/japanese-anime/" class="seonav-link">アニメ・アイドルのフリーBGM（50曲）</a>
+        <a href="/genre/horror/" class="seonav-link">ホラー・ダークのフリーBGM（76曲）</a>
+        <a href="/genre/corporate-bgm/" class="seonav-link">企業VP向けフリーBGM</a>
+        <a href="/genre/other/" class="seonav-link">その他のフリーBGM（93曲）</a>
+      </div>
+    </div>
+    <div class="seonav-block">
+      <h2 class="seonav-ttl">用途別フリーBGM</h2>
+      <div class="seonav-grid">
+        <a href="/use/youtube-bgm/" class="seonav-link">YouTubeに使えるフリーBGM</a>
+        <a href="/use/game-bgm/" class="seonav-link">ゲーム実況に使えるフリーBGM</a>
+        <a href="/use/vlog-bgm/" class="seonav-link">Vlogに使えるフリーBGM</a>
+        <a href="/use/streaming-bgm/" class="seonav-link">配信・ライブ配信に使えるフリーBGM</a>
+      </div>
+    </div>
   </div>
 </section>
 
