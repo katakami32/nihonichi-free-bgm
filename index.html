@@ -8832,9 +8832,9 @@ function sendMessage(text){
     if(res.chips){
       chips=res.chips;
     } else if(res.songs&&res.songs.length){
-      chips=['他の気分を探す','🎸 ジャンルを選ぶ','おすすめを教えて'];
+      chips=['他の気分を探す','🎸 ジャンルを選ぶ','おすすめを教えて','ℹ️ サイトについて'];
     } else {
-      chips=['🌿 穏やか・癒し','📚 集中したい','⚡ テンション上げたい','🌙 夜に聴きたい','😢 エモ・泣ける','🎲 おまかせで！'];
+      chips=['🌿 穏やか・癒し','📚 集中したい','⚡ テンション上げたい','🌙 夜に聴きたい','😢 エモ・泣ける','🎲 おまかせで！','ℹ️ サイトについて'];
     }
     appendMsg('navi',res.text,res.songs||null,chips,res.expr);
   },600+Math.random()*400);
