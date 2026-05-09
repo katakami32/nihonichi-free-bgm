@@ -803,7 +803,7 @@ html[data-theme="dark"] footer{background:#0a0805}
   /* 行1: サムネ + 曲名情報 + アニメバー */
   /* 行2: コントロールボタン (中央揃え) */
   /* 行3: シークバー (全幅) */
-  .pbar{padding:8px 1rem calc(8px + env(safe-area-inset-bottom,0px))}
+  .pbar{padding:8px 1rem calc(8px + env(safe-area-inset-bottom,0px));padding-left:max(1rem, env(safe-area-inset-left,0px));padding-right:max(1rem, env(safe-area-inset-right,0px))}
   .pinner{flex-wrap:wrap;gap:4px 8px;align-items:center}
   /* 行1 */
   .pthumb{order:1;width:38px;height:38px;flex-shrink:0}
@@ -858,7 +858,7 @@ html[data-theme="dark"] footer{background:#0a0805}
   }
   .aibody{overflow-y:auto;-webkit-overflow-scrolling:touch;flex:1;min-height:0}
   /* iOS ズーム防止: フォントサイズ16px未満の入力欄はフォーカス時にズームする */
-  .rmcustom input,.rmopts select,.aiform textarea{font-size:16px !important}
+  .rmcustom input,.rmopts select,.aiform textarea,.navi-chat-input{font-size:16px !important}
   /* フッターの列を1列に */
   .fcol a{color:rgba(255,255,255,.7)}
 }
@@ -1089,7 +1089,7 @@ body:has(.pbar.on) .navi-chat-panel{bottom:calc(182px + env(safe-area-inset-bott
   font-family:inherit}
 .navi-chip:hover{background:var(--accent3);color:#fff}
 @media(max-width:480px){
-  .navi-chat-panel{width:calc(100vw - 28px);max-height:70vh;
+  .navi-chat-panel{width:calc(100vw - 28px);max-height:70svh;max-height:70dvh;
     right:14px;left:14px}}
 </style>
 </head>
@@ -1152,7 +1152,7 @@ body:has(.pbar.on) .navi-chat-panel{bottom:calc(182px + env(safe-area-inset-bott
       </div>
     </div>
     <div class="hvis" id="heroVis" aria-hidden="true">
-      <img src="images/site/promo.png" alt="日本一フリーBGM" style="width:100%;max-width:400px;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.6),0 0 40px rgba(29,233,182,.1);animation:floatImg 6s ease-in-out infinite">
+      <img src="images/site/promo.png" alt="日本一フリーBGM" width="400" height="400" style="width:100%;max-width:400px;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.6),0 0 40px rgba(29,233,182,.1);animation:floatImg 6s ease-in-out infinite">
     </div>
   </div>
 </section>
@@ -1749,7 +1749,7 @@ body:has(.pbar.on) .navi-chat-panel{bottom:calc(182px + env(safe-area-inset-bott
 </aside>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
-<audio id="audio" preload="auto"></audio>
+<audio id="audio" preload="none"></audio>
 
 <!--
   ┌──────────────────────────────────────────────────────────────┐
@@ -1848,7 +1848,7 @@ audio.volume = 0.8;
 
 // ---- HERO VISUAL (シンプルな白バーアニメ) ----
 const hv = document.getElementById('heroVis');
-if (hv) {
+if (hv && !window.matchMedia('(max-width:980px)').matches) {
   for (let i=0;i<24;i++){
     const b = document.createElement('div');
     b.className = 'hvb';
