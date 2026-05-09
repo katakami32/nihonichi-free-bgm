@@ -1,14 +1,16 @@
 {
   "scripts": {
-    "sitemap":        "node scripts/generate-sitemap.js",
-    "sitemap:prod":   "node scripts/generate-sitemap.js --base=https://nihonichi-bgm.com",
-    "seo:inject":     "node scripts/inject-seo-list.js",
-    "seo:pages":      "node scripts/generate-song-pages.js",
+    "dev": "browser-sync start --config bs-config.js",
+    "sitemap": "node scripts/generate-sitemap.js",
+    "sitemap:prod": "node scripts/generate-sitemap.js --base=https://nihonichi-bgm.com",
+    "seo:inject": "node scripts/inject-seo-list.js",
+    "seo:pages": "node scripts/generate-song-pages.js",
     "seo:pages:test": "node scripts/generate-song-pages.js --limit=10",
-    "build":          "node scripts/inject-seo-list.js && node scripts/generate-song-pages.js && node scripts/generate-sitemap.js --base=https://nihonichi-bgm.com",
-    "build:dry":      "node scripts/inject-seo-list.js --dry-run"
+    "build": "node scripts/inject-seo-list.js && node scripts/generate-song-pages.js && node scripts/generate-sitemap.js --base=https://nihonichi-bgm.com",
+    "build:dry": "node scripts/inject-seo-list.js --dry-run"
   },
   "devDependencies": {
+    "browser-sync": "^3.0.4",
     "wrangler": "^4.85.0"
   }
 }

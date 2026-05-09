@@ -23,11 +23,11 @@
 <meta property="og:site_name" content="日本一フリーBGM">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:url" content="https://nihonichi-bgm.com/">
-<meta property="og:image" content="https://nihonichi-bgm.com/images/site/hero-banner.png">
+<meta property="og:image" content="https://nihonichi-bgm.com/images/site/navi-hero-banner.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="フリーBGM 2,090曲｜無料・商用利用OK｜日本一フリーBGM">
 <meta name="twitter:description" content="登録不要、商用OK、クレジット任意。BPM・尺・ムードで秒で見つかるフリーBGM。">
-<meta name="twitter:image" content="https://nihonichi-bgm.com/images/site/hero-banner.png">
+<meta name="twitter:image" content="https://nihonichi-bgm.com/images/site/navi-hero-banner.png">
 
 <!-- インライン SVG ファビコン (音符マーク) -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23c85a1e'/%3E%3Ctext x='32' y='44' font-family='serif' font-size='38' font-weight='900' text-anchor='middle' fill='white'%3E音%3C/text%3E%3C/svg%3E">
@@ -151,7 +151,7 @@
   border:0;
   pointer-events:none;
 }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;min-width:0}
 img,video{max-width:100%;height:auto}
 body{overflow-wrap:break-word}
 :root{
@@ -197,22 +197,35 @@ nav a.active{color:#1de9b6;font-weight:700;background:rgba(29,233,182,.1)}
 #favBtn{display:none!important}
 .hbadge{background:var(--accent);color:#fff;font-size:11px;font-weight:700;padding:6px 14px;border-radius:20px;letter-spacing:.05em}
 
+/* SEO内部リンクナビ */
+.seo-nav-section{background:var(--warm);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:2rem 1.5rem}
+.seonav-wrap{max-width:1280px;margin:0 auto;display:flex;flex-direction:column;gap:1.5rem}
+.seonav-block{}
+.seonav-ttl{font-size:13px;font-weight:800;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.7rem}
+.seonav-grid{display:flex;flex-wrap:wrap;gap:.4rem}
+.seonav-link{display:inline-flex;background:var(--card);border:1px solid var(--border);color:var(--ink);font-size:12.5px;font-weight:600;padding:5px 12px;border-radius:20px;text-decoration:none;transition:all .15s}
+.seonav-link:hover{border-color:var(--accent);color:var(--accent);background:#fff8f5;text-decoration:none}
+
 /* HERO (元の構成) */
 .hero{background:#0d0b08;color:#fff;padding:5rem 1.5rem 4rem;position:relative;overflow:hidden}
 html[data-theme="dark"] .hero{background:#0a0805}
 .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 70% at 75% 50%,rgba(29,233,182,.12) 0%,transparent 60%),radial-gradient(ellipse 60% 80% at 20% 80%,rgba(124,77,255,.1) 0%,transparent 55%),radial-gradient(ellipse 40% 50% at 90% 10%,rgba(200,90,30,.1) 0%,transparent 50%);pointer-events:none}
-.herowrap{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 420px;gap:3rem;align-items:center;position:relative}
+.herowrap{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1fr 560px;gap:2.5rem;align-items:center;position:relative}
 .htag{display:inline-flex;align-items:center;gap:6px;background:rgba(29,233,182,.1);border:1px solid rgba(29,233,182,.3);color:#1de9b6;font-size:11.5px;font-weight:700;padding:6px 14px;border-radius:20px;margin-bottom:1.4rem;letter-spacing:.05em;box-shadow:0 0 16px rgba(29,233,182,.15)}
 .hero h1{font-family:var(--serif);font-size:clamp(2rem,3.6vw,3.2rem);font-weight:700;line-height:1.32;margin-bottom:1.2rem;letter-spacing:.02em;color:#fff}
 .hero h1 em{font-style:normal;background:linear-gradient(135deg,#1de9b6 0%,#7c4dff 55%,#d4a843 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .hero p.lead{font-size:14px;color:rgba(255,255,255,.65);max-width:520px;line-height:1.95;margin-bottom:1.8rem}
-.hsearch{display:flex;gap:8px;max-width:580px;flex-wrap:wrap}
-.hsearch input{flex:1;min-width:200px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.15);color:#fff;font-family:var(--font);font-size:14px;padding:14px 20px;border-radius:12px;outline:none;transition:all .25s;backdrop-filter:blur(12px);font-weight:500}
+.hsearch{display:flex;gap:8px;max-width:580px;flex-wrap:wrap;box-sizing:border-box}
+.hbtns{display:flex;flex-direction:column;gap:6px;flex:1 1 100%;min-width:0;box-sizing:border-box}
+.hbtns-label{font-size:12px;font-weight:700;color:rgba(255,255,255,.7);letter-spacing:.04em}
+.hbtns-row{display:flex;gap:8px;width:100%;box-sizing:border-box}
+.hsearch input{flex:1;min-width:0;width:100%;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.15);color:#fff;font-family:var(--font);font-size:14px;padding:14px 20px;border-radius:12px;outline:none;transition:all .25s;backdrop-filter:blur(12px);font-weight:500}
 .hsearch input::placeholder{color:rgba(255,255,255,.4)}
 .hsearch input:focus{border-color:rgba(29,233,182,.6);background:rgba(29,233,182,.06);box-shadow:0 0 0 3px rgba(29,233,182,.12)}
 .hsearch button{background:linear-gradient(135deg,#1de9b6 0%,#00b8d4 100%);color:#0d0b08;border:none;font-size:14px;font-weight:800;padding:14px 24px;border-radius:12px;cursor:pointer;transition:all .2s;white-space:nowrap;box-shadow:0 4px 16px rgba(29,233,182,.3)}
 .hsearch button:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(29,233,182,.4)}
-.hsearch .aibtn{background:linear-gradient(135deg,rgba(124,77,255,.85) 0%,rgba(200,90,30,.85) 100%);color:#fff;display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(124,77,255,.4)}
+.hsearch .aibtn{background:linear-gradient(135deg,rgba(124,77,255,.85) 0%,rgba(200,90,30,.85) 100%);color:#fff;display:inline-flex;flex-direction:column;align-items:center;gap:2px;border:1px solid rgba(124,77,255,.4)}
+.aibtn-sub{font-size:10px;font-weight:500;opacity:.88;letter-spacing:.02em;white-space:normal;max-width:100%}
 .hsearch .aibtn:hover{filter:brightness(1.15);transform:translateY(-1px)}
 .aitips{display:flex;flex-wrap:wrap;gap:6px;margin-top:.7rem}
 .aitip{font-size:11.5px;color:rgba(255,255,255,.7);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);padding:5px 12px;border-radius:20px;cursor:pointer;transition:all .18s;font-weight:500}
@@ -243,7 +256,7 @@ body.ai-active .hsearch input{border-color:var(--gold);background:rgba(0,0,0,.6)
 
 /* 📻 作業用ラジオ */
 .radiobtn{background:linear-gradient(135deg,#c85a1e 0%,#d4a843 100%);color:#fff;display:inline-flex;flex-direction:column;align-items:center;gap:2px;font-weight:800;line-height:1.3}
-.radiobtn .radiosub{font-size:10px;font-weight:500;opacity:.88;letter-spacing:.02em}
+.radiobtn .radiosub{font-size:10px;font-weight:500;opacity:.88;letter-spacing:.02em;white-space:normal;max-width:100%}
 .radiobtn:hover{filter:brightness(1.1);transform:translateY(-1px)}
 .rmgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
 .rmcard{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:14px 16px;border:1.5px solid var(--border);border-radius:11px;background:var(--card);cursor:pointer;text-align:left;font-family:inherit;transition:all .15s;color:var(--ink)}
@@ -332,7 +345,7 @@ body.ai-active .hsearch input{border-color:var(--gold);background:rgba(0,0,0,.6)
 .scard:has(.cpick) .cmeta2{top:auto;bottom:8px}
 
 /* プレイリストフローティングピル */
-.plpill{position:fixed;bottom:88px;right:20px;background:var(--ink);color:#fff;border:none;padding:11px 18px;border-radius:24px;font-size:13px;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.35);cursor:pointer;display:none;align-items:center;gap:9px;z-index:180;transition:all .2s}
+.plpill{position:fixed;bottom:88px;right:20px;background:var(--ink);color:#fff;border:none;padding:11px 18px;border-radius:24px;font-size:13px;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.35);cursor:pointer;display:none;align-items:center;gap:9px;z-index:215;transition:all .2s}
 .plpill.on{display:inline-flex}
 .plpill:hover{background:var(--accent);transform:translateY(-2px) scale(1.02)}
 .plpill .ct{background:var(--accent);color:#fff;font-size:11px;font-weight:800;padding:1px 8px;border-radius:10px;font-variant-numeric:tabular-nums}
@@ -786,13 +799,16 @@ html[data-theme="dark"] footer{background:#0a0805}
 .fcopy{font-size:11px;color:rgba(255,255,255,.3)}
 
 /* RESPONSIVE */
+@media(max-width:1200px){
+  .herowrap{grid-template-columns:1fr 460px;gap:2rem}
+}
 @media(max-width:980px){
   .main{grid-template-columns:1fr}
   .side{position:static;flex-direction:row;flex-wrap:wrap;gap:.8rem}
   .sblock{flex:1;min-width:240px}
   .catlist{max-height:200px}
   .trustinner{grid-template-columns:1fr 1fr}
-  .herowrap{grid-template-columns:1fr}
+  .herowrap{grid-template-columns:1fr;gap:0px}
   .hvis{display:none}
   nav{display:none}
   .fgrid{grid-template-columns:1fr 1fr;gap:1.5rem}
@@ -821,7 +837,8 @@ html[data-theme="dark"] footer{background:#0a0805}
   .hsearch{max-width:100%}
   /* 入力欄+検索ボタンを1行目、AI/ラジオを2行目に */
   .hsearch input{min-width:0;font-size:16px;flex:1 1 160px}
-  .hsearch .aibtn,.hsearch .radiobtn{flex:1 1 calc(50% - 4px);justify-content:center}
+  .hbtns{flex:1 1 100%}
+  .hbtns-row .aibtn,.hbtns-row .radiobtn{flex:1;min-width:0;justify-content:center}
   /* モバイルプレイヤー分の余白 (3行で~140px) */
   body{padding-bottom:160px}
   /* ======== モバイルプレイヤー 3行レイアウト ======== */
@@ -923,8 +940,8 @@ html[data-theme="dark"] footer{background:#0a0805}
 .navi-qa button:hover{background:var(--accent3);color:#fff}
 
 /* ヒーロー直下の挨拶バンド (ヒーローと同じ黒で連続感) */
-.navi-greet .navi-img{width:150px;height:240px}
-.navi-greet .navi-img img{object-position:center top}
+.navi-greet .navi-img{width:150px;height:200px}
+.navi-greet .navi-img img{object-position:top center}
 .navi-greet{background:#0d0b08;padding:0 1.5rem 60px;color:#fff;
   position:relative}
 html[data-theme="dark"] .navi-greet{background:#0a0805}
@@ -978,7 +995,7 @@ body:has(.pbar.on) .navi-fab{
   /* iOSでタップハイライトを抑える */
   -webkit-tap-highlight-color:transparent}
 .navi-fab-btn img{width:100%;height:100%;object-fit:cover;
-  object-position:center 15%;display:block}
+  object-position:center 20%;display:block}
 .navi-fab-btn:hover{transform:scale(1.06)}
 .navi-fab-quick{display:flex;flex-direction:column;gap:6px;margin-top:8px}
 .navi-fab-quick a{font-size:12px;text-decoration:none;
@@ -999,7 +1016,7 @@ body:has(.pbar.on) .navi-fab{
 @media (max-width:760px){
   .navi-greet{padding:24px 1rem 36px}
   .navi-img{width:96px;height:144px}
-  .navi-greet .navi-img{width:120px;height:190px}
+  .navi-greet .navi-img{width:120px;height:160px}
   .navi-bubble{font-size:13.5px;padding:12px 14px;line-height:1.65}
   .navi-bubble::before{bottom:14px}
   .navi-qa button{font-size:11.5px;padding:5px 10px}
@@ -1012,7 +1029,7 @@ body:has(.pbar.on) .navi-fab{
   .navi-chan{flex-direction:column;align-items:flex-start;gap:10px}
   .navi-chan.right{flex-direction:column;align-items:flex-end}
   .navi-img{width:84px;height:126px}
-  .navi-greet .navi-img{width:100px;height:160px}
+  .navi-greet .navi-img{width:100px;height:133px}
   .navi-bubble{max-width:100%;width:100%}
   .navi-bubble::before{display:none}
   .navi-qa{gap:6px}
@@ -1049,7 +1066,7 @@ body:has(.pbar.on) .navi-chat-panel{bottom:calc(182px + env(safe-area-inset-bott
   padding:12px 16px;border-bottom:1px solid rgba(123,94,167,.2);flex-shrink:0}
 .navi-chat-avatar{width:74px;height:74px;border-radius:50%;overflow:hidden;
   border:2.5px solid var(--accent3);flex-shrink:0}
-.navi-chat-avatar img{width:100%;height:100%;object-fit:cover;object-position:center center}
+.navi-chat-avatar img{width:100%;height:100%;object-fit:cover;object-position:center 20%}
 .navi-chat-name{font-weight:800;font-size:16px;color:var(--accent3);flex:1}
 .navi-chat-status{font-size:12px;color:var(--ink-dim,#888)}
 .navi-chat-x{background:transparent;border:none;color:var(--ink-dim,#888);
@@ -1062,7 +1079,7 @@ body:has(.pbar.on) .navi-chat-panel{bottom:calc(182px + env(safe-area-inset-bott
 .navi-msg.user{flex-direction:row-reverse}
 .navi-msg-av{width:64px;height:64px;border-radius:50%;overflow:hidden;
   border:2px solid var(--accent3);flex-shrink:0}
-.navi-msg-av img{width:100%;height:100%;object-fit:cover;object-position:center center}
+.navi-msg-av img{width:100%;height:100%;object-fit:cover;object-position:center 20%}
 .navi-msg-bubble{max-width:76%;padding:11px 15px;border-radius:18px;
   font-size:15px;line-height:1.7;word-break:break-word}
 .navi-msg.navi .navi-msg-bubble{background:rgba(123,94,167,.08);
@@ -1155,13 +1172,18 @@ body:has(.pbar.on) .navi-chat-panel{bottom:calc(182px + env(safe-area-inset-bott
   <div class="herowrap">
     <div>
       <div class="htag" data-i18n="hero_badge">⭐ 完全無料・商用利用OK・登録不要・クレジット表記不要</div>
-      <h1 data-i18n-html="hero_h1">すべての<em>クリエイター</em>に、<br>日本一の<em>フリーBGM</em>を。</h1>
+      <h1 data-i18n-html="hero_h1">気分を伝えるだけ。<br>AIが<em>ぴったりのBGM</em>を選びます。</h1>
       <p class="lead" data-i18n-html="hero_lead">高品質なAI生成BGMを<b id="totalCount">2,090</b>曲、すべて無料・商用利用OKでダウンロードできます。BPM・尺・ムードで秒で見つかる検索体験。YouTube・ゲーム実況・Vlog・配信・映像制作にどうぞ。</p>
       <div class="hsearch">
-        <input type="text" id="searchBox" placeholder="例：ジャズ、夜カフェ、戦闘、ローファイ、爽やか" data-i18n-placeholder="search_placeholder" data-i18n-aria="search_aria" aria-label="BGMを検索">
+        <input type="text" id="searchBox" placeholder="作業用BGM・癒し・Vlog・ゲーム実況…" data-i18n-placeholder="search_placeholder" data-i18n-aria="search_aria" aria-label="BGMを検索">
         <button onclick="doSearch()" data-i18n-title="search_title" data-i18n-aria="search_title" title="キーワード検索" aria-label="キーワード検索" data-i18n="search_btn">検索</button>
-        <button class="aibtn" id="aiOpen" data-i18n-title="ai_btn_title" data-i18n-aria="ai_btn_aria" title="AIにおまかせ" aria-label="AIにおまかせ" data-i18n-html="ai_btn">✨ AIにおまかせ</button>
-        <button class="radiobtn" id="radioOpen" data-i18n-title="radio_btn_title" data-i18n-aria="radio_btn_title" title="BGMチャンネル" aria-label="BGMチャンネル">🎧 <span data-i18n="radio_btn">BGMチャンネル</span><span class="radiosub" data-i18n="radio_sub">気分を選ぶだけ・自動で流れ続ける</span></button>
+        <div class="hbtns">
+          <div class="hbtns-label" data-i18n="hbtns_label">どんな気分？5曲おすすめするよ😊</div>
+          <div class="hbtns-row">
+            <button class="aibtn" id="aiOpen" data-i18n-title="ai_btn_title" data-i18n-aria="ai_btn_aria" title="AIにおまかせ（人気）" aria-label="AIにおまかせ（人気）"><span data-i18n="ai_btn">✨ AIにおまかせ（人気）</span><span class="aibtn-sub" data-i18n="ai_btn_sub">おすすめ5曲</span></button>
+            <button class="radiobtn" id="radioOpen" data-i18n-title="radio_btn_title" data-i18n-aria="radio_btn_title" title="BGMチャンネル" aria-label="BGMチャンネル"><span data-i18n="radio_btn">🎧 BGMチャンネル</span><span class="radiosub" data-i18n="radio_sub">おすすめ5曲</span></button>
+          </div>
+        </div>
       </div>
       <div class="aitips" id="aitips">
         <span class="aitip" data-q="朝の散歩で気持ち良くなれる音楽" data-i18n="tip1">☀️ 朝の散歩で気持ち良くなれる音楽</span>
@@ -1177,7 +1199,7 @@ body:has(.pbar.on) .navi-chat-panel{bottom:calc(182px + env(safe-area-inset-bott
       </div>
     </div>
     <div class="hvis" id="heroVis" aria-hidden="true">
-      <img src="images/site/promo.png" alt="日本一フリーBGM" width="400" height="400" style="width:100%;max-width:400px;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.6),0 0 40px rgba(29,233,182,.1);animation:floatImg 6s ease-in-out infinite">
+      <img src="images/site/hero-display.png" alt="日本一フリーBGM AIがあなたにぴったりのBGMを提案" style="width:100%;max-width:100%;height:auto;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.6),0 0 40px rgba(29,233,182,.1);animation:floatImg 6s ease-in-out infinite;display:block">
     </div>
   </div>
 </section>
@@ -1250,6 +1272,42 @@ body:has(.pbar.on) .navi-chat-panel{bottom:calc(182px + env(safe-area-inset-bott
       </div>
     </div>
     <div class="gsgrid" id="gsGrid"></div>
+  </div>
+</section>
+
+<!-- ジャンル別・用途別ランディングページへのSEO内部リンク -->
+<section class="seo-nav-section" aria-label="ジャンル別・用途別フリーBGMページ一覧">
+  <div class="seonav-wrap">
+    <div class="seonav-block">
+      <h2 class="seonav-ttl">ジャンル別フリーBGM</h2>
+      <div class="seonav-grid">
+        <a href="/genre/jazz/" class="seonav-link">ジャズのフリーBGM（232曲）</a>
+        <a href="/genre/lo-fi/" class="seonav-link">Lo-FiのフリーBGM（193曲）</a>
+        <a href="/genre/ambient/" class="seonav-link">アンビエントのフリーBGM（362曲）</a>
+        <a href="/genre/cinematic/" class="seonav-link">シネマティックのフリーBGM（375曲）</a>
+        <a href="/genre/j-pop/" class="seonav-link">J-POPのフリーBGM（205曲）</a>
+        <a href="/genre/electronic/" class="seonav-link">エレクトロニックのフリーBGM（155曲）</a>
+        <a href="/genre/rock/" class="seonav-link">ロックのフリーBGM（52曲）</a>
+        <a href="/genre/pop/" class="seonav-link">ポップスのフリーBGM（47曲）</a>
+        <a href="/genre/hip-hop-rnb/" class="seonav-link">ヒップホップ・R&amp;BのフリーBGM（82曲）</a>
+        <a href="/genre/folk-acoustic/" class="seonav-link">フォーク・アコースティックのフリーBGM（100曲）</a>
+        <a href="/genre/childrens/" class="seonav-link">キッズ・童謡のフリーBGM（38曲）</a>
+        <a href="/genre/wafu/" class="seonav-link">和風・日本伝統のフリーBGM（28曲）</a>
+        <a href="/genre/japanese-anime/" class="seonav-link">アニメ・アイドルのフリーBGM（50曲）</a>
+        <a href="/genre/horror/" class="seonav-link">ホラー・ダークのフリーBGM（76曲）</a>
+        <a href="/genre/corporate-bgm/" class="seonav-link">企業VP向けフリーBGM</a>
+        <a href="/genre/other/" class="seonav-link">その他のフリーBGM（93曲）</a>
+      </div>
+    </div>
+    <div class="seonav-block">
+      <h2 class="seonav-ttl">用途別フリーBGM</h2>
+      <div class="seonav-grid">
+        <a href="/use/youtube-bgm/" class="seonav-link">YouTubeに使えるフリーBGM</a>
+        <a href="/use/game-bgm/" class="seonav-link">ゲーム実況に使えるフリーBGM</a>
+        <a href="/use/vlog-bgm/" class="seonav-link">Vlogに使えるフリーBGM</a>
+        <a href="/use/streaming-bgm/" class="seonav-link">配信・ライブ配信に使えるフリーBGM</a>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1402,11 +1460,6 @@ body:has(.pbar.on) .navi-chat-panel{bottom:calc(182px + env(safe-area-inset-bott
         <div class="navi-who">▸ NAVI</div>
         <span data-i18n-html="navi_card_text">ほかに気になることある？<br>
         <strong>ライセンスのこと</strong>とか、<strong>使い方</strong>とか、なんでも聞いてね💡</span><br>
-        <span style="display:inline-block;margin-top:8px">
-          <a href="#license" data-i18n="navi_card_btn_license" style="color:var(--accent3);text-decoration:none;border:1px solid var(--accent3);padding:6px 14px;border-radius:999px;font-size:13px">📜 利用規約を見る</a>
-          &nbsp;
-          <a href="#privacy" data-i18n="navi_card_btn_privacy" style="color:var(--accent3);text-decoration:none;border:1px solid var(--accent3);padding:6px 14px;border-radius:999px;font-size:13px">🔒 プライバシー</a>
-        </span>
       </div>
     </div>
   </div>
@@ -1721,7 +1774,7 @@ body:has(.pbar.on) .navi-chat-panel{bottom:calc(182px + env(safe-area-inset-bott
         <button class="rmcard" data-rm="シティポップ J-Pop 80年代 爽やか" data-genres="j-pop,pop"><div class="ic">🌸</div><b data-i18n="rm_citypop">シティポップ</b><small data-i18n="rm_citypop_sub">80年代風</small></button>
         <button class="rmcard" data-rm="エレクトロニック シンセ 高揚 アップテンポ" data-genres="electronic,rock"><div class="ic">🎛</div><b data-i18n="rm_electronic">エレクトロニック</b><small data-i18n="rm_electronic_sub">シンセ & ダンス</small></button>
         <button class="rmcard" data-rm="朝 散歩 爽やか アコースティック ギター" data-genres="folk-acoustic,j-pop,pop"><div class="ic">☀️</div><b data-i18n="rm_morning">朝の散歩</b><small data-i18n="rm_morning_sub">爽やか & ギター</small></button>
-        <button class="rmcard" data-rm="キッズ こども 可愛い 明るい 楽しい" data-genres="childrens,j-pop,pop,japanese-anime"><div class="ic">🧸</div><b data-i18n="rm_kids">キッズ・こども</b><small data-i18n="rm_kids_sub">明るく楽しい</small></button>
+        <button class="rmcard" data-rm="キッズ こども 可愛い 明るい 楽しい" data-genres="childrens"><div class="ic">🧸</div><b data-i18n="rm_kids">キッズ・こども</b><small data-i18n="rm_kids_sub">明るく楽しい</small></button>
         <button class="rmcard" data-rm="synthwave ネオン 真夜中 neon midnight シンセ 疾走感 retro 高揚 アップテンポ ドライブ ナイトドライブ レトロウェーヴ" data-genres="electronic"><div class="ic">🌃</div><b data-i18n="rm_drive">ナイトドライブ</b><small data-i18n="rm_drive_sub">シンセウェーヴ・夜の疾走</small></button>
         <button class="rmcard" data-rm="ホラー 怖い 不気味 サスペンス 幽霊 心霊 dark ambient" data-genres="horror"><div class="ic">👻</div><b>ホラー・ダーク</b><small>怖い・不気味な雰囲気</small></button>
         <button class="rmcard" data-rm="和風 日本 祭り 和楽器 太鼓 三味線 琴 尺八 神社 侍" data-genres="wafu"><div class="ic">⛩</div><b>和風・日本伝統</b><small>祭り・和楽器・侍</small></button>
@@ -3570,17 +3623,27 @@ play = function(id){
 window.play = play;
 
 // ---- iOS 画面ロック後の AudioContext 復帰 ----
-document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState !== 'visible') return;
-  // Web Audio API の AudioContext が suspend されている場合に resume
+function _resumeAllAudioCtx() {
+  // Howler の AudioContext
   if (typeof Howler !== 'undefined' && Howler.ctx && Howler.ctx.state === 'suspended') {
     Howler.ctx.resume().catch(()=>{});
   }
+  // クロスフェード用カスタム AudioContext (_actx は後方で定義されるため関数参照)
+  if (typeof resumeAudioCtx === 'function') resumeAudioCtx();
+}
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState !== 'visible') return;
+  _resumeAllAudioCtx();
   // html5 モードで再生中なのに止まっていたら再開
   const h = _activeHowl();
   if (h && !h.playing() && playBtn && playBtn.textContent === '⏸') {
     try { h.play(); } catch(_){}
   }
+});
+// iOS BFCache（戻るボタンでページ復元）からの復帰対応
+window.addEventListener('pageshow', (e) => {
+  if (!e.persisted) return;
+  _resumeAllAudioCtx();
 });
 
 // ---- ハッシュルーティング ----
@@ -4332,6 +4395,8 @@ async function plPlayAll(){
   view = songs;
   applySeq++;
   play(songs[0].id);
+  // playQueueをプレイリスト曲に明示固定（apply()等でviewが上書きされても連続再生を維持）
+  playQueue = songs.slice();
   plClose();
   toast(window._currentLang==='en' ? `▶ Playing ${songs.length} track${songs.length!==1?'s':''}` : `▶ プレイリスト${songs.length}曲を再生開始`);
 }
@@ -4849,9 +4914,17 @@ async function radioStart(prompt, allowedGenres) {
   // プリセットカードの明示ジャンルで絞り込む（最優先）
   let targetGenre = null;
   if (allowedGenres && allowedGenres.length) {
-    const genreSet = new Set(allowedGenres);
-    const genrePool = pool.filter(s => genreSet.has(s.genre));
-    if (genrePool.length >= 5) { pool = genrePool; targetGenre = allowedGenres[0]; }
+    targetGenre = allowedGenres[0];
+    // 主ジャンル（先頭）に曲が十分あれば主ジャンルのみ使用
+    const primaryPool = pool.filter(s => s.genre === targetGenre);
+    if (primaryPool.length >= 5) {
+      pool = primaryPool;
+    } else {
+      // 主ジャンルが少ない場合は全指定ジャンルで絞り込む
+      const genreSet = new Set(allowedGenres);
+      const genrePool = pool.filter(s => genreSet.has(s.genre));
+      if (genrePool.length >= 5) pool = genrePool;
+    }
   } else {
     // 自由入力時はキーワードからジャンルを推測
     targetGenre = _detectRadioGenre(prompt);
@@ -4874,6 +4947,7 @@ async function radioStart(prompt, allowedGenres) {
   RADIO.prompt = prompt;
   RADIO.mode = prompt;
   RADIO.targetGenre = targetGenre; // キュー枯渇時の補充でも同ジャンルを維持
+  RADIO.allowedGenres = allowedGenres ? new Set(allowedGenres) : null; // 複数ジャンル補充用
   // グッド曲を2倍の確率で再生（シャッフル配列に重複追加）
   RADIO.queue = _buildRadioQueue(candidates);
   RADIO.history = [];
@@ -4899,25 +4973,41 @@ async function radioStart(prompt, allowedGenres) {
 function radioPlayNext() {
   if (!RADIO.on) return;
 
-  // キュー枯渇 → 同ジャンル絞り込みを維持して補充
+  // キュー枯渇 → 選択ジャンルを維持して補充
   if (RADIO.queue.length === 0) {
-    let pool = allSongs.length ? allSongs : view;
-    if (RADIO.targetGenre) {
-      const gp = pool.filter(s => s.genre === RADIO.targetGenre);
-      if (gp.length >= 5) pool = gp;
+    const base = allSongs.length ? allSongs : view;
+
+    // ① 選択ジャンルで絞り込む（allowedGenres優先、次にtargetGenre単体）
+    let pool;
+    if (RADIO.allowedGenres && RADIO.allowedGenres.size) {
+      const gp = base.filter(s => RADIO.allowedGenres.has(s.genre));
+      pool = gp.length >= 3 ? gp : base; // ジャンル曲が少なすぎる場合のみ全体へ
+    } else if (RADIO.targetGenre) {
+      const gp = base.filter(s => s.genre === RADIO.targetGenre);
+      pool = gp.length >= 3 ? gp : base;
+    } else {
+      pool = base;
     }
-    // バッド曲を除外
+
+    // ② バッド曲を除外
     pool = pool.filter(s => !_rPrefs.dislikes.has(s.id));
-    const cands = aiMatch(RADIO.mode, pool, 80) || [];
+
+    // ③ コンセプトマッチ → 取れなければジャンルプールからランダム補充（ジャンル維持）
+    let cands = aiMatch(RADIO.mode, pool, 80) || [];
+    if (!cands.length) cands = shuffleArr(pool.slice()).slice(0, 80);
+
+    // ④ recent履歴除外（グッド曲は除外しない）
     const recentIds = new Set(RADIO.history.slice(-15).map(s => s.id));
-    // グッド曲は recent でも除外しない（好きな曲は繰り返し流す）
     let fresh = cands.filter(s => !recentIds.has(s.id) || _rPrefs.likes.has(s.id));
-    if (!fresh.length) fresh = cands;
+    if (!fresh.length) fresh = cands; // 全曲が recent なら繰り返す
+
     RADIO.queue = _buildRadioQueue(fresh);
+
+    // ⑤ 最終フォールバック: ジャンル内で再シャッフル（ジャンル維持を優先）
     if (!RADIO.queue.length) {
-      toast(window.t('toast_radio_exhausted'));
-      radioStop();
-      return;
+      const fallback = shuffleArr(pool.slice());
+      if (!fallback.length) { toast(window.t('toast_radio_exhausted')); radioStop(); return; }
+      RADIO.queue = fallback.slice(0, 20);
     }
   }
 
@@ -5245,13 +5335,17 @@ document.getElementById('radioInd').onclick = () => {
 };
 
 // ラジオ中にユーザーが手動で曲を再生 → ラジオ停止
+// ※ fromQueue引数を必ず引き継ぐ（プレイリスト連続再生のplayQueue保持に必要）
 const _origPlayForRadio = play;
-play = function(id) {
-  if (RADIO.on) {
+play = function(id, fromQueue) {
+  if (RADIO.on && !fromQueue) {
+    // キュー自動送り（fromQueue=true）ではラジオ停止しない
+    // ユーザー手動再生（fromQueue=false/undefined）のみラジオ停止
     radioStop();
   }
-  return _origPlayForRadio(id);
+  return _origPlayForRadio(id, fromQueue);
 };
+window.play = play; // ナビちゃん等の別スコープからの呼び出しにも適用
 
 // ---- お問い合わせフォーム ----------------------------------------
 (function(){
@@ -7546,13 +7640,15 @@ const T = {
     nav_usage:'用途別', nav_browse:'BGM一覧', nav_faq:'よくある質問', nav_license:'利用規約',
     // Hero
     hero_badge:'⭐ 完全無料・商用利用OK・登録不要・クレジット表記不要',
-    hero_h1:'すべての<em>クリエイター</em>に、<br>日本一の<em>フリーBGM</em>を。',
+    hero_h1:'気分を伝えるだけ。<br>AIが<em>ぴったりのBGM</em>を選びます。',
     hero_lead:'高品質なAI生成BGMを<b id="totalCount">2,090</b>曲、すべて無料・商用利用OKでダウンロードできます。BPM・尺・ムードで秒で見つかる検索体験。YouTube・ゲーム実況・Vlog・配信・映像制作にどうぞ。',
-    search_placeholder:'例：ジャズ、夜カフェ、戦闘、ローファイ、爽やか',
+    search_placeholder:'作業用BGM・癒し・Vlog・ゲーム実況…',
     search_btn:'検索',
-    ai_btn:'✨ AIにおまかせ',
+    hbtns_label:'✨ 好みで選ぶ　　🎧 流しっぱなしで聴く',
+    ai_btn:'✨ AIにおまかせ（人気）',
+    ai_btn_sub:'あなたの好みに合わせてAIが選ぶ',
     radio_btn:'BGMチャンネル',
-    radio_sub:'気分を選ぶだけ・自動で流れ続ける',
+    radio_sub:'ジャンルを選んで連続再生',
     tip1:'☀️ 朝の散歩で気持ち良くなれる音楽',
     tip2:'🌙 夜カフェでまったりするチル',
     tip3:'😱 ホラー実況・怖い曲',
@@ -7735,7 +7831,7 @@ const T = {
     btn_theme_title:'ダーク/ライト切替', btn_theme_aria:'テーマ切替',
     btn_lang_aria:'言語切替',
     search_aria:'BGMを検索', search_title:'キーワード検索',
-    ai_btn_title:'AIにおまかせ', ai_btn_aria:'AIにおまかせ',
+    ai_btn_title:'AIにおまかせ（人気）', ai_btn_aria:'AIにおまかせ（人気）',
     radio_btn_title:'BGMチャンネル',
     // Filter bar
     filter_region_aria:'適用中のフィルタ',
@@ -7810,11 +7906,13 @@ const T = {
     nav_usage:'Use Cases', nav_browse:'All BGM', nav_faq:'FAQ', nav_license:'License',
     // Hero
     hero_badge:'⭐ 100% Free · Commercial Use OK · No Sign-up · No Credit Required',
-    hero_h1:'The best music<br>for every <em>creator</em>.',
+    hero_h1:'Just describe your mood.<br>AI picks the <em>perfect BGM</em> for you.',
     hero_lead:'<b id="totalCount">2,090</b> high-quality AI-generated BGM tracks — all free, commercial use OK, no registration required. Find the perfect track by BPM, length, or mood in seconds. Perfect for YouTube, gaming, Vlogs, streams & films.',
-    search_placeholder:'e.g. jazz, chill café, battle, lo-fi, upbeat',
+    search_placeholder:'study music, chill, Vlog, gaming…',
     search_btn:'Search',
+    hbtns_label:'✨ Pick by taste　　🎧 Continuous play',
     ai_btn:'✨ AI Match',
+    ai_btn_sub:'AI picks based on your taste',
     radio_btn:'BGM Channel',
     radio_sub:'Pick a vibe · music plays on',
     tip1:'☀️ Morning walk feel-good music',
@@ -8185,7 +8283,7 @@ if ('serviceWorker' in navigator) {
     <div class="navi-chat-avatar"><img src="images/navi/welcome.png" alt="ナビちゃん"></div>
     <div>
       <div class="navi-chat-name">ナビちゃん</div>
-      <div class="navi-chat-status" id="naviStatus">オンライン ✨</div>
+      <div class="navi-chat-status" id="naviStatus">曲を探す・使い方案内</div>
     </div>
     <button class="navi-chat-x" id="naviChatClose" aria-label="チャットを閉じる">×</button>
   </div>
@@ -8196,7 +8294,7 @@ if ('serviceWorker' in navigator) {
   </div>
 </div>
 <div class="navi-fab" id="naviFab">
-  <button class="navi-fab-btn" id="naviFabBtn" aria-label="ナビちゃんに話しかける" title="ナビちゃん">
+  <button class="navi-fab-btn" id="naviFabBtn" aria-label="ナビちゃんに話しかける（曲を探す・使い方案内）" title="ナビちゃん — 曲を探す・使い方案内">
     <img src="images/navi/welcome.png" alt="ナビちゃん">
   </button>
 </div>
@@ -8298,8 +8396,27 @@ const MOOD=[
   {k:['コーポレート','企業','ビジネス','プレゼン','corporate','professional','bgm'],g:['corporate-bgm']},
   {k:['j-pop','jpop','ポップス','j pop','Jポップ'],g:['j-pop','pop']},
   {k:['こども','子供','子ども','童謡','キッズ','kids','children'],g:['childrens']},
-  {k:['速い','テンポ速','fast','快活','bpm高'],min:130},
+  {k:['速い','テンポ速','fast','快活','bpm高','疾走感','駆け抜ける','スピード感','爆走'],min:130},
   {k:['遅い','スロー','ゆっくり','slow','テンポ遅'],max:85},
+  // ニュアンス系
+  {k:['疾走感','駆け抜ける','スピード感','爆走','chase','race','sprint'],
+    g:['rock','electronic','cinematic'],min:130},
+  {k:['浮遊感','ふわふわ','漂う','floating','ethereal','dreamy'],
+    g:['ambient','lo-fi','electronic'],max:100},
+  {k:['エモい','切ない','感傷','ノスタルジア','nostalgic','melancholic'],
+    g:['cinematic','folk-acoustic','ambient']},
+  {k:['ほっこり','温かい','ぬくもり','heartwarming','cozy','wholesome'],
+    g:['folk-acoustic','j-pop','ambient'],max:110},
+  {k:['高揚','解放感','開放感','uplifting','triumphant','euphoric'],
+    g:['cinematic','electronic','rock'],min:100},
+  {k:['ゾクゾク','緊張感','スリル','thrilling','tense','suspenseful'],
+    g:['cinematic','horror','electronic']},
+  {k:['神秘的','幻想的','mystical','ethereal','magical'],
+    g:['ambient','cinematic','electronic'],max:110},
+  {k:['哀愁','哀れ','wistful','melancholy','longing'],
+    g:['cinematic','folk-acoustic','jazz']},
+  {k:['爽やか','清々しい','refreshing','crisp','bright'],
+    g:['folk-acoustic','pop','j-pop'],min:90},
 ];
 
 /* ---------- 会話パターン ---------- */
@@ -8320,14 +8437,23 @@ const CONVS=[
   {r:/😢|エモ.*泣ける|泣ける.*エモ/i, expr:'crying',
     a:['思いっきり感情に浸れる曲を選んだよ😢 心ゆくまで聴いてね💕'],
     q:'感動 切ない 泣ける エモ cinematic folk-acoustic'},
-  {r:/🎲|おまかせで/i, expr:'surprise', special:'random'},
+  {r:/🎲|おまかせで/i, expr:'surprise',
+    a:['おまかせ！いろんな系統からセレクトしてみたよ🎲 気に入る曲あるかな？'],
+    q:'明るい 癒し j-pop ambient lo-fi'},
+  {r:/ℹ️|サイトについて$/i, expr:'smile',
+    a:['「日本一フリーBGMサイト」について教えるね📋'],
+    chips:['無料？商用OK？','ダウンロードの仕方','禁止事項は？','ライセンスについて','BGMチャンネルとは？','新曲の追加頻度は？']},
   {r:/他の気分を探す/i, expr:'smiling',
     a:['どんな気分にする？気軽に選んでみて🎵'],
-    chips:['🌿 穏やか・癒し','📚 集中したい','⚡ テンション上げたい','🌙 夜に聴きたい','😢 エモ・泣ける','🎲 おまかせで！']},
+    chips:['🌿 穏やか・癒し','📚 集中したい','⚡ テンション上げたい','🌙 夜に聴きたい','😢 エモ・泣ける','🎲 おまかせで！','🎸 ジャンルを選ぶ']},
   {r:/🎸|ジャンルを選ぶ/i, expr:'confident',
     a:['どのジャンルにする？🎵'],
     chips:['Lo-Fi','ジャズ','アンビエント','ロック','エレクトロニック','アニメ','シネマティック','フォーク']},
-  {r:/もっと見る/i, expr:'smile', special:'searchMore'},
+  {r:/おすすめを教えて|もっと見る/i, expr:'smiling',
+    a:['ナビちゃんのおすすめをピックアップしたよ🎵 いろいろなジャンルからセレクト✨',
+       'ナビ的にイチオシの曲を選んだよ💕 気に入ったのがあるといいな！',
+       'おすすめをいくつか持ってきたよ🎶 どれか好みのやつある？'],
+    q:'明るい 癒し ambient j-pop lo-fi cinematic jazz folk'},
   // ── 通常会話 ──
   {r:/^(こんにちは|やあ|hello|hi|hey|おはよ|こんばん|はじめ|よろしく)/i, expr:'smiling',
     a:['こんにちは！ナビちゃんです🎵 どんな曲を探してる？気分やシーン、テンポ感… なんでも話してね✨',
@@ -8394,8 +8520,8 @@ const CONVS=[
     a:['ダークな雰囲気のBGMを探してきたよ🌑 緊張感のある曲を選んだよ！',
        'サスペンス系の不穏なBGMをセレクトしたよ🎭 映像制作にも使えるよ！'],
     q:'ダーク 不穏 サスペンス mysterious cinematic dark ambient'},
-  {r:/何が好き|おすすめ|おすすめ曲|人気|ランキング/i, expr:'joy', special:'recommend'},
-  {r:/ランダム|適当|なんでも|おまかせ|random/i, expr:'surprise', special:'random'},
+  {r:/このサイト|何のサイト|サイト.*説明|使い方|どう使う|何ができ|機能.*教えて|教えて.*機能/i, expr:'confident',
+    a:['日本一フリーBGMは<strong>2,090曲以上が完全無料</strong>で使えるBGMサイトだよ🎵<br>・商用利用OK／登録不要／クレジット表記不要<br>・検索やジャンルで曲を見つけてダウンロードできるよ！<br>・わたし（ナビちゃん）に気分やシーンを話してくれたら曲を探すよ✨']},
   {r:/全ジャンル|ジャンル一覧|どんなジャンル|genre/i, expr:'confident',
     a:['ジャンルはこんな感じだよ🎵\n<strong>Jazz・Ambient・Lo-Fi・Cinematic・Electronic・Rock・Pop・J-Pop・Folk・Hip-Hop・Anime・Corporate・Kids・Other</strong>\nどれか気になる？']},
 
@@ -8479,7 +8605,9 @@ const CONVS=[
   {r:/泣きたい|涙|なきたい|cry|泣ける/i, expr:'crying',
     a:['思いっきり泣けるような、エモい曲を探すね🎵 ちょっと待って💕'],
     q:'感動 切ない 泣ける エモ cinematic folk-acoustic'},
-  {r:/暇|ひま|することない|退屈|bored/i, expr:'surprise', special:'random'},
+  {r:/暇|ひま|することない|退屈|bored/i, expr:'surprise',
+    a:['暇なときはBGMで気分転換しよ🎲 いろんな系統からセレクトしてみたよ！'],
+    q:'明るい 癒し j-pop ambient lo-fi'},
 
   // ── 季節・天気 ──
   {r:/春|さくら|桜|花見|ぽかぽか|spring/i, expr:'smiling',
@@ -8553,6 +8681,24 @@ const CONVS=[
     a:['毎週新曲が追加されてるよ🆕 「BGM一覧」→「新着順」で最新曲をチェックできるよ✨']},
   {r:/お気に入り|ブックマーク|保存|favorite|fav/i, expr:'blushing',
     a:['曲カードの♡ボタンでお気に入り登録できるよ💕 右上の「♡」ボタンでお気に入りだけ表示もできるよ！']},
+
+  // ── サイトFAQ ──
+  {r:/ライセンス|著作権|権利|利用規約|規約|terms|license|copyright/i, expr:'confident',
+    a:['全曲<strong>著作権フリー</strong>だよ✨<br>・商用利用OK（YouTube・配信・ゲーム・企業VP・アプリ等）<br>・クレジット表記不要<br>・登録不要・無料<br>詳しくはサイトのフッター「利用規約」で確認してね！']},
+  {r:/禁止|ダメ|使えない|NG|できない.*こと|してはいけない|prohibited/i, expr:'pensive',
+    a:['禁止されてることを教えるね！<br>・曲自体を販売・再配布すること<br>・素材として他のフリー素材サイトに転載<br>・AIの学習データへの利用<br>・違法コンテンツへの使用<br>それ以外はほぼOKだよ✨ 詳しくはフッターの利用規約で確認してね！']},
+  {r:/BGMチャンネル|チャンネル機能|連続再生|自動再生|playlist|プレイリスト/i, expr:'excited',
+    a:['BGMチャンネルはジャンルを選ぶと<strong>同じジャンルの曲を自動で連続再生</strong>してくれる機能だよ🎵<br>ヒーローセクションの「BGMチャンネル」ボタンから使えるよ✨ 作業中や配信のBGMにぴったり！']},
+  {r:/サイトについて|どんなサイト|運営|誰が作|作者|制作者|サービス.*説明/i, expr:'smile',
+    a:['「日本一フリーBGMサイト」は、<strong>完全無料でBGMが使い放題</strong>のサービスだよ🎵<br>・2,090曲以上・全曲商用利用OK・登録不要・クレジット表記不要<br>・AIナビ（ナビちゃん）による気分検索<br>・BGMチャンネルで連続再生<br>・毎週新曲追加中✨<br>全部タダで使えるよ！気軽に活用してね💕']},
+  {r:/使い方.*教|教.*使い方|how.*use|使い方.*わかr|操作.*教|基本.*使/i, expr:'smiling',
+    a:['簡単に使えるよ🎵<br>①気分やジャンルで曲を絞り込む<br>②曲カードをクリックして試聴<br>③「ダウンロード」で無料DL<br>④ナビちゃん（わたし）に話しかけると気分に合う曲を提案するよ✨<br>全部タダで登録不要！']},
+  {r:/検索.*使い方|検索.*コツ|うまく検索|検索.*方法/i, expr:'confident',
+    a:['検索のコツを教えるね🔍<br>・気分やシーン（「疾走感」「ほっこり」「深夜」等）で話しかけるとナビちゃんが探すよ<br>・上の検索バーでタイトル・ジャンルを直接検索もできるよ<br>・「詳細フィルター」でBPMやジャンルを絞れるよ✨']},
+  {r:/更新|追加.*頻度|新曲.*いつ|どのくらい.*曲|曲.*増え/i, expr:'excited',
+    a:['毎週新曲を追加してるよ🆕 「新着順」フィルターで最新曲が見られるよ✨ どんどん増えてるから楽しみにしてて！']},
+  {r:/スマホ|モバイル|アプリ|app|スマートフォン/i, expr:'smiling',
+    a:['スマホのブラウザからそのまま使えるよ📱 アプリは今のところないけど、ブラウザでも全機能が使えるよ✨ ホーム画面に追加するとアプリっぽく使えるよ！']},
 ];
 
 /* ---------- タグ同義語マップ（ナビちゃんチャット検索用） ---------- */
@@ -8582,6 +8728,27 @@ const QUERY_EXPAND={
   'シネマティック':['cinematic','orchestral','epic','dramatic','film score'],
   '和風':['japanese','wa-pop','traditional japanese','koto','shakuhachi','taiko'],
   'アニメ':['anime','j-pop','japanese-anime','manga'],
+  // ── 感覚・ニュアンス系 ──
+  '疾走感':['driving','fast-paced','chase','action','sprint','running','energetic','adrenaline','race'],
+  '浮遊感':['floating','ethereal','dreamy','ambient','atmospheric','airy','weightless','spacious'],
+  'ふわふわ':['fluffy','dreamy','ethereal','ambient','soft','whimsical','light','airy'],
+  'エモい':['emotional','melancholic','nostalgic','bittersweet','sentimental','touching','evocative'],
+  'ゾクゾク':['thrilling','tense','suspenseful','eerie','spine-tingling','intense','dramatic'],
+  'ほっこり':['warm','cozy','heartwarming','gentle','tender','wholesome','soft'],
+  '切ない':['melancholic','bittersweet','nostalgic','sad','emotional','longing','wistful'],
+  '高揚':['uplifting','euphoric','triumphant','soaring','empowering','inspiring'],
+  'ドラマチック':['dramatic','cinematic','epic','orchestral','powerful','intense'],
+  '哀愁':['melancholy','nostalgic','wistful','sad','bittersweet','longing'],
+  '感動':['emotional','moving','touching','dramatic','cinematic','inspiring','uplifting'],
+  '神秘的':['mysterious','mystical','ethereal','magical','otherworldly','mystical'],
+  '温かい':['warm','cozy','heartwarming','acoustic','gentle','tender'],
+  '爽やか':['fresh','breezy','upbeat','refreshing','bright','clean','crisp'],
+  '幻想的':['fantastical','dreamlike','ethereal','magical','mystical','otherworldly'],
+  'ノスタルジア':['nostalgic','retro','vintage','old-school','sentimental'],
+  'メランコリー':['melancholy','melancholic','sad','wistful','bittersweet'],
+  '緊張感':['tense','suspenseful','dramatic','intense','thriller','action'],
+  '開放感':['open','spacious','free','expansive','wide','ambient'],
+  '壮大':['epic','grand','orchestral','cinematic','majestic','powerful'],
 };
 
 /* ---------- 検索ロジック ---------- */
@@ -8635,71 +8802,6 @@ function searchSongs(query){
   return scored.slice(0,5).map(x=>x.s);
 }
 
-function getRandomSongs(n){
-  const songs=typeof allSongs!=='undefined'?[...allSongs]:[];
-  for(let i=songs.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[songs[i],songs[j]]=[songs[j],songs[i]];}
-  return songs.slice(0,n);
-}
-
-function getRecommend(){
-  const songs=typeof allSongs!=='undefined'?[...allSongs]:[];
-  // 人気っぽい曲（duration長め・BPMが適度）を優先
-  return songs.filter(s=>s.bpm>70&&s.bpm<130&&s.duration>90)
-    .sort(()=>Math.random()-.5).slice(0,5);
-}
-
-/* ---------- 直前の検索状態（「もっと見る」で再利用） ---------- */
-let _lastSearchQuery = '';    // 直前のsearchSongs用クエリ
-let _shownSongIds = new Set(); // 今セッションで表示済みの曲ID
-
-function _searchMore(){
-  // 直前クエリで未表示の曲をさらに5曲返す
-  if(!_lastSearchQuery) return getRandomSongs(5);
-  const q=_lastSearchQuery.toLowerCase();
-  let genres=[],minBPM=0,maxBPM=999;
-  MOOD.forEach(m=>{
-    if(m.k.some(k=>q.includes(k))){
-      if(m.g) genres.push(...m.g);
-      if(m.min) minBPM=Math.max(minBPM,m.min);
-      if(m.max) maxBPM=Math.min(maxBPM,m.max);
-    }
-  });
-  const rawTokens=q.replace(/[、。！？！？\s]+/g,' ').split(' ').filter(t=>t.length>1);
-  const expandedTags=new Set();
-  rawTokens.forEach(t=>{if(QUERY_EXPAND[t])QUERY_EXPAND[t].forEach(e=>expandedTags.add(e));});
-  const qTokens=[...new Set([...rawTokens,...expandedTags])];
-  const songs=typeof allSongs!=='undefined'?allSongs:[];
-  const hasBpmConstraint=minBPM>0||maxBPM<999;
-  let scored=songs
-    .filter(s=>!_shownSongIds.has(s.id)) // 表示済みを除外
-    .map(s=>{
-      let sc=0;
-      if(genres.length&&genres.includes(s.genre)) sc+=40;
-      if(hasBpmConstraint&&s.bpm>=minBPM&&s.bpm<=maxBPM) sc+=15;
-      if(hasBpmConstraint&&genres.length&&(s.bpm<minBPM||s.bpm>maxBPM)) sc-=20;
-      qTokens.forEach(t=>{
-        const tags=(s.tags||'').toLowerCase();
-        const title=(s.title||'').toLowerCase();
-        const titleEn=(s.title_en||'').toLowerCase();
-        const desc=(s.description||'').toLowerCase();
-        if(tags.includes(t)) sc+=(expandedTags.has(t)?25:20);
-        if(title.includes(t)||titleEn.includes(t)) sc+=30;
-        if(desc.includes(t)) sc+=10;
-      });
-      return {s,sc};
-    }).filter(x=>x.sc>0).sort((a,b)=>b.sc-a.sc||Math.random()-.5);
-  if(scored.length&&scored.every(x=>x.sc<=40)){
-    for(let i=scored.length-1;i>0;i--){
-      const j=Math.floor(Math.random()*(i+1));[scored[i],scored[j]]=[scored[j],scored[i]];
-    }
-  }
-  const results=scored.slice(0,5).map(x=>x.s);
-  // 表示済みに追加
-  if(results.length) results.forEach(s=>_shownSongIds.add(s.id));
-  // 未表示が5曲以下ならランダムで補完
-  if(results.length<3) return getRandomSongs(5);
-  return results;
-}
 
 /* ---------- レスポンス生成 ---------- */
 function getResponse(msg){
@@ -8708,35 +8810,16 @@ function getResponse(msg){
   // 会話パターン
   for(const c of CONVS){
     if(c.r.test(m)){
-      if(c.special==='random') return {text:'じゃあランダムで5曲選んでみたよ🎲 好きな曲あるかな？',songs:getRandomSongs(5),expr:'playful'};
-      if(c.special==='searchMore'){
-        const more=_searchMore();
-        const moreTxt=_lastSearchQuery
-          ? ['同じ雰囲気でもっと探してきたよ🎵 こんな感じはどう？',
-             'さっきとは違う曲を選んでみたよ✨ 聴いてみて！',
-             '続けてセレクトしたよ🎶 気に入る曲があるといいな！'][Math.floor(Math.random()*3)]
-          : 'ランダムで5曲選んでみたよ🎲';
-        return {text:moreTxt,songs:more,expr:'smile'};
-      }
-      if(c.special==='recommend') return {text:'ナビのおすすめ曲だよ🌟 気に入ってもらえると嬉しいな！',songs:getRecommend(),expr:'confident'};
       const a=c.a;
       const text=a[Math.floor(Math.random()*a.length)];
-      if(c.q){
-        _lastSearchQuery=c.q;
-        _shownSongIds.clear();
-      }
       const songs=c.q ? searchSongs(c.q) : null;
-      if(songs) songs.forEach(s=>_shownSongIds.add(s.id));
       const expr=c.expr||(songs&&songs.length ? (NAVI_GENRE_FACE[songs[0].genre]||'confident') : 'welcome');
       return {text, songs, expr, chips:c.chips||null};
     }
   }
   // 曲検索（自由入力）
-  _lastSearchQuery=m;
-  _shownSongIds.clear();
   const found=searchSongs(m);
   if(found.length){
-    found.forEach(s=>_shownSongIds.add(s.id));
     const genre=found[0].genre;
     const genreJa=GENRE_JA[genre]||genre;
     const expr=NAVI_GENRE_FACE[genre]||'confident';
@@ -8889,7 +8972,7 @@ function sendMessage(text){
     if(res.chips){
       chips=res.chips;
     } else if(res.songs&&res.songs.length){
-      chips=['他の気分を探す','もっと見る','おすすめを教えて'];
+      chips=['他の気分を探す','🎸 ジャンルを選ぶ','おすすめを教えて'];
     } else {
       chips=['🌿 穏やか・癒し','📚 集中したい','⚡ テンション上げたい','🌙 夜に聴きたい','😢 エモ・泣ける','🎲 おまかせで！'];
     }
@@ -8904,7 +8987,7 @@ input.addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.
 function initChat(){
   messages.innerHTML='';
   appendMsg('navi','こんにちは！ナビちゃんです🎵<br>今どんな気分？ボタンを押すだけで<strong>ピッタリのBGMを探す</strong>よ✨<br>もちろん自由に話しかけてもOK！',null,
-    ['🌿 穏やか・癒し','📚 集中したい','⚡ テンション上げたい','🌙 夜に聴きたい','😢 エモ・泣ける','🎲 おまかせで！'],'welcome');
+    ['🌿 穏やか・癒し','📚 集中したい','⚡ テンション上げたい','🌙 夜に聴きたい','😢 エモ・泣ける','🎲 おまかせで！','🎸 ジャンルを選ぶ','ℹ️ サイトについて'],'welcome');
 }
 initChat();
 
