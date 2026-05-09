@@ -1569,7 +1569,7 @@ body:has(.pbar.on) .navi-chat-panel{bottom:calc(182px + env(safe-area-inset-bott
           <div style="font-size:10px;color:var(--muted);font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px" data-i18n="detail_credit_label">クレジット表記（任意）</div>
           <code id="mCredit">—</code>
         </div>
-        <button class="cpybtn" onclick="copyCredit()" data-i18n="detail_copy_btn">コピー</button>
+        <button class="cpybtn" onclick="copyCredit(this)" data-i18n="detail_copy_btn">コピー</button>
       </div>
     </div>
     <div class="mfoot">
@@ -3272,14 +3272,13 @@ function openDetail(id){
   document.getElementById('detailModal').classList.add('on');
 }
 window.closeModal = () => document.getElementById('detailModal').classList.remove('on');
-window.copyCredit = () => {
+window.copyCredit = (btn) => {
   const t = document.getElementById('mCredit').textContent;
   navigator.clipboard.writeText(t).then(()=>{
-    const btn = event.target;
     const orig = btn.textContent;
     btn.textContent = window.t('toast_copy_credit');
     setTimeout(()=>btn.textContent=orig, 1400);
-  });
+  }).catch(()=>{});
 };
 document.getElementById('detailModal').onclick = e => { if (e.target.id === 'detailModal') closeModal(); };
 
@@ -8120,6 +8119,8 @@ if ('serviceWorker' in navigator) {
 (function(){
 'use strict';
 
+const escH=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
 const R2='https://pub-c8052da2182b4317bc252b78e473584c.r2.dev';
 
 /* ---------- ジャンル日本語ラベル ---------- */
@@ -8654,7 +8655,7 @@ function getResponse(msg){
     const genreJa=GENRE_JA[genre]||genre;
     const expr=NAVI_GENRE_FACE[genre]||'confident';
     const intros=[
-      `「${m}」にぴったりの曲を見つけたよ🎵 聴いてみて！`,
+      `「${escH(m)}」にぴったりの曲を見つけたよ🎵 聴いてみて！`,
       `${genreJa}系のBGMを探してきたよ✨ こんな感じはどう？`,
       `いい感じの曲があったよ💕 再生ボタンで試聴できるよ！`,
       `気分に合いそうな曲をセレクトしたよ🎶 どれか好み？`,
@@ -8681,11 +8682,12 @@ const closeBtn=document.getElementById('naviChatClose');
 if(!panel||!messages||!input) return;
 
 let isOpen=false;
+let _lastFace='welcome';
 function setOpen(v){
   isOpen=v;
   panel.classList.toggle('open',v);
   fab.classList.toggle('chat-active',v);
-  if(v) setNaviFace('welcome');
+  if(v) setNaviFace(_lastFace);
 }
 
 fabBtn.addEventListener('click',function(e){e.stopPropagation();setOpen(!isOpen);});
@@ -8729,6 +8731,7 @@ function songCard(s){
 
 const naviHeaderImg=document.querySelector('#naviChatPanel .navi-chat-avatar img');
 function setNaviFace(expr){
+  _lastFace=expr;
   if(naviHeaderImg) naviHeaderImg.src=naviImg(expr);
 }
 
@@ -8745,7 +8748,7 @@ function appendMsg(who, text, songs, chips, expr){
   }
   const bubble=document.createElement('div');
   bubble.className='navi-msg-bubble';
-  bubble.innerHTML=text;
+  if(who==='user'){bubble.textContent=text;}else{bubble.innerHTML=text;}
   if(songs&&songs.length){
     const hint=document.createElement('div');
     hint.className='navi-song-hint';
@@ -8824,7 +8827,7 @@ try{
   var last=parseInt(localStorage.getItem('naviChatClosed')||'0',10);
   if(!last||(Date.now()-last)>30*24*60*60*1000){
     setTimeout(()=>{setOpen(true);},3000);
-    setTimeout(()=>{if(isOpen)setOpen(false);},14000);
+    setTimeout(()=>{if(isOpen){setOpen(false);try{localStorage.setItem('naviChatClosed',String(Date.now()));}catch(_){}}},14000);
   }
 }catch(_){}
 

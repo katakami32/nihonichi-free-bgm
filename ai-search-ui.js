@@ -105,6 +105,7 @@
   }
 
   async function callAiSearch(query, limit = 10) {
+    if (!API_BASE) throw new Error('no api');
     const res = await fetch(`${API_BASE}/api/ai-search?q=${encodeURIComponent(query)}&limit=${limit}`);
     if (!res.ok) throw new Error(`API ${res.status}`);
     return res.json();
