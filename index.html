@@ -133,7 +133,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Shippori+Mincho:wght@700&display=swap" rel="stylesheet">
 
 <!-- Howler.js (Web Audio API ベースの安定再生エンジン) -->
-<script src="https://cdn.jsdelivr.net/npm/howler@2.2.4/dist/howler.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/howler@2.2.4/dist/howler.min.js" integrity="sha384-SSf4pKRrGaeWL8bdA89QvGkhZo5WvIVCGwKVzfX7z+9sSaIHtE/AkOLehofI4JVY" crossorigin="anonymous"></script>
 <style>
 /* ── SEO 全曲カタログ（ユーザーには非表示・クローラーには可視） ─────────────────────────
    display:none / visibility:hidden はGoogleがコンテンツを無視する可能性があるため使わない。
@@ -146,7 +146,6 @@
   padding:0;
   margin:-1px;
   overflow:hidden;
-  clip:rect(0,0,0,0);
   clip-path:inset(50%);
   white-space:nowrap;
   border:0;
@@ -1470,7 +1469,7 @@ body:has(.pbar.on) .navi-chat-panel{bottom:calc(182px + env(safe-area-inset-bott
       <div data-i18n-html="privacy_collect"><strong style="color:var(--ink)">収集する情報</strong><br>当サイトはアカウント登録不要で利用できます。氏名・メールアドレス等の個人情報は一切収集しません。</div>
       <div data-i18n-html="privacy_storage"><strong style="color:var(--ink)">ブラウザ保存（localStorage）</strong><br>お気に入り登録・最近聴いた曲・テーマ設定は、お使いのブラウザのlocalStorageにのみ保存されます。サーバーへは送信されません。</div>
       <div data-i18n-html="privacy_analytics"><strong style="color:var(--ink)">アクセス解析</strong><br>サイト改善のため、匿名の閲覧データ（ページビュー・再生回数等）を収集する場合があります。特定個人を識別できる情報は含みません。</div>
-      <div data-i18n-html="privacy_contact"><strong style="color:var(--ink)">お問い合わせ</strong><br>プライバシーに関するご質問は <a href="#" id="privacyContactLink" style="color:var(--accent)">お問い合わせフォーム</a> よりご連絡ください。</div>
+      <div data-i18n-html="privacy_contact"><strong style="color:var(--ink)">お問い合わせ</strong><br>プライバシーに関するご質問は <a href="#0" id="privacyContactLink" style="color:var(--accent)">お問い合わせフォーム</a> よりご連絡ください。</div>
     </div>
   </div>
 </section>
@@ -1569,7 +1568,7 @@ body:has(.pbar.on) .navi-chat-panel{bottom:calc(182px + env(safe-area-inset-bott
           <div style="font-size:10px;color:var(--muted);font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px" data-i18n="detail_credit_label">クレジット表記（任意）</div>
           <code id="mCredit">—</code>
         </div>
-        <button class="cpybtn" onclick="copyCredit()" data-i18n="detail_copy_btn">コピー</button>
+        <button class="cpybtn" onclick="copyCredit(this)" data-i18n="detail_copy_btn">コピー</button>
       </div>
     </div>
     <div class="mfoot">
@@ -2331,10 +2330,12 @@ async function fetchAllForFavs(ids, max){
   let page = 1;
   while (got.length < wanted.size && page < 100){
     const res = await apiGet('/api/songs', { sort: 'new', page, limit: 100 });
-    for (const it of (res.items||[])){
+    const items = res.items || [];
+    for (const it of items){
       if (wanted.has(it.id)) got.push(it);
     }
-    if ((res.items||[]).length < 100) break;
+    if (items.length === 0) break;
+    if (items.length < 100) break;
     page++;
   }
   return got;
@@ -3272,14 +3273,13 @@ function openDetail(id){
   document.getElementById('detailModal').classList.add('on');
 }
 window.closeModal = () => document.getElementById('detailModal').classList.remove('on');
-window.copyCredit = () => {
+window.copyCredit = (btn) => {
   const t = document.getElementById('mCredit').textContent;
   navigator.clipboard.writeText(t).then(()=>{
-    const btn = event.target;
     const orig = btn.textContent;
     btn.textContent = window.t('toast_copy_credit');
     setTimeout(()=>btn.textContent=orig, 1400);
-  });
+  }).catch(()=>toast('コピーに失敗しました'));
 };
 document.getElementById('detailModal').onclick = e => { if (e.target.id === 'detailModal') closeModal(); };
 
@@ -3619,8 +3619,24 @@ document.addEventListener('keydown', e => {
   switch(e.key){
     case ' ':
       e.preventDefault();
-      if (!audio.src && view.length) play(view[0].id);
-      else if (audio.paused) audio.play(); else audio.pause();
+      {
+        const h = _activeHowl();
+        if (h) {
+          if (playBtn.textContent === '⏸') {
+            h.fade(h.volume(), 0, 180);
+            setTimeout(() => { try { h.pause(); } catch(_){} }, 200);
+          } else {
+            h.volume(0); h.play();
+            setTimeout(() => { try { h.fade(0, savedVolume, 150); } catch(_){} }, 10);
+          }
+        } else if (!audio.src && view.length) {
+          play(view[0].id);
+        } else if (audio.paused) {
+          audio.play();
+        } else {
+          audio.pause();
+        }
+      }
       break;
     case 'ArrowRight':
       if (e.shiftKey){ audio.currentTime = Math.min(audio.duration||0, audio.currentTime + 5); }
@@ -7548,7 +7564,7 @@ const T = {
     privacy_collect:'<strong style="color:var(--ink)">収集する情報</strong><br>当サイトはアカウント登録不要で利用できます。氏名・メールアドレス等の個人情報は一切収集しません。',
     privacy_storage:'<strong style="color:var(--ink)">ブラウザ保存（localStorage）</strong><br>お気に入り登録・最近聴いた曲・テーマ設定は、お使いのブラウザのlocalStorageにのみ保存されます。サーバーへは送信されません。',
     privacy_analytics:'<strong style="color:var(--ink)">アクセス解析</strong><br>サイト改善のため、匿名の閲覧データ（ページビュー・再生回数等）を収集する場合があります。特定個人を識別できる情報は含みません。',
-    privacy_contact:'<strong style="color:var(--ink)">お問い合わせ</strong><br>プライバシーに関するご質問は <a href="#" id="privacyContactLink" style="color:var(--accent)">お問い合わせフォーム</a> よりご連絡ください。',
+    privacy_contact:'<strong style="color:var(--ink)">お問い合わせ</strong><br>プライバシーに関するご質問は <a href="#0" id="privacyContactLink" style="color:var(--accent)">お問い合わせフォーム</a> よりご連絡ください。',
     // FAQ
     faq_q1:'本当に無料で使っていいんですか？商用利用も？',
     faq_a1:'はい、すべての楽曲が <b>完全無料・商用利用OK</b> です。YouTube・TikTok・Instagram などの動画、ゲーム実況・配信、企業VPや広告まで、特別な手続きなしで使用できます。会員登録もメールアドレス入力も不要です。',
@@ -7812,7 +7828,7 @@ const T = {
     privacy_collect:'<strong style="color:var(--ink)">Data We Collect</strong><br>No account registration is required. We do not collect any personal information such as names or email addresses.',
     privacy_storage:'<strong style="color:var(--ink)">Browser Storage (localStorage)</strong><br>Favorites, recently played tracks, and theme settings are stored only in your browser\'s localStorage and are never sent to our servers.',
     privacy_analytics:'<strong style="color:var(--ink)">Analytics</strong><br>We may collect anonymous usage data (page views, play counts, etc.) to improve the site. No personally identifiable information is included.',
-    privacy_contact:'<strong style="color:var(--ink)">Contact</strong><br>For privacy-related questions, please use the <a href="#" id="privacyContactLink" style="color:var(--accent)">contact form</a>.',
+    privacy_contact:'<strong style="color:var(--ink)">Contact</strong><br>For privacy-related questions, please use the <a href="#0" id="privacyContactLink" style="color:var(--accent)">contact form</a>.',
     // FAQ
     faq_q1:'Is it really free? Can I use it commercially?',
     faq_a1:'Yes — all tracks are <b>100% free and commercial use is OK</b>. YouTube, TikTok, Instagram videos, game streams, corporate videos, ads — all fine with no special procedure. No account or email required.',
@@ -8739,7 +8755,7 @@ function appendMsg(who, text, songs, chips, expr){
   }
   const bubble=document.createElement('div');
   bubble.className='navi-msg-bubble';
-  bubble.innerHTML=text;
+  if(who==='user'){bubble.textContent=text;}else{bubble.innerHTML=text;}
   if(songs&&songs.length){
     const hint=document.createElement('div');
     hint.className='navi-song-hint';
