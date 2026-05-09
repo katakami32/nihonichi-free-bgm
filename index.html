@@ -1025,7 +1025,7 @@ body:has(.pbar.on) .navi-chat-panel{bottom:calc(182px + env(safe-area-inset-bott
   padding:12px 16px;border-bottom:1px solid rgba(123,94,167,.2);flex-shrink:0}
 .navi-chat-avatar{width:74px;height:74px;border-radius:50%;overflow:hidden;
   border:2.5px solid var(--accent3);flex-shrink:0}
-.navi-chat-avatar img{width:100%;height:100%;object-fit:cover;object-position:center 15%}
+.navi-chat-avatar img{width:100%;height:100%;object-fit:cover;object-position:center center}
 .navi-chat-name{font-weight:800;font-size:16px;color:var(--accent3);flex:1}
 .navi-chat-status{font-size:12px;color:var(--ink-dim,#888)}
 .navi-chat-x{background:transparent;border:none;color:var(--ink-dim,#888);
@@ -1038,7 +1038,7 @@ body:has(.pbar.on) .navi-chat-panel{bottom:calc(182px + env(safe-area-inset-bott
 .navi-msg.user{flex-direction:row-reverse}
 .navi-msg-av{width:64px;height:64px;border-radius:50%;overflow:hidden;
   border:2px solid var(--accent3);flex-shrink:0}
-.navi-msg-av img{width:100%;height:100%;object-fit:cover;object-position:center 15%}
+.navi-msg-av img{width:100%;height:100%;object-fit:cover;object-position:center center}
 .navi-msg-bubble{max-width:76%;padding:11px 15px;border-radius:18px;
   font-size:15px;line-height:1.7;word-break:break-word}
 .navi-msg.navi .navi-msg-bubble{background:rgba(123,94,167,.08);
@@ -5273,6 +5273,12 @@ load().then(() => {
   applyHash();
   plUpdatePill();
 });
+
+// ai-search-ui.js から参照できるよう公開
+window.runAi = runAi;
+window.radioStart = radioStart;
+window.radioUpdateNowPlaying = radioUpdateNowPlaying;
+
 })();
 </script>
 
@@ -8829,5 +8835,6 @@ closeBtn.addEventListener('click',function(){
 })();
 </script>
 
+<script src="ai-search-ui.js" defer></script>
 </body>
 </html>
