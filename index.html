@@ -251,6 +251,31 @@ body.ai-active .hsearch input{border-color:var(--gold);background:rgba(0,0,0,.6)
 .rmcard .ic{font-size:1.6rem;margin-bottom:4px;line-height:1}
 .rmcard b{font-size:14px;font-weight:800}
 .rmcard small{font-size:11px;color:var(--muted);font-weight:500}
+/* BGMチャンネル タブ */
+.rmtabs{display:flex;gap:6px;margin-bottom:1rem}
+.rmtab{flex:1;padding:8px 10px;border:1.5px solid var(--border);border-radius:8px;background:transparent;color:var(--muted);font-size:13px;font-weight:700;cursor:pointer;transition:all .15s;font-family:inherit}
+.rmtab.active{border-color:var(--accent3);color:var(--ink);background:rgba(200,90,30,.08)}
+/* ジャンル別グリッド（4列） */
+.rmgrid-genre{grid-template-columns:repeat(4,1fr)}
+@media(max-width:540px){.rmgrid-genre{grid-template-columns:repeat(2,1fr)}}
+/* ジャンルカード左ボーダーアクセント */
+.rmcard-g{border-left:3px solid var(--border);padding-left:12px}
+.rmcard-g.g-ambient{border-left-color:rgba(45,125,210,.85)}
+.rmcard-g.g-cinematic{border-left-color:rgba(140,80,180,.85)}
+.rmcard-g.g-jazz{border-left-color:rgba(200,90,30,.85)}
+.rmcard-g.g-lo-fi{border-left-color:rgba(140,110,90,.85)}
+.rmcard-g.g-jpop{border-left-color:rgba(220,90,140,.85)}
+.rmcard-g.g-electronic{border-left-color:rgba(40,170,160,.85)}
+.rmcard-g.g-rock{border-left-color:rgba(200,60,60,.85)}
+.rmcard-g.g-pop{border-left-color:rgba(230,170,50,.85)}
+.rmcard-g.g-folk{border-left-color:rgba(110,150,90,.85)}
+.rmcard-g.g-hiphop{border-left-color:rgba(80,80,80,.85)}
+.rmcard-g.g-childrens{border-left-color:rgba(255,140,170,.85)}
+.rmcard-g.g-anime{border-left-color:rgba(190,80,120,.85)}
+.rmcard-g.g-horror{border-left-color:rgba(80,20,20,.9)}
+.rmcard-g.g-wafu{border-left-color:rgba(160,60,80,.85)}
+.rmcard-g.g-corporate{border-left-color:rgba(70,130,170,.85)}
+.rmcard-g.g-other{border-left-color:rgba(120,120,120,.85)}
 .rmcustom{margin-top:1rem;border-top:1px solid var(--border);padding-top:1rem}
 .rmguide{margin-top:1.2rem;border-top:1px solid var(--border);padding-top:1rem}
 .rmguide-ttl{font-size:11px;font-weight:800;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.7rem}
@@ -1680,6 +1705,13 @@ body:has(.pbar.on) .navi-chat-panel{bottom:calc(182px + env(safe-area-inset-bott
       <div class="aisub" data-i18n-html="rm_modal_sub">気分やシーンを選ぶだけで、<b style="color:var(--gold)">曲が途切れず自動で流れ続けます。</b><br>曲と曲の間は<b style="color:var(--gold)">自然なフェードで滑らかに繋がる</b>ので、作業・勉強・配信BGMにそのまま使えます。</div>
     </div>
     <div class="aibody">
+      <!-- タブ -->
+      <div class="rmtabs">
+        <button class="rmtab active" data-tab="mood">🎨 気分・シーン</button>
+        <button class="rmtab" data-tab="genre">🎼 ジャンル別</button>
+      </div>
+      <!-- 気分・シーン -->
+      <div id="rmMoodPanel">
       <div class="rmgrid">
         <button class="rmcard" data-rm="癒し チル リラックス カフェ ジャズ" data-genres="jazz,lo-fi,ambient"><div class="ic">☕</div><b data-i18n="rm_cafe">カフェ作業</b><small data-i18n="rm_cafe_sub">チル & リラックス</small></button>
         <button class="rmcard" data-rm="勉強 集中 Lo-Fi 穏やか 静か" data-genres="lo-fi,ambient"><div class="ic">📚</div><b data-i18n="rm_study">勉強・集中</b><small data-i18n="rm_study_sub">Lo-Fi & 穏やか</small></button>
@@ -1693,6 +1725,26 @@ body:has(.pbar.on) .navi-chat-panel{bottom:calc(182px + env(safe-area-inset-bott
         <button class="rmcard" data-rm="synthwave ネオン 真夜中 neon midnight シンセ 疾走感 retro 高揚 アップテンポ ドライブ ナイトドライブ レトロウェーヴ" data-genres="electronic"><div class="ic">🌃</div><b data-i18n="rm_drive">ナイトドライブ</b><small data-i18n="rm_drive_sub">シンセウェーヴ・夜の疾走</small></button>
         <button class="rmcard" data-rm="ホラー 怖い 不気味 サスペンス 幽霊 心霊 dark ambient" data-genres="horror"><div class="ic">👻</div><b>ホラー・ダーク</b><small>怖い・不気味な雰囲気</small></button>
         <button class="rmcard" data-rm="和風 日本 祭り 和楽器 太鼓 三味線 琴 尺八 神社 侍" data-genres="wafu"><div class="ic">⛩</div><b>和風・日本伝統</b><small>祭り・和楽器・侍</small></button>
+      </div>
+      </div>
+      <!-- ジャンル別（16ジャンル） -->
+      <div id="rmGenrePanel" class="rmgrid rmgrid-genre" style="display:none">
+        <button class="rmcard rmcard-g g-ambient"    data-genre="ambient"       data-gp="アンビエント 静か 瞑想 癒し 自然 ドローン 環境音"><div class="ic">🌌</div><b>アンビエント</b><small>瞑想・自然音</small></button>
+        <button class="rmcard rmcard-g g-cinematic"  data-genre="cinematic"     data-gp="シネマティック 壮大 オーケストラ 感動 映画音楽"><div class="ic">🎬</div><b>シネマティック</b><small>壮大・感動</small></button>
+        <button class="rmcard rmcard-g g-jazz"       data-genre="jazz"          data-gp="ジャズ おしゃれ 大人 スウィング カフェ ピアノ トランペット"><div class="ic">🎷</div><b>ジャズ</b><small>おしゃれ・大人</small></button>
+        <button class="rmcard rmcard-g g-lo-fi"      data-genre="lo-fi"         data-gp="Lo-Fi ローファイ 集中 まったり チル 穏やか"><div class="ic">📻</div><b>Lo-Fi</b><small>集中・まったり</small></button>
+        <button class="rmcard rmcard-g g-jpop"       data-genre="j-pop"         data-gp="J-Pop 邦楽 日本語 明るい 爽やか ポップ シティポップ"><div class="ic">🌸</div><b>J-Pop</b><small>邦楽・明るい</small></button>
+        <button class="rmcard rmcard-g g-electronic" data-genre="electronic"    data-gp="エレクトロニック シンセ ダンス テクノ アップテンポ"><div class="ic">🎛</div><b>エレクトロニック</b><small>シンセ・ダンス</small></button>
+        <button class="rmcard rmcard-g g-rock"       data-genre="rock"          data-gp="ロック ギター ドラム バンド 熱い エネルギッシュ"><div class="ic">🎸</div><b>ロック</b><small>ギター・熱い</small></button>
+        <button class="rmcard rmcard-g g-pop"        data-genre="pop"           data-gp="ポップ 明るい 軽快 楽しい 爽やか キャッチー"><div class="ic">🎵</div><b>ポップ</b><small>明るい・軽快</small></button>
+        <button class="rmcard rmcard-g g-folk"       data-genre="folk-acoustic" data-gp="フォーク アコースティック ギター 温かい 自然 ナチュラル"><div class="ic">🪕</div><b>フォーク</b><small>ギター・温かい</small></button>
+        <button class="rmcard rmcard-g g-hiphop"     data-genre="hip-hop-rnb"   data-gp="ヒップホップ R&amp;B グルーヴ クール ビート ラップ"><div class="ic">🎤</div><b>ヒップホップ</b><small>グルーヴ・クール</small></button>
+        <button class="rmcard rmcard-g g-childrens"  data-genre="childrens"     data-gp="キッズ こども 可愛い 明るい 楽しい 元気"><div class="ic">🧸</div><b>キッズ</b><small>明るく・楽しい</small></button>
+        <button class="rmcard rmcard-g g-anime"      data-genre="japanese-anime" data-gp="アニメ アニソン 和風 日本 キャラクター ファンタジー"><div class="ic">⭐</div><b>アニメ</b><small>アニソン風</small></button>
+        <button class="rmcard rmcard-g g-horror"     data-genre="horror"        data-gp="ホラー 怖い 不気味 サスペンス ダーク 心霊"><div class="ic">👻</div><b>ホラー</b><small>怖い・不気味</small></button>
+        <button class="rmcard rmcard-g g-wafu"       data-genre="wafu"          data-gp="和風 日本 和楽器 琴 三味線 尺八 太鼓 侍 神社 祭り"><div class="ic">⛩</div><b>和風</b><small>和楽器・伝統</small></button>
+        <button class="rmcard rmcard-g g-corporate"  data-genre="corporate-bgm" data-gp="コーポレート ビジネス 清潔 プロフェッショナル VP 企業"><div class="ic">💼</div><b>コーポレート</b><small>ビジネス・清潔</small></button>
+        <button class="rmcard rmcard-g g-other"      data-genre="other"         data-gp="ミックス 多様 様々なジャンル その他"><div class="ic">🎶</div><b>その他</b><small>ミックス・多様</small></button>
       </div>
       <div class="rmcustom">
         <label data-i18n="rm_custom_label">または自由に指定</label>
@@ -5140,11 +5192,28 @@ document.getElementById('radioModal').addEventListener('click', e => {
   if (e.target.id === 'radioModal') closeRadio();
 });
 
-// プリセットカード
-document.querySelectorAll('#radioModal .rmcard').forEach(b => b.onclick = () => {
+// プリセットカード（気分・シーン）
+document.querySelectorAll('#rmMoodPanel .rmcard').forEach(b => b.onclick = () => {
   closeRadio();
   const genres = b.dataset.genres ? b.dataset.genres.split(',') : null;
   radioStart(b.dataset.rm, genres);
+});
+
+// ジャンル別カード
+document.querySelectorAll('#rmGenrePanel .rmcard-g').forEach(b => b.onclick = () => {
+  closeRadio();
+  radioStart(b.dataset.gp, [b.dataset.genre]);
+});
+
+// タブ切り替え
+document.querySelectorAll('.rmtab').forEach(tab => {
+  tab.onclick = () => {
+    document.querySelectorAll('.rmtab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    const isGenre = tab.dataset.tab === 'genre';
+    document.getElementById('rmMoodPanel').style.display  = isGenre ? 'none' : '';
+    document.getElementById('rmGenrePanel').style.display = isGenre ? '' : 'none';
+  };
 });
 
 // 自由入力
