@@ -136,7 +136,7 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- ===== 楽曲個別ページ (2090曲) — /songs/<slug>.html ===== -->
+  <!-- ===== 楽曲個別ページ (2129曲) — /songs/<slug>.html ===== -->
   <!-- 各ページは固有タイトル・JSON-LD・OGPを持つ静的HTML -->
   <url>
     <loc>https://nihonichi-bgm.com/songs/midnight-pour-over_9aaa952c</loc>
