@@ -45,7 +45,7 @@
     "slug": "electronic",
     "label_ja": "エレクトロニック",
     "label_en": "Electronic / Synthwave",
-    "count": 159,
+    "count": 157,
     "cover": "images/electronic/paper-skies_50984de4.jpeg"
   },
   {
@@ -80,7 +80,7 @@
     "slug": "pop",
     "label_ja": "ポップス",
     "label_en": "Pop",
-    "count": 65,
+    "count": 45,
     "cover": "images/pop/sakura-festival_7b9ea74f.jpeg"
   },
   {
@@ -110,5 +110,13 @@
     "label_en": "Corporate / Documentary",
     "count": 2,
     "cover": "images/corporate-bgm/boardroom-momentum_e272fe5b.jpeg"
+  },
+  {
+    "slug": "k-pop",
+    "label": "K-Pop",
+    "label_ja": "K-Pop",
+    "label_en": "K-Pop",
+    "count": 22,
+    "cover": ""
   }
 ]

@@ -62,7 +62,7 @@
   "@type": "MusicGroup",
   "name": "日本一フリーBGM",
   "description": "AIで生成した高品質フリーBGMを配布するライブラリ。",
-  "genre": ["Ambient","Cinematic","J-Pop","Jazz","Lo-Fi","Electronic","Rock","Pop","Folk","Hip-Hop","Children's","Anime","Corporate"]
+  "genre": ["Ambient","Cinematic","J-Pop","K-Pop","Jazz","Lo-Fi","Electronic","Rock","Pop","Folk","Hip-Hop","Children's","Anime","Corporate"]
 }
 </script>
 <script type="application/ld+json">
@@ -81,7 +81,7 @@
     "name": "日本一フリーBGM",
     "url": "https://nihonichi-bgm.com/"
   },
-  "genre": ["Ambient","Cinematic","J-Pop","Jazz","Lo-Fi","Electronic","Rock","Pop","Folk","Hip-Hop","Children's","Anime","Corporate"],
+  "genre": ["Ambient","Cinematic","J-Pop","K-Pop","Jazz","Lo-Fi","Electronic","Rock","Pop","Folk","Hip-Hop","Children's","Anime","Corporate"],
   "isAccessibleForFree": true,
   "license": "https://nihonichi-bgm.com/#license",
   "creditText": "日本一フリーBGM",
@@ -278,6 +278,7 @@ body.ai-active .hsearch input{border-color:var(--gold);background:rgba(0,0,0,.6)
 .rmcard-g.g-jazz{border-left-color:rgba(200,90,30,.85)}
 .rmcard-g.g-lo-fi{border-left-color:rgba(140,110,90,.85)}
 .rmcard-g.g-jpop{border-left-color:rgba(220,90,140,.85)}
+.rmcard-g.g-kpop{border-left-color:rgba(255,70,120,.85)}
 .rmcard-g.g-electronic{border-left-color:rgba(40,170,160,.85)}
 .rmcard-g.g-rock{border-left-color:rgba(200,60,60,.85)}
 .rmcard-g.g-pop{border-left-color:rgba(230,170,50,.85)}
@@ -684,6 +685,7 @@ html[data-theme="dark"] .ccount{background:rgba(255,255,255,.1)}
 .gtag.g-jazz{background:rgba(200,90,30,.85)}
 .gtag.g-lo-fi{background:rgba(140,110,90,.85)}
 .gtag.g-jpop{background:rgba(220,90,140,.85)}
+.gtag.g-kpop{background:rgba(255,70,120,.85)}
 .gtag.g-electronic{background:rgba(40,170,160,.85)}
 .gtag.g-rock{background:rgba(200,60,60,.85)}
 .gtag.g-pop{background:rgba(230,170,50,.85)}
@@ -1216,6 +1218,7 @@ body:has(.pbar.on) .navi-chat-panel{bottom:calc(182px + env(safe-area-inset-bott
         <span class="navi-tag">▸ NAVI</span>
         <span data-i18n-html="navi_greet_text">ようこそ！ナビゲーターの<strong>ナビちゃん</strong>です✨<br>
         気分やシーンを話してくれれば、ピッタリのBGMをAIが秒で見つけるよ。<br>
+        新ジャンル💗<strong>K-Pop</strong>も追加されたので、ぜひ聴いてみてね！<br>
         分からないことは右下の私に、いつでも聞いてね💡</span>
         <div class="navi-qa">
           <button data-i18n="navi_greet_btn_ai" onclick="document.getElementById('aiOpen')?.click()">✨ AIにおまかせを試す</button>
@@ -1285,8 +1288,9 @@ body:has(.pbar.on) .navi-chat-panel{bottom:calc(182px + env(safe-area-inset-bott
         <a href="/genre/lo-fi/" class="seonav-link">Lo-FiのフリーBGM（193曲）</a>
         <a href="/genre/ambient/" class="seonav-link">アンビエントのフリーBGM（362曲）</a>
         <a href="/genre/cinematic/" class="seonav-link">シネマティックのフリーBGM（375曲）</a>
-        <a href="/genre/j-pop/" class="seonav-link">J-POPのフリーBGM（205曲）</a>
-        <a href="/genre/electronic/" class="seonav-link">エレクトロニックのフリーBGM（155曲）</a>
+        <a href="/genre/j-pop/" class="seonav-link">J-POPのフリーBGM（210曲）</a>
+        <a href="/genre/k-pop/" class="seonav-link">K-PopのフリーBGM（22曲）</a>
+        <a href="/genre/electronic/" class="seonav-link">エレクトロニックのフリーBGM（157曲）</a>
         <a href="/genre/rock/" class="seonav-link">ロックのフリーBGM（52曲）</a>
         <a href="/genre/pop/" class="seonav-link">ポップスのフリーBGM（47曲）</a>
         <a href="/genre/hip-hop-rnb/" class="seonav-link">ヒップホップ・R&amp;BのフリーBGM（82曲）</a>
@@ -1733,6 +1737,7 @@ body:has(.pbar.on) .navi-chat-panel{bottom:calc(182px + env(safe-area-inset-bott
             <button type="button" class="aiex" data-q="深夜カフェでチルする大人のジャズ" data-i18n="aiex_jazz">夜のジャズ</button>
             <button type="button" class="aiex" data-q="桜の春らしい優しくて切ないピアノ" data-i18n="aiex_spring">桜・春</button>
             <button type="button" class="aiex" data-q="壮大なシネマティックでエピックな冒険感" data-i18n="aiex_epic">エピック冒険</button>
+            <button type="button" class="aiex" data-q="K-Popアイドル風のキラキラしたダンスポップ" data-i18n="aiex_kpop">K-Pop</button>
           </div>
           <button class="aigo" id="aiGo" data-i18n="ai_go_btn">✨ ぴったりの曲を選んでもらう</button>
           <div class="aihist" id="aiHistWrap" style="display:none">
@@ -1787,6 +1792,7 @@ body:has(.pbar.on) .navi-chat-panel{bottom:calc(182px + env(safe-area-inset-bott
         <button class="rmcard rmcard-g g-jazz"       data-genre="jazz"          data-gp="ジャズ おしゃれ 大人 スウィング カフェ ピアノ トランペット"><div class="ic">🎷</div><b>ジャズ</b><small>おしゃれ・大人</small></button>
         <button class="rmcard rmcard-g g-lo-fi"      data-genre="lo-fi"         data-gp="Lo-Fi ローファイ 集中 まったり チル 穏やか"><div class="ic">📻</div><b>Lo-Fi</b><small>集中・まったり</small></button>
         <button class="rmcard rmcard-g g-jpop"       data-genre="j-pop"         data-gp="J-Pop 邦楽 日本語 明るい 爽やか ポップ シティポップ"><div class="ic">🌸</div><b>J-Pop</b><small>邦楽・明るい</small></button>
+        <button class="rmcard rmcard-g g-kpop"       data-genre="k-pop"         data-gp="K-Pop 韓国 アイドル ダンスポップ シンセ キャッチー 华やか"><div class="ic">💗</div><b>K-Pop</b><small>韓国・アイドル</small></button>
         <button class="rmcard rmcard-g g-electronic" data-genre="electronic"    data-gp="エレクトロニック シンセ ダンス テクノ アップテンポ"><div class="ic">🎛</div><b>エレクトロニック</b><small>シンセ・ダンス</small></button>
         <button class="rmcard rmcard-g g-rock"       data-genre="rock"          data-gp="ロック ギター ドラム バンド 熱い エネルギッシュ"><div class="ic">🎸</div><b>ロック</b><small>ギター・熱い</small></button>
         <button class="rmcard rmcard-g g-pop"        data-genre="pop"           data-gp="ポップ 明るい 軽快 楽しい 爽やか キャッチー"><div class="ic">🎵</div><b>ポップ</b><small>明るい・軽快</small></button>
@@ -2302,7 +2308,7 @@ function renderCats(){
   const list = document.getElementById('catList');
   const total = allSongs.length;
   let html = `<button class="catbtn ${currentCat==='all'?'active':''}" data-cat="all"><span>🎼 すべて</span><span class="ccount">${total}</span></button>`;
-  const ic = {ambient:'🌌',cinematic:'🎬','j-pop':'🌸',jazz:'🎷','lo-fi':'☕',electronic:'🎛','folk-acoustic':'🎸','hip-hop-rnb':'🎤',rock:'🎸',pop:'⭐',childrens:'🧸','japanese-anime':'🎌',horror:'👻',wafu:'⛩','corporate-bgm':'💼',other:'🎵'};
+  const ic = {ambient:'🌌',cinematic:'🎬','j-pop':'🌸',jazz:'🎷','lo-fi':'☕',electronic:'🎛','folk-acoustic':'🎸','hip-hop-rnb':'🎤',rock:'🎸',pop:'⭐',childrens:'🧸','japanese-anime':'🎌',horror:'👻',wafu:'⛩','corporate-bgm':'💼','k-pop':'💗',other:'🎵'};
   for (const g of genres){
     html += `<button class="catbtn ${currentCat===g.slug?'active':''}" data-cat="${g.slug}"><span>${ic[g.slug]||'🎵'} ${g.label_ja}</span><span class="ccount">${g.count}</span></button>`;
   }
@@ -2720,7 +2726,7 @@ function updateTitle(){
 // ---- RENDER ----
 const GENRE_CLASS = {
   'ambient':'g-ambient','cinematic':'g-cinematic','jazz':'g-jazz','lo-fi':'g-lo-fi',
-  'j-pop':'g-jpop','electronic':'g-electronic','rock':'g-rock','pop':'g-pop',
+  'j-pop':'g-jpop','k-pop':'g-kpop','electronic':'g-electronic','rock':'g-rock','pop':'g-pop',
   'folk-acoustic':'g-folk','hip-hop-rnb':'g-hiphop','childrens':'g-childrens',
   'japanese-anime':'g-anime','horror':'g-horror','wafu':'g-wafu',
   'corporate-bgm':'g-corporate','other':'g-other'
@@ -4123,6 +4129,7 @@ const RADIO_GENRE_MAP = {
   'cinematic':     ['シネマティック','cinematic','オーケストラ','orchestra'],
   'lo-fi':         ['ローファイ','lo-fi','lofi','チルホップ'],
   'j-pop':         ['シティポップ','city pop','j-pop','jpop'],
+  'k-pop':         ['k-pop','kpop','ケーポップ','韓国','korea','アイドル','idol'],
   'electronic':    ['エレクトロニック','electronic'],
   'hip-hop-rnb':   ['ヒップホップ','hip-hop','hiphop'],
   'folk-acoustic': ['フォーク','folk'],
@@ -7705,7 +7712,7 @@ const T = {
     ai_hist_label:'🕘 過去の検索', ai_hist_clear:'クリア',
     aiex_vlog:'朝のVlog', aiex_game:'ゲームバトル', aiex_study:'勉強・作業',
     aiex_cooking:'料理動画', aiex_horror:'ホラー', aiex_jazz:'夜のジャズ',
-    aiex_spring:'桜・春', aiex_epic:'エピック冒険',
+    aiex_spring:'桜・春', aiex_epic:'エピック冒険', aiex_kpop:'K-Pop',
     // License
     license_title:'利用規約・ライセンス',
     license_sub:'「使っていいの？」を3秒で。シンプルでわかりやすく。',
@@ -7763,7 +7770,7 @@ const T = {
     navi_close_aria:'閉じる',
     navi_fab_aria:'ナビちゃんに話しかける',
     navi_fab_title:'ナビちゃん',
-    navi_greet_text:'ようこそ！ナビゲーターの<strong>ナビちゃん</strong>です✨<br>気分やシーンを話してくれれば、ピッタリのBGMをAIが秒で見つけるよ。<br>分からないことは右下の私に、いつでも聞いてね💡',
+    navi_greet_text:'ようこそ！ナビゲーターの<strong>ナビちゃん</strong>です✨<br>気分やシーンを話してくれれば、ピッタリのBGMをAIが秒で見つけるよ。<br>新ジャンル💗<strong>K-Pop</strong>も追加されたので、ぜひ聴いてみてね！<br>分からないことは右下の私に、いつでも聞いてね💡',
     navi_greet_btn_ai:'✨ AIにおまかせを試す',
     navi_greet_btn_radio:'🎧 BGMチャンネルを開く',
     navi_greet_btn_faq:'❓ よくある質問',
@@ -7971,7 +7978,7 @@ const T = {
     ai_hist_label:'🕘 Recent Searches', ai_hist_clear:'Clear',
     aiex_vlog:'Morning Vlog', aiex_game:'Game Battle', aiex_study:'Study / Focus',
     aiex_cooking:'Cooking Video', aiex_horror:'Horror', aiex_jazz:'Night Jazz',
-    aiex_spring:'Cherry Blossom', aiex_epic:'Epic Adventure',
+    aiex_spring:'Cherry Blossom', aiex_epic:'Epic Adventure', aiex_kpop:'K-Pop',
     // License
     license_title:'License & Terms of Use',
     license_sub:'Is it free to use? Yes. Here\'s the short version.',
@@ -8029,7 +8036,7 @@ const T = {
     navi_close_aria:'Close',
     navi_fab_aria:'Talk to Navi',
     navi_fab_title:'Navi',
-    navi_greet_text:'Welcome! I\'m <strong>Navi</strong>, your guide ✨<br>Tell me your mood or scene — AI finds the perfect BGM in seconds.<br>Stuck? Tap me anytime in the bottom-right corner 💡',
+    navi_greet_text:'Welcome! I\'m <strong>Navi</strong>, your guide ✨<br>Tell me your mood or scene — AI finds the perfect BGM in seconds.<br>New genre 💗<strong>K-Pop</strong> just added — check it out!<br>Stuck? Tap me anytime in the bottom-right corner 💡',
     navi_greet_btn_ai:'✨ Try AI Match',
     navi_greet_btn_radio:'🎧 Open BGM Channel',
     navi_greet_btn_faq:'❓ FAQ',
