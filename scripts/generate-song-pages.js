@@ -181,10 +181,6 @@ function buildPage(song) {
   ]
 }, null, 0)}</script>
 
-<!-- メインアプリへ即時リダイレクト -->
-<script>window.location.replace(${JSON.stringify(appUrl)});</script>
-<noscript><meta http-equiv="refresh" content="0;url=${esc(appUrl)}"></noscript>
-
 <style>
 body{font-family:'Noto Sans JP',system-ui,sans-serif;background:#faf6f0;color:#1a1008;padding:2rem 1.5rem;max-width:700px;margin:0 auto;line-height:1.7}
 h1{font-size:1.6rem;font-weight:900;margin-bottom:.5rem;color:#c85a1e}
@@ -193,9 +189,14 @@ h1{font-size:1.6rem;font-weight:900;margin-bottom:.5rem;color:#c85a1e}
 .tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1.5rem}
 .tag{font-size:12px;background:#f5ede0;border:1px solid #ddd0c0;padding:3px 10px;border-radius:14px;color:#8a7060}
 .desc{font-size:14px;color:#3a2a1a;margin-bottom:1.5rem;line-height:1.9}
-.backlink{display:inline-block;background:#c85a1e;color:#fff;text-decoration:none;padding:12px 24px;border-radius:9px;font-weight:700;font-size:14px}
-.backlink:hover{background:#a84812}
-.redirect-note{font-size:12px;color:#8a7060;margin-top:1rem}
+.player-wrap{background:#fff;border:1px solid #e8ddd0;border-radius:12px;padding:1.2rem 1.5rem;margin-bottom:1.5rem}
+.player-wrap audio{width:100%;margin-bottom:.8rem;display:block}
+.btn-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:.8rem}
+.dl-btn{display:inline-block;background:#c85a1e;color:#fff;text-decoration:none;padding:10px 22px;border-radius:9px;font-weight:700;font-size:14px}
+.dl-btn:hover{background:#a84812}
+.open-btn{display:inline-block;background:#fff;color:#c85a1e;text-decoration:none;padding:10px 22px;border-radius:9px;font-weight:700;font-size:14px;border:2px solid #c85a1e}
+.open-btn:hover{background:#fdf0e8}
+.license-note{font-size:12px;color:#8a7060}
 </style>
 </head>
 <body>
@@ -204,9 +205,15 @@ h1{font-size:1.6rem;font-weight:900;margin-bottom:.5rem;color:#c85a1e}
 <div class="meta">${esc(metaList)}</div>
 ${desc ? `<div class="desc">${esc(desc)}</div>` : ''}
 ${tags.length ? `<div class="tags">${tags.map(t => `<span class="tag">#${esc(t)}</span>`).join('')}</div>` : ''}
-<a class="backlink" href="${esc(appUrl)}">▶ この曲を再生・ダウンロードする</a>
-<p class="redirect-note">※ このページは自動的にメインサイトに転送されます。転送されない場合は上のリンクをクリックしてください。</p>
-<p style="margin-top:2rem;font-size:12px;color:#b09c84">
+<div class="player-wrap">
+${audioUrl ? `<audio controls preload="none" src="${esc(audioUrl)}"></audio>` : ''}
+<div class="btn-row">
+${audioUrl ? `<a class="dl-btn" href="${esc(audioUrl)}" download>⬇ ダウンロード（無料）</a>` : ''}
+<a class="open-btn" href="${esc(appUrl)}">▶ サイトで全曲を聴く</a>
+</div>
+<p class="license-note">✅ 商用利用OK・登録不要・クレジット不要 /<a href="${esc(BASE_URL)}/#license" style="color:#c85a1e;margin-left:4px">利用規約</a></p>
+</div>
+<p style="margin-top:1.5rem;font-size:12px;color:#b09c84">
   <a href="${esc(BASE_URL)}" style="color:#c85a1e">← 日本一フリーBGM トップへ</a> |
   <a href="${esc(BASE_URL)}/#genre/${esc(song.genre||'')}" style="color:#c85a1e">${esc(gJa)}一覧へ</a>
 </p>
