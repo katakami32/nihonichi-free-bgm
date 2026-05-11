@@ -2950,11 +2950,20 @@ function _updateKnob(pct){
   const knob = document.getElementById('seekKnob');
   if (knob) knob.style.left = pct + '%';
 }
+function _howlNode(h){
+  // html5:true時はHowlerが内部で作る<audio>要素から直接currentTime/durationを取得
+  try { const n = h._sounds && h._sounds[0] && h._sounds[0]._node; if (n) return n; } catch(_){}
+  return null;
+}
 function _updateProgress(){
   const h = _activeHowl();
-  if (!h || !h.playing()) { progressRaf = null; return; }
-  const t = h.seek() || 0;
-  const d = h.duration() || 0;
+  if (!h) { progressRaf = null; return; }
+  // html5モードではバッファ中にh.playing()がfalseになるため_nodeで判定
+  const node = _howlNode(h);
+  const isPlaying = node ? !node.paused : h.playing();
+  if (!isPlaying) { progressRaf = null; return; }
+  const t = node ? (node.currentTime || 0) : (h.seek() || 0);
+  const d = node ? (node.duration || h.duration() || 0) : (h.duration() || 0);
   if (d > 0) {
     const pct = t/d*100;
     document.getElementById('fill').style.width = pct + '%';
