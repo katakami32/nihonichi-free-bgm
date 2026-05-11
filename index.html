@@ -3034,16 +3034,19 @@ function play(id, fromQueue=false){
     return;
   }
 
-  // 前の Howl をフェードアウト → 停止 + 解放（ぷつぷつ防止）
+  // 前の Howl をフェードアウト → fade完了後に停止 + 解放（ぷつぷつ防止）
   if (currentHowl) {
     const dying = currentHowl;
+    currentHowl = null;
     try {
-      dying.fade(dying.volume(), 0, 200);
-      setTimeout(() => { try { dying.stop(); dying.unload(); } catch(_){} }, 230);
+      dying.fade(dying.volume(), 0, 250);
+      // onfadeで完全に0になってからstop → setTimeoutより確実にポップを防ぐ
+      dying.once('fade', () => { try { dying.stop(); dying.unload(); } catch(_){} });
+      // 安全弁: 600ms後に残っていれば強制解放
+      setTimeout(() => { try { dying.stop(); dying.unload(); } catch(_){} }, 600);
     } catch(_) {
       try { dying.stop(); dying.unload(); } catch(_){}
     }
-    currentHowl = null;
   }
   _stopProgressLoop();
 
@@ -3060,11 +3063,14 @@ function play(id, fromQueue=false){
     volume: 0,       // 無音スタート → onplay でフェードイン（ぷつぷつ防止）
     autoplay: true,
     onload: () => {
+      if (currentHowl !== howl) return;
       document.getElementById('durTime').textContent = fmtDur(howl.duration());
     },
     onplay: () => {
-      // フェードイン（150ms）で開始ぷつぷつを消す
-      howl.fade(0, savedVolume, 150);
+      // 古いHowlのonstopが遅延発火しても新しい曲の状態を上書きしないようガード
+      if (currentHowl !== howl) return;
+      // フェードイン（250ms）で開始ぷつぷつを消す
+      howl.fade(0, savedVolume, 250);
       document.getElementById('playBtn').textContent = '⏸';
       document.getElementById('player').classList.add('playing');
       _stopProgressLoop();
@@ -3072,18 +3078,21 @@ function play(id, fromQueue=false){
       updatePlayingButtons();
     },
     onpause: () => {
+      if (currentHowl !== howl) return;
       document.getElementById('playBtn').textContent = '▶';
       document.getElementById('player').classList.remove('playing');
       _stopProgressLoop();
       updatePlayingButtons();
     },
     onstop: () => {
+      if (currentHowl !== howl) return;
       document.getElementById('playBtn').textContent = '▶';
       document.getElementById('player').classList.remove('playing');
       _stopProgressLoop();
       updatePlayingButtons();
     },
     onend: () => {
+      if (currentHowl !== howl) return;
       document.getElementById('playBtn').textContent = '▶';
       document.getElementById('player').classList.remove('playing');
       _stopProgressLoop();
