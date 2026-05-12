@@ -8262,6 +8262,17 @@ const MOOD=[
   {k:['こども','子供','子ども','童謡','キッズ','kids','children'],g:['childrens']},
   {k:['速い','テンポ速','fast','快活','bpm高'],min:130},
   {k:['遅い','スロー','ゆっくり','slow','テンポ遅'],max:85},
+  // 追加シーン
+  {k:['通勤','通学','朝の移動','朝活','morning commute'],g:['j-pop','pop','folk-acoustic'],min:90,max:130},
+  {k:['ジョギング','ランニング','running','走る','マラソン','ウォーキング','jogging'],g:['rock','electronic','hip-hop-rnb'],min:125},
+  {k:['家事','掃除','料理','炊事','洗い物','cooking','housework','cleaning'],g:['j-pop','pop','folk-acoustic'],min:85,max:125},
+  {k:['昼寝','仮眠','うとうと','nap','ひと眠り'],g:['ambient','lo-fi'],max:75},
+  {k:['入浴','お風呂','バスタイム','bath','シャワー'],g:['ambient','lo-fi','folk-acoustic'],max:95},
+  {k:['散歩','のんびり歩く','ひとり歩き','walk','stroll'],g:['folk-acoustic','lo-fi','ambient'],min:75,max:110},
+  {k:['夜ドライブ','深夜ドライブ','night drive'],g:['lo-fi','electronic','j-pop'],min:85,max:115},
+  {k:['シティポップ','city pop','オシャレポップ','80年代'],g:['j-pop'],min:95,max:125},
+  {k:['ボサノバ','bossa nova','ブラジリアン','ブラジル'],g:['jazz'],max:110},
+  {k:['チル','chill','laid back','まったり過ごす'],g:['lo-fi','ambient'],max:100},
 ];
 
 /* ---------- 会話パターン ---------- */
@@ -8515,11 +8526,80 @@ const CONVS=[
     a:['毎週新曲が追加されてるよ🆕 「BGM一覧」→「新着順」で最新曲をチェックできるよ✨']},
   {r:/お気に入り|ブックマーク|保存|favorite|fav/i, expr:'blushing',
     a:['曲カードの♡ボタンでお気に入り登録できるよ💕 右上の「♡」ボタンでお気に入りだけ表示もできるよ！']},
+  // ── 「別の曲」「もっと見る」「違う感じ」 ──
+  {r:/別の曲|もっと見|もっと聴|違う曲|他の曲|もっと出|次の曲|他にも|another|more song/i, expr:'smile',
+    special:'searchMore'},
+  {r:/同じ.*系|もっと.*系|こういう.*感じ|似た.*曲|似てる.*曲|similar|もっと.*雰囲気/i, expr:'smile',
+    special:'searchMore'},
+  // ── 通勤・通学 ──
+  {r:/通勤|通学|電車.*中|バス.*中|朝の移動|移動.*中.*聴/i, expr:'smiling',
+    a:['通勤・通学にぴったりなBGMを選んだよ🚃 気持ちよく移動できるといいね✨'],
+    q:'通勤 朝 元気 アップテンポ pop city pop'},
+  // ── 家事・掃除・料理 ──
+  {r:/家事|掃除|片付|洗い物|洗濯|炊事|料理しながら|クッキング/i, expr:'smiling',
+    a:['家事がはかどるBGMを見つけたよ🏠 楽しく家事しちゃお✨'],
+    q:'家事 料理 明るい 軽快 ポップ folk'},
+  // ── 昼寝・仮眠 ──
+  {r:/昼寝|仮眠|うとうと|ひと眠り|少し眠|nap/i, expr:'sleepy',
+    a:['昼寝にぴったりなゆったり系を選んだよ😴 ゆっくり休んでね✨'],
+    q:'昼寝 睡眠 ambient 穏やか 静か'},
+  // ── ジョギング・ランニング ──
+  {r:/ジョギング|ランニング|マラソン|走る.*曲|走りながら/i, expr:'excited',
+    a:['走るときのBGMを選んだよ🏃 テンポ速めで気持ちよく走れるよ！'],
+    q:'ランニング 運動 energetic upbeat fast'},
+  // ── 散歩 ──
+  {r:/散歩|のんびり歩|ぶらぶら.*歩|walk.*聴/i, expr:'smiling',
+    a:['散歩にぴったりな気持ちいい曲を選んだよ🚶 ゆったり歩こう✨'],
+    q:'散歩 自然 アコースティック リラックス 穏やか'},
+  // ── 夜ドライブ ──
+  {r:/夜ドライブ|深夜.*ドライブ|ドライブ.*夜|night drive/i, expr:'pensive',
+    a:['夜のドライブにはまるBGMを選んだよ🚗🌙 カッコよく走ろう！'],
+    q:'夜ドライブ night cool smooth city pop'},
+  // ── チル・まったり ──
+  {r:/チル|まったり.*過ごす|ゆる.*過ごす|chill.*out|だらだら/i, expr:'smile',
+    a:['チルなBGMをセレクトしたよ☕ ゆったり流してね✨'],
+    q:'チル lo-fi mellow relaxed chill'},
+  // ── 勉強・集中（詳細） ──
+  {r:/勉強.*BGM|BGM.*勉強|試験前|受験|テスト勉強|study with me/i, expr:'pensive',
+    a:['勉強に集中できるBGMを選んだよ📖 頑張れ〜！'],
+    q:'勉強 集中 focus lo-fi ambient instrumental'},
+  // ── 朝起き・モーニングルーティン ──
+  {r:/朝活|モーニングルーティン|起床.*曲|目覚め.*BGM|朝のルーティン/i, expr:'smiling',
+    a:['朝をポジティブに始められる曲を選んだよ☀️ いい1日になりますように！'],
+    q:'朝 morning energetic bright fresh upbeat'},
+  // ── ノスタルジック・懐かしい ──
+  {r:/ノスタルジック|懐かしい|懐かし系|レトロ|昭和|90年代|80年代|retro|vintage/i, expr:'pensive',
+    a:['懐かしい雰囲気の曲を選んだよ🕰️ タイムスリップしちゃお✨'],
+    q:'ノスタルジック retro vintage nostalgic city pop'},
+  // ── 不安・そわそわ（追加対応） ──
+  {r:/不安|ドキドキ.*悪い|緊張.*悪い|ストレス|プレッシャー/i, expr:'timid',
+    a:['不安をほぐしてくれる穏やかな曲を選んだよ🌿 深呼吸して聴いてね✨'],
+    q:'癒し 穏やか calm healing ambient peaceful'},
+  // ── 孤独・一人時間 ──
+  {r:/ひとり時間|一人の時間|孤独感|ぼっち.*過ごす|おひとり様/i, expr:'sadness',
+    a:['一人の時間にしみじみ聴ける曲を選んだよ🌙 ゆっくりね✨'],
+    q:'孤独 ambient 切ない introspective melancholy'},
+  // ── 似たジャンル探し ──
+  {r:/他のジャンル|違うジャンル|ジャンル変えて|別ジャンル|何かおすすめ.*ジャンル/i, expr:'confident',
+    a:['どのジャンルにする？🎵'],
+    chips:['🎷 ジャズ','🎧 Lo-Fi','🎸 ロック','🎬 シネマティック','🌸 和風','⚡ エレクトロ']},
+  // ── 会話への反応 ──
+  {r:/ありがとう|ありがとございます|サンクス|thx|thanks/i, expr:'joy',
+    a:['どういたしまして💕 他にも気になるBGMがあったら何でも聞いてね🎵',
+       'お役に立てて嬉しい✨ もっと探したかったらいつでも言ってね！']},
+  {r:/すごい|いいね|最高|よかった|good|nice|perfect/i, expr:'joy',
+    a:['ありがとう🎉 気に入ってくれてよかった！他にも探してあげるよ✨',
+       'えへへ、嬉しい💕 もっと聴きたい曲があったら言ってね🎵']},
+  {r:/違う|合わない|イマイチ|微妙|好みじゃない|別のやつ/i, expr:'timid',
+    a:['ごめんね💦 別の曲を探してみるね！どんな雰囲気が好み？',
+       '難しかったかな😅 もう少し教えてくれると嬉しいな。気分・シーン・ジャンルとか！'],
+    special:'searchMore'},
 ];
 
 /* ---------- タグ同義語マップ（ナビちゃんチャット検索用） ---------- */
 // 日本語クエリ→英語タグへの展開（曲のtags/titleは英語が多いため）
 const QUERY_EXPAND={
+  // ── ホラー・ダーク ──
   'ホラー':['horror','horror ambient','dark ambient','horror film','spooky','eerie','haunted','creepy'],
   '怖い':['horror','horror ambient','dark ambient','spooky','eerie','scary','haunted','creepy','dark','ghost'],
   '不気味':['eerie','creepy','dark ambient','mysterious','spooky','unsettling'],
@@ -8529,21 +8609,96 @@ const QUERY_EXPAND={
   'spooky':['spooky','horror','eerie','haunted','creepy'],
   'eerie':['eerie','horror ambient','dark ambient','mysterious','spooky'],
   'haunted':['haunted','horror ambient','dark ambient','ghost','eerie'],
+  // ── 子ども・かわいい ──
   'こども':['children','kids','childrens','kawaii','playful','fun','bouncy','ukulele'],
   '子供':['children','kids','childrens','kawaii','playful','fun','bouncy'],
   'キッズ':['kids','children','childrens','fun','playful','bouncy'],
   'かわいい':['kawaii','cute','playful','sweet','whimsical','adorable','girly'],
+  // ── ムード・感情 ──
   'かっこいい':['rock','punk','cool','epic','aggressive','powerful','bold','swagger'],
   '癒し':['healing','relaxing','calm','peaceful','ambient','nature'],
-  '集中':['focus','concentration','study','deep work','instrumental'],
-  'ジャズ':['jazz','swing','bossa nova','bebop'],
+  '集中':['focus','concentration','study','deep work','instrumental','lo-fi'],
+  '勉強':['study','focus','concentration','lo-fi','ambient','instrumental'],
+  '作業':['work','focus','deep work','lo-fi','ambient','concentration','instrumental'],
+  'リラックス':['relaxing','calm','peaceful','healing','mellow','chill','lo-fi'],
+  '眠い':['sleep','calm','ambient','peaceful','soft','night'],
+  '睡眠':['sleep','calm','ambient','peaceful','soft','night','lullaby'],
+  '元気':['energetic','upbeat','cheerful','happy','fun','bright','positive'],
+  '明るい':['bright','cheerful','happy','upbeat','fun','positive','sunny'],
+  '切ない':['emotional','sad','melancholy','nostalgic','bittersweet','longing'],
+  '悲しい':['sad','emotional','melancholy','sorrowful','tearful'],
+  '泣ける':['emotional','sad','melancholy','moving','tearful','heartfelt','cinematic'],
+  '感動':['emotional','moving','inspiring','heartfelt','cinematic','orchestral'],
+  'エモい':['emotional','nostalgic','bittersweet','indie','atmospheric','sad'],
+  'やる気':['motivational','energetic','inspiring','epic','upbeat','powerful'],
+  '頑張る':['motivational','energetic','inspiring','epic','upbeat','powerful'],
+  'モチベ':['motivational','energetic','inspiring','epic','upbeat','powerful'],
+  '壮大':['epic','cinematic','orchestral','majestic','grand','powerful','dramatic'],
+  'ドラマチック':['dramatic','cinematic','orchestral','epic','intense','emotional'],
+  'おしゃれ':['stylish','sophisticated','elegant','cool','smooth','chill','jazz'],
+  '孤独':['lonely','solitude','ambient','melancholy','introspective','quiet'],
+  'そわそわ':['nervous','anxious','unsettled','tense','suspense','mysterious'],
+  '不安':['anxious','nervous','tense','unsettled','dark','mysterious'],
+  'ポジティブ':['positive','uplifting','happy','cheerful','motivational','bright'],
+  '幸せ':['happy','joyful','cheerful','sweet','warm','positive'],
+  'ノスタルジック':['nostalgic','retro','vintage','bittersweet','classic'],
+  '懐かしい':['nostalgic','retro','vintage','classic','bittersweet'],
+  // ── シーン・用途 ──
+  '通勤':['commute','morning','energetic','upbeat','pop','city pop'],
+  '通学':['commute','morning','upbeat','cheerful','pop','energetic'],
+  '朝活':['morning','energetic','fresh','upbeat','positive','bright'],
+  '家事':['housework','light','easy listening','cheerful','relaxed'],
+  '料理':['cooking','light','cheerful','easy listening','fun','casual'],
+  '掃除':['cleaning','upbeat','energetic','cheerful','light','fun'],
+  'ジョギング':['running','workout','energetic','upbeat','fast','pump up'],
+  'ランニング':['running','workout','energetic','upbeat','fast','pump up'],
+  '運動':['workout','energetic','upbeat','pump up','fast','fitness'],
+  'ジム':['gym','workout','energetic','pump up','intense','powerful'],
+  'ドライブ':['drive','road trip','upbeat','cool','smooth','chill'],
+  '夜ドライブ':['night drive','road','cool','dark','smooth','city'],
+  '散歩':['walk','casual','relaxed','light','easy listening','nature','fresh'],
+  '昼寝':['sleep','calm','ambient','soft','peaceful'],
+  '瞑想':['meditation','ambient','calm','peaceful','zen','nature','drone'],
+  'ヨガ':['yoga','meditation','calm','peaceful','zen','nature','ambient'],
+  '読書':['reading','calm','ambient','focus','instrumental','lo-fi','quiet'],
+  'ゲーム':['game','bgm','epic','energetic','electronic','rock','cinematic'],
+  'カフェ':['cafe','coffee','lo-fi','jazz','chill','relaxed','morning'],
+  'バー':['bar','jazz','night','cool','smooth','lounge'],
+  'パーティ':['party','upbeat','dance','electronic','fun','energetic','festive'],
+  '結婚式':['wedding','romantic','sweet','orchestral','emotional'],
+  // ── 時間帯 ──
+  '朝':['morning','fresh','energetic','bright','upbeat','sunrise'],
+  '昼':['midday','lunch','relaxed','light','casual','bright'],
+  '夕方':['evening','sunset','mellow','nostalgic','warm','acoustic'],
+  '夜':['night','calm','dark','mellow','lo-fi','ambient'],
+  '深夜':['midnight','late night','ambient','dark','quiet','introspective'],
+  '明け方':['dawn','sunrise','calm','fresh','ambient','peaceful'],
+  // ── 季節・天気 ──
+  '春':['spring','cherry blossom','fresh','light','uplifting','sakura'],
+  '夏':['summer','beach','tropical','bright','energetic','sunny','vacation'],
+  '秋':['autumn','fall','melancholy','nostalgic','mellow','harvest'],
+  '冬':['winter','cold','christmas','calm','cozy','snow','holiday'],
+  '雨':['rain','melancholy','cozy','acoustic','introspective','rainy day'],
+  '晴れ':['sunny','bright','happy','upbeat','fresh','positive','outdoor'],
+  '雪':['snow','winter','calm','peaceful','soft','cold'],
+  '嵐':['storm','intense','dramatic','powerful','epic','dark'],
+  // ── ジャンル ──
+  'ジャズ':['jazz','swing','bossa nova','bebop','cool jazz','smooth jazz'],
   'アンビエント':['ambient','atmospheric','drone','soundscape'],
-  'ロック':['rock','punk','hard rock','j-rock','electric'],
-  'ヒップホップ':['hip hop','hiphop','trap','rap','boom bap'],
-  'エレクトロ':['electronic','edm','synthwave','techno','house'],
+  'ロック':['rock','punk','hard rock','j-rock','electric','guitar'],
+  'ヒップホップ':['hip hop','hiphop','trap','rap','boom bap','urban'],
+  'エレクトロ':['electronic','edm','synthwave','techno','house','dance'],
   'シネマティック':['cinematic','orchestral','epic','dramatic','film score'],
   '和風':['japanese','wa-pop','traditional japanese','koto','shakuhachi','taiko'],
   'アニメ':['anime','j-pop','japanese-anime','manga'],
+  'ローファイ':['lo-fi','lofi','chill','hip hop','jazzy','mellow'],
+  'シティポップ':['city pop','j-pop','retro','urban','night'],
+  'フォーク':['folk','acoustic','guitar','indie','organic'],
+  'ボサノバ':['bossa nova','jazz','brazilian','acoustic','smooth','tropical'],
+  'チル':['chill','lo-fi','mellow','relaxed','smooth','laid back'],
+  'ポップ':['pop','j-pop','upbeat','catchy','bright','cheerful'],
+  'k-pop':['k-pop','korean','idol','dance','electronic','urban'],
+  'kpop':['k-pop','korean','idol','dance','electronic','urban'],
 };
 
 /* ---------- 検索ロジック ---------- */
@@ -8594,7 +8749,14 @@ function searchSongs(query){
       [scored[i],scored[j]]=[scored[j],scored[i]];
     }
   }
-  return scored.slice(0,5).map(x=>x.s);
+  const direct=scored.slice(0,5).map(x=>x.s);
+  if(direct.length>=3) return direct;
+  // スコアが少ない場合はsmartSearch(AI_CONCEPTS辞書)でフォールバック
+  if(typeof smartSearch==='function' && typeof allSongs!=='undefined'){
+    const fallback=smartSearch(query,allSongs);
+    if(fallback && fallback.length>=3) return fallback.slice(0,5);
+  }
+  return direct.length ? direct : [];
 }
 
 function getRandomSongs(n){
