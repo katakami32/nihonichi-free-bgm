@@ -18,7 +18,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: dec079cbb6f80e5bf626941e3f83844b
-          projectName: nihonichi-free-auto
+          projectName: nihonichi-bgm
           directory: .
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
