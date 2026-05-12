@@ -2380,6 +2380,10 @@ function smartSearch(query, pool) {
         }
       }
     }
+    // QUERY_EXPAND辞書からも展開（日本語シーン・感情・ジャンルキーワードに対応）
+    if (typeof QUERY_EXPAND !== 'undefined' && QUERY_EXPAND[tok]) {
+      QUERY_EXPAND[tok].forEach(e => syns.add(e));
+    }
     return { direct, syns: [...syns] };
   });
 
@@ -4050,6 +4054,31 @@ const RADIO_GENRE_MAP = {
 
 function _detectRadioGenre(prompt) {
   const pl = prompt.toLowerCase();
+  // MOOD辞書を優先チェック（ナビちゃんと同じキーワードカバレッジ）
+  if (typeof MOOD !== 'undefined') {
+    for (const m of MOOD) {
+      if (m.g && m.k.some(k => pl.includes(k.toLowerCase()))) return m.g[0];
+    }
+  }
+  // QUERY_EXPAND → タグ → ジャンルスラッグ変換
+  if (typeof QUERY_EXPAND !== 'undefined') {
+    const TAG_TO_GENRE = {
+      'lo-fi':'lo-fi','lofi':'lo-fi','jazz':'jazz','bossa nova':'jazz',
+      'ambient':'ambient','rock':'rock','electronic':'electronic','edm':'electronic',
+      'hip hop':'hip-hop-rnb','hiphop':'hip-hop-rnb','folk':'folk-acoustic','acoustic':'folk-acoustic',
+      'anime':'japanese-anime','j-pop':'j-pop','cinematic':'cinematic',
+      'children':'childrens','kids':'childrens',
+    };
+    const toks = pl.replace(/[、。！？\s]+/g,' ').split(' ').filter(t=>t.length>1);
+    for (const tok of toks) {
+      if (QUERY_EXPAND[tok]) {
+        for (const tag of QUERY_EXPAND[tok]) {
+          if (TAG_TO_GENRE[tag]) return TAG_TO_GENRE[tag];
+        }
+      }
+    }
+  }
+  // RADIO_GENRE_MAPフォールバック
   for (const [genre, kws] of Object.entries(RADIO_GENRE_MAP)) {
     if (kws.some(k => pl.includes(k.toLowerCase()))) return genre;
   }
@@ -4845,7 +4874,15 @@ async function radioStart(prompt, allowedGenres) {
   pool = pool.filter(s => !_rPrefs.dislikes.has(s.id));
 
   // RADIOは長時間再生するので候補を多めに取得（最大80曲）
-  const candidates = aiMatch(prompt, pool, 80);
+  // QUERY_EXPANDで日本語プロンプトを英語タグに展開してaiMatchの精度を上げる
+  let _radioPrompt = prompt;
+  if (typeof QUERY_EXPAND !== 'undefined') {
+    const _toks = prompt.toLowerCase().replace(/[、。！？\s]+/g,' ').split(' ').filter(t=>t.length>1);
+    const _extras = new Set();
+    _toks.forEach(t => { if (QUERY_EXPAND[t]) QUERY_EXPAND[t].forEach(e=>_extras.add(e)); });
+    if (_extras.size) _radioPrompt = prompt + ' ' + [..._extras].join(' ');
+  }
+  const candidates = aiMatch(_radioPrompt, pool, 80);
   if (!candidates || candidates.length < 3) {
     toast(window.t('toast_radio_no_results'));
     return;
