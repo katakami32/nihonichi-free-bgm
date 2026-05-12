@@ -2934,12 +2934,14 @@ if (typeof Howler !== 'undefined') { Howler.autoSuspend = false; }
 let currentHowl = null;       // 再生中の Howl インスタンス
 let savedVolume = 0.8;        // ユーザー音量設定 (localStorage 復元)
 let progressRaf = null;       // 進捗バー rAF ID
+let _progressMissCount = 0;  // 「再生してない」フレームの連続カウント（バッファリング猶予用）
 const _howlCache = new Map(); // 直近のHowlを少しキャッシュ (高速切替)
 
 function _howlerSrcReady(){ return typeof Howl !== 'undefined' && typeof Howler !== 'undefined'; }
 
 function _stopProgressLoop(){
   if (progressRaf) { cancelAnimationFrame(progressRaf); progressRaf = null; }
+  _progressMissCount = 0;
 }
 // 通常再生 / ラジオ再生のうちアクティブな方を返す
 function _activeHowl(){
@@ -2958,10 +2960,21 @@ function _howlNode(h){
 function _updateProgress(){
   const h = _activeHowl();
   if (!h) { progressRaf = null; return; }
-  // html5モードではバッファ中にh.playing()がfalseになるため_nodeで判定
   const node = _howlNode(h);
-  const isPlaying = node ? !node.paused : h.playing();
-  if (!isPlaying) { progressRaf = null; return; }
+  // seekingフラグ中はpaused=trueでもアクティブとみなす
+  const isPlaying = node ? (!node.paused || node.seeking) : h.playing();
+  if (!isPlaying) {
+    // バッファリング/シーク直後は一時的にpaused=trueになる場合がある
+    // 約167ms(10フレーム)の猶予を設けてからループを終了する
+    if (++_progressMissCount < 10) {
+      progressRaf = requestAnimationFrame(_updateProgress);
+      return;
+    }
+    progressRaf = null;
+    _progressMissCount = 0;
+    return;
+  }
+  _progressMissCount = 0;
   const t = node ? (node.currentTime || 0) : (h.seek() || 0);
   const d = node ? (node.duration || h.duration() || 0) : (h.duration() || 0);
   if (d > 0) {
@@ -3174,7 +3187,11 @@ function _doSeek(ratio){
         h.volume(0);
         try { h.seek(ratio * d); } catch(e){ console.warn('seek err', e); }
         // 120ms後にフェードイン（80msだとバッファリングが遅い端末でまだプツプツするため延長）
-        setTimeout(() => { try { h.fade(0, vol > 0 ? vol : savedVolume, 100); } catch(_){} }, 120);
+        // ループが猶予期間中に終了していた場合の保険として再起動も行う
+        setTimeout(() => {
+          try { h.fade(0, vol > 0 ? vol : savedVolume, 100); } catch(_){}
+          if (!progressRaf && _activeHowl() === h) { _progressMissCount = 0; _updateProgress(); }
+        }, 120);
         // 進捗バーを即時更新 (Howler内部の状態反映を待たない)
         const pct = ratio*100;
         document.getElementById('fill').style.width = pct + '%';
