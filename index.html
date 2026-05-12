@@ -3018,8 +3018,12 @@ function play(id, fromQueue=false){
       setTimeout(() => { try { currentHowl && currentHowl.pause(); } catch(_){} }, 200);
     } else {
       currentHowl.volume(0);
+      currentHowl.once('play', () => {
+        // onplayが発火してから確実にフェードイン（固定10msより安全）
+        const h = currentHowl;
+        if (h) setTimeout(() => { try { h.fade(0, savedVolume, 150); } catch(_){} }, 20);
+      });
       currentHowl.play();
-      setTimeout(() => { try { currentHowl && currentHowl.fade(0, savedVolume, 150); } catch(_){} }, 10);
     }
     return;
   }
@@ -3169,8 +3173,8 @@ function _doSeek(ratio){
         const vol = h.volume();
         h.volume(0);
         try { h.seek(ratio * d); } catch(e){ console.warn('seek err', e); }
-        // 80ms後にフェードイン（シーク直後のバッファ待ちでプツプツしないよう余裕を持たせる）
-        setTimeout(() => { try { h.fade(0, vol > 0 ? vol : savedVolume, 120); } catch(_){} }, 80);
+        // 120ms後にフェードイン（80msだとバッファリングが遅い端末でまだプツプツするため延長）
+        setTimeout(() => { try { h.fade(0, vol > 0 ? vol : savedVolume, 100); } catch(_){} }, 120);
         // 進捗バーを即時更新 (Howler内部の状態反映を待たない)
         const pct = ratio*100;
         document.getElementById('fill').style.width = pct + '%';
