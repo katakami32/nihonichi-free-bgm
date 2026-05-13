@@ -2776,7 +2776,8 @@ async function renderPickup(){
 
   row.querySelectorAll('[data-pkid]').forEach(c => c.onclick = e => {
     if (e.target.closest('[data-play]')) return;
-    openDetail(c.dataset.pkid);
+    const ps = (USE_API ? view : allSongs).find(x => x.id === c.dataset.pkid);
+    if (ps) location.href = '/songs/' + (ps.slug || ps.id);
   });
   row.querySelectorAll('[data-play]').forEach(b => b.onclick = e => {
     e.stopPropagation();
@@ -3605,14 +3606,7 @@ function applyHash(){
   let m = h.match(/^song\/(.+)$/);
   if (m){
     const slug = m[1];
-    let s = (USE_API ? view : allSongs).find(x => x.slug === slug || x.id === slug);
-    if (!s && USE_API){
-      apiGet('/api/song/' + encodeURIComponent(slug)).then(r => {
-        if (r && r.id){ view = [r, ...view.filter(x=>x.id!==r.id)]; openDetail(r.id); }
-      }).catch(()=>{});
-    } else if (s) {
-      openDetail(s.id);
-    }
+    location.replace('/songs/' + slug);
     return;
   }
   // #genre/<slug>
