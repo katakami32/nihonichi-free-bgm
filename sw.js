@@ -31,6 +31,19 @@ self.addEventListener('fetch', e => {
     return;
   }
 
+  // HTMLページはネットワーク優先（デプロイ後すぐ反映）
+  if (e.request.mode === 'navigate') {
+    e.respondWith(
+      fetch(e.request)
+        .then(res => {
+          if (res.ok) caches.open(CACHE).then(c => c.put(e.request, res.clone()));
+          return res;
+        })
+        .catch(() => caches.match(e.request))
+    );
+    return;
+  }
+
   // /data/*.json はネットワーク優先、失敗時にキャッシュ
   if (url.pathname.startsWith('/data/')) {
     e.respondWith(
