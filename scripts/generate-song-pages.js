@@ -268,7 +268,7 @@ function buildPage(song) {
     : `${R2_BASE}/images/jazz/midnight-pour-over_9aaa952c.jpeg`;
   const audioUrl = song.audio ? `${R2_BASE}/${song.audio}` : null;
   const pageUrl  = `${BASE_URL}/songs/${slug}`;
-  const appUrl   = `${BASE_URL}/#song/${slug}`;
+  const appUrl   = `${BASE_URL}/`;
 
   const metaDesc = buildMetaDesc(song);
   const rich     = buildRichDesc(song);

@@ -2776,7 +2776,8 @@ async function renderPickup(){
 
   row.querySelectorAll('[data-pkid]').forEach(c => c.onclick = e => {
     if (e.target.closest('[data-play]')) return;
-    openDetail(c.dataset.pkid);
+    const ps = (USE_API ? view : allSongs).find(x => x.id === c.dataset.pkid);
+    if (ps) location.href = '/songs/' + (ps.slug || ps.id);
   });
   row.querySelectorAll('[data-play]').forEach(b => b.onclick = e => {
     e.stopPropagation();
@@ -3368,7 +3369,7 @@ function toast(msg){
 async function shareSong(id){
   const s = findSong(id);
   if (!s) return;
-  const url = location.origin + location.pathname + '#song/' + (s.slug||s.id);
+  const url = location.origin + '/songs/' + (s.slug||s.id);
   const txt = `${s.title} | 日本一フリーBGM (商用OK・無料)`;
   if (navigator.share){
     try { await navigator.share({ title: s.title, text: txt, url }); return; }
@@ -3499,16 +3500,10 @@ const _origOpenDetail = openDetail;
 openDetail = function(id){
   modalSongId = id;
   _origOpenDetail(id);
-  // hash 更新
-  const s = findSong(id);
-  if (s) history.replaceState(null, '', '#song/' + (s.slug || s.id));
 };
 document.getElementById('mShareBtn').onclick = () => { if (modalSongId) shareSong(modalSongId); };
-const _origCloseModal = window.closeModal;
 window.closeModal = () => {
-  _origCloseModal();
-  // ハッシュをクリア（URL を綺麗に保つ）
-  if (location.hash.startsWith('#song/')) history.replaceState(null, '', location.pathname);
+  document.getElementById('detailModal').classList.remove('on');
 };
 
 // ---- ランダム再生 ----
@@ -3605,14 +3600,7 @@ function applyHash(){
   let m = h.match(/^song\/(.+)$/);
   if (m){
     const slug = m[1];
-    let s = (USE_API ? view : allSongs).find(x => x.slug === slug || x.id === slug);
-    if (!s && USE_API){
-      apiGet('/api/song/' + encodeURIComponent(slug)).then(r => {
-        if (r && r.id){ view = [r, ...view.filter(x=>x.id!==r.id)]; openDetail(r.id); }
-      }).catch(()=>{});
-    } else if (s) {
-      openDetail(s.id);
-    }
+    location.replace('/songs/' + slug);
     return;
   }
   // #genre/<slug>
