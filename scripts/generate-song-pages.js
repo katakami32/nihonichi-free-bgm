@@ -364,6 +364,7 @@ h3{font-size:.95rem;font-weight:700;margin:1.2rem 0 .3rem;color:#6a3008}
 .open-btn{display:inline-block;background:#fff;color:#c85a1e;text-decoration:none;padding:10px 22px;border-radius:9px;font-weight:700;font-size:14px;border:2px solid #c85a1e}
 .open-btn:hover{background:#fdf0e8}
 .license-note{font-size:12px;color:#8a7060}
+.dl-btn{cursor:pointer;border:none}
 .rich-section{background:#fff8f4;border:1px solid #ead8c4;border-radius:12px;padding:1.4rem 1.5rem;margin-bottom:1.5rem}
 .song-img{width:100%;height:auto;border-radius:8px;margin-bottom:1.2rem;display:block}
 .rich-section p{font-size:14px;line-height:1.9;color:#2a1a0a;margin:0 0 .9rem}
@@ -384,7 +385,7 @@ ${tags.length ? `<div class="tags">${tags.map(t => `<span class="tag">#${esc(t)}
 <div class="player-wrap">
 ${audioUrl ? `<audio controls preload="none" src="${esc(audioUrl)}"></audio>` : ''}
 <div class="btn-row">
-${audioUrl ? `<a class="dl-btn" href="${esc(audioUrl)}" download>⬇ ダウンロード（無料）</a>` : ''}
+${audioUrl ? `<button class="dl-btn" onclick="dlBgm(this,'${esc(audioUrl)}','${esc(slug)}')">⬇ ダウンロード（無料）</button>` : ''}
 <a class="open-btn" href="${esc(appUrl)}">▶ サイトで全曲を聴く</a>
 </div>
 <p class="license-note">✅ 商用利用OK・登録不要・クレジット不要 /<a href="${esc(BASE_URL)}/#license" style="color:#c85a1e;margin-left:4px">利用規約</a></p>
@@ -412,6 +413,30 @@ ${audioUrl ? `<a class="dl-btn" href="${esc(audioUrl)}" download>⬇ ダウン�
   <a href="${esc(BASE_URL)}" style="color:#c85a1e">← 日本一フリーBGM トップへ</a> |
   <a href="${esc(BASE_URL)}/#genre/${esc(song.genre||'')}" style="color:#c85a1e">${esc(gJa)}一覧へ</a>
 </p>
+<script>
+function dlBgm(btn, url, slug) {
+  var orig = btn.textContent;
+  btn.textContent = '⏳ 準備中…';
+  btn.disabled = true;
+  fetch(url)
+    .then(function(r){ return r.blob(); })
+    .then(function(blob){
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = slug + '.mp3';
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+      btn.textContent = '✅ ダウンロード完了';
+      setTimeout(function(){ btn.textContent = orig; btn.disabled = false; }, 3000);
+    })
+    .catch(function(){
+      btn.textContent = orig;
+      btn.disabled = false;
+      window.open(url, '_blank');
+    });
+}
+</script>
 </body>
 </html>`;
 }
