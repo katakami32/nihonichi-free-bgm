@@ -3369,7 +3369,7 @@ function toast(msg){
 async function shareSong(id){
   const s = findSong(id);
   if (!s) return;
-  const url = location.origin + location.pathname + '#song/' + (s.slug||s.id);
+  const url = location.origin + '/songs/' + (s.slug||s.id);
   const txt = `${s.title} | 日本一フリーBGM (商用OK・無料)`;
   if (navigator.share){
     try { await navigator.share({ title: s.title, text: txt, url }); return; }
@@ -3500,16 +3500,10 @@ const _origOpenDetail = openDetail;
 openDetail = function(id){
   modalSongId = id;
   _origOpenDetail(id);
-  // hash 更新
-  const s = findSong(id);
-  if (s) history.replaceState(null, '', '#song/' + (s.slug || s.id));
 };
 document.getElementById('mShareBtn').onclick = () => { if (modalSongId) shareSong(modalSongId); };
-const _origCloseModal = window.closeModal;
 window.closeModal = () => {
-  _origCloseModal();
-  // ハッシュをクリア（URL を綺麗に保つ）
-  if (location.hash.startsWith('#song/')) history.replaceState(null, '', location.pathname);
+  document.getElementById('detailModal').classList.remove('on');
 };
 
 // ---- ランダム再生 ----
