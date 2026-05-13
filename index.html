@@ -630,7 +630,7 @@ html[data-theme="dark"] .ccount{background:rgba(255,255,255,.1)}
 .gtag{font-size:10px;font-weight:700;padding:3px 9px;border-radius:14px;background:rgba(0,0,0,.65);color:#fff;backdrop-filter:blur(6px)}
 .dur{font-size:10px;font-weight:700;padding:3px 9px;border-radius:14px;background:rgba(0,0,0,.65);color:#fff;backdrop-filter:blur(6px);font-variant-numeric:tabular-nums}
 .cbody{padding:12px 14px 13px;display:flex;flex-direction:column;gap:8px;flex:1}
-.ctit{font-size:14.5px;font-weight:800;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:40px;cursor:pointer;letter-spacing:.01em}
+.ctit{font-size:14.5px;font-weight:800;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:40px;cursor:pointer;letter-spacing:.01em;color:inherit;text-decoration:none}
 .ctit:hover{color:var(--accent)}
 .cdesc{font-size:11.5px;color:var(--muted);line-height:1.55;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:36px;margin-top:-2px}
 .ctags{display:flex;flex-wrap:wrap;gap:4px;min-height:20px}
@@ -2676,7 +2676,7 @@ function card(s){
       <div class="cplay"><button class="${isPlaying?'playing':''}" data-play="${escHtml(s.id)}" aria-label="${window.t('card_play_aria')}">${isPlaying?'⏸':'▶'}</button></div>
     </div>
     <div class="cbody">
-      <div class="ctit" data-detail="${escHtml(s.id)}" title="${escHtml(getTitle(s))}">${escHtml(getTitle(s))}</div>
+      <a class="ctit" href="/songs/${escHtml(s.slug||s.id)}" title="${escHtml(getTitle(s))}">${escHtml(getTitle(s))}</a>
       ${s._aiReason && s._aiReason.length ? (window._currentLang==='en' ? `<div class="creason">${s._aiReason.slice(0,4).map(r=>`"${escHtml(r)}"`).join(' · ')} match</div>` : `<div class="creason">${s._aiReason.slice(0,4).map(r=>`「${escHtml(r)}」`).join('・')}にマッチ</div>`) : ''}
       ${desc?`<div class="cdesc">${escHtml(desc)}</div>`:'<div class="cdesc"></div>'}
       <div class="ctags">${tags.map(t=>`<span class="ctag" data-search="${escHtml(t)}">#${escHtml(t)}</span>`).join('')}</div>
@@ -2718,7 +2718,6 @@ function attachCardEvents(){
     b.classList.toggle('on');
     b.textContent = favs.has(id) ? '♥' : '♡';
   });
-  document.querySelectorAll('[data-detail]').forEach(b => b.onclick = () => openDetail(b.dataset.detail));
   document.querySelectorAll('[data-dl]').forEach(b => b.addEventListener('click', (e) => {
     _onDlClick(e, b.href, b.getAttribute('download') || b.dataset.dl + '.mp3', b.dataset.dl);
   }));
