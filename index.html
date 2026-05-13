@@ -1162,7 +1162,7 @@ body:has(.pbar.on) .navi-chat-panel{bottom:calc(182px + env(safe-area-inset-bott
       </div>
     </div>
     <div class="hvis" id="heroVis" aria-hidden="true">
-      <img src="images/site/promo.png" alt="日本一フリーBGM" style="width:100%;max-width:400px;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.6),0 0 40px rgba(29,233,182,.1);animation:floatImg 6s ease-in-out infinite">
+      <img src="images/site/hero-display.png" alt="日本一フリーBGM AIがあなたにぴったりのBGMを提案" style="width:100%;max-width:100%;height:auto;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.6),0 0 40px rgba(29,233,182,.1);animation:floatImg 6s ease-in-out infinite;display:block">
     </div>
   </div>
 </section>
@@ -3147,8 +3147,11 @@ playBtn.onclick = () => {
     } else {
       // 再開: 無音から再生してフェードイン
       h.volume(0);
+      h.once('play', () => {
+        const _h = h;
+        if (_h) setTimeout(() => { try { _h.fade(0, savedVolume, 150); } catch(_){} }, 20);
+      });
       h.play();
-      setTimeout(() => { try { h.fade(0, savedVolume, 150); } catch(_){} }, 10);
     }
     return;
   }
@@ -3541,7 +3544,7 @@ play = function(id){
       // ロック画面 play/pause → Howler 経由で制御（audio 要素直接操作は NG）
       navigator.mediaSession.setActionHandler('play', () => {
         const h = _activeHowl();
-        if (h) { h.volume(0); h.play(); setTimeout(() => { try { h.fade(0, savedVolume, 150); } catch(_){} }, 10); }
+        if (h) { h.volume(0); h.once('play', () => { const _h = h; if (_h) setTimeout(() => { try { _h.fade(0, savedVolume, 150); } catch(_){} }, 20); }); h.play(); }
         else if (audio.src) audio.play().catch(()=>{});
         if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'playing';
       });
