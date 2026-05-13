@@ -2961,6 +2961,7 @@ function _howlNode(h){
   try { const n = h._sounds && h._sounds[0] && h._sounds[0]._node; if (n) return n; } catch(_){}
   return null;
 }
+let _posStateTs = 0; // setPositionState の最終呼び出し時刻（ms）
 function _updateProgress(){
   const h = _activeHowl();
   if (!h) { progressRaf = null; return; }
@@ -2985,9 +2986,11 @@ function _updateProgress(){
     const pct = t/d*100;
     document.getElementById('fill').style.width = pct + '%';
     _updateKnob(pct);
-    // ロック画面のシークバー更新（iOS / Android 対応）
-    if ('mediaSession' in navigator && navigator.mediaSession.setPositionState) {
+    // ロック画面のシークバー更新: 1秒に1回に絞る（毎RAFだとIPC負荷が高い）
+    const now = performance.now();
+    if ('mediaSession' in navigator && navigator.mediaSession.setPositionState && now - _posStateTs > 1000) {
       try { navigator.mediaSession.setPositionState({ duration: d, playbackRate: 1, position: Math.min(t, d) }); } catch(_) {}
+      _posStateTs = now;
     }
   }
   document.getElementById('curTime').textContent = fmtDur(t);
