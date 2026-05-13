@@ -3118,8 +3118,17 @@ function play(id, fromQueue=false){
       document.getElementById('player').classList.remove('playing');
       _stopProgressLoop();
       updatePlayingButtons();
-      // ループ
-      if (loopOn) { howl.play(); return; }
+      // ループ: 無音から再開してフェードイン（直接play()だとポップ音が出る）
+      if (loopOn) {
+        howl.seek(0);
+        howl.volume(0);
+        howl.once('play', () => {
+          const _h = howl;
+          if (_h) setTimeout(() => { try { _h.fade(0, savedVolume, 200); } catch(_){} }, 20);
+        });
+        howl.play();
+        return;
+      }
       // ラジオ中は別ロジック
       if (typeof RADIO !== 'undefined' && RADIO.on) return;
       nextSongV2();
@@ -3674,15 +3683,16 @@ document.addEventListener('keydown', e => {
   switch(e.key){
     case ' ':
       e.preventDefault();
-      if (!audio.src && view.length) play(view[0].id);
-      else if (audio.paused) audio.play(); else audio.pause();
+      { const _h = _activeHowl();
+        if (_h) document.getElementById('playBtn').click();
+        else if (nowPlayingId || (view.length && play(view[0].id))) {} }
       break;
     case 'ArrowRight':
-      if (e.shiftKey){ audio.currentTime = Math.min(audio.duration||0, audio.currentTime + 5); }
+      if (e.shiftKey){ const _h2 = _activeHowl(); if (_h2) { const _d = _h2.duration()||0; const _s = _h2.seek()||0; _doSeek(Math.min(1, (_s+5)/_d)); } }
       else nextSongV2();
       break;
     case 'ArrowLeft':
-      if (e.shiftKey){ audio.currentTime = Math.max(0, audio.currentTime - 5); }
+      if (e.shiftKey){ const _h3 = _activeHowl(); if (_h3) { const _d3 = _h3.duration()||0; const _s3 = _h3.seek()||0; _doSeek(Math.max(0, (_s3-5)/_d3)); } }
       else prevSongV2();
       break;
     case 'ArrowUp':
