@@ -2684,6 +2684,7 @@ function card(s){
         <span class="cbpm">♩= <b>${s.bpm?Math.round(s.bpm):'—'}</b></span>
         <div class="cact">
           <button class="fav ${isFav?'on':''}" data-fav="${escHtml(s.id)}" title="${window.t('card_fav_title')}" aria-label="${isFav?window.t('card_fav_remove'):window.t('card_fav_add')}" aria-pressed="${isFav}">${isFav?'♥':'♡'}</button>
+          <button class="fav share-card" data-share="${escHtml(s.id)}" title="共有 / URLコピー" aria-label="この曲を共有">↗</button>
           <a class="dlbtn" href="${escHtml(aud)}" download="${escHtml(s.slug||s.id)}.mp3" data-dl="${escHtml(s.id)}" title="${window.t('card_dl_title')}">⬇ DL</a>
         </div>
       </div>
@@ -2721,6 +2722,10 @@ function attachCardEvents(){
   document.querySelectorAll('[data-dl]').forEach(b => b.addEventListener('click', (e) => {
     _onDlClick(e, b.href, b.getAttribute('download') || b.dataset.dl + '.mp3', b.dataset.dl);
   }));
+  document.querySelectorAll('[data-share]').forEach(b => b.onclick = e => {
+    e.stopPropagation();
+    shareSong(b.dataset.share);
+  });
   document.querySelectorAll('[data-search]').forEach(b => b.onclick = e => {
     e.stopPropagation();
     document.getElementById('searchBox').value = b.dataset.search;
