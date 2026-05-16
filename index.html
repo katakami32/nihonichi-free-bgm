@@ -1699,7 +1699,7 @@ body:has(.pbar.on) .navi-chat-panel{bottom:calc(182px + env(safe-area-inset-bott
         <button class="rmcard" data-rm="シティポップ J-Pop 80年代 爽やか" data-genres="j-pop,pop"><div class="ic">🌸</div><b data-i18n="rm_citypop">シティポップ</b><small data-i18n="rm_citypop_sub">80年代風</small></button>
         <button class="rmcard" data-rm="エレクトロニック シンセ 高揚 アップテンポ" data-genres="electronic,rock"><div class="ic">🎛</div><b data-i18n="rm_electronic">エレクトロニック</b><small data-i18n="rm_electronic_sub">シンセ & ダンス</small></button>
         <button class="rmcard" data-rm="朝 散歩 爽やか アコースティック ギター" data-genres="folk-acoustic,j-pop,pop"><div class="ic">☀️</div><b data-i18n="rm_morning">朝の散歩</b><small data-i18n="rm_morning_sub">爽やか & ギター</small></button>
-        <button class="rmcard" data-rm="キッズ こども 可愛い 明るい 楽しい" data-genres="childrens,j-pop,pop,japanese-anime"><div class="ic">🧸</div><b data-i18n="rm_kids">キッズ・こども</b><small data-i18n="rm_kids_sub">明るく楽しい</small></button>
+        <button class="rmcard" data-rm="キッズ こども 可愛い 明るい 楽しい" data-genres="childrens"><div class="ic">🧸</div><b data-i18n="rm_kids">キッズ・こども</b><small data-i18n="rm_kids_sub">明るく楽しい</small></button>
         <button class="rmcard" data-rm="synthwave ネオン 真夜中 neon midnight シンセ 疾走感 retro 高揚 アップテンポ ドライブ ナイトドライブ レトロウェーヴ" data-genres="electronic"><div class="ic">🌃</div><b data-i18n="rm_drive">ナイトドライブ</b><small data-i18n="rm_drive_sub">シンセウェーヴ・夜の疾走</small></button>
         <button class="rmcard" data-rm="ホラー 怖い 不気味 サスペンス 幽霊 心霊 dark ambient" data-genres="horror"><div class="ic">👻</div><b>ホラー・ダーク</b><small>怖い・不気味な雰囲気</small></button>
         <button class="rmcard" data-rm="和風 日本 祭り 和楽器 太鼓 三味線 琴 尺八 神社 侍" data-genres="wafu"><div class="ic">⛩</div><b>和風・日本伝統</b><small>祭り・和楽器・侍</small></button>
@@ -4825,7 +4825,8 @@ const RADIO = {
   prevVolume: null,
   watchInterval: null,   // 末尾空白検知インターバル
   _transitioning: false, // 二重遷移防止フラグ
-  targetGenre: null,     // 検出されたジャンル（null = 全ジャンル対象）
+  targetGenre: null,     // 主ジャンル（null = 全ジャンル対象）
+  allowedGenres: null,   // 許可ジャンル一覧（プリセット指定時に保存）
 };
 
 function radioInitElems() {
@@ -4885,7 +4886,20 @@ async function radioStart(prompt, allowedGenres) {
     _toks.forEach(t => { if (QUERY_EXPAND[t]) QUERY_EXPAND[t].forEach(e=>_extras.add(e)); });
     if (_extras.size) _radioPrompt = prompt + ' ' + [..._extras].join(' ');
   }
-  const candidates = aiMatch(_radioPrompt, pool, 80);
+  // 複数ジャンルの場合は各ジャンルから均等にサンプリングして偏りを防ぐ
+  let candidates;
+  if (allowedGenres && allowedGenres.length > 1) {
+    const perLimit = Math.ceil(80 / allowedGenres.length);
+    const genreCands = [];
+    for (const genre of allowedGenres) {
+      const gPool = pool.filter(s => s.genre === genre);
+      const gCands = aiMatch(_radioPrompt, gPool, perLimit);
+      if (gCands && gCands.length) genreCands.push(...gCands);
+    }
+    candidates = genreCands;
+  } else {
+    candidates = aiMatch(_radioPrompt, pool, 80);
+  }
   if (!candidates || candidates.length < 3) {
     toast(window.t('toast_radio_no_results'));
     return;
@@ -4893,9 +4907,10 @@ async function radioStart(prompt, allowedGenres) {
 
   RADIO.prompt = prompt;
   RADIO.mode = prompt;
-  RADIO.targetGenre = targetGenre; // キュー枯渇時の補充でも同ジャンルを維持
+  RADIO.targetGenre = targetGenre;       // 主ジャンル（キュー補充時も維持）
+  RADIO.allowedGenres = allowedGenres || null; // 全許可ジャンルを保存
   // グッド曲を2倍の確率で再生（シャッフル配列に重複追加）
-  RADIO.queue = _buildRadioQueue(candidates);
+  RADIO.queue = _buildRadioQueue(candidates, targetGenre);
   RADIO.history = [];
   RADIO.on = true;
   RADIO.prevVolume = (audio && audio.volume) || 0.8;
@@ -4919,10 +4934,14 @@ async function radioStart(prompt, allowedGenres) {
 function radioPlayNext() {
   if (!RADIO.on) return;
 
-  // キュー枯渇 → 同ジャンル絞り込みを維持して補充
+  // キュー枯渇 → 許可ジャンル全体を維持して補充
   if (RADIO.queue.length === 0) {
     let pool = allSongs.length ? allSongs : view;
-    if (RADIO.targetGenre) {
+    if (RADIO.allowedGenres && RADIO.allowedGenres.length) {
+      const genreSet = new Set(RADIO.allowedGenres);
+      const gp = pool.filter(s => genreSet.has(s.genre));
+      if (gp.length >= 5) pool = gp;
+    } else if (RADIO.targetGenre) {
       const gp = pool.filter(s => s.genre === RADIO.targetGenre);
       if (gp.length >= 5) pool = gp;
     }
@@ -4933,7 +4952,7 @@ function radioPlayNext() {
     // グッド曲は recent でも除外しない（好きな曲は繰り返し流す）
     let fresh = cands.filter(s => !recentIds.has(s.id) || _rPrefs.likes.has(s.id));
     if (!fresh.length) fresh = cands;
-    RADIO.queue = _buildRadioQueue(fresh);
+    RADIO.queue = _buildRadioQueue(fresh, RADIO.targetGenre);
     if (!RADIO.queue.length) {
       toast(window.t('toast_radio_exhausted'));
       radioStop();
@@ -5122,11 +5141,12 @@ const _rPrefs = (() => {
 })();
 
 // グッド曲を2倍の確率で出現させるキュー構築（シャッフル前に重複追加）
-function _buildRadioQueue(candidates) {
+function _buildRadioQueue(candidates, primaryGenre) {
   const withBonus = [];
   for (const s of candidates) {
     withBonus.push(s);
     if (_rPrefs.likes.has(s.id)) withBonus.push(s); // グッド曲は2回追加
+    if (primaryGenre && s.genre === primaryGenre) withBonus.push(s); // 主ジャンルは2回追加
   }
   return shuffleArr(withBonus);
 }
