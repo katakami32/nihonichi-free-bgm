@@ -561,6 +561,54 @@ def main():
         out.write_text(json.dumps(songs_in_genre, ensure_ascii=False))
     print(f"  by-genre/*.json 更新完了（{len(by_genre_map)} ジャンル）")
 
+    # ── 7b. タイトル重複チェック ──────────────────────────────────
+    print("\n[7b] タイトル重複チェック...")
+    title_cnt = collections.Counter(s["title"] for s in updated)
+    dupes = {t: c for t, c in title_cnt.items() if c > 1}
+    if dupes:
+        print(f"  ⚠ 重複タイトル検出 ({len(dupes)} 件):")
+        for t, c in list(dupes.items())[:10]:
+            print(f"    「{t}」× {c}")
+        print("  → 09_dedupe_rename.py を実行して重複を解消することを推奨します")
+    else:
+        print("  ✔ 重複タイトルなし")
+
+    # ── 7c. SEO詳細ページ生成 ────────────────────────────────────
+    print("\n[7c] SEO詳細ページ生成 (generate-song-pages.js)...")
+    new_slugs = [s["slug"] for s in songs_to_add if s.get("slug")]
+    if new_slugs:
+        import subprocess
+        script_js = ROOT / "scripts" / "generate-song-pages.js"
+        if script_js.exists():
+            for slug in new_slugs:
+                r = subprocess.run(
+                    ["node", str(script_js), f"--slug={slug}"],
+                    capture_output=True, text=True, cwd=ROOT
+                )
+                if r.returncode == 0:
+                    print(f"  ✔ /songs/{slug}.html")
+                else:
+                    print(f"  ✘ /songs/{slug}.html: {r.stderr.strip()[:80]}")
+        else:
+            print("  ⚠ generate-song-pages.js が見つかりません")
+    else:
+        print("  スキップ（新曲のslugなし）")
+
+    # ── 7d. SEOカタログ（index.html の隠しリスト）更新 ───────────
+    print("\n[7d] SEOカタログ更新 (inject-seo-list.js)...")
+    inject_js = ROOT / "scripts" / "inject-seo-list.js"
+    if inject_js.exists():
+        r = subprocess.run(
+            ["node", str(inject_js)],
+            capture_output=True, text=True, cwd=ROOT
+        )
+        if r.returncode == 0:
+            print("  ✔ index.html のSEOリスト更新完了")
+        else:
+            print(f"  ✘ inject-seo-list.js 失敗: {r.stderr.strip()[:80]}")
+    else:
+        print("  ⚠ inject-seo-list.js が見つかりません")
+
     # ── 8. Cloudflare 認証 ───────────────────────────────────
     print("\n[8/9] Cloudflare 認証トークン取得...")
     try:
