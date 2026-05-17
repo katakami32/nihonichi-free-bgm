@@ -83,6 +83,27 @@ for (const page of staticPages) {
   lines.push('  </url>');
 }
 
+// ---- 全曲一覧ページ (songs-list/) ----------------------------------------
+const PER_PAGE  = 150;
+const listTotal = Math.ceil(songs.length / PER_PAGE);
+
+lines.push('');
+lines.push(`  <!-- ===== 全曲一覧ページ (${listTotal}ページ) — /songs-list/ ===== -->`);
+lines.push('  <url>');
+lines.push(`    <loc>${BASE}/songs-list/</loc>`);
+lines.push(`    <lastmod>${today}</lastmod>`);
+lines.push(`    <changefreq>weekly</changefreq>`);
+lines.push(`    <priority>0.8</priority>`);
+lines.push('  </url>');
+for (let p = 2; p <= listTotal; p++) {
+  lines.push('  <url>');
+  lines.push(`    <loc>${BASE}/songs-list/page-${p}.html</loc>`);
+  lines.push(`    <lastmod>${today}</lastmod>`);
+  lines.push(`    <changefreq>weekly</changefreq>`);
+  lines.push(`    <priority>0.7</priority>`);
+  lines.push('  </url>');
+}
+
 lines.push('');
 lines.push(`  <!-- ===== 楽曲個別ページ (${songs.length}曲) — /songs/<slug>.html ===== -->`);
 lines.push('  <!-- 各ページは固有タイトル・JSON-LD・OGPを持つ静的HTML -->');;
