@@ -116,7 +116,13 @@ python3 scripts/06_add_new_songs.py
 ```
 
 - ジャンル判定は自動（`GENRE_RULES` が優先順位順にマッチ）
-- `songs.json`・`index.json`・`by-genre/*.json`・`genres.json` を自動更新
+- `index.json`・`by-genre/*.json`・`genres.json` を自動更新
+
+> 🔒 **データ消失防止ガード（スクリプト内蔵）**
+> - 曲数が減少していたら書き込みを即abort（絶対に上書きしない）
+> - 書き込み前に `index.json.bak` を自動バックアップ
+> - tmpファイル経由のアトミック書き込み（クラッシュ時も安全）
+> - 書き込み後に件数を検証してから本ファイルに置換
 
 #### ジャンル判定ルール（優先順位順・完全版）
 
