@@ -50,8 +50,9 @@ GENRE_RULES = [
     ("k-pop",         ["k-pop", "kpop", "korean", "korean pop", "k pop",
                        "dance pop", "bubblegum pop", "idol pop"]),
     # ホラー・ダーク（dark ambient より ambient を先に処理しないよう上位に配置）
+    # suspense はドキュメンタリー文脈で使われるため除外
     ("horror",        ["horror", "dark ambient", "scary", "creepy", "eerie",
-                       "suspense", "haunted", "ominous", "sinister", "thriller"]),
+                       "haunted", "ominous", "sinister", "thriller"]),
     # 和風（japanese-anime より上位。shakuhachi 等は wafu 優先）
     ("wafu",          ["和風", "wa-fu", "wafu", "japanese traditional", "wagakki",
                        "shamisen", "koto", "taiko", "shakuhachi", "biwa", "matsuri"]),
@@ -61,8 +62,9 @@ GENRE_RULES = [
     ("ambient",       ["ambient", "drone", "soundscape", "meditative", "meditation",
                        "nature sounds", "rain", "white noise"]),
     # ジャズ
+    # fusion はエレクトロニックfusionでも使われるため除外
     ("jazz",          ["jazz", "bossa", "bossa nova", "neo soul", "neo-soul",
-                       "swing", "blues", "bebop", "smooth jazz", "fusion"]),
+                       "swing", "blues", "bebop", "smooth jazz"]),
     # シネマティック
     ("cinematic",     ["cinematic", "orchestral", "film score", "soundtrack",
                        "classical", "epic", "trailer", "dramatic", "symphonic"]),
