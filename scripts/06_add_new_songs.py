@@ -514,7 +514,33 @@ def main():
     # ── 7. index.json・genres.json 更新 ───────────────────────
     print(f"\n[7/9] index.json 更新 ({len(existing)} → {len(existing)+len(songs_to_add)} 曲)...")
     updated = existing + songs_to_add
-    DATA_FILE.write_text(json.dumps(updated, ensure_ascii=False))
+
+    # 【安全ガード】曲数が減っていたら絶対に書き込まない
+    if len(updated) < len(existing):
+        raise RuntimeError(
+            f"🚨 データ消失を検出！書き込みを中断します。\n"
+            f"   既存: {len(existing)} 曲 → 更新後: {len(updated)} 曲（減少は異常）\n"
+            f"   data/index.json は変更されていません。"
+        )
+    if len(updated) == 0:
+        raise RuntimeError("🚨 updatedが空です。index.jsonへの書き込みを中断します。")
+
+    # バックアップを作成してからアトミック書き込み
+    bak = DATA_FILE.with_suffix(".json.bak")
+    if DATA_FILE.exists():
+        import shutil
+        shutil.copy2(DATA_FILE, bak)
+        print(f"  バックアップ作成: {bak.name}")
+
+    tmp = DATA_FILE.with_suffix(".json.tmp")
+    tmp.write_text(json.dumps(updated, ensure_ascii=False))
+    # 書き込んだ内容を検証してから本ファイルに置換
+    verify = json.loads(tmp.read_text())
+    if len(verify) != len(updated):
+        tmp.unlink()
+        raise RuntimeError(f"🚨 書き込み検証失敗。index.jsonは変更されていません。")
+    tmp.replace(DATA_FILE)
+    print(f"  ✔ index.json 書き込み完了（{len(updated)} 曲）")
 
     genres_data = json.loads(GENRES_FILE.read_text()) if GENRES_FILE.exists() else []
     genre_cnt = collections.Counter(s["genre"] for s in updated)
@@ -523,6 +549,17 @@ def main():
             g["count"] = genre_cnt[g["slug"]]
     GENRES_FILE.write_text(json.dumps(genres_data, ensure_ascii=False, indent=2))
     print(f"  genres.json 更新完了")
+
+    # by-genre/*.json 更新（index.json と常に同期させる）
+    by_genre_dir = ROOT / "data" / "by-genre"
+    by_genre_dir.mkdir(exist_ok=True)
+    by_genre_map: dict = {}
+    for s in updated:
+        by_genre_map.setdefault(s["genre"], []).append(s)
+    for slug, songs_in_genre in by_genre_map.items():
+        out = by_genre_dir / f"{slug}.json"
+        out.write_text(json.dumps(songs_in_genre, ensure_ascii=False))
+    print(f"  by-genre/*.json 更新完了（{len(by_genre_map)} ジャンル）")
 
     # ── 8. Cloudflare 認証 ───────────────────────────────────
     print("\n[8/9] Cloudflare 認証トークン取得...")
