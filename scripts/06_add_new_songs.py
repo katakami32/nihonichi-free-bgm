@@ -127,10 +127,13 @@ def slugify(text, maxlen=60):
     return (s or "track")[:maxlen].rstrip("-")
 
 def pick_genre(tags):
+    import re as _re
     t = (tags or "").lower()
     for name, kws in GENRE_RULES:
         for kw in kws:
-            if kw in t:
+            # 単語境界マッチ（例: "folk-pop" が "k-pop" に誤マッチするのを防ぐ）
+            pattern = r'(?<![a-z0-9])' + _re.escape(kw) + r'(?![a-z0-9])'
+            if _re.search(pattern, t):
                 return name
     return "other"
 

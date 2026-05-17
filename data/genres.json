@@ -24,14 +24,14 @@
     "slug": "j-pop",
     "label_ja": "J-POP / シティポップ",
     "label_en": "J-Pop / City Pop",
-    "count": 206,
+    "count": 202,
     "cover": "images/j-pop/summit-signal_2846248c.jpeg"
   },
   {
     "slug": "k-pop",
     "label_ja": "K-POP",
     "label_en": "K-Pop",
-    "count": 2,
+    "count": 54,
     "cover": "images/pop/cherry-pop_d273c12b.jpeg"
   },
   {
@@ -52,7 +52,7 @@
     "slug": "electronic",
     "label_ja": "エレクトロニック",
     "label_en": "Electronic / Synthwave",
-    "count": 163,
+    "count": 155,
     "cover": "images/electronic/paper-skies_50984de4.jpeg"
   },
   {
@@ -87,7 +87,7 @@
     "slug": "pop",
     "label_ja": "ポップス",
     "label_en": "Pop",
-    "count": 83,
+    "count": 43,
     "cover": "images/pop/sakura-festival_7b9ea74f.jpeg"
   },
   {
