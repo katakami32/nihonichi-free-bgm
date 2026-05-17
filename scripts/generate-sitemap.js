@@ -60,6 +60,12 @@ for (const g of GENRES) {
   staticPages.push({ loc: `/#genre/${g}`, priority: '0.6', changefreq: 'weekly' });
 }
 
+// 全曲一覧ページ（songs-list/）をサイトマップに追加
+staticPages.push({ loc: '/songs-list/',                priority: '0.8', changefreq: 'weekly' });
+for (let i = 2; i <= 15; i++) {
+  staticPages.push({ loc: `/songs-list/page-${i}.html`, priority: '0.7', changefreq: 'weekly' });
+}
+
 // ---- メイン --------------------------------------------------------------
 const songs = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
 const today = new Date().toISOString().slice(0, 10);
