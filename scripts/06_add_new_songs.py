@@ -45,25 +45,61 @@ CF_ACCOUNT  = "dec079cbb6f80e5bf626941e3f83844b"
 
 # ── ジャンルルール（childrens は pop より前） ────────────────
 GENRE_RULES = [
-    ("lo-fi",         ["lo-fi", "lofi", "chillhop", "chill hop"]),
-    ("ambient",       ["ambient", "drone", "soundscape"]),
-    ("jazz",          ["jazz", "bossa", "neo soul", "neo-soul", "swing", "blues"]),
+    # ── 優先度順（先にマッチしたジャンルが採用される）──────────
+    # K-POP（k-pop / kpop / korean は j-pop より先に判定）
+    ("k-pop",         ["k-pop", "kpop", "korean", "korean pop", "k pop",
+                       "dance pop", "bubblegum pop", "idol pop"]),
+    # ホラー・ダーク（dark ambient より ambient を先に処理しないよう上位に配置）
+    ("horror",        ["horror", "dark ambient", "scary", "creepy", "eerie",
+                       "suspense", "haunted", "ominous", "sinister", "thriller"]),
+    # 和風（japanese-anime より上位。shakuhachi 等は wafu 優先）
+    ("wafu",          ["和風", "wa-fu", "wafu", "japanese traditional", "wagakki",
+                       "shamisen", "koto", "taiko", "shakuhachi", "biwa", "matsuri"]),
+    # Lo-Fi
+    ("lo-fi",         ["lo-fi", "lofi", "chillhop", "chill hop", "lo fi"]),
+    # アンビエント
+    ("ambient",       ["ambient", "drone", "soundscape", "meditative", "meditation",
+                       "nature sounds", "rain", "white noise"]),
+    # ジャズ
+    ("jazz",          ["jazz", "bossa", "bossa nova", "neo soul", "neo-soul",
+                       "swing", "blues", "bebop", "smooth jazz", "fusion"]),
+    # シネマティック
     ("cinematic",     ["cinematic", "orchestral", "film score", "soundtrack",
-                       "classical", "epic", "trailer"]),
+                       "classical", "epic", "trailer", "dramatic", "symphonic"]),
+    # エレクトロニック
     ("electronic",    ["electronic", "edm", "synthwave", "future bass", "house",
-                       "techno", "trance", "dubstep", "chiptune", "8bit", "8-bit"]),
+                       "techno", "trance", "dubstep", "chiptune", "8bit", "8-bit",
+                       "drum and bass", "dnb", "ambient electronic"]),
+    # キッズ
     ("childrens",     ["children", "children's", "kids", "nursery", "lullaby",
-                       "toybox", "toy box", "toy piano", "playful ukulele", "cartoon"]),
+                       "toybox", "toy box", "toy piano", "playful ukulele", "cartoon",
+                       "kindergarten", "nursery rhyme"]),
+    # J-POP（k-pop より後に判定）
     ("j-pop",         ["j-pop", "jpop", "city pop", "citypop", "acoustic pop",
-                       "ballad", "pop rock", "pop-rock", "idol", "indie pop"]),
-    ("folk-acoustic", ["folk", "acoustic", "country", "americana", "bluegrass"]),
+                       "ballad", "pop rock", "pop-rock", "idol", "indie pop",
+                       "shibuya-kei", "shibuya kei"]),
+    # フォーク・アコースティック
+    ("folk-acoustic", ["folk", "acoustic", "country", "americana", "bluegrass",
+                       "fingerpicking", "fingerstyle", "singer-songwriter"]),
+    # ヒップホップ・R&B
+    ("hip-hop-rnb",   ["hip hop", "hip-hop", "hiphop", "trap", "r&b", "rnb",
+                       "soul", "funk", "neo r&b", "urban"]),
+    # ロック
+    ("rock",          ["rock", "punk", "metal", "emo", "grunge", "alternative",
+                       "hard rock", "indie rock", "post-rock"]),
+    # アニメ・アイドル（wafu より下位）
+    ("japanese-anime",["anime", "j-idol", "visual kei", "vocaloid", "enka",
+                       "anison", "anime song"]),
+    # コーポレート
+    ("corporate-bgm", ["corporate", "documentary", "business", "presentation",
+                       "motivational", "inspirational", "uplifting corporate"]),
+    # ポップス（最後にマッチ）
     ("pop",           ["pop"]),
-    ("hip-hop-rnb",   ["hip hop", "hip-hop", "hiphop", "trap", "r&b", "rnb", "soul"]),
-    ("rock",          ["rock", "punk", "metal", "emo", "grunge", "alternative"]),
-    ("japanese-anime",["japanese traditional", "anime", "shakuhachi", "koto", "taiko", "enka"]),
-    ("corporate-bgm", ["corporate", "documentary", "business"]),
 ]
 GENRE_LABELS = {
+    "k-pop":         ("K-Pop",                   "K-Pop"),
+    "horror":        ("ホラー・ダーク",            "Horror / Dark"),
+    "wafu":          ("和風",                     "Japanese / Wafu"),
     "lo-fi":         ("Lo-Fi",                    "Lo-Fi"),
     "ambient":       ("アンビエント",              "Ambient"),
     "jazz":          ("ジャズ",                   "Jazz"),
@@ -281,6 +317,7 @@ def r2_upload(local_path, r2_key, content_type, cf_token):
 
 # ── 英語メタデータ生成 ─────────────────────────────────────────
 GENRE_EN = {
+    "k-pop": "K-Pop", "horror": "Horror / Dark", "wafu": "Japanese / Wafu",
     "jazz": "Jazz", "ambient": "Ambient", "cinematic": "Cinematic",
     "lo-fi": "Lo-Fi", "pop": "Pop", "electronic": "Electronic",
     "rock": "Rock", "folk-acoustic": "Folk / Acoustic",
