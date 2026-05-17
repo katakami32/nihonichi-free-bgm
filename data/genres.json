@@ -28,6 +28,13 @@
     "cover": "images/j-pop/summit-signal_2846248c.jpeg"
   },
   {
+    "slug": "k-pop",
+    "label_ja": "K-POP",
+    "label_en": "K-Pop",
+    "count": 2,
+    "cover": "images/pop/cherry-pop_d273c12b.jpeg"
+  },
+  {
     "slug": "jazz",
     "label_ja": "ジャズ",
     "label_en": "Jazz & Bossa Nova",
@@ -80,7 +87,7 @@
     "slug": "pop",
     "label_ja": "ポップス",
     "label_en": "Pop",
-    "count": 85,
+    "count": 83,
     "cover": "images/pop/sakura-festival_7b9ea74f.jpeg"
   },
   {

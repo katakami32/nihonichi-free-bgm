@@ -1,0 +1,34 @@
+[
+  {
+    "id": "d273c12b-e620-4845-9ba5-41ecc223b67c",
+    "slug": "cherry-pop_d273c12b",
+    "title": "桜・ポップ",
+    "genre": "k-pop",
+    "description": "アップテンポK-popinspiredダンスpop、明るいシンセ、キャッチーなフック、エネルギッシュビート、若々しい＆楽しい、〜にぴったりYouTubeダンスcover＆challenge動画。",
+    "tags": "dance pop, bright, k-pop",
+    "duration": 149.92,
+    "bpm": 130.99,
+    "model": "chirp-fenix",
+    "created_at": "2026-04-24T00:47:56.511Z",
+    "audio": "audio/pop/cherry-pop_d273c12b.mp3",
+    "image": "images/pop/cherry-pop_d273c12b.jpeg",
+    "desc_en": "Pop BGM · dance pop, bright, k-pop · BPM 131",
+    "title_en": "Cherry Pop"
+  },
+  {
+    "id": "6003b675-e818-42fe-9588-e30d3a4f16b9",
+    "slug": "cherry-pop_6003b675",
+    "title": "桜・ポップ・ときめき",
+    "genre": "k-pop",
+    "description": "アップテンポK-popinspiredダンスpop、明るいシンセ、キャッチーなフック、エネルギッシュビート、若々しい＆楽しい、〜にぴったりYouTubeダンスcover＆challenge動画。",
+    "tags": "dance pop, bright, k-pop",
+    "duration": 161.76,
+    "bpm": 133.52,
+    "model": "chirp-fenix",
+    "created_at": "2026-04-24T00:47:56.511Z",
+    "audio": "audio/pop/cherry-pop_6003b675.mp3",
+    "image": "images/pop/cherry-pop_6003b675.jpeg",
+    "desc_en": "Pop BGM · dance pop, bright, k-pop · BPM 134",
+    "title_en": "Cherry Pop Spark"
+  }
+]

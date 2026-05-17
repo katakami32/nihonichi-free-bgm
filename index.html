@@ -657,6 +657,7 @@ html[data-theme="dark"] .ccount{background:rgba(255,255,255,.1)}
 .gtag.g-horror{background:rgba(80,20,20,.9)}
 .gtag.g-wafu{background:rgba(160,60,80,.85)}
 .gtag.g-corporate{background:rgba(70,130,170,.85)}
+.gtag.g-kpop{background:rgba(230,80,160,.85)}
 .gtag.g-other{background:rgba(120,120,120,.85)}
 .fav{width:30px;height:30px;border-radius:50%;border:1px solid var(--border);background:var(--card);cursor:pointer;display:grid;place-items:center;font-size:14px;color:var(--muted);transition:all .15s}
 .fav:hover{border-color:var(--accent);color:var(--accent)}
@@ -1697,6 +1698,7 @@ body:has(.pbar.on) .navi-chat-panel{bottom:calc(182px + env(safe-area-inset-bott
         <button class="rmcard" data-rm="アンビエント 静か 瞑想 癒し 自然" data-genres="ambient,lo-fi,folk-acoustic"><div class="ic">🌌</div><b data-i18n="rm_ambient">アンビエント</b><small data-i18n="rm_ambient_sub">瞑想 & 集中</small></button>
         <button class="rmcard" data-rm="シネマティック 壮大 オーケストラ 感動" data-genres="cinematic"><div class="ic">🎬</div><b data-i18n="rm_cinematic">シネマティック</b><small data-i18n="rm_cinematic_sub">壮大 & 感動</small></button>
         <button class="rmcard" data-rm="シティポップ J-Pop 80年代 爽やか" data-genres="j-pop,pop"><div class="ic">🌸</div><b data-i18n="rm_citypop">シティポップ</b><small data-i18n="rm_citypop_sub">80年代風</small></button>
+        <button class="rmcard" data-rm="K-Pop ダンス アイドル 韓国 ポップ 明るい" data-genres="k-pop"><div class="ic">💗</div><b>K-POP</b><small>アイドル・ダンス</small></button>
         <button class="rmcard" data-rm="エレクトロニック シンセ 高揚 アップテンポ" data-genres="electronic,rock"><div class="ic">🎛</div><b data-i18n="rm_electronic">エレクトロニック</b><small data-i18n="rm_electronic_sub">シンセ & ダンス</small></button>
         <button class="rmcard" data-rm="朝 散歩 爽やか アコースティック ギター" data-genres="folk-acoustic,j-pop,pop"><div class="ic">☀️</div><b data-i18n="rm_morning">朝の散歩</b><small data-i18n="rm_morning_sub">爽やか & ギター</small></button>
         <button class="rmcard" data-rm="キッズ こども 可愛い 明るい 楽しい" data-genres="childrens"><div class="ic">🧸</div><b data-i18n="rm_kids">キッズ・こども</b><small data-i18n="rm_kids_sub">明るく楽しい</small></button>
@@ -2207,7 +2209,7 @@ function renderCats(){
   const list = document.getElementById('catList');
   const total = allSongs.length;
   let html = `<button class="catbtn ${currentCat==='all'?'active':''}" data-cat="all"><span>🎼 すべて</span><span class="ccount">${total}</span></button>`;
-  const ic = {ambient:'🌌',cinematic:'🎬','j-pop':'🌸',jazz:'🎷','lo-fi':'☕',electronic:'🎛','folk-acoustic':'🎸','hip-hop-rnb':'🎤',rock:'🎸',pop:'⭐',childrens:'🧸','japanese-anime':'🎌',horror:'👻',wafu:'⛩','corporate-bgm':'💼',other:'🎵'};
+  const ic = {ambient:'🌌',cinematic:'🎬','j-pop':'🌸','k-pop':'💗',jazz:'🎷','lo-fi':'☕',electronic:'🎛','folk-acoustic':'🎸','hip-hop-rnb':'🎤',rock:'🎸',pop:'⭐',childrens:'🧸','japanese-anime':'🎌',horror:'👻',wafu:'⛩','corporate-bgm':'💼',other:'🎵'};
   for (const g of genres){
     html += `<button class="catbtn ${currentCat===g.slug?'active':''}" data-cat="${g.slug}"><span>${ic[g.slug]||'🎵'} ${g.label_ja}</span><span class="ccount">${g.count}</span></button>`;
   }
@@ -2630,7 +2632,7 @@ const GENRE_CLASS = {
   'j-pop':'g-jpop','electronic':'g-electronic','rock':'g-rock','pop':'g-pop',
   'folk-acoustic':'g-folk','hip-hop-rnb':'g-hiphop','childrens':'g-childrens',
   'japanese-anime':'g-anime','horror':'g-horror','wafu':'g-wafu',
-  'corporate-bgm':'g-corporate','other':'g-other'
+  'corporate-bgm':'g-corporate','k-pop':'g-kpop','other':'g-other'
 };
 
 // 紹介文を綺麗に整形（最大90文字でカット、カンマ分割しない）
@@ -8322,7 +8324,7 @@ const R2='https://pub-c8052da2182b4317bc252b78e473584c.r2.dev';
 const GENRE_JA={
   jazz:'ジャズ',ambient:'アンビエント',cinematic:'シネマティック',
   'lo-fi':'Lo-Fi','hip-hop-rnb':'ヒップホップ・R&B',
-  'folk-acoustic':'フォーク・アコースティック','j-pop':'J-Pop',
+  'folk-acoustic':'フォーク・アコースティック','j-pop':'J-Pop','k-pop':'K-POP',
   'japanese-anime':'アニメ・日本風','corporate-bgm':'コーポレート',
   electronic:'エレクトロニック',rock:'ロック',pop:'ポップ',
   childrens:'こども向け',other:'その他'
@@ -8406,6 +8408,7 @@ const MOOD=[
   {k:['ヒップホップ','ラップ','hip hop','hiphop','rnb','r&b','rap'],g:['hip-hop-rnb']},
   {k:['コーポレート','企業','ビジネス','プレゼン','corporate','professional','bgm'],g:['corporate-bgm']},
   {k:['j-pop','jpop','ポップス','j pop','Jポップ'],g:['j-pop','pop']},
+  {k:['k-pop','kpop','韓国','Korean','アイドル','idol','케이팝'],g:['k-pop']},
   {k:['こども','子供','子ども','童謡','キッズ','kids','children'],g:['childrens']},
   {k:['速い','テンポ速','fast','快活','bpm高'],min:130},
   {k:['遅い','スロー','ゆっくり','slow','テンポ遅'],max:85},
@@ -8517,7 +8520,7 @@ const CONVS=[
   {r:/何が好き|おすすめ|おすすめ曲|人気|ランキング/i, expr:'joy', special:'recommend'},
   {r:/ランダム|適当|なんでも|おまかせ|random/i, expr:'surprise', special:'random'},
   {r:/全ジャンル|ジャンル一覧|どんなジャンル|genre/i, expr:'confident',
-    a:['ジャンルはこんな感じだよ🎵\n<strong>Jazz・Ambient・Lo-Fi・Cinematic・Electronic・Rock・Pop・J-Pop・Folk・Hip-Hop・Anime・Corporate・Kids・Other</strong>\nどれか気になる？']},
+    a:['ジャンルはこんな感じだよ🎵\n<strong>Jazz・Ambient・Lo-Fi・Cinematic・Electronic・Rock・Pop・J-Pop・K-POP・Folk・Hip-Hop・Anime・Corporate・Kids・Other</strong>\nどれか気になる？']},
 
   // ── 用途・シーン ──
   {r:/YouTube|ユーチューブ|動画|配信|ライブ|vlog|vtuber/i, expr:'excited',
