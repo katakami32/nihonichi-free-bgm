@@ -660,5 +660,20 @@ def main():
     if _result.returncode != 0:
         print("⚠️  後処理チェックでエラーが検出されました。上記のログを確認してください。")
 
+    # ── git commit & push → Cloudflare Pages 自動デプロイ ────
+    # index.json は /data/ (Pages) から配信されるため push が必須
+    print("\n[最終] git commit & push → nihonichi-bgm.com に反映...")
+    song_count = len(updated)
+    added_count_final = len(songs_to_add)
+    commit_msg = f"feat: 新曲{added_count_final}本追加（合計{song_count}曲）"
+    try:
+        _sp.run(["git", "add", "data/", "index.html", "songs/"], cwd=ROOT, check=True)
+        _sp.run(["git", "commit", "-m", commit_msg], cwd=ROOT, check=True)
+        _sp.run(["git", "push", "origin", "main"], cwd=ROOT, check=True)
+        print(f"  ✔ push完了 → https://nihonichi-bgm.com に反映されます（約1分）")
+    except _sp.CalledProcessError as e:
+        print(f"  ✘ git操作失敗: {e}")
+        print("  手動で git add / commit / push を実行してください")
+
 if __name__ == "__main__":
     main()
