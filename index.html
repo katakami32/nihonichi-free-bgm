@@ -464,6 +464,26 @@ body.ai-active .hsearch input{border-color:var(--gold);background:rgba(0,0,0,.6)
 .pkcard:hover .pkplay{opacity:1}
 .pkplay:hover{transform:scale(1.1);background:var(--accent)}
 
+/* NEW ARRIVALS (新着BGM) */
+.new-arrivals{background:var(--paper);padding:2rem 1.5rem;border-bottom:1px solid var(--border)}
+.nawrap{max-width:1280px;margin:0 auto}
+.nahead{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:1.2rem;flex-wrap:wrap;gap:.6rem}
+.nattl{font-family:var(--serif);font-size:1.5rem;font-weight:700;display:flex;align-items:center;gap:10px}
+.nattl::before{content:'';width:5px;height:24px;background:linear-gradient(180deg,var(--accent2),var(--accent));border-radius:3px}
+.nasub{font-size:12px;color:var(--muted)}
+.narow{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px;scrollbar-width:thin}
+.narow::-webkit-scrollbar{height:5px}
+.narow::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.nacard{flex:0 0 180px;display:flex;flex-direction:column;border-radius:12px;overflow:hidden;background:var(--card);border:1px solid var(--border);scroll-snap-align:start;transition:transform .2s,box-shadow .2s;text-decoration:none;color:inherit}
+.nacard:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(26,16,8,.14);border-color:var(--accent)}
+.nacard-img{aspect-ratio:1/1;overflow:hidden;background:var(--warm2)}
+.nacard-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s}
+.nacard:hover .nacard-img img{transform:scale(1.06)}
+.nacard-body{padding:10px 12px;flex:1;display:flex;flex-direction:column;gap:5px}
+.na-genre{font-size:10px;font-weight:700;padding:2px 8px;border-radius:12px;background:var(--accent2);color:#fff;align-self:flex-start;letter-spacing:.04em}
+.na-tit{font-size:13px;font-weight:800;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.na-meta{font-size:10.5px;color:var(--muted);font-variant-numeric:tabular-nums;margin-top:auto}
+
 /* GENRE SHOWCASE (Bento) */
 .genshow{padding:2.5rem 1.5rem;background:var(--paper)}
 .gswrap{max-width:1280px;margin:0 auto}
@@ -1226,6 +1246,19 @@ body:has(.pbar.on) .navi-chat-panel{bottom:calc(182px + env(safe-area-inset-bott
   </div>
 </section>
 
+<!-- 新着BGM -->
+<section class="new-arrivals" id="new-arrivals">
+  <div class="nawrap">
+    <div class="nahead">
+      <div>
+        <div class="nattl">新着BGM</div>
+        <div class="nasub">最新追加の楽曲。タイトルをクリックで詳細ページへ。</div>
+      </div>
+    </div>
+    <div class="narow" id="naRow"></div>
+  </div>
+</section>
+
 <!-- ジャンルショーケース -->
 <section class="genshow" id="genshow">
   <div class="gswrap">
@@ -1499,6 +1532,7 @@ body:has(.pbar.on) .navi-chat-panel{bottom:calc(182px + env(safe-area-inset-bott
         <a href="#mood" data-i18n="footer_mood">ムード別</a>
         <a href="#bpm" data-i18n="footer_bpm">BPM別</a>
         <a href="#" id="favLink" data-i18n="footer_fav">お気に入り</a>
+        <a href="/songs-list/" style="opacity:.7;font-size:11px">全曲一覧（HTMLサイトマップ）</a>
       </div>
       <div class="fcol">
         <h3 data-i18n="footer_support_title">サポート</h3>
@@ -2066,9 +2100,10 @@ async function load(){
     renderCats();
     renderGenreShowcase();
     renderPickup();
+    renderNewArrivals();
     // window.t がまだフォールバック（i18n IIFE未実行）の場合、適用後に再レンダリングを予約
     if (window.t('genre_tracks_suffix') === 'genre_tracks_suffix') {
-      const _rerenderI18n = () => { renderGenreShowcase(); renderPickup(); };
+      const _rerenderI18n = () => { renderGenreShowcase(); renderPickup(); renderNewArrivals(); };
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', _rerenderI18n, {once: true});
       } else {
@@ -2790,6 +2825,32 @@ async function renderPickup(){
     e.stopPropagation();
     play(b.dataset.play);
   });
+}
+
+// ---- NEW ARRIVALS (新着BGM) ----
+function renderNewArrivals(){
+  const row = document.getElementById('naRow');
+  if (!row || !allSongs.length) return;
+  const N = 25;
+  const newest = allSongs
+    .filter(s => s.created_at)
+    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+    .slice(0, N);
+
+  row.innerHTML = newest.map(s => {
+    const img = imageOf(s);
+    const gJa = getGenreLabel(s.genre);
+    const gCls = GENRE_CLASS[s.genre] || '';
+    const href = '/songs/' + (s.slug || s.id);
+    return `<a class="nacard" href="${escHtml(href)}" aria-label="${escHtml(getTitle(s))}">
+      <div class="nacard-img">${img ? `<img src="${escHtml(img)}" alt="${escHtml(getTitle(s))}" loading="lazy">` : ''}</div>
+      <div class="nacard-body">
+        <span class="na-genre ${gCls}">${escHtml(gJa)}</span>
+        <div class="na-tit">${escHtml(getTitle(s))}</div>
+        <div class="na-meta">${fmtDur(s.duration)}${s.bpm ? ` · ♩=${Math.round(s.bpm)}` : ''}</div>
+      </div>
+    </a>`;
+  }).join('');
 }
 
 // ---- GENRE SHOWCASE (Bento) ----
