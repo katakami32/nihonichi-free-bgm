@@ -526,8 +526,17 @@ def main():
 
     print(f"\n{'='*60}")
     print(f"✅ 完了！  追加: {len(songs_to_add)} 曲  R2: {ok}成功/{fail}失敗")
-    print(f"  次は git add data/ && git commit && git push をしてください")
     print(f"{'='*60}")
+
+    # ── 追加後チェック・自動修正を実行 ───────────────────────
+    print("\n[後処理] 10_post_upload_check.py を実行します...")
+    import subprocess as _sp
+    _result = _sp.run(
+        [sys.executable, str(Path(__file__).parent / "10_post_upload_check.py")],
+        cwd=Path(__file__).parent.parent
+    )
+    if _result.returncode != 0:
+        print("⚠️  後処理チェックでエラーが検出されました。上記のログを確認してください。")
 
 if __name__ == "__main__":
     main()

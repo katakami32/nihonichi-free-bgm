@@ -11,7 +11,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T12:21:06.697Z",
     "audio": "audio/ambient/fox-bell-shrine_e5a5b729.mp3",
-    "image": "images/ambient/fox-bell-shrine_e5a5b729.jpeg"
+    "image": "images/ambient/fox-bell-shrine_e5a5b729.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, Japanese horror, cinematic ambient · BPM 122",
+    "title_en": "Fox Bell Shrine"
   },
   {
     "id": "8716cee9-bcae-4cc8-89e1-1b708a389a55",
@@ -25,7 +27,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T12:21:06.697Z",
     "audio": "audio/ambient/fox-bell-shrine_8716cee9.mp3",
-    "image": "images/ambient/fox-bell-shrine_8716cee9.jpeg"
+    "image": "images/ambient/fox-bell-shrine_8716cee9.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, Japanese horror, cinematic ambient · BPM 110",
+    "title_en": "Fox Bell Shrine Shadow"
   },
   {
     "id": "c27b14bb-e13b-4f72-bcc2-66f4ed1c2f20",
@@ -39,7 +43,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T12:20:57.901Z",
     "audio": "audio/ambient/haunted-glass-hall_c27b14bb.mp3",
-    "image": "images/ambient/haunted-glass-hall_c27b14bb.jpeg"
+    "image": "images/ambient/haunted-glass-hall_c27b14bb.jpeg",
+    "desc_en": "Ambient BGM · ambient, horror ambient, dark ambient · BPM 118",
+    "title_en": "Haunted Glass Hall"
   },
   {
     "id": "01b79666-eea6-4d59-bf26-8619daa45290",
@@ -53,7 +59,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T12:20:57.901Z",
     "audio": "audio/ambient/haunted-glass-hall_01b79666.mp3",
-    "image": "images/ambient/haunted-glass-hall_01b79666.jpeg"
+    "image": "images/ambient/haunted-glass-hall_01b79666.jpeg",
+    "desc_en": "Ambient BGM · ambient, horror ambient, dark ambient · BPM 134",
+    "title_en": "Haunted Glass Hall Shadow"
   },
   {
     "id": "d598ebf6-9487-4116-9a8b-be21b8e7f27a",
@@ -67,7 +75,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T12:13:51.943Z",
     "audio": "audio/ambient/lanterns-at-the-torii_d598ebf6.mp3",
-    "image": "images/ambient/lanterns-at-the-torii_d598ebf6.jpeg"
+    "image": "images/ambient/lanterns-at-the-torii_d598ebf6.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, Japanese horror BGM, ambient drone · BPM 91",
+    "title_en": "Lanterns At The Torii"
   },
   {
     "id": "19fbabbb-13e4-4f01-b647-d1002877e5fe",
@@ -81,7 +91,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T12:13:51.943Z",
     "audio": "audio/ambient/lanterns-at-the-torii_19fbabbb.mp3",
-    "image": "images/ambient/lanterns-at-the-torii_19fbabbb.jpeg"
+    "image": "images/ambient/lanterns-at-the-torii_19fbabbb.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, Japanese horror BGM, ambient drone · BPM 112",
+    "title_en": "Lanterns At The Torii Shadow"
   },
   {
     "id": "e87957f1-a81d-493c-9d17-40aedefea42e",
@@ -95,7 +107,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T12:13:42.398Z",
     "audio": "audio/ambient/haunted-corridor_e87957f1.mp3",
-    "image": "images/ambient/haunted-corridor_e87957f1.jpeg"
+    "image": "images/ambient/haunted-corridor_e87957f1.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, horror ambient, cinematic atmospheric · BPM 119",
+    "title_en": "Haunted Corridor"
   },
   {
     "id": "b2f11edb-36b9-47b9-bd56-1aaf5fd376db",
@@ -109,7 +123,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T12:13:42.398Z",
     "audio": "audio/ambient/haunted-corridor_b2f11edb.mp3",
-    "image": "images/ambient/haunted-corridor_b2f11edb.jpeg"
+    "image": "images/ambient/haunted-corridor_b2f11edb.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, horror ambient, cinematic atmospheric · BPM 120",
+    "title_en": "Haunted Corridor Shadow"
   },
   {
     "id": "15aee1a7-bd9d-4a8d-b24c-a398baec9d1c",
@@ -123,7 +139,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T12:06:27.117Z",
     "audio": "audio/ambient/haunted-corridor_15aee1a7.mp3",
-    "image": "images/ambient/haunted-corridor_15aee1a7.jpeg"
+    "image": "images/ambient/haunted-corridor_15aee1a7.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, horror ambient, cinematic thriller · BPM 114",
+    "title_en": "Haunted Corridor Dark"
   },
   {
     "id": "b4c102e7-2277-49a0-aa34-72a91e0fb38e",
@@ -137,7 +155,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T12:06:27.117Z",
     "audio": "audio/ambient/haunted-corridor_b4c102e7.mp3",
-    "image": "images/ambient/haunted-corridor_b4c102e7.jpeg"
+    "image": "images/ambient/haunted-corridor_b4c102e7.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, horror ambient, cinematic thriller · BPM 120",
+    "title_en": "Haunted Corridor グレイブ"
   },
   {
     "id": "ff93b69f-8f2e-4eda-9f7f-a8fbd3ec0ca6",
@@ -151,7 +171,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T11:59:21.123Z",
     "audio": "audio/ambient/yurei-shrine_ff93b69f.mp3",
-    "image": "images/ambient/yurei-shrine_ff93b69f.jpeg"
+    "image": "images/ambient/yurei-shrine_ff93b69f.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, Japanese horror BGM, ambient drone · BPM 114",
+    "title_en": "Yurei Shrine"
   },
   {
     "id": "e038c6b2-c31c-4bf1-99b9-5356b3144896",
@@ -165,7 +187,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T11:59:12.544Z",
     "audio": "audio/ambient/haunted-hallway_e038c6b2.mp3",
-    "image": "images/ambient/haunted-hallway_e038c6b2.jpeg"
+    "image": "images/ambient/haunted-hallway_e038c6b2.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, horror film score, ambient drone · BPM 143",
+    "title_en": "Haunted Hallway"
   },
   {
     "id": "a45b0697-59c4-41a5-bb16-af4a27803fbf",
@@ -179,7 +203,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T11:59:12.544Z",
     "audio": "audio/ambient/haunted-hallway_a45b0697.mp3",
-    "image": "images/ambient/haunted-hallway_a45b0697.jpeg"
+    "image": "images/ambient/haunted-hallway_a45b0697.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, horror film score, ambient drone · BPM 119",
+    "title_en": "Haunted Hallway Shadow"
   },
   {
     "id": "81334e0e-b411-4845-b99e-c912525fa916",
@@ -193,7 +219,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T11:52:06.123Z",
     "audio": "audio/ambient/yurei-shrine_81334e0e.mp3",
-    "image": "images/ambient/yurei-shrine_81334e0e.jpeg"
+    "image": "images/ambient/yurei-shrine_81334e0e.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, Japanese horror, ritual/ambient drone · BPM 90",
+    "title_en": "Yurei Shrine Dark"
   },
   {
     "id": "ae25dc0c-cea9-4257-a635-2ed06ff23a50",
@@ -207,7 +235,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T11:52:06.123Z",
     "audio": "audio/ambient/yurei-shrine_ae25dc0c.mp3",
-    "image": "images/ambient/yurei-shrine_ae25dc0c.jpeg"
+    "image": "images/ambient/yurei-shrine_ae25dc0c.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, Japanese horror, ritual/ambient drone · BPM 70",
+    "title_en": "Yurei Shrine グレイブ"
   },
   {
     "id": "f4907e54-0e96-4bca-8dcc-8e62ba37e7f2",
@@ -221,7 +251,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T11:51:57.513Z",
     "audio": "audio/ambient/broken-hallway_f4907e54.mp3",
-    "image": "images/ambient/broken-hallway_f4907e54.jpeg"
+    "image": "images/ambient/broken-hallway_f4907e54.jpeg",
+    "desc_en": "Ambient BGM · ambient, horror ambient, dark ambient · BPM 124",
+    "title_en": "Broken Hallway"
   },
   {
     "id": "5c9c5ce2-11aa-4b2c-b87d-6fa3375678c2",
@@ -235,7 +267,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T11:51:57.513Z",
     "audio": "audio/ambient/broken-hallway_5c9c5ce2.mp3",
-    "image": "images/ambient/broken-hallway_5c9c5ce2.jpeg"
+    "image": "images/ambient/broken-hallway_5c9c5ce2.jpeg",
+    "desc_en": "Ambient BGM · ambient, horror ambient, dark ambient · BPM 109",
+    "title_en": "Broken Hallway Shadow"
   },
   {
     "id": "375bff76-8bbf-411a-967a-debee6d835ed",
@@ -249,7 +283,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T11:44:51.435Z",
     "audio": "audio/ambient/foxfire-shrine_375bff76.mp3",
-    "image": "images/ambient/foxfire-shrine_375bff76.jpeg"
+    "image": "images/ambient/foxfire-shrine_375bff76.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, Japanese horror BGM, eerie koto drone · BPM 114",
+    "title_en": "Foxfire Shrine"
   },
   {
     "id": "6cfad9a4-72b7-4222-a73f-c41275cd2ecc",
@@ -263,7 +299,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T11:44:51.435Z",
     "audio": "audio/ambient/foxfire-shrine_6cfad9a4.mp3",
-    "image": "images/ambient/foxfire-shrine_6cfad9a4.jpeg"
+    "image": "images/ambient/foxfire-shrine_6cfad9a4.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, Japanese horror BGM, eerie koto drone · BPM 82",
+    "title_en": "Foxfire Shrine Shadow"
   },
   {
     "id": "e834d3b2-737e-4bb0-97a3-a8a70eecdd0a",
@@ -277,7 +315,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T11:44:42.537Z",
     "audio": "audio/ambient/haunted-hallway-tape_e834d3b2.mp3",
-    "image": "images/ambient/haunted-hallway-tape_e834d3b2.jpeg"
+    "image": "images/ambient/haunted-hallway-tape_e834d3b2.jpeg",
+    "desc_en": "Ambient BGM · ambient, horror ambient, cinematic · BPM 107",
+    "title_en": "Haunted Hallway Tape"
   },
   {
     "id": "1fe22539-ed36-4f17-a1c2-24f4934eab1e",
@@ -291,7 +331,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T11:44:42.537Z",
     "audio": "audio/ambient/haunted-hallway-tape_1fe22539.mp3",
-    "image": "images/ambient/haunted-hallway-tape_1fe22539.jpeg"
+    "image": "images/ambient/haunted-hallway-tape_1fe22539.jpeg",
+    "desc_en": "Ambient BGM · ambient, horror ambient, cinematic · BPM 95",
+    "title_en": "Haunted Hallway Tape Shadow"
   },
   {
     "id": "b9033c1d-22ec-435f-8749-516d5e597b7d",
@@ -305,7 +347,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T11:37:37.240Z",
     "audio": "audio/ambient/track_b9033c1d.mp3",
-    "image": "images/ambient/track_b9033c1d.jpeg"
+    "image": "images/ambient/track_b9033c1d.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, Japanese horror BGM, ambient/drone · BPM 102",
+    "title_en": "狐灯の社"
   },
   {
     "id": "84cdf3eb-6a14-424e-9e87-017eb1cfd41d",
@@ -319,7 +363,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T11:37:37.239Z",
     "audio": "audio/ambient/track_84cdf3eb.mp3",
-    "image": "images/ambient/track_84cdf3eb.jpeg"
+    "image": "images/ambient/track_84cdf3eb.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, Japanese horror BGM, ambient/drone · BPM 74",
+    "title_en": "狐灯の社・シャドウ"
   },
   {
     "id": "fbb34d09-a0fd-4b19-94b9-9476e3fe06b4",
@@ -333,7 +379,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T11:37:28.361Z",
     "audio": "audio/ambient/moth-hall_fbb34d09.mp3",
-    "image": "images/ambient/moth-hall_fbb34d09.jpeg"
+    "image": "images/ambient/moth-hall_fbb34d09.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, horror ambient, cinematic · BPM 128",
+    "title_en": "Moth Hall"
   },
   {
     "id": "881ae8ea-e993-4b5b-8111-5e35f1943091",
@@ -347,7 +395,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T11:37:28.361Z",
     "audio": "audio/ambient/moth-hall_881ae8ea.mp3",
-    "image": "images/ambient/moth-hall_881ae8ea.jpeg"
+    "image": "images/ambient/moth-hall_881ae8ea.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, horror ambient, cinematic · BPM 89",
+    "title_en": "Moth Hall Shadow"
   },
   {
     "id": "12a674a8-87a8-4a3c-b54d-c18274aaeabe",
@@ -361,7 +411,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T11:30:22.942Z",
     "audio": "audio/ambient/haunted-shrine-echo_12a674a8.mp3",
-    "image": "images/ambient/haunted-shrine-echo_12a674a8.jpeg"
+    "image": "images/ambient/haunted-shrine-echo_12a674a8.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, Japanese horror BGM, eerie ambient/drone · BPM 115",
+    "title_en": "Haunted Shrine Echo"
   },
   {
     "id": "851fb8a4-1caa-4112-817b-e4428c56e16b",
@@ -375,7 +427,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T11:30:22.942Z",
     "audio": "audio/ambient/haunted-shrine-echo_851fb8a4.mp3",
-    "image": "images/ambient/haunted-shrine-echo_851fb8a4.jpeg"
+    "image": "images/ambient/haunted-shrine-echo_851fb8a4.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, Japanese horror BGM, eerie ambient/drone · BPM 96",
+    "title_en": "Haunted Shrine Echo Shadow"
   },
   {
     "id": "b0fc9415-7fbc-4777-97f6-660b9587c168",
@@ -389,7 +443,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T11:30:14.255Z",
     "audio": "audio/ambient/basement-door_b0fc9415.mp3",
-    "image": "images/ambient/basement-door_b0fc9415.jpeg"
+    "image": "images/ambient/basement-door_b0fc9415.jpeg",
+    "desc_en": "Ambient BGM · ambient, horror ambient, psychological thriller · BPM 120",
+    "title_en": "Basement Door"
   },
   {
     "id": "bd16dc80-10ee-4d04-82a4-58122c558abf",
@@ -403,7 +459,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T11:30:14.255Z",
     "audio": "audio/ambient/basement-door_bd16dc80.mp3",
-    "image": "images/ambient/basement-door_bd16dc80.jpeg"
+    "image": "images/ambient/basement-door_bd16dc80.jpeg",
+    "desc_en": "Ambient BGM · ambient, horror ambient, psychological thriller · BPM 118",
+    "title_en": "Basement Door Shadow"
   },
   {
     "id": "b7532cea-047c-4463-b5be-88daadbfd63a",
@@ -417,7 +475,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T11:23:08.627Z",
     "audio": "audio/ambient/foxfire-shrine_b7532cea.mp3",
-    "image": "images/ambient/foxfire-shrine_b7532cea.jpeg"
+    "image": "images/ambient/foxfire-shrine_b7532cea.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, Japanese horror, ambient drone · BPM 114",
+    "title_en": "Foxfire Shrine Dark"
   },
   {
     "id": "92e1b476-534e-4280-a241-9f591938e31c",
@@ -431,7 +491,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T11:23:08.627Z",
     "audio": "audio/ambient/foxfire-shrine_92e1b476.mp3",
-    "image": "images/ambient/foxfire-shrine_92e1b476.jpeg"
+    "image": "images/ambient/foxfire-shrine_92e1b476.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, Japanese horror, ambient drone · BPM 111",
+    "title_en": "Foxfire Shrine グレイブ"
   },
   {
     "id": "d2794ba4-2da6-4941-998c-58c266aad4d0",
@@ -445,7 +507,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T11:22:59.575Z",
     "audio": "audio/ambient/basement-tape_d2794ba4.mp3",
-    "image": "images/ambient/basement-tape_d2794ba4.jpeg"
+    "image": "images/ambient/basement-tape_d2794ba4.jpeg",
+    "desc_en": "Ambient BGM · ambient, horror ambient, dark ambient · BPM 124",
+    "title_en": "Basement Tape"
   },
   {
     "id": "13c8b753-74fc-413b-b648-b2b8624232db",
@@ -459,7 +523,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T11:22:59.575Z",
     "audio": "audio/ambient/basement-tape_13c8b753.mp3",
-    "image": "images/ambient/basement-tape_13c8b753.jpeg"
+    "image": "images/ambient/basement-tape_13c8b753.jpeg",
+    "desc_en": "Ambient BGM · ambient, horror ambient, dark ambient · BPM 177",
+    "title_en": "Basement Tape Shadow"
   },
   {
     "id": "b6ee81c8-c14a-4620-9af1-d3efaed1c7ee",
@@ -473,7 +539,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T11:15:54.322Z",
     "audio": "audio/ambient/haunted-shrine-echo_b6ee81c8.mp3",
-    "image": "images/ambient/haunted-shrine-echo_b6ee81c8.jpeg"
+    "image": "images/ambient/haunted-shrine-echo_b6ee81c8.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, Japanese horror, eerie ritual percussion · BPM 125",
+    "title_en": "Haunted Shrine Echo Dark"
   },
   {
     "id": "c9f1e356-ebd3-441a-9ab2-1fbf3b734463",
@@ -487,7 +555,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T11:15:54.321Z",
     "audio": "audio/ambient/haunted-shrine-echo_c9f1e356.mp3",
-    "image": "images/ambient/haunted-shrine-echo_c9f1e356.jpeg"
+    "image": "images/ambient/haunted-shrine-echo_c9f1e356.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, Japanese horror, eerie ritual percussion · BPM 114",
+    "title_en": "Haunted Shrine Echo グレイブ"
   },
   {
     "id": "d68732c4-625e-476b-8ff1-93d971b35e8e",
@@ -501,7 +571,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T11:15:45.769Z",
     "audio": "audio/ambient/haunted-hallway_d68732c4.mp3",
-    "image": "images/ambient/haunted-hallway_d68732c4.jpeg"
+    "image": "images/ambient/haunted-hallway_d68732c4.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, horror ambient, cinematic thriller · BPM 120",
+    "title_en": "Haunted Hallway Dark"
   },
   {
     "id": "8f12dc73-50e9-43d8-95b4-23778bedaf08",
@@ -515,7 +587,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T11:15:45.769Z",
     "audio": "audio/ambient/haunted-hallway_8f12dc73.mp3",
-    "image": "images/ambient/haunted-hallway_8f12dc73.jpeg"
+    "image": "images/ambient/haunted-hallway_8f12dc73.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, horror ambient, cinematic thriller · BPM 120",
+    "title_en": "Haunted Hallway グレイブ"
   },
   {
     "id": "fee72e42-e622-4b58-90c9-d3437d3e0e83",
@@ -529,7 +603,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T11:08:40.573Z",
     "audio": "audio/ambient/yurei-shrine_fee72e42.mp3",
-    "image": "images/ambient/yurei-shrine_fee72e42.jpeg"
+    "image": "images/ambient/yurei-shrine_fee72e42.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, horror score, ambient drone · BPM 126",
+    "title_en": "Yurei Shrine ルーン"
   },
   {
     "id": "1903b6cc-7a24-4bb2-a05e-f39774c111d9",
@@ -543,7 +619,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T11:08:40.573Z",
     "audio": "audio/ambient/yurei-shrine_1903b6cc.mp3",
-    "image": "images/ambient/yurei-shrine_1903b6cc.jpeg"
+    "image": "images/ambient/yurei-shrine_1903b6cc.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, horror score, ambient drone · BPM 130",
+    "title_en": "Yurei Shrine クリプト"
   },
   {
     "id": "5ecc9777-f5c3-4604-a55e-ff635f97f197",
@@ -557,7 +635,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T11:08:32.431Z",
     "audio": "audio/ambient/glass-house-pulse_5ecc9777.mp3",
-    "image": "images/ambient/glass-house-pulse_5ecc9777.jpeg"
+    "image": "images/ambient/glass-house-pulse_5ecc9777.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, ambient horror, drone · BPM 123",
+    "title_en": "Glass House Pulse"
   },
   {
     "id": "e9b8820c-184a-46b1-8924-4ce0be9e527c",
@@ -571,7 +651,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T11:08:32.431Z",
     "audio": "audio/ambient/glass-house-pulse_e9b8820c.mp3",
-    "image": "images/ambient/glass-house-pulse_e9b8820c.jpeg"
+    "image": "images/ambient/glass-house-pulse_e9b8820c.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, ambient horror, drone · BPM 120",
+    "title_en": "Glass House Pulse Shadow"
   },
   {
     "id": "f7d64148-75ba-445e-949d-f1b46c00d77b",
@@ -585,7 +667,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T11:01:27.023Z",
     "audio": "audio/ambient/torii-in-ash_f7d64148.mp3",
-    "image": "images/ambient/torii-in-ash_f7d64148.jpeg"
+    "image": "images/ambient/torii-in-ash_f7d64148.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, Japanese horror BGM, drone · BPM 97",
+    "title_en": "Torii In Ash"
   },
   {
     "id": "dee3fab5-c863-45bb-b33f-73f234d75dd0",
@@ -599,7 +683,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T11:01:27.023Z",
     "audio": "audio/ambient/torii-in-ash_dee3fab5.mp3",
-    "image": "images/ambient/torii-in-ash_dee3fab5.jpeg"
+    "image": "images/ambient/torii-in-ash_dee3fab5.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, Japanese horror BGM, drone · BPM 119",
+    "title_en": "Torii In Ash Shadow"
   },
   {
     "id": "8f0e21b8-67fc-4dab-b812-4062e24cfd13",
@@ -613,7 +699,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T11:01:18.100Z",
     "audio": "audio/ambient/whispered-hall_8f0e21b8.mp3",
-    "image": "images/ambient/whispered-hall_8f0e21b8.jpeg"
+    "image": "images/ambient/whispered-hall_8f0e21b8.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, ambient horror, cinematic thriller · BPM 117",
+    "title_en": "Whispered Hall"
   },
   {
     "id": "935cac47-b965-471d-8afc-b6c4a99efee5",
@@ -627,7 +715,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T11:01:18.100Z",
     "audio": "audio/ambient/whispered-hall_935cac47.mp3",
-    "image": "images/ambient/whispered-hall_935cac47.jpeg"
+    "image": "images/ambient/whispered-hall_935cac47.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, ambient horror, cinematic thriller · BPM 137",
+    "title_en": "Whispered Hall Shadow"
   },
   {
     "id": "d198d20e-becd-4572-8ea1-a91ee16e167a",
@@ -641,7 +731,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T10:54:13.547Z",
     "audio": "audio/ambient/foxfire-shrine_d198d20e.mp3",
-    "image": "images/ambient/foxfire-shrine_d198d20e.jpeg"
+    "image": "images/ambient/foxfire-shrine_d198d20e.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, Japanese horror game BGM, cinematic ambient horror · BPM 86",
+    "title_en": "Foxfire Shrine ルーン"
   },
   {
     "id": "afeb4eb6-40a7-4d6e-b17f-e61533bbc4a4",
@@ -655,7 +747,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T10:54:04.693Z",
     "audio": "audio/ambient/haunted-hallway_afeb4eb6.mp3",
-    "image": "images/ambient/haunted-hallway_afeb4eb6.jpeg"
+    "image": "images/ambient/haunted-hallway_afeb4eb6.jpeg",
+    "desc_en": "Ambient BGM · ambient, horror ambient, dark ambient · BPM 70",
+    "title_en": "Haunted Hallway ルーン"
   },
   {
     "id": "89cc93e9-5574-4263-b8bf-8a118cb2c722",
@@ -669,7 +763,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T10:54:04.693Z",
     "audio": "audio/ambient/haunted-hallway_89cc93e9.mp3",
-    "image": "images/ambient/haunted-hallway_89cc93e9.jpeg"
+    "image": "images/ambient/haunted-hallway_89cc93e9.jpeg",
+    "desc_en": "Ambient BGM · ambient, horror ambient, dark ambient · BPM 120",
+    "title_en": "Haunted Hallway クリプト"
   },
   {
     "id": "0937d626-fb95-4b04-b0f8-06a58c838a96",
@@ -683,7 +779,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T10:47:00.503Z",
     "audio": "audio/ambient/yurei-shrine_0937d626.mp3",
-    "image": "images/ambient/yurei-shrine_0937d626.jpeg"
+    "image": "images/ambient/yurei-shrine_0937d626.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, Japanese horror BGM, ritualistic ambient · BPM 120",
+    "title_en": "Yurei Shrine ハント"
   },
   {
     "id": "9ba662e1-1de8-4be1-8b0d-51bc334d251d",
@@ -697,7 +795,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T10:47:00.503Z",
     "audio": "audio/ambient/yurei-shrine_9ba662e1.mp3",
-    "image": "images/ambient/yurei-shrine_9ba662e1.jpeg"
+    "image": "images/ambient/yurei-shrine_9ba662e1.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, Japanese horror BGM, ritualistic ambient · BPM 82",
+    "title_en": "Yurei Shrine ファントム"
   },
   {
     "id": "bb671332-49bc-46e1-a55e-314a302d9bc3",
@@ -711,7 +811,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T10:46:52.323Z",
     "audio": "audio/ambient/black-room-waltz_bb671332.mp3",
-    "image": "images/ambient/black-room-waltz_bb671332.jpeg"
+    "image": "images/ambient/black-room-waltz_bb671332.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, cinematic ambient, horror ambient · BPM 121",
+    "title_en": "Black Room Waltz"
   },
   {
     "id": "5644a3a4-9e7f-4a44-a58b-eb9fadf90983",
@@ -725,7 +827,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T10:46:52.323Z",
     "audio": "audio/ambient/black-room-waltz_5644a3a4.mp3",
-    "image": "images/ambient/black-room-waltz_5644a3a4.jpeg"
+    "image": "images/ambient/black-room-waltz_5644a3a4.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, cinematic ambient, horror ambient · BPM 120",
+    "title_en": "Black Room Waltz Shadow"
   },
   {
     "id": "41bfeae7-c80d-4945-a9b2-95f024ba33e9",
@@ -739,7 +843,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T10:39:46.787Z",
     "audio": "audio/ambient/yurei-shrine_41bfeae7.mp3",
-    "image": "images/ambient/yurei-shrine_41bfeae7.jpeg"
+    "image": "images/ambient/yurei-shrine_41bfeae7.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, horror ambient, Japanese horror BGM · BPM 120",
+    "title_en": "Yurei Shrine ミスト"
   },
   {
     "id": "8ed8e7a0-2e83-46ef-b205-045731386ed3",
@@ -753,7 +859,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T10:39:46.787Z",
     "audio": "audio/ambient/yurei-shrine_8ed8e7a0.mp3",
-    "image": "images/ambient/yurei-shrine_8ed8e7a0.jpeg"
+    "image": "images/ambient/yurei-shrine_8ed8e7a0.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, horror ambient, Japanese horror BGM · BPM 121",
+    "title_en": "Yurei Shrine レイス"
   },
   {
     "id": "f504c5ae-1f39-4af9-829c-11b701d9eb16",
@@ -767,7 +875,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T10:32:33.617Z",
     "audio": "audio/ambient/foxfire-shrine_f504c5ae.mp3",
-    "image": "images/ambient/foxfire-shrine_f504c5ae.jpeg"
+    "image": "images/ambient/foxfire-shrine_f504c5ae.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, Japanese horror BGM, cinematic atmospheric · BPM 100",
+    "title_en": "Foxfire Shrine ハント"
   },
   {
     "id": "4bcbb504-a826-4c47-9303-e369c720f127",
@@ -781,7 +891,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T10:32:33.616Z",
     "audio": "audio/ambient/foxfire-shrine_4bcbb504.mp3",
-    "image": "images/ambient/foxfire-shrine_4bcbb504.jpeg"
+    "image": "images/ambient/foxfire-shrine_4bcbb504.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, Japanese horror BGM, cinematic atmospheric · BPM 113",
+    "title_en": "Foxfire Shrine ファントム"
   },
   {
     "id": "e05e5113-39b8-4eea-9dc6-809e8cf83ba2",
@@ -795,7 +907,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T10:32:23.964Z",
     "audio": "audio/ambient/haunted-room-13_e05e5113.mp3",
-    "image": "images/ambient/haunted-room-13_e05e5113.jpeg"
+    "image": "images/ambient/haunted-room-13_e05e5113.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, horror ambient, ambient drone · BPM 120",
+    "title_en": "Haunted Room 13"
   },
   {
     "id": "8ae0f714-69a4-44a9-a0bd-258e5f3b9bca",
@@ -809,7 +923,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T10:32:23.964Z",
     "audio": "audio/ambient/haunted-room-13_8ae0f714.mp3",
-    "image": "images/ambient/haunted-room-13_8ae0f714.jpeg"
+    "image": "images/ambient/haunted-room-13_8ae0f714.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, horror ambient, ambient drone · BPM 98",
+    "title_en": "Haunted Room 13 Shadow"
   },
   {
     "id": "54e37ec2-03d1-4f3f-a27e-15fc12b6fb86",
@@ -823,7 +939,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T10:25:25.632Z",
     "audio": "audio/ambient/yurei-shrine_54e37ec2.mp3",
-    "image": "images/ambient/yurei-shrine_54e37ec2.jpeg"
+    "image": "images/ambient/yurei-shrine_54e37ec2.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, Japanese horror BGM, ambient/drone · BPM 92",
+    "title_en": "Yurei Shrine アビス"
   },
   {
     "id": "697304ca-7e2b-4c61-b4f0-dc98470c0f00",
@@ -837,7 +955,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T10:25:25.632Z",
     "audio": "audio/ambient/yurei-shrine_697304ca.mp3",
-    "image": "images/ambient/yurei-shrine_697304ca.jpeg"
+    "image": "images/ambient/yurei-shrine_697304ca.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, Japanese horror BGM, ambient/drone · BPM 111",
+    "title_en": "Yurei Shrine カース"
   },
   {
     "id": "9345da91-b2e2-4d14-96e8-22c38fd67746",
@@ -851,7 +971,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T10:25:19.621Z",
     "audio": "audio/ambient/foxfire-shrine_9345da91.mp3",
-    "image": "images/ambient/foxfire-shrine_9345da91.jpeg"
+    "image": "images/ambient/foxfire-shrine_9345da91.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, Japanese horror BGM, eerie cinematic/temple ambience · BPM 121",
+    "title_en": "Foxfire Shrine ミスト"
   },
   {
     "id": "bc2c867d-df8f-4aad-bc5a-8f9c396ed47c",
@@ -865,7 +987,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T10:25:19.621Z",
     "audio": "audio/ambient/foxfire-shrine_bc2c867d.mp3",
-    "image": "images/ambient/foxfire-shrine_bc2c867d.jpeg"
+    "image": "images/ambient/foxfire-shrine_bc2c867d.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, Japanese horror BGM, eerie cinematic/temple ambience · BPM 67",
+    "title_en": "Foxfire Shrine レイス"
   },
   {
     "id": "6d04682b-fac6-46cb-ad50-c8fd82457e17",
@@ -879,7 +1003,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T10:25:10.742Z",
     "audio": "audio/ambient/moth-house_6d04682b.mp3",
-    "image": "images/ambient/moth-house_6d04682b.jpeg"
+    "image": "images/ambient/moth-house_6d04682b.jpeg",
+    "desc_en": "Ambient BGM · ambient, dark horror ambient, cinematic · BPM 120",
+    "title_en": "Moth House"
   },
   {
     "id": "c9a21cb9-5da0-4978-a5a4-6cfa040ac482",
@@ -893,7 +1019,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T10:25:10.742Z",
     "audio": "audio/ambient/moth-house_c9a21cb9.mp3",
-    "image": "images/ambient/moth-house_c9a21cb9.jpeg"
+    "image": "images/ambient/moth-house_c9a21cb9.jpeg",
+    "desc_en": "Ambient BGM · ambient, dark horror ambient, cinematic · BPM 118",
+    "title_en": "Moth House Shadow"
   },
   {
     "id": "8628fb7d-2fe2-4d6a-8099-7cb28b82a8fc",
@@ -907,7 +1035,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T10:15:46.710Z",
     "audio": "audio/cinematic/mansion-of-jack-o-lanterns_8628fb7d.mp3",
-    "image": "images/cinematic/mansion-of-jack-o-lanterns_8628fb7d.jpeg"
+    "image": "images/cinematic/mansion-of-jack-o-lanterns_8628fb7d.jpeg",
+    "desc_en": "Cinematic BGM · horror film soundtrack, cinematic orchestral, dark classical · BPM 92",
+    "title_en": "Mansion Of Jack O Lanterns"
   },
   {
     "id": "ff51569a-0315-48ac-bf4a-1810824692fa",
@@ -921,7 +1051,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T10:15:46.710Z",
     "audio": "audio/cinematic/mansion-of-jack-o-lanterns_ff51569a.mp3",
-    "image": "images/cinematic/mansion-of-jack-o-lanterns_ff51569a.jpeg"
+    "image": "images/cinematic/mansion-of-jack-o-lanterns_ff51569a.jpeg",
+    "desc_en": "Cinematic BGM · horror film soundtrack, cinematic orchestral, dark classical · BPM 112",
+    "title_en": "Mansion Of Jack O Lanterns Shadow"
   },
   {
     "id": "eec2aa91-1221-4375-be1d-57df157c3a96",
@@ -935,7 +1067,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T09:11:50.815Z",
     "audio": "audio/ambient/paper-lantern-rot_eec2aa91.mp3",
-    "image": "images/ambient/paper-lantern-rot_eec2aa91.jpeg"
+    "image": "images/ambient/paper-lantern-rot_eec2aa91.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, horror ambient, drone · BPM 107",
+    "title_en": "Paper Lantern Rot"
   },
   {
     "id": "62d3ad01-6f7f-4ab3-8694-95b5b95eec73",
@@ -949,7 +1083,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T09:11:50.815Z",
     "audio": "audio/ambient/paper-lantern-rot_62d3ad01.mp3",
-    "image": "images/ambient/paper-lantern-rot_62d3ad01.jpeg"
+    "image": "images/ambient/paper-lantern-rot_62d3ad01.jpeg",
+    "desc_en": "Ambient BGM · dark ambient, horror ambient, drone · BPM 111",
+    "title_en": "Paper Lantern Rot Shadow"
   },
   {
     "id": "48b0f795-59fb-4616-8f09-8d0ae6a54de8",
@@ -963,7 +1099,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T07:32:11.046Z",
     "audio": "audio/ambient/haikyo-echoes_48b0f795.mp3",
-    "image": "images/ambient/haikyo-echoes_48b0f795.jpeg"
+    "image": "images/ambient/haikyo-echoes_48b0f795.jpeg",
+    "desc_en": "Ambient BGM · ambient, cinematic drone, dark ambient · BPM 142",
+    "title_en": "Haikyo Echoes"
   },
   {
     "id": "63216b02-3df0-4ad6-8ea4-235ddc7087e0",
@@ -977,7 +1115,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T07:32:11.046Z",
     "audio": "audio/ambient/haikyo-echoes_63216b02.mp3",
-    "image": "images/ambient/haikyo-echoes_63216b02.jpeg"
+    "image": "images/ambient/haikyo-echoes_63216b02.jpeg",
+    "desc_en": "Ambient BGM · ambient, cinematic drone, dark ambient · BPM 130",
+    "title_en": "Haikyo Echoes Drift"
   },
   {
     "id": "c1319691-0233-4bf0-8bb4-e0c8f5df2ee9",
@@ -991,7 +1131,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T07:10:19.901Z",
     "audio": "audio/ambient/cold-case-files_c1319691.mp3",
-    "image": "images/ambient/cold-case-files_c1319691.jpeg"
+    "image": "images/ambient/cold-case-files_c1319691.jpeg",
+    "desc_en": "Ambient BGM · dark ambient · BPM 93",
+    "title_en": "Cold Case Files"
   },
   {
     "id": "f104e54e-d1fb-4ad7-83f1-f037ba4bff6e",
@@ -1005,7 +1147,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T07:10:19.901Z",
     "audio": "audio/ambient/cold-case-files_f104e54e.mp3",
-    "image": "images/ambient/cold-case-files_f104e54e.jpeg"
+    "image": "images/ambient/cold-case-files_f104e54e.jpeg",
+    "desc_en": "Ambient BGM · dark ambient · BPM 90",
+    "title_en": "Cold Case Files Drift"
   },
   {
     "id": "a96cbf55-db33-40c9-bef7-37de691a7ae2",
@@ -1019,7 +1163,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T01:41:30.123Z",
     "audio": "audio/ambient/kaidan-moon_a96cbf55.mp3",
-    "image": "images/ambient/kaidan-moon_a96cbf55.jpeg"
+    "image": "images/ambient/kaidan-moon_a96cbf55.jpeg",
+    "desc_en": "Ambient BGM · Japanese horror BGM, ambient, dark drone · BPM 138",
+    "title_en": "Kaidan Moon"
   },
   {
     "id": "c748940b-983a-4c73-bd69-0de0e842a074",
@@ -1033,7 +1179,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T01:41:30.123Z",
     "audio": "audio/ambient/kaidan-moon_c748940b.mp3",
-    "image": "images/ambient/kaidan-moon_c748940b.jpeg"
+    "image": "images/ambient/kaidan-moon_c748940b.jpeg",
+    "desc_en": "Ambient BGM · Japanese horror BGM, ambient, dark drone · BPM 120",
+    "title_en": "Kaidan Moon Shadow"
   },
   {
     "id": "056bd3e3-a7a1-451e-b769-a5b9088b3673",
@@ -1047,7 +1195,9 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T01:32:41.913Z",
     "audio": "audio/ambient/black-glass-room_056bd3e3.mp3",
-    "image": "images/ambient/black-glass-room_056bd3e3.jpeg"
+    "image": "images/ambient/black-glass-room_056bd3e3.jpeg",
+    "desc_en": "Ambient BGM · film score, cinematic thriller, dark ambient · BPM 70",
+    "title_en": "Black Glass Room"
   },
   {
     "id": "82111d5e-bc0c-448e-aeb6-9246fa37cc4b",
@@ -1061,6 +1211,8 @@
     "model": "chirp-fenix",
     "created_at": "2026-04-24T01:32:41.913Z",
     "audio": "audio/ambient/black-glass-room_82111d5e.mp3",
-    "image": "images/ambient/black-glass-room_82111d5e.jpeg"
+    "image": "images/ambient/black-glass-room_82111d5e.jpeg",
+    "desc_en": "Ambient BGM · film score, cinematic thriller, dark ambient · BPM 70",
+    "title_en": "Black Glass Room Drift"
   }
 ]
