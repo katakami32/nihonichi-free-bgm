@@ -152,6 +152,58 @@ python3 scripts/06_add_new_songs.py
 
 > ⚠️ **新ジャンル追加時は必ず** `GENRE_RULES`・`GENRE_LABELS`・`GENRE_EN`（06_add_new_songs.py内）と `genres.json` の4箇所を同時に更新すること。
 
+### ジャンル崩壊を防ぐルール
+
+#### 🚨 絶対にやってはいけないこと
+- `GENRE_RULES` のキーワードを **部分文字列で被るように** 追加しない
+  - 例: `"k-pop"` を追加すると `"folk-pop"` にもマッチしてしまう（過去に発生した実バグ）
+  - → `pick_genre()` は単語境界マッチ（`(?<![a-z0-9])keyword(?![a-z0-9])`）で実装済み
+- ジャンルを追加・変更したあとに **既存曲の再スキャンをしない**
+  - → 新キーワードに該当する既存曲が古いジャンルのまま残る
+
+#### ✅ ジャンルを変更・追加したあとに必ずやること
+
+```bash
+# 既存曲のジャンルを再スキャンして修正
+python3 -c "
+import json, re, collections, shutil
+from pathlib import Path
+
+ROOT = Path('.')
+DATA_FILE = ROOT / 'data' / 'index.json'
+GENRES_FILE = ROOT / 'data' / 'genres.json'
+
+# 06_add_new_songs.py の GENRE_RULES を参照するためインポート
+import sys; sys.path.insert(0, str(ROOT / 'scripts'))
+from 06_add_new_songs import GENRE_RULES, pick_genre  # noqa
+
+songs = json.loads(DATA_FILE.read_text())
+shutil.copy2(DATA_FILE, DATA_FILE.with_suffix('.json.bak'))
+
+changed = 0
+for s in songs:
+    new_genre = pick_genre(s.get('tags', ''))
+    if new_genre != s.get('genre') and new_genre != 'other':
+        s['genre'] = new_genre
+        changed += 1
+
+print(f'再分類: {changed}曲')
+DATA_FILE.write_text(json.dumps(songs, ensure_ascii=False))
+"
+```
+
+> ただし上記は全曲を再判定するため、意図的に手動で設定したジャンルも上書きされる場合がある。
+> 変更後は **P-10チェックリスト** を必ず実行してズレがないか確認すること。
+
+#### ✅ ジャンル整合性クイックチェック（いつでも実行可）
+
+```bash
+python3 scripts/10_post_upload_check.py
+```
+
+- 全ジャンルの曲数が `index.json` ↔ `by-genre/*.json` ↔ `genres.json` で一致しているか確認
+- ❌ が出たら `index.json` を正として他ファイルを修正する
+
 ### STEP 3: データ整合性チェック（必須）
 
 ```bash
