@@ -100,10 +100,96 @@ git add . && git commit -m "feat: ..." && git push origin main
 3. **songs.jsonが正とする**（index.json等はsongs.jsonから生成）
 4. **コミットメッセージ**: `feat:` / `fix:` / `chore:` / `perf:` の慣習に従う
 
+## 🏆 新曲追加 最強ルール（バグゼロ保証手順）
+
+> **必ずこの順番通りに実行する。スキップ厳禁。**
+
+### STEP 1: Sunoで曲を生成・ダウンロード
+
+- Suno AI（ユーザー: taka_h2ommm）で曲を生成
+- 音源（MP3）と画像（JPEG）をローカルにダウンロード
+
+### STEP 2: 新曲追加スクリプト実行
+
+```bash
+python3 scripts/06_add_new_songs.py
+```
+
+- ジャンル判定は自動（`GENRE_RULES` が優先順位順にマッチ）
+- `songs.json`・`index.json`・`by-genre/*.json`・`genres.json` を自動更新
+
+#### ジャンル判定ルール（優先順位順・完全版）
+
+| 優先 | ジャンルslug | 代表キーワード |
+|-----|------------|-------------|
+| 1 | `k-pop` | k-pop, kpop, korean, dance pop |
+| 2 | `horror` | horror, dark ambient, scary, creepy, thriller |
+| 3 | `wafu` | 和風, wagakki, shakuhachi, koto, taiko, matsuri |
+| 4 | `lo-fi` | lo-fi, lofi, chillhop |
+| 5 | `ambient` | ambient, drone, meditation, rain |
+| 6 | `jazz` | jazz, bossa nova, swing, blues, fusion |
+| 7 | `cinematic` | cinematic, orchestral, epic, dramatic |
+| 8 | `electronic` | edm, synthwave, house, techno, dubstep, dnb |
+| 9 | `childrens` | children, kids, nursery, lullaby, cartoon |
+| 10 | `j-pop` | j-pop, city pop, ballad, shibuya-kei |
+| 11 | `folk-acoustic` | folk, acoustic, country, fingerstyle |
+| 12 | `hip-hop-rnb` | hip-hop, trap, r&b, soul, funk |
+| 13 | `rock` | rock, punk, metal, grunge, alternative |
+| 14 | `japanese-anime` | anime, vocaloid, enka, anison |
+| 15 | `corporate-bgm` | corporate, documentary, business |
+| 16 | `pop` | pop |
+| 17 | `other` | （上記いずれにもマッチしない場合） |
+
+> ⚠️ **新ジャンル追加時は必ず** `GENRE_RULES`・`GENRE_LABELS`・`GENRE_EN`（06_add_new_songs.py内）と `genres.json` の4箇所を同時に更新すること。
+
+### STEP 3: データ整合性チェック（必須）
+
+```bash
+python3 scripts/10_post_upload_check.py
+```
+
+❌が1つでも出たら先に進まない。`songs.json` を正として他ファイルを修正する。
+
+### STEP 4: R2に音源・画像をアップロード
+
+```bash
+export CLOUDFLARE_API_TOKEN=...
+# R2アップロードはスクリプト経由のみ（手動操作・直接削除禁止）
+```
+
+### STEP 5: サイトマップ更新
+
+```bash
+node scripts/generate-sitemap.js
+```
+
+### STEP 6: SW キャッシュバージョンを +1
+
+`index.html` 内の `CACHE_VERSION` を +1（P-05参照）。**忘れると古いキャッシュが残り再生バグが発生する。**
+
+### STEP 7: CLAUDE.md の曲数を更新
+
+「現在の状態」セクションの曲数を最新に書き換える。
+
+### STEP 8: コミット・プッシュ
+
+```bash
+git add data/ index.html
+git commit -m "feat: 新曲XX本追加（合計XXXX曲）"
+git push origin main
+```
+
+### STEP 9: 本番確認
+
+- https://nihonichi-bgm.com で新曲が表示されることを確認
+- 新曲の再生・ダウンロードが動作することを確認
+
+---
+
 ## バグ対応リソース
 
 - **バグ報告書**: `docs/bug-report-2026-05.md` — 過去の全バグ分類・再発パターン分析
-- **対応プロンプト集**: `docs/prompt-templates.md` — 定型プロンプト P-01〜P-09
+- **対応プロンプト集**: `docs/prompt-templates.md` — 定型プロンプト P-01〜P-10
   - P-01: セッション開始時の状況確認
   - P-02: 音声ぷつぷつ音バグ（最頻出・5回再発）
   - P-03: ジャンルデータ整合性チェック（ジャンル変更後は必須）
