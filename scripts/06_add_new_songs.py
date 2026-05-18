@@ -516,6 +516,22 @@ def main():
         songs_to_add.append(song)
         print(f"  ✔ {final_base}  genre={genre}  bpm={e['bpm']}  dur={e['duration']}")
 
+    # ── 6b. タイトル重複を自動リネーム ───────────────────────
+    existing_titles = {s.get("title", "") for s in existing}
+    seen_new = {}
+    for song in songs_to_add:
+        t = song["title"]
+        if t in existing_titles or t in seen_new:
+            n = 2
+            while f"{t} {n}" in existing_titles or f"{t} {n}" in seen_new:
+                n += 1
+            new_t = f"{t} {n}"
+            print(f"  [重複リネーム] {t} → {new_t}")
+            song["title"] = new_t
+            seen_new[new_t] = True
+        else:
+            seen_new[t] = True
+
     # ── 7. index.json・genres.json 更新 ───────────────────────
     print(f"\n[7/9] index.json 更新 ({len(existing)} → {len(existing)+len(songs_to_add)} 曲)...")
     updated = existing + songs_to_add
@@ -533,7 +549,6 @@ def main():
     # バックアップを作成してからアトミック書き込み
     bak = DATA_FILE.with_suffix(".json.bak")
     if DATA_FILE.exists():
-        import shutil
         shutil.copy2(DATA_FILE, bak)
         print(f"  バックアップ作成: {bak.name}")
 
@@ -582,7 +597,6 @@ def main():
     print("\n[7c] SEO詳細ページ生成 (generate-song-pages.js)...")
     new_slugs = [s["slug"] for s in songs_to_add if s.get("slug")]
     if new_slugs:
-        import subprocess
         script_js = ROOT / "scripts" / "generate-song-pages.js"
         if script_js.exists():
             for slug in new_slugs:
@@ -657,8 +671,7 @@ def main():
 
     # ── 追加後チェック・自動修正を実行 ───────────────────────
     print("\n[後処理] 10_post_upload_check.py を実行します...")
-    import subprocess as _sp
-    _result = _sp.run(
+    _result = subprocess.run(
         [sys.executable, str(Path(__file__).parent / "10_post_upload_check.py")],
         cwd=Path(__file__).parent.parent
     )

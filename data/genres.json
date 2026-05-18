@@ -3,7 +3,7 @@
     "slug": "ambient",
     "label_ja": "アンビエント",
     "label_en": "Ambient",
-    "count": 362,
+    "count": 366,
     "cover": "images/ambient/merry-eve-snowfall_0d9e8f9f.jpeg"
   },
   {
@@ -24,14 +24,14 @@
     "slug": "j-pop",
     "label_ja": "J-POP / シティポップ",
     "label_en": "J-Pop / City Pop",
-    "count": 202,
+    "count": 207,
     "cover": "images/j-pop/summit-signal_2846248c.jpeg"
   },
   {
     "slug": "k-pop",
     "label_ja": "K-POP",
     "label_en": "K-Pop",
-    "count": 54,
+    "count": 94,
     "cover": "images/pop/cherry-pop_d273c12b.jpeg"
   },
   {
@@ -45,28 +45,28 @@
     "slug": "lo-fi",
     "label_ja": "Lo-Fi",
     "label_en": "Lo-Fi / Chill",
-    "count": 197,
+    "count": 203,
     "cover": "images/lo-fi/window-rain-loops_cfe433ce.jpeg"
   },
   {
     "slug": "electronic",
     "label_ja": "エレクトロニック",
     "label_en": "Electronic / Synthwave",
-    "count": 155,
+    "count": 157,
     "cover": "images/electronic/paper-skies_50984de4.jpeg"
   },
   {
     "slug": "folk-acoustic",
     "label_ja": "フォーク・アコースティック",
     "label_en": "Folk / Acoustic",
-    "count": 100,
+    "count": 102,
     "cover": "images/folk-acoustic/open-window-morning_3bdae392.jpeg"
   },
   {
     "slug": "other",
     "label_ja": "その他",
     "label_en": "Other",
-    "count": 96,
+    "count": 97,
     "cover": "images/other/breaking-report_a7dda388.jpeg"
   },
   {
